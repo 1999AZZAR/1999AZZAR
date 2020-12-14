@@ -33,9 +33,6 @@ while (azzar.LoveYou === false) {
     if (azzar.LoveYou) {
         azzar.TheyMightBeWandering;
         hmmmm = azzar.ItProbablyMeans(Tesla.Social.GitHub);
-        oh_i_also_have_a_reddit = 'https://www.reddit.com/user/' + hmmmm;
-
-        console.log(oh_i_also_have_a_reddit);
     }
 }
 ```
