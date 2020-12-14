@@ -5,7 +5,7 @@
 [![Updated](https://badges.pufler.dev/updated/1999AZZAR/1999AZZAR?style=for-the-badge&color=ff00b4&logo=github&label=Profile+Updated)](https://github.com/1999AZZAR)
 [![Repos Badge](https://badges.pufler.dev/repos/1999AZZAR/?style=for-the-badge&color=251ee7&logo=github&label=Public+Repos)](https//github.com/1999AZZAR)
 [![Visits Badge](https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=251ee7&logo=github&label=visits)](https//github.com/1999AZZAR)
-[![](https://img.shields.io/badge/?style=for-the-badge&color=251ee7&logo=github&label=please+just+text+me)](https//t.me/azzar_budiyanto)
+https://img.shields.io/badge/contact%20me-https%3A%2F%2Ft.me%2Fazzar__budiyanto-f97e01
 ## Wanna learn more about me?
 
 ```js
