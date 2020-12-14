@@ -11,13 +11,13 @@
 ```js
 globalThis.Tesla = {
     Social: {
-        GitHub: '1999AZZAR',
-        Telegram: '@azzar_budiyanto',
-        Website: 'not_make_yet'
+        GitHub   : '1999AZZAR',
+        Telegram : '@azzar_budiyanto',
+        Website  : 'not_make_yet'
     },
     Hobbies: [
         'arduino',
-        '.python',
+        'python',
         'twitter',
         'Reverse Engineering',
         'Listening music and reading novel',
@@ -34,7 +34,6 @@ while (azzar.LoveYou === false) {
 
     if (azzar.LoveYou) {
         azzar.TheyMightBeWandering;
-        hmmmm = azzar.ItProbablyMeans(Tesla.Social.GitHub);
     }
 }
 ```
