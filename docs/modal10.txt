@@ -1,0 +1,173 @@
+<div id="modal10" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h1>Daftar Harga dan Paket Layanan Embedded Systems</h1>
+
+        <p>Kami menyediakan berbagai paket layanan untuk kebutuhan proyek Anda, mulai dari pembuatan program sederhana hingga solusi kompleks di bidang embedded systems, Arduino, IoT, dan lainnya. Semua layanan dapat disesuaikan dengan kebutuhan dan tingkat keahlian Anda.</p>
+
+        <h2>A. Detail Layanan dan Harga Dasar</h2>
+
+        <div class="script-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Layanan</th>
+                        <th>Harga (IDR)</th>
+                        <th>Durasi Pengerjaan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pembuatan Program Dasar</td>
+                        <td>Mulai dari 300,000</td>
+                        <td>1-3 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Pembuatan Program Kompleks</td>
+                        <td>Mulai dari 750,000</td>
+                        <td>3-7 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Penulisan Program IoT</td>
+                        <td>Mulai dari 1,000,000</td>
+                        <td>5-10 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Refaktorial Program</td>
+                        <td>Mulai dari 500,000</td>
+                        <td>2-5 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Debugging dan Troubleshooting</td>
+                        <td>Mulai dari 300,000</td>
+                        <td>1-3 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Pembuatan Library Khusus</td>
+                        <td>Mulai dari 1,500,000</td>
+                        <td>5-14 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Integrasi Sistem Embedded</td>
+                        <td>Mulai dari 2,000,000</td>
+                        <td>7-14 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Simulasi dan Pengujian Virtual</td>
+                        <td>Mulai dari 500,000</td>
+                        <td>3-5 hari</td>
+                    </tr>
+                    <tr>
+                        <td>Pelatihan dan Dokumentasi Program</td>
+                        <td>Mulai dari 300,000/jam</td>
+                        <td>Sesuaikan permintaan</td>
+                    </tr>
+                    <tr>
+                        <td>Pengajaran (45 menit)</td>
+                        <td>150,000/paket</td>
+                        <td>45 menit/paket</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Contoh Paket Proyek</h2>
+        <ul>
+            <li><strong>Paket Pemula:</strong> Pembuatan program sederhana untuk membaca data sensor suhu dan menyalakan kipas otomatis. <br>
+                <em>Harga:</em> 400,000 IDR | <em>Durasi:</em> 2 hari</li>
+            <li><strong>Paket IoT Dasar:</strong> Penulisan program IoT untuk mengirimkan data suhu dan kelembapan ke Firebase. <br>
+                <em>Harga:</em> 1,200,000 IDR | <em>Durasi:</em> 7 hari</li>
+            <li><strong>Paket Refaktorial:</strong> Optimasi kode kontrol motor servo untuk mengurangi ukuran program. <br>
+                <em>Harga:</em> 600,000 IDR | <em>Durasi:</em> 3 hari</li>
+        </ul>
+
+        <h2>B. Paket Khusus</h2>
+        <div class="button-list">
+            <button class="openModal" data-modal="modal1">Pengembangan</button>
+            <button class="openModal" data-modal="modal3">Pelatihan</button>
+        </div>
+        <div class="script-section">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Paket</th>
+                        <th>Harga</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="package-name">Beginer</td>
+                        <td class="price">Mulai dari 1,899,000 IDR</td>
+                        <td class="details">
+                            <ul>
+                                <li>Programming Arduino dasar untuk pemula dan pelajar</li>
+                                <li>Desain sirkuit elektronika sederhana</li>
+                                <li>Pengenalan dan integrasi IoT dasar</li>
+                                <li>Perakitan komponen dan pengujian sistem</li>
+                                <li>Dokumentasi project</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="package-name">Essential</td>
+                        <td class="price">Mulai dari 3,299,000 IDR</td>
+                        <td class="details">
+                            <ul>
+                                <li>Programming Arduino level menengah</li>
+                                <li>Implementasi IoT dasar dengan sensor</li>
+                                <li>Pengembangan sistem otomasi sederhana</li>
+                                <li>Desain sistem dan skema rangkaian</li>
+                                <li>Perakitan, testing, dan debugging dasar</li>
+                                <li>Dokumentasi dan training penggunaan</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="package-name">Intermediate</td>
+                        <td class="price">Mulai dari 5,299,000 IDR</td>
+                        <td class="details">
+                            <ul>
+                                <li>Programming Arduino tingkat lanjut</li>
+                                <li>Integrasi IoT dengan platform cloud</li>
+                                <li>Perancangan sistem otomasi kompleks</li>
+                                <li>Pengembangan embedded system</li>
+                                <li>Quality assurance dan testing menyeluruh</li>
+                                <li>Dokumentasi teknis lengkap & support</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="package-name">Advanced</td>
+                        <td class="price">Mulai dari 7,299,000 IDR</td>
+                        <td class="details">
+                            <ul>
+                                <li>Programming Arduino expert level</li>
+                                <li>Sistem otomasi industrial grade</li>
+                                <li>IoT system dengan analitik lanjut</li>
+                                <li>High-end embedded system design</li>
+                                <li>Extensive testing & performance optimization</li>
+                                <li>Dokumentasi profesional & maintenance guide</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Informasi Tambahan</h2>
+        <ul>
+            <li><strong>Penyesuaian Harga:</strong> Harga bervariasi berdasarkan kompleksitas proyek.</li>
+            <li><strong>Revisi:</strong> Termasuk satu kali revisi gratis untuk memastikan kepuasan.</li>
+            <li><strong>Urgent Project:</strong> Biaya tambahan 20-30% untuk penyelesaian mendesak.</li>
+            <li><strong>Platform Simulasi:</strong> Wokwi, Proteus, dan Tinkercad tersedia.</li>
+            <li><strong>Kustomisasi:</strong> Layanan dan fitur dapat disesuaikan dengan kebutuhan klien.</li>
+            <li><strong>Komparasi Paket:</strong> Kami menawarkan fleksibilitas untuk memilih elemen dari beberapa paket.</li>
+        </ul>
+
+        <footer>
+            <p>Untuk informasi lebih lanjut atau memesan layanan, silakan <a href="https://azzar.netlify.app/porto" target="_blank" rel="noopener noreferrer">hubungi kami</a>.</p>
+        </footer>
+    </div>
+</div>
