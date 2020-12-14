@@ -9,7 +9,7 @@
 ## Wanna learn more about me?
 
 ```js
-globalThis.Tesla = {
+globalThis.azzar = {
     Social: {
         GitHub   : '1999AZZAR',
         Telegram : '@azzar_budiyanto',
