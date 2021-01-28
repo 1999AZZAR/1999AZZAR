@@ -37,4 +37,4 @@ while (azzar.LoveYou === false) {
     }
 }
 ```
-## ![welcome and enjoy your day](footer.png)
+## ![welcome and enjoy your day]
