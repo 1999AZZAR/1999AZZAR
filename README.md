@@ -1,4 +1,4 @@
-## ![Welcome to my profile guys](header.png)
+## ![Welcome to my profile guys](header.jpg)
 
 [![Spying Counter](https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=e74c3c&logo=github&label=Spying+Counter)](https://github.com/1999AZZAR)
 [![Account Age](https://badges.pufler.dev/years/1999AZZAR/?style=for-the-badge&color=27a4fb&logo=github&label=Account+Age)](https://github.com/1999AZZAR)
@@ -37,4 +37,4 @@ while (azzar.LoveYou === false) {
     }
 }
 ```
-## ![welcome and enjoy your day]
+## ![welcome and enjoy your day](header.png)
