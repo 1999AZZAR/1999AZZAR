@@ -17,6 +17,7 @@ globalThis.azzar = {
     },
     Hobbies: [
         'arduino',
+        'sound system'
         'python',
         'twitter',
         'Reverse Engineering',
