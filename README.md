@@ -1,3 +1,6 @@
+<h1 align="center">Hi 👋, I'm Azzar</h1>
+<h3 align="center">Student at UNY, mecatronic.</h3>
+
 ## ![Welcome to my profile guys](header.jpg)
 
 <br>
