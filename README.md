@@ -1,12 +1,14 @@
-<h1 align="center">Hi <img width="30rem" src="./resources/img/waving.gif">, I'm Azzar</h1>
+<div align="center">
+<h1 align="center">Hi <img width="35rem" src="./resources/img/waving.gif">, I'm Azzar</h1>
 <h3 align="center">an engineering students at yogyakarta state university</h3>
+</div>
 
 <div>
   <samp>
-    <img align="right" width="590rem" height="auto" src="./resources/img/header.jpg"/>
-    <br>
+    <img align="right" width="460rem" height="auto" src="./resources/img/header.jpg"/>
     <h3 align="center">Connect with me</h3>
     <p align="center">
+      <br/>
       <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="blank"><img align="center"
          src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg"
          alt="azzar" height="30" width="40" /></a>
@@ -22,32 +24,35 @@
       <a href="https://twitter.com/siapa_hayosiapa" target="blank"><img align="center"
          src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg"
          alt="azzar" height="30" width="40" /></a>
+      <br>
     </p>
-  <br>
+  </samp>
 </div>
 
-  <div>
-<br/>
+<div>
 <h3 align="center">About this Account</h3>
  <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=e74c3c&logo=github&label=Spying+Counter"
      alt="spying counter" /></a>
+   <h6 align="center"></h3>
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/years/1999AZZAR/?style=for-the-badge&color=27a4fb&logo=github&label=Account+Age"
      alt="account age" /></a>
+   <h6 align="center"></h3>
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/updated/1999AZZAR/1999AZZAR?style=for-the-badge&color=ff00b4&logo=github&label=Profile+Updated"
      alt="updated" /></a>
+  <h6 align="center"></h3>
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/repos/1999AZZAR/?style=for-the-badge&color=251ee7&logo=github&label=Public+Repos"
      alt="repos" /></a>
+   <h6 align="center"></h3>
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=fbd11d&logo=github&label=visits"
      alt="visits" /></a>
  </p>
-<br>
-  </div>
+</div>
   
 ## Wanna learn more something about me?
 
@@ -81,7 +86,7 @@ while (azzar.LoveYou === false) {
     }
 }
 ```
-
+<div>
 <h2 align="center"> Github stats </h2>
 
 <br/>
@@ -95,6 +100,7 @@ while (azzar.LoveYou === false) {
   </a>
 </p>
 <br>
+</div>
 
 <div align="center">
   <img  src="./resources/img/grid-snake.svg"
