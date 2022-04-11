@@ -1,31 +1,34 @@
-<h1 align="center">Hi 👋, I'm Azzar</h1>
+<h1 align="center">Hi <img width="30rem" src="./resources/img/waving.gif">, I'm Azzar</h1>
 <h3 align="center">an engineering students at yogyakarta state university</h3>
 
-## ![Welcome to my profile guys](header.jpg)
+<div>
+  <samp>
+    <img align="right" width="590rem" height="auto" src="./resources/img/header.jpg"/>
+    <br>
+    <h3 align="center">Connect with me</h3>
+    <p align="center">
+      <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="blank"><img align="center"
+         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg"
+         alt="azzar" height="30" width="40" /></a>
+      <a href="https://fb.com/1999AZZAR" target="blank"><img align="center"
+         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg"
+         alt="azzar" height="30" width="40" /></a>
+      <a href="https://instagram.com/azzar_budiyanto" target="blank"><img align="center"
+         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg"
+         alt="azzar" height="30" width="40" /></a>
+      <a href="https://wa.me/+6282232529804" target="blank"><img align="center"
+         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/whatsapp.svg"
+         alt="azzar" height="30" width="40" /></a>
+      <a href="https://twitter.com/siapa_hayosiapa" target="blank"><img align="center"
+         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg"
+         alt="azzar" height="30" width="40" /></a>
+    </p>
+  <br>
+</div>
 
-<br>
-<h3 align="center">Connect with me:</h3>
-<p align="center">
-  <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="blank"><img align="center"
-      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg"
-      alt="azzar" height="30" width="40" /></a>
-  <a href="https://fb.com/1999AZZAR" target="blank"><img align="center"
-      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg"
-      alt="azzar" height="30" width="40" /></a>
-  <a href="https://instagram.com/azzar_budiyanto" target="blank"><img align="center"
-      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg"
-      alt="azzar" height="30" width="40" /></a>
-  <a href="https://wa.me/+6282232529804" target="blank"><img align="center"
-      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/whatsapp.svg"
-      alt="azzar" height="30" width="40" /></a>
- <a href="https://twitter.com/siapa_hayosiapa" target="blank"><img align="center"
-      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg"
-      alt="azzar" height="30" width="40" /></a>
-</p>
-<br>
-
+  <div>
 <br/>
-<h3 align="center">about this account:</h3>
+<h3 align="center">About this Account</h3>
  <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=e74c3c&logo=github&label=Spying+Counter"
@@ -44,6 +47,7 @@
      alt="visits" /></a>
  </p>
 <br>
+  </div>
   
 ## Wanna learn more something about me?
 
@@ -78,7 +82,7 @@ while (azzar.LoveYou === false) {
 }
 ```
 
-<h2 align="center"> my statistics </h2>
+<h2 align="center"> Github stats </h2>
 
 <br/>
 <p align="center">
@@ -91,3 +95,8 @@ while (azzar.LoveYou === false) {
   </a>
 </p>
 <br>
+
+<div align="center">
+  <img  src="./resources/img/grid-snake.svg"
+    alt="snake" />
+</div>
