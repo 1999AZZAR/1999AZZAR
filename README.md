@@ -39,4 +39,13 @@ while (azzar.LoveYou === false) {
 }
 ```
 
-## ![welcome and enjoy your day](header.png)
+## My Statistics
+
+<br/>
+<p align="left">
+  <a href="https://abhigyantrips.dev/">
+  <img width="49.5%" src="https://github-readme-stats.vercel.app/api?username=1999AZZAR&show_icons=true&theme=gruvbox&hide_border=true" />
+    <img width="49.5%" src="https://github-readme-streak-stats.herokuapp.com/?user=1999AZZAR&theme=gruvbox&hide_border=true" />
+  </a>
+</p>
+<br>
