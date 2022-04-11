@@ -49,7 +49,7 @@ while (azzar.LoveYou === false) {
   </a>
 </p>
 <p><img align="center"
-    src="https://github-readme-stats.vercel.app/api/top-langs?username=1999AZZAR&show_icons=true&locale=en&bg_color=0d1117&text_color=ffffff&layout=compact"
-    alt="adam-pw" 
+    src="https://github-readme-stats.vercel.app/api/top-langs?username=1999AZZAR&show_icons=true&&theme=gruvbox&hide_border=true"
+    alt="1999AZZAR" 
     bg_color=#808080/></p>
 <br>
