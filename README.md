@@ -5,7 +5,7 @@
 
 <div>
   <samp>
-    <img align="right" width="460rem" height="auto" src="./resources/img/header.jpg"/>
+    <img align="right" width="auto" height="360rem" src="./resources/img/header.jpg"/>
     <h3 align="center">Connect with me</h3>
     <p align="center">
       <br/>
@@ -31,23 +31,23 @@
 
 <div>
 <h3 align="center">About this Account</h3>
- <p align="center">
+ <p align="left">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=e74c3c&logo=github&label=Spying+Counter"
      alt="spying counter" /></a>
-   <h6 align="center"></h3>
+  
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/years/1999AZZAR/?style=for-the-badge&color=27a4fb&logo=github&label=Account+Age"
      alt="account age" /></a>
-   <h6 align="center"></h3>
+  
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/updated/1999AZZAR/1999AZZAR?style=for-the-badge&color=ff00b4&logo=github&label=Profile+Updated"
      alt="updated" /></a>
-  <h6 align="center"></h3>
+  
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/repos/1999AZZAR/?style=for-the-badge&color=251ee7&logo=github&label=Public+Repos"
      alt="repos" /></a>
-   <h6 align="center"></h3>
+  
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=fbd11d&logo=github&label=visits"
      alt="visits" /></a>
