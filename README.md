@@ -105,37 +105,6 @@
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ```
-
-```js
-globalThis.azzar = {
-    Social: {
-        GitHub   : '1999AZZAR',
-        Telegram : '@azzar_budiyanto',
-        Website  : 'not_make_yet'
-    },
-    Hobbies: [
-        'arduino',
-        'sound system'
-        'python',
-        'twitter',
-        'Reverse Engineering',
-        'Listening music and reading novel',
-    ],
-    LoveYou: Boolean(!1337),
-    ShowSomeLove: (ProbablyLeet) => console.table(ProbablyLeet),
-    TheyMightBeWondering: () => console.log('What does azzar means?'),
-    ItProbablyMeans: (azzar) => parseInt(azzar)
-}
-
-while (azzar.LoveYou === false) {
-    azzar.ShowSomeLove(azzar);
-    azzar.LoveYou = Boolean(1337);
-
-    if (azzar.LoveYou) {
-        azzar.TheyMightBeWandering;
-    }
-}
-```
 <div>
 <h2 align="center"> Github stats </h2>
 
