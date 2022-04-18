@@ -1,11 +1,11 @@
 <div align="center">
 <h1 align="center">Hi <img width="35rem" src="./resources/img/waving.gif">, I'm Azzar</h1>
-<h3 align="center">an engineering students at yogyakarta state university</h3>
+<h4 align="center">an engineering students at yogyakarta state university</h4>
 </div>
 
 <div>
   <samp>
-    <h3 align="center">Connect with me</h3>
+    <h3 align="center">Connect with me for more</h3>
     <p align="center">
       <br/>
       <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="blank"><img align="center"
@@ -50,10 +50,12 @@
      alt="visits" /></a>
  </p>
 </div>
-  
-## Wanna learn more something about me?
-```js
 
+<div>
+<h2 align="center"> Wanna learn more something about me? </h2>
+</div>
+
+```js
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -103,7 +105,6 @@
 ```
 <div>
 <h2 align="center"> Github stats </h2>
-
 <br/>
 <p align="center">
   <a href="https://github.com/1999AZZAR/">
