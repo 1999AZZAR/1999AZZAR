@@ -1,33 +1,40 @@
 <div align="center">
 <h1 align="center">Hi <img width="35rem" src="./resources/img/waving.gif">, I'm Azzar</h1>
-<h4 align="center">an engineering students at yogyakarta state university</h4>
+<h4 align="center">a freelance developer an also an engineering students at yogyakarta state university</h4>
 </div>
 
+<details>
+  <summary>contact me</summary>
 <div>
   <samp>
     <h3 align="center">Connect with me for more</h3>
     <p align="center">
       <br/>
       <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="blank"><img align="center"
-         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg"
-         alt="azzar" height="30" width="40" /></a>
+         src="https://img.shields.io/badge/azzar%20budiyanto-%231DA1F2.svg?style=for-the-badge&logo=linkedin&logoColor=white"
+         alt="azzar" height="30"/></a>
       <a href="https://fb.com/1999AZZAR" target="blank"><img align="center"
-         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg"
-         alt="azzar" height="30" width="40" /></a>
+         src="https://img.shields.io/badge/azzar%20budiyanto-4267B2.svg?style=for-the-badge&logo=facebook&logoColor=white"
+         alt="azzar" height="30"/></a>
+    </p>
+  <p align="center">
       <a href="https://instagram.com/azzar_budiyanto" target="blank"><img align="center"
-         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg"
-         alt="azzar" height="30" width="40" /></a>
+         src="https://img.shields.io/badge/azzar%20budiyanto-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white"
+         alt="azzar" height="30"/></a>
       <a href="https://wa.me/+6282232529804" target="blank"><img align="center"
-         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/whatsapp.svg"
-         alt="azzar" height="30" width="40" /></a>
+         src="https://img.shields.io/badge/azzar%20budiyanto-4B7F1.svg?style=for-the-badge&logo=whatsapp&logoColor=white"
+         alt="azzar" height="30"/></a>
       <a href="https://twitter.com/siapa_hayosiapa" target="blank"><img align="center"
-         src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg"
-         alt="azzar" height="30" width="40" /></a>
+         src="https://img.shields.io/badge/¯\_(ツ)_/¯-1DA1F2.svg?style=for-the-badge&logo=twitter&logoColor=white"
+         alt="azzar" height="30"/></a>
       <br>
     </p>
   </samp>
 </div>
+</details>
 
+<details>
+  <summary>about</summary>
 <div>
 <h3 align="center">About this Account</h3>
  <p align="center">
@@ -50,6 +57,7 @@
      alt="visits" /></a>
  </p>
 </div>
+</details>
 
 <div>
 <h2 align="center"> Wanna learn more something about me? </h2>
@@ -103,21 +111,31 @@
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ```
-<div>
-<h2 align="center"> Github stats </h2>
-<br/>
-<p align="center">
-  <a href="https://github.com/1999AZZAR/">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=1999AZZAR&langs_count=6&theme=gruvbox&layout=compact&hide_border=true" alt="1999AZZAR :: Top Langs" /></a>
-</p>
-<p align="center">
-  <a href="https://github.com/1999AZZAR/">
-  <img width="49.5%" src="https://github-readme-stats.vercel.app/api?username=1999AZZAR&show_icons=true&theme=gruvbox&hide_border=true" />
-  <img width="49.5%" src="https://github-readme-streak-stats.herokuapp.com/?user=1999AZZAR&theme=gruvbox&hide_border=true" />
-  </a>
-</p>
-<br>
-</div>
+
+<details> 
+  <summary>💻 GitHub Profile Stats</summary>
+  <div>
+    <h2 align="center"> 📊 Github stats </h2>
+      <br/>
+        <p align="center">
+          <a href="https://github.com/1999AZZAR/">
+          <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=1999AZZAR&langs_count=6&theme=gruvbox&layout=compact&hide_border=true" alt="1999AZZAR :: Top Langs" /></a>
+        </p>
+        <p align="center">
+          <a href="https://github.com/1999AZZAR/">
+          <img width="49.5%" src="https://github-readme-stats.vercel.app/api?username=1999AZZAR&show_icons=true&theme=gruvbox&hide_border=true" />
+          <img width="49.5%" src="https://github-readme-streak-stats.herokuapp.com/?user=1999AZZAR&theme=gruvbox&hide_border=true" />
+          </a>
+       </p>
+     <br>
+  </div>    
+</details>
+
+<details>
+  <summary>📈 Activity Graph</summary>
+  <br/>
+<a href="https://github.com/ashutosh00710/github-readme-activity-graph"><img alt="azzar's Activity Graph" src="https://activity-graph.herokuapp.com/graph/?username=1999azzar&bg_color=000&color=fff&line=00E676&point=fff&hide_border=true" /></a>
+</details>
 
 <div align="center">
   <a href="https://github.com/1999AZZAR/">
