@@ -10,7 +10,7 @@
 </div>
 
 <details>
-  <summary>contact me</summary>
+  <summary>☎️ contact me</summary>
 <div>
   <samp>
     <h3 align="center">Connect with me for more</h3>
@@ -40,7 +40,7 @@
 </details>
 
 <details>
-  <summary>about</summary>
+  <summary>🧮 about</summary>
 <div>
 <h3 align="center">About this Account</h3>
  <p align="center">
@@ -63,7 +63,7 @@
 </details>
 
 <details>
-  <summary>global</summary>
+  <summary>🌏 global</summary>
 <div>
 <h2 align="center"> Wanna learn more something about me? </h2>
 </div>
