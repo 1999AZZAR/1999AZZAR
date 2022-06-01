@@ -13,7 +13,7 @@
   <summary>☎️ contact me</summary>
 <div>
   <samp>
-    <h3 align="center">Connect with me for more</h3>
+    <h2 align="center">😎 you can reach me by:</h2>
     <p align="center">
       <br/>
       <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="blank"><img align="center"
@@ -42,7 +42,7 @@
 <details>
   <summary>🧮 about</summary>
 <div>
-<h3 align="center">About this Account</h3>
+<h2 align="center">🧮 About this Account</h2>
  <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/visits/1999AZZAR/1999AZZAR?style=for-the-badge&color=e74c3c&logo=github&label=Spying+Counter"
@@ -140,5 +140,6 @@
 <details>
   <summary>📈 Activity Graph</summary>
   <br/>
+  <h2 align="center"> my current activity </h2>
 <a href="https://github.com/ashutosh00710/github-readme-activity-graph"><img alt="azzar's Activity Graph" src="https://activity-graph.herokuapp.com/graph/?username=1999azzar&bg_color=000&color=fff&line=00E676&point=fff&hide_border=true" /></a>
 </details>
