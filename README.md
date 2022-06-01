@@ -3,6 +3,12 @@
 <h4 align="center">a freelance developer an also an engineering students at yogyakarta state university</h4>
 </div>
 
+<div align="center">
+  <a href="https://github.com/1999AZZAR/">
+  <img  src="./resources/img/grid-snake.svg"
+       alt="snake" /></a>
+</div>
+
 <details>
   <summary>contact me</summary>
 <div>
@@ -56,6 +62,8 @@
 </div>
 </details>
 
+<details>
+  <summary>global</summary>
 <div>
 <h2 align="center"> Wanna learn more something about me? </h2>
 </div>
@@ -108,6 +116,7 @@
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ```
+</details>
 
 <details> 
   <summary>💻 GitHub Profile Stats</summary>
@@ -133,9 +142,3 @@
   <br/>
 <a href="https://github.com/ashutosh00710/github-readme-activity-graph"><img alt="azzar's Activity Graph" src="https://activity-graph.herokuapp.com/graph/?username=1999azzar&bg_color=000&color=fff&line=00E676&point=fff&hide_border=true" /></a>
 </details>
-
-<div align="center">
-  <a href="https://github.com/1999AZZAR/">
-  <img  src="./resources/img/grid-snake.svg"
-       alt="snake" /></a>
-</div>
