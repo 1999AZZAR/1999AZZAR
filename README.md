@@ -48,7 +48,7 @@
 <h2 align="center">🧮 About this Account</h2>
  <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
-     src="![](https://komarev.com/ghpvc/?username=1999azzar&style=for-the-badge)"
+     src="![Visitor Count](https://profile-counter.glitch.me/1999AZZAR/count.svg)"
      alt="spying counter" /></a>
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://badges.pufler.dev/years/1999AZZAR/?style=for-the-badge&color=27a4fb&logo=github&label=Account+Age"
