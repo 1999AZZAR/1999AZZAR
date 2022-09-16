@@ -59,8 +59,8 @@
      src="https://img.shields.io/github/license/1999AZZAR/1999AZZAR?color=purple&style=for-the-badge"
      alt="lisense" /></a>
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
-     src="https://badges.pufler.dev/repos/1999AZZAR/?style=for-the-badge&color=251ee7&logo=github&label=Public+Repos"
-     alt="repos" /></a>
+     src="https://github.com/1999AZZAR/1999AZZAR/actions/workflows/pages/pages-build-deployment/badge.svg"
+     alt="page built"/></a>
  </p>
 </div>
 </details>
