@@ -48,11 +48,11 @@
 <h2 align="center">🧮 About this Account</h2>
  <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
-     src="![Visitor Count](https://komarev.com/ghpvc/?username=1999AZZAR&label=Profile%20views&color=FF0049&style=for-the-badge)"
-     alt="spying counter" /></a>
-  <a href="github.com/1999AZZAR" target="blank"><img align="center" 
-     src="https://badges.pufler.dev/years/1999AZZAR/?style=for-the-badge&color=27a4fb&logo=github&label=Account+Age"
-     alt="account age" /></a>
+     src="https://komarev.com/ghpvc/?username=1999AZZAR&style=for-the-badge&label=PROFILE+VIEWS"
+     alt="views count" /></a>
+  <a href="https://1999azzar.github.io/1999AZZAR/"><img align="center" 
+     src="https://img.shields.io/website?down_message=offline&style=for-the-badge&up_message=online&url=https%3A%2F%2F1999azzar.github.io%2F1999AZZAR%2F"
+     alt="website" /></a>
   </p>
   <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
