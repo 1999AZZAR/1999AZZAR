@@ -13,7 +13,7 @@
   <summary>☎️ contact me</summary>
 <div>
   <samp>
-    <h2 align="center">😎 you can reach me by:</h2>
+    <h2 align="center">you can reach me by:</h2>
     <p align="center">
       <br/>
       <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="blank"><img align="center"
@@ -45,7 +45,7 @@
 <details>
   <summary>🧮 about</summary>
 <div>
-<h2 align="center">🧮 About this Account</h2>
+<h2 align="center">About this Account</h2>
  <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://komarev.com/ghpvc/?username=1999AZZAR&style=for-the-badge&label=PROFILE+VIEWS" height="25"
@@ -151,8 +151,10 @@
 <details> 
   <summary>💻 GitHub Profile Stats</summary>
   <div>
-    <h2 align="center"> 📊 Github stats </h2>
+    <h2 align="center"> Github stats </h2>
       <br/>
+    <details open>
+  <summary>Languages</summary>
         <p align="center">
           <a href="https://github.com/1999AZZAR/">
           <img width="33%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=1999azzar&theme=gruvbox&layout=compact&hide_border=true"
@@ -162,7 +164,9 @@
           <img width="33%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=1999azzar&theme=gruvbox&layout=compact&hide_border=true"
           alt="1999AZZAR :: Top Langs by commit" />
           </a>
-        </p>
+        </p></details>
+    <details open>
+  <summary>stasistic</summary>
         <p align="center">
           <a href="https://github.com/1999AZZAR/">
           <img width="49.5%" src="https://github-readme-stats.vercel.app/api?username=1999AZZAR&show_icons=true&theme=gruvbox&hide_border=true" />
