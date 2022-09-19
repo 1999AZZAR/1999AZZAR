@@ -55,15 +55,20 @@
      alt="website" /></a>
   </p>
   <p align="center">
-  <a href="github.com/1999AZZAR" target="blank"><img align="center" 
-     src="https://img.shields.io/github/license/1999AZZAR/1999AZZAR?color=purple&style=for-the-badge"
-     alt="lisense" /></a>
-  <a href="github.com/1999AZZAR" target="blank"><img align="center" 
-     src="https://github.com/1999AZZAR/1999AZZAR/actions/workflows/pages/pages-build-deployment/badge.svg"
-     alt="page built"/></a>
   <a href="https://www.codefactor.io/repository/github/1999azzar/1999azzar/overview/main"><img align="center"
      src="https://www.codefactor.io/repository/github/1999azzar/1999azzar/badge/main" 
      alt="CodeFactor" /></a>
+  <a href="github.com/1999AZZAR" target="blank"><img align="center" 
+     src="https://github.com/1999AZZAR/1999AZZAR/actions/workflows/pages/pages-build-deployment/badge.svg"
+     alt="page built"/></a>
+  </p>
+ <p align="center">
+  <a href="github.com/1999AZZAR" target="blank"><img align="center" 
+     src="https://img.shields.io/github/license/1999AZZAR/1999AZZAR?color=purple&style=for-the-badge"
+     alt="lisense" /></a>
+  <a href="github.com/1999AZZAR"><img align="center"
+     src="https://forthebadge.com/images/badges/works-on-my-machine.svg" 
+     alt="work on my machine" /></a>
  </p>
 </div>
 </details>
@@ -123,7 +128,23 @@
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ```
 </details>
-
+<details>
+  <summary>👷‍♂️ built your own custom badge</summary>
+  <div>
+    <p align="center">
+      <a href="https://forthebadge.com/generator/" target="blank">
+        <img src="https://forthebadge.com/images/mark.svg" img align="center" height="50"
+        alt="for the badge"/></a>        
+      <a href="https://badgen.net/" target="blank">
+        <img src="https://badgen.net/static/favicon.png" img align="center" height="50"
+        alt="badgen"/></a>
+      <a href="https://shields.io/" target="blank">
+        <img src="https://raw.githubusercontent.com/badges/shields/master/readme-logo.svg" img align="center" height="50"
+        alt="shields.io"/></a>
+    </p>
+  </div>
+</details> 
+  
 <details> 
   <summary>💻 GitHub Profile Stats</summary>
   <div>
@@ -147,7 +168,8 @@
   <summary>📈 Latest Activity Graph</summary>
   <br/>
   <h2 align="center"> latest contribution </h2>
-<a href="https://github.com/ashutosh00710/github-readme-activity-graph"><img alt="azzar's Activity Graph" src="https://activity-graph.herokuapp.com/graph/?username=1999azzar&bg_color=000&color=fff&line=00E676&point=fff&hide_border=true" /></a>
+<a href="https://github.com/ashutosh00710/github-readme-activity-graph">
+  <img alt="azzar's Activity Graph" src="https://activity-graph.herokuapp.com/graph/?username=1999azzar&bg_color=000&color=fff&line=00E676&point=fff&hide_border=true" /></a>
 </details>
 
 warning : don't click global button on this profile if you open it from android browser or your device will freeze, to recover it just force stop your browser app
