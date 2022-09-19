@@ -135,7 +135,7 @@
 <details>
   <summary>🌏 global</summary>
 <div>
-<h2 align="center"> Wanna learn more something about me? </h2>
+<h2 align="center"> just an ascii art of me holding an umbrella </h2>
 </div>
 
 ```js
