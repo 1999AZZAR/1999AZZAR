@@ -61,6 +61,9 @@
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://github.com/1999AZZAR/1999AZZAR/actions/workflows/pages/pages-build-deployment/badge.svg"
      alt="page built"/></a>
+  <a href="https://www.codefactor.io/repository/github/1999azzar/1999azzar/overview/main"><img align="center"
+     src="https://www.codefactor.io/repository/github/1999azzar/1999azzar/badge/main" 
+     alt="CodeFactor" /></a>
  </p>
 </div>
 </details>
