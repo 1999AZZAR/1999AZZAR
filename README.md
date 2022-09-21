@@ -45,6 +45,7 @@
 <details>
   <summary>🧮 about</summary>
 <div>
+<samp>
 <h2 align="center">About this Account</h2>
  <p align="center">
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
@@ -70,12 +71,14 @@
      src="https://forthebadge.com/images/badges/works-on-my-machine.svg" height="25"
      alt="work on my machine" /></a>
  </p>
+ </samp>
 </div>
 </details>
 
 <details>
   <summary>👷‍♂️ built your own custom badge</summary>
   <div>
+  <samp>
     <h2 align="center">u can try using these web for creating your own badge</h2>
     <p align="center">
       <a href="https://forthebadge.com/generator/" target="blank">
@@ -88,12 +91,14 @@
         <img src="https://raw.githubusercontent.com/badges/shields/master/readme-logo.svg" img align="center" height="50"
         alt="shields.io"/></a>
     </p>
+    </samp>
   </div>
 </details> 
   
 <details> 
   <summary>💻 GitHub Profile Stats</summary>
   <div>
+  <samp>
     <h2 align="center"> Github stats </h2>
       <br/>
     <details open>
@@ -121,6 +126,7 @@
           </a>
        </p>
      <br>
+     </samp>
   </div>    
 </details>
 
@@ -135,7 +141,9 @@
 <details>
   <summary>🌏 global</summary>
 <div>
+<samp>
 <h2 align="center"> just an ascii art of me holding an umbrella </h2>
+</samp>
 </div>
 
 ```js
@@ -192,4 +200,4 @@
   
 -----
 Credits: [1999AZZAR](https://github.com/1999AZZAR)
-Last Edited on: 20/09/2022
+Last Edited on: 22/09/2022
