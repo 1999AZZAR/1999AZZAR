@@ -632,7 +632,7 @@
 
 .u-section-4 .u-repeater-1 {
     grid-template-columns: 33.3333% 33.3333% 33.3333%;
-    grid-gap: 0px 0px;
+    grid-gap: 0px;
     min-height: 488px;
 }
 
