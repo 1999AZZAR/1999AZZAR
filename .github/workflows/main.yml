@@ -1,7 +1,7 @@
 name: Minify Workflow
 on:
   push:
-    branches: [ foo ]
+    branches: [ master ]
 
 jobs:
   build:
