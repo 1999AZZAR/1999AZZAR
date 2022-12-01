@@ -1,3 +1,6 @@
+<html>
+<body>
+  
 <div align="center">
 <h1 align="center">Hi <img width="35" src="https://github.com/1999AZZAR/1999AZZAR/blob/main/resources/img/waving.gif">, I'm Azzar</h1>
 <h4 align="center">a freelance developer an also an engineering students at yogyakarta state university, see my <a href="https://github.com/1999AZZAR/1999AZZAR/blob/main/assets/doc/azzar_resume.pdf" target="_blank">resume</a> for more</h4>
@@ -203,21 +206,18 @@
 */
 ```
 </details>
-  <details open>
-   <summary>✍️ random dev quote</summary>
-    <div>
-     <samp>
-      <p align="center">
-       <a href="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" target="blank">
-       <Img width="49.5%" scr="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark"/>
-       </a>
-      </p>
-     </samp>
+<details open>
+<summary>✍️ random dev quote</summary>
+    <div class="container">
+      <p align="center"><iframe scr="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" alt="some quote"/></iframe></p>
    </div>
   </details> 
 <br/>
-</details> 
+</details>
+
+</body>
+</html>
 
 -----
 Credits: [1999AZZAR](https://github.com/1999AZZAR)
-Last Edited on: 22/09/2022
+Last Edited on: 02/12/2022
