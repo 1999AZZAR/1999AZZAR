@@ -203,6 +203,18 @@
 */
 ```
 </details>
+  <details open>
+   <summary>✍️ random dev quote</summary>
+    <div>
+     <samp>
+      <p align="center">
+       <a href="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" target="blank">
+       <Img width="49.5%" scr="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark"/>
+       </a>
+      </p>
+     </samp>
+   </div>
+  </details> 
 <br/>
 </details> 
 
