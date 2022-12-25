@@ -209,7 +209,7 @@
 <details open>
 <summary>✍️ random dev quote</summary>
     <div class="container">
-      <p align="center"><iframe scr="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" alt="some quote"/></iframe></p>
+      <p align="center"><iframe src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" alt="some quote"></iframe></p>
    </div>
   </details> 
 <br/>
