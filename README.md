@@ -205,19 +205,13 @@
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 */
 ```
-</details>
-<details open>
-<summary>✍️ random dev quote</summary>
-    <div class="container">
-      <p align="center"><iframe src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" alt="some quote"></iframe></p>
-   </div>
-  </details> 
-<br/>
-</details>
+ </details>
+
+</details>  
 
 </body>
 </html>
 
 -----
 Credits: [1999AZZAR](https://github.com/1999AZZAR)
-Last Edited on: 02/12/2022
+Last Edited on: 19/01/2022
