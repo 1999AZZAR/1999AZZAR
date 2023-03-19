@@ -5,3 +5,4 @@
     "minKBReduced": 1 // set reduction threshold (default to 10),
     "prTitle" : "Compressed images", // set pull request title    
 }
+
