@@ -914,6 +914,12 @@ body {
     bottom: 15px;
     right: 15px;
   }
+
+  .img-por{
+    width:400px;
+    height:400px;
+    object-fit:cover;
+  }
   
   /*--------------------------------------------------------------
   # Portfolio Details
