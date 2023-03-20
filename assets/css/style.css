@@ -50,7 +50,7 @@ body {
   # Header
   --------------------------------------------------------------*/
   #header {
-    transition: ease-in-out 0.3s;
+    transition: ease-in-out 0.4s;
     position: relative;
     height: 100vh;
     display: flex;
@@ -60,12 +60,13 @@ body {
   }
   
   #header * {
-    transition: ease-in-out 0.3s;
+    transition: ease-in-out 0.4s;
   }
   
   #header h1 {
+    float: left;
     font-size: 48px;
-    margin: 0;
+    margin:10px 8px 0px 0px;
     padding: 0;
     line-height: 1;
     font-weight: 700;
@@ -81,7 +82,7 @@ body {
   
   #header h2 {
     font-size: 24px;
-    margin-top: 20px;
+    margin-top: 10px;
     color: rgba(255, 255, 255, 0.8);
   }
   
@@ -92,9 +93,10 @@ body {
   }
   
   #header img {
-    padding: 0;
-    margin: 0;
-  }
+    float: inherit;
+    width: 58px;
+    height: 58px;
+    }
   
   #header .social-links {
     margin-top: 40px;
@@ -160,6 +162,10 @@ body {
     font-size: 36px;
   }
   
+  #header.header-top img {
+    display: none;
+  }
+
   #header.header-top .container {
     display: flex;
     align-items: center;
@@ -253,7 +259,7 @@ body {
     color: #fff;
   }
   
-  /**
+  /*
   * Mobile Navigation 
   */
   .mobile-nav-toggle {
