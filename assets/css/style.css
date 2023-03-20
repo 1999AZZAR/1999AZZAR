@@ -230,7 +230,6 @@ body {
   .navbar a:before {
     content: "";
     position: absolute;
-    width: 0;
     height: 2px;
     bottom: -4px;
     left: 0;
@@ -366,7 +365,7 @@ body {
     font-weight: 500;
     padding: 0;
     line-height: 1px;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #aaaaaa;
@@ -384,7 +383,7 @@ body {
   
   .section-title p {
     margin: 0;
-    margin: -15px 0 15px 0;
+    margin: -15px 0 15px;
     font-size: 36px;
     font-weight: 700;
     text-transform: uppercase;
@@ -435,7 +434,7 @@ body {
   }
   
   .counts .count-box {
-    padding: 30px 30px 25px 30px;
+    padding: 30px 30px 25px;
     width: 100%;
     position: relative;
     text-align: center;
@@ -591,10 +590,9 @@ body {
   
   .testimonials .testimonial-item p {
     font-style: italic;
-    margin: 0 15px 0 15px;
-    padding: 20px 20px 60px 20px;
+    margin: 0 15px;
+    padding: 20px 20px 60px;
     background: rgba(255, 255, 255, 0.1);
-    position: relative;
     border-radius: 6px;
     position: relative;
     z-index: 1;
@@ -765,8 +763,7 @@ body {
   }
   
   .portfolio #portfolio-flters {
-    padding: 0;
-    margin: 0 auto 15px auto;
+    margin: 0 auto 15px;
     list-style: none;
     text-align: center;
     border-radius: 50px;
@@ -776,14 +773,14 @@ body {
   .portfolio #portfolio-flters li {
     cursor: pointer;
     display: inline-block;
-    padding: 8px 16px 10px 16px;
+    padding: 8px 16px 10px;
     font-size: 14px;
     font-weight: 600;
     line-height: 1;
     text-transform: uppercase;
     color: #fff;
     background: rgba(255, 255, 255, 0.1);
-    margin: 0 3px 10px 3px;
+    margin: 0 3px 10px;
     transition: all 0.3s ease-in-out;
     border-radius: 4px;
   }
@@ -968,7 +965,7 @@ body {
   
   .portfolio-details .portfolio-info p {
     font-size: 15px;
-    padding: 15px 0 0 0;
+    padding: 15px 0 0;
   }
   
   @media (max-width: 992px) {
