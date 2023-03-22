@@ -1,6 +1,3 @@
 User-agent: *
-allow: /
-
-Disallow: /cgi-bin/
-
+Allow: /
 Sitemap: https://azzarbudiyanto.me/sitemap.xml
