@@ -120,7 +120,7 @@
   <br/>
   <h2 align="center"> latest contribution </h2>
 <a href="https://github.com/ashutosh00710/github-readme-activity-graph">
-  <img alt="azzar's Activity Graph" src="https://github-readme-activity-graph.cyclic.app/graph?username=1999azzar&theme=github-compact&hide_border=true" /></a>
+  <img alt="azzar's Activity Graph" src="https://github-readme-activity-graph.vercel.app/graph?username=1999azzar&theme=github-compact&hide_border=true" /></a>
 <br/>
   </samp>
   </details>
