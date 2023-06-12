@@ -138,7 +138,7 @@
         <img src="https://forthebadge.com/images/mark.svg" img align="center" height="50"
         alt="for the badge"/></a>        
       <a href="https://badgen.net/" target="blank">
-        <img src="https://badgen.net/static/favicon.png" img align="center" height="50"
+        <img src="https://badgen.net/statics/badgen-logo.svg" img align="center" height="50"
         alt="badgen"/></a>
       <a href="https://shields.io/" target="blank">
         <img src="https://raw.githubusercontent.com/badges/shields/master/readme-logo.svg" img align="center" height="50"
