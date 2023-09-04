@@ -71,9 +71,11 @@
   <a href="github.com/1999AZZAR" target="blank"><img align="center" 
      src="https://img.shields.io/github/license/1999AZZAR/1999AZZAR?color=purple&style=for-the-badge" height="25"
      alt="lisense" /></a>
-  <a href="github.com/1999AZZAR"><img align="center"
+  <!--
+   <a href="github.com/1999AZZAR"><img align="center"
      src="https://forthebadge.com/images/badges/works-on-my-machine.svg" height="25"
      alt="work on my machine" /></a>
+   -->
  </p>
  </samp>
 </div>
@@ -134,9 +136,11 @@
   <samp>
     <h2 align="center">u can try using these website for creating your own custom badge</h2>
     <p align="center">
+      <!--
       <a href="https://forthebadge.com/generator/" target="blank">
         <img src="https://forthebadge.com/images/mark.svg" img align="center" height="50"
-        alt="for the badge"/></a>        
+        alt="for the badge"/></a>
+      -->
       <a href="https://badgen.net/" target="blank">
         <img src="https://badgen.net/statics/badgen-logo.svg" img align="center" height="50"
         alt="badgen"/></a>
@@ -155,8 +159,7 @@
 </samp>
 </div>
 
-```js
-/*
+```text
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
@@ -203,12 +206,13 @@
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-*/
 ```
  </details>
 
 </details>  
+   <!--
    <p align="center"><a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=0E7334&center=true&vCenter=true&width=435&lines=Freelance+embedded+device+developer;have+high+creativity;Able+to+work+in+team+or+individual+" alt="Typing SVG" /></a></p>
+   -->
 </body>
 </html>
 
