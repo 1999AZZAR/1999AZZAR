@@ -124,11 +124,6 @@
   <samp>
     <h2 align="center">u can try using these website for creating your own custom badge</h2>
     <p align="center">
-      <!--
-      <a href="https://forthebadge.com/generator/" target="blank">
-        <img src="https://forthebadge.com/images/mark.svg" img align="center" height="50"
-        alt="for the badge"/></a>
-      -->
       <a href="https://badgen.net/" target="blank">
         <img src="https://badgen.net/statics/badgen-logo.svg" img align="center" height="50"
         alt="badgen"/></a>
@@ -203,7 +198,6 @@
 
 You can support me by buy me a coffee if u like to.
 <div align="left">
-<!--   <h4>And you can also support me by <a href="https://www.buymeacoffee.com/azzar" target="_blank">buying me coffee</a></h4> -->
   <a href="https://www.buymeacoffee.com/azzar" target="_blank">
     <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 42px !important;width: 151.9px !important; margin-top: 50px !important;">
   </a>
