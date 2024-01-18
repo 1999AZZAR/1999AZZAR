@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--   <title>Azzar - Freelance Developer</title> -->
 </head>
+<!--
+<header>
+  <img src=https://capsule-render.vercel.app/api?type=waving&color=auto&height=100&section=header>
+</header>
+-->
 <body>
 
 <div align="center">
@@ -208,6 +213,11 @@ You can support me by buying me a coffee if you like to.
 </div>
 
 </body>
+<!--
+<footer>
+  <img src=https://capsule-render.vercel.app/api?type=waving&color=auto&height=100&section=footer>
+</footer>
+-->
 </html>
 
 -----
