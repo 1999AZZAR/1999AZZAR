@@ -10,7 +10,7 @@
 <div align="center">
   <span>
     <h1>Hello, I'm Azzar,</h1>
-    <h4>I'm a freelance developer. Please take a look at my <a href="https://github.com/1999AZZAR/1999AZZAR/blob/main/assets/cv.azzar_budiyanto.pdf" target="_blank">resume</a> for more information.</h4>
+    <h4>I'm a freelance developer. Please take a look at my <a href="https://github.com/1999AZZAR/1999AZZAR/blob/readme/resources/img/rcv_en_azzar.pdf" target="_blank">resume</a> for more information.</h4>
   </span>
 </div>
 
