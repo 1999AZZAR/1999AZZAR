@@ -25,16 +25,16 @@
 }
 
 :root.three {
-    --primary-color: #4c0000;
+    --primary-color: #4d0000;
     --secondary-color: #660000;
     --tertiary-color: #800000;
     --quaternary-color: #990000;
     --quinary-color: #b30000;
-    --senary-color: #e60073;
-    --septenary-color: #ff0080;
-    --octonary-color: #ff5ab4;
-    --nonary-color: #ff66bf;
-    --denary-color: #ff99d9;
+    --senary-color: #ffd700;
+    --septenary-color: #ffcc00;
+    --octonary-color: #ffb300;
+    --nonary-color: #ff9900;
+    --denary-color: #ff8000;
 }
 
 :root.four {
@@ -51,16 +51,16 @@
 }
 
 :root.five {
-    --primary-color: #0066cc;
-    --secondary-color: #0073e6;
-    --tertiary-color: #0080ff;
-    --quaternary-color: #3399ff;
-    --quinary-color: #66b2ff;
-    --senary-color: #80bfff;
-    --septenary-color: #99ccff;
-    --octonary-color: #b3d9ff;
-    --nonary-color: #cce6ff;
-    --denary-color: #e6f2ff;
+    --primary-color: #ffcccc;
+    --secondary-color: #ffb3b3;
+    --tertiary-color: #ff9999;
+    --quaternary-color: #ff8080;
+    --quinary-color: #ff6666;
+    --senary-color: #eb4d4d;
+    --septenary-color: #d43939;
+    --octonary-color: #bc2626;
+    --nonary-color: #a31313;
+    --denary-color: #8B0000;
 }
 
 :root.six {
@@ -111,7 +111,7 @@ header {
     background: var(--primary-color);
     color: var(--denary-color);
     padding: 1rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.1);
     transition: height 0.5s ease-in-out, padding 0.5s ease-in-out;
     position: fixed;
     width: 100%;
@@ -130,8 +130,8 @@ header.fullscreen {
 
 header.top {
     height: auto;
-    padding: 0.25rem 0;
     justify-content: flex-start;
+    border-radius: 0 0 75px 75px;
 }
 
 header.animated {
@@ -232,7 +232,7 @@ section.active {
 .box-container {
     padding: 2rem;
     max-width: 85vw;
-    margin: 40px auto;
+    margin: 60px auto;
     background: var(--denary-color);
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
@@ -430,24 +430,7 @@ div#skills {
 }
 
 /* Media Queries */
-@media (max-width: 992px) {
-    header .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
-@media (max-width: 768px) {
-    header .container {
-        padding: 0 1rem;
-    }
-
-    .service-card {
-        margin: 1rem 0;
-    }
-}
-
-@media (max-width: 512px) {
+@media (max-width: 640px) {
     body {
         font-size: 12px;
         line-height: 1.5;
@@ -501,7 +484,7 @@ div#skills {
     .box-container {
         padding: 1rem;
         max-width: 95vw;
-        margin: auto;
+        margin: 0 auto;
     }
 
         header .container {
@@ -535,5 +518,9 @@ div#skills {
 
     header nav {
         margin-top: 0.5rem;
+    }
+
+    header.top {
+        border-radius: 0 0 35px 35px;
     }
 }
