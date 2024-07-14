@@ -121,7 +121,7 @@ header.animated {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Kalnia', sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
@@ -263,6 +263,10 @@ header h1 {
 header p {
     margin: 0.25rem 0;
     font-size: 0.9rem;
+}
+
+h1, h2 {
+    font-family: 'Kalnia';
 }
 
 h3 {
