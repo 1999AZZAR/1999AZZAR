@@ -260,9 +260,9 @@ header p {
     font-size: 0.9rem;
 }
 
-/*header nav {
-    margin-top: 0.5rem;
-}*/
+h3 {
+    margin-top: 0;
+}
 
 header nav ul {
     list-style: none;
