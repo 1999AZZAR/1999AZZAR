@@ -80,6 +80,7 @@ header.animated {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    text-align: justify;
 }
 
 .service-card:hover {
@@ -113,6 +114,10 @@ header.animated {
     margin-right: 10px;
     color: var(--primary-color);
     color: var(--secondary-color);
+}
+
+.service-card p {
+    margin: 0.45rem auto;
 }
 
 body {
@@ -264,6 +269,11 @@ h3 {
     margin-top: 0;
 }
 
+a:-webkit-any-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 header nav ul {
     list-style: none;
     padding: 0;
@@ -371,4 +381,23 @@ div#projects-container {
 
 div#projects-container:hover {
     transform: none;
+}
+
+div#service-container {
+    margin: unset;
+    padding: unset;
+    background-color: unset;
+    border: unset;
+    box-shadow: unset;
+}
+
+div#service-container:hover {
+    transform: none;
+}
+
+div#skills {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
