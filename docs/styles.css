@@ -11,6 +11,10 @@
     --denary-color: #FFFFF5;
 }
 
+html::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     font-family: 'Poppins', 'Kalnia', sans-serif;
     margin: 0;
