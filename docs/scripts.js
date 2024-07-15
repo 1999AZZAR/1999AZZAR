@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .forEach(repo => {
                     const projectCard = document.createElement('div');
                     projectCard.classList.add('service-card');
-                    const iconClass = 'fas fa-project-diagram'; // You can customize this icon class as needed
+                    const iconClass = 'fas fa-tarp'; // You can customize this icon class as needed
                     projectCard.innerHTML = `
                         <h3><a href="${repo.html_url}" target="_blank"><i class="${iconClass}"></i> ${repo.name}</a></h3>
                         <p>${repo.description}</p>

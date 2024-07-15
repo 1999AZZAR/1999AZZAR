@@ -11,61 +11,54 @@
     --denary-color: #FFFFF5;
 }
 
-
-
-/* Media Queries for Responsiveness */
-@media (max-width: 1200px) {
-    header .container, .box-container {
-        max-width: 100%;
-        padding: 0 2rem;
-    }
+body {
+    font-family: 'Poppins', 'Kalnia', sans-serif;
+    margin: 0;
+    padding: 120px 0 0;
+    line-height: 1.6;
+    background-color: var(--denary-color);
+    color: var(--primary-color);
 }
 
-@media (max-width: 992px) {
-    header .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .box-container {
-        padding: 2rem 1rem;
-    }
+h1, h2 {
+    font-family: 'Kalnia';
 }
 
-@media (max-width: 768px) {
-    header .container {
-        padding: 0 1rem;
-    }
-
-    .service-card {
-        margin: 1rem 0;
-    }
-
-    .box-container {
-        padding: 1rem;
-    }
+h3 {
+    margin-top: 0;
 }
 
-@media (max-width: 576px) {
-    header .container {
-        padding: 0 0.5rem;
-    }
+a:-webkit-any-link {
+    text-decoration: none;
+    color: inherit;
+}
 
-    header .logo h1 {
-        font-size: 1.2rem;
-    }
+/* Header Styles */
+header {
+    background: var(--primary-color);
+    color: var(--denary-color);
+    padding: 1rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: height 0.5s ease-in-out, padding 0.5s ease-in-out;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-    header .logo p {
-        font-size: 0.8rem;
-    }
+header.fullscreen {
+    height: 100vh;
+}
 
-    .box-container h2 {
-        font-size: 1.5rem;
-    }
-
-    .box-container form input, .box-container form textarea, .box-container form button {
-        font-size: 0.9rem;
-    }
+header.top {
+    height: auto;
+    padding: 0.25rem 0;
+    justify-content: flex-start;
 }
 
 header.animated {
@@ -73,6 +66,153 @@ header.animated {
     transform: translateY(0);
 }
 
+header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+header .logo {
+    margin-bottom: 1rem;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header .logo p {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+header nav {
+    margin-top: 1rem;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: var(--denary-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+    color: var(--quinary-color);
+}
+
+header nav ul li a i {
+    font-size: 1.5rem;
+}
+
+header .social-links {
+    margin-top: unset;
+    display: flex;
+    justify-content: center;
+}
+
+header .social-links a {
+    color: var(--denary-color);
+    font-size: 1.8rem;
+    margin: 0 15px;
+}
+
+header .social-links a:hover {
+    color: var(--quinary-color);
+}
+
+/* Section Styles */
+section {
+    display: none;
+}
+
+section.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Box Container Styles */
+.box-container {
+    padding: 2rem;
+    max-width: 85vw;
+    margin: 40px auto;
+    background: var(--denary-color);
+    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.box-container.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.box-container h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.box-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.box-container form input,
+.box-container form textarea {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--denary-color);
+    color: var(--primary-color);
+}
+
+.box-container form button {
+    padding: 0.75rem;
+    border: none;
+    background: var(--primary-color);
+    color: var(--denary-color);
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.box-container form button:hover {
+    background: var(--secondary-color);
+}
+
+/* Service Card Styles */
 .service-card {
     background: var(--octonary-color);
     padding: 1.5rem;
@@ -110,283 +250,31 @@ header.animated {
     align-items: center;
 }
 
-.service-card ul li i {
+.service-card ul li i,
+.service-card h3 i {
     margin-right: 10px;
-    color: var(--primary-color);
     color: var(--secondary-color);
+    vertical-align: middle;
 }
 
 .service-card p {
     margin: 0.45rem auto;
 }
 
-body {
-    font-family: 'Roboto', 'Kalnia', sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    background-color: var(--denary-color);
-    color: var(--primary-color);
-    padding-top: 120px; /* Adjust this value based on the header height */
-}
-
-
-header {
-    background: var(--primary-color);
-    color: var(--denary-color);
-    padding: 1rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: height 0.5s ease-in-out, padding 0.5s ease-in-out;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    height: 100vh; /* Make header fullscreen */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-header.fullscreen {
-    height: 100vh; /* Fullscreen height */
-    transition: height 0.5s ease-in-out, padding 0.5s ease-in-out;
-}
-
-header.top {
-    height: auto; /* Auto height for non-home sections */
-    padding: 0.5rem 0;
-    justify-content: flex-start;
-    transition: height 0.5s ease-in-out, padding 0.5s ease-in-out;
-}
-
-section {
-    display: none; /* Hide all sections by default */
-}
-
-section.active {
-    display: block; /* Show the active section */
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-header .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    text-align: center;
-}
-
-header .logo {
-    margin-bottom: 1rem;
-}
-
-header .logo h1 {
-    margin: 0;
-    font-size: 2.5rem;
-}
-
-header .logo p {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-header nav {
-    margin-top: 1rem;
-}
-
-header nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-header nav ul li {
-    margin: 10px 15px;
-}
-
-header nav ul li a {
-    color: var(--denary-color);
-    text-decoration: none;
-    font-size: 1.5rem; /* Adjusted font size for icons */
-    transition: color 0.3s;
-}
-
-header nav ul li a:hover {
-    color: var(--quinary-color);
-}
-
-header nav ul li a i {
-    font-size: 1.5rem; /* Ensure icons are appropriately sized */
-}
-
-header .social-links {
-    margin-top: unset;
-    display: flex;
-    justify-content: center;
-}
-
-header .social-links a {
-    margin: 0 15px;
-    color: var(--denary-color);
-    text-decoration: none;
-    font-size: 1.8rem;
-    transition: color 0.3s;
-}
-
-header .social-links a:hover {
-    color: var(--quinary-color);
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-}
-
-header p {
-    margin: 0.25rem 0;
-    font-size: 0.9rem;
-}
-
-h1, h2 {
-    font-family: 'Kalnia';
-}
-
-h3 {
-    margin-top: 0;
-}
-
-a:-webkit-any-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-header nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-}
-
-header nav ul li {
-    margin: 0 15px;
-}
-
-header nav ul li a {
-    color: var(--denary-color);
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
-}
-
-header nav ul li a:hover {
-    color: var(--quinary-color);
-}
-
-.social-links {
-    margin-top: 1rem;
-}
-
+/* Other Styles */
 .social-links a {
     margin: 0 10px;
     text-decoration: none;
-    font-size: 1.5rem;
-    transition: color 0.3s;
+    font-size: 1.6rem;
     color: var(--primary-color);
+    transition: color 0.3s;
 }
 
 .social-links a:hover {
     color: var(--quinary-color);
 }
 
-.box-container {
-    padding: 4rem 2rem;
-    max-width: 85vw;
-    margin: 40px auto; /* Increased margin to create a larger gap between boxes */
-    background: var(--denary-color);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-    border-radius: 8px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.box-container.animated {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.box-container h2 {
-    margin-top: 0;
-    font-size: 2rem;
-    color: var(--primary-color);
-}
-
-.box-container form {
-    display: flex;
-    flex-direction: column;
-}
-
-.box-container form input, .box-container form textarea {
-    margin-bottom: 1rem;
-    padding: 0.75rem;
-    border: 1px solid var(--secondary-color);
-    border-radius: 5px;
-    font-size: 1rem;
-    background-color: var(--denary-color);
-    color: var(--primary-color);
-}
-
-.box-container form button {
-    padding: 0.75rem;
-    border: none;
-    background: var(--primary-color);
-    color: var(--denary-color);
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 4px;
-    transition: background 0.3s;
-}
-
-.box-container form button:hover {
-    background: var(--secondary-color);
-}
-.service-card ul li i, .service-card h3 i, .service-card ul li i, .service-card h3 i, .service-card h3 i {
-    margin-right: 10px;
-    vertical-align: middle;
-}
-
-div#projects-container {
-    margin: unset;
-    padding: unset;
-    background-color: unset;
-    border: unset;
-    box-shadow: unset;
-}
-
-div#projects-container:hover {
-    transform: none;
-}
-
+div#projects-container,
 div#service-container {
     margin: unset;
     padding: unset;
@@ -395,6 +283,7 @@ div#service-container {
     box-shadow: unset;
 }
 
+div#projects-container:hover,
 div#service-container:hover {
     transform: none;
 }
@@ -404,4 +293,46 @@ div#skills {
     justify-content: space-between;
     flex-direction: column;
     flex-wrap: wrap;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    header .container {
+        padding: 0 1rem;
+    }
+
+    .service-card {
+        margin: 1rem 0;
+    }
+}
+
+@media (max-width: 576px) {
+    header .container {
+        padding: 0 0.5rem;
+    }
+
+    header .logo h1 {
+        font-size: 1.2rem;
+    }
+
+    header .logo p {
+        font-size: 0.8rem;
+    }
+
+    .box-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .box-container form input,
+    .box-container form textarea,
+    .box-container form button {
+        font-size: 0.9rem;
+    }
 }
