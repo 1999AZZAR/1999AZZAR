@@ -1,35 +1,61 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Fetch GitHub projects and display them in the Overview section
-    fetch('https://api.github.com/users/1999AZZAR/repos')
+// Global variable to store the sorted projects
+let sortedProjects = [];
+
+// Function to fetch and sort GitHub projects
+function fetchAndSortProjects() {
+    return fetch('https://api.github.com/users/1999AZZAR/repos')
         .then(response => response.json())
         .then(data => {
-            const projectsContainer = document.getElementById('projects-container');
-            projectsContainer.innerHTML = ''; // Clear the loading message
-
-            data
-                .filter(repo => repo.description) // Filter out projects without descriptions
-                .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)) // Sort projects by date
-                .forEach(repo => {
-                    const projectCard = document.createElement('div');
-                    projectCard.classList.add('service-card');
-                    const iconClass = 'fas fa-tarp'; // You can customize this icon class as needed
-                    projectCard.innerHTML = `
-                        <h3><a href="${repo.html_url}" target="_blank"><i class="${iconClass}"></i> ${repo.name}</a></h3>
-                        <p>${repo.description}</p>
-                        <ul>
-                            <li><i class="fas fa-calendar-alt"></i> Updated on: ${new Date(repo.updated_at).toLocaleDateString()}</li>
-                            <li><i class="fas fa-code-branch"></i> Forks: ${repo.forks_count}</li>
-                            <li><i class="fas fa-star"></i> Stars: ${repo.stargazers_count}</li>
-                        </ul>
-                    `;
-                    projectsContainer.appendChild(projectCard);
-                });
+            sortedProjects = data.sort((a, b) => {
+                // Sort by popularity (stars + forks)
+                const popularityA = a.stargazers_count + a.forks_count;
+                const popularityB = b.stargazers_count + b.forks_count;
+                if (popularityB !== popularityA) {
+                    return popularityB - popularityA;
+                }
+                // If popularity is the same, sort by date
+                return new Date(b.updated_at) - new Date(a.updated_at);
+            });
         })
         .catch(error => {
             console.error('Error fetching GitHub repositories:', error);
-            const projectsContainer = document.getElementById('projects-container');
-            projectsContainer.innerHTML = '<p>Failed to load projects. Please try again later.</p>';
         });
+}
+
+// Function to display projects
+function displayProjects() {
+    const projectsContainer = document.getElementById('projects-container');
+    projectsContainer.innerHTML = ''; // Clear the container
+
+    if (sortedProjects.length === 0) {
+        projectsContainer.innerHTML = '<p>No projects to display. Please try again later.</p>';
+        return;
+    }
+
+    sortedProjects.forEach(repo => {
+        const projectCard = document.createElement('div');
+        projectCard.classList.add('service-card');
+        const iconClass = 'fas fa-bars-staggered';
+        projectCard.innerHTML = `
+            <h3><a href="${repo.html_url}" target="_blank"><i class="${iconClass}"></i> ${repo.name}</a></h3>
+            <p>${repo.description || 'No description available'}</p>
+            <ul>
+                <li><i class="fas fa-calendar-alt"></i> Updated on: ${new Date(repo.updated_at).toLocaleDateString()}</li>
+                <li><i class="fas fa-code-branch"></i> Forks: ${repo.forks_count}</li>
+                <li><i class="fas fa-star"></i> Stars: ${repo.stargazers_count}</li>
+            </ul>
+        `;
+        projectsContainer.appendChild(projectCard);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Fetch and sort projects when the page loads
+    fetchAndSortProjects().then(() => {
+        console.log('Projects data is ready to be displayed.');
+        // If the overview section is visible by default, uncomment the next line
+        // displayProjects();
+    });
 
     // Navigation link click handling
     const navLinks = document.querySelectorAll('header nav ul li a');
@@ -61,6 +87,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector('.social-links').style.display = 'none';
                 header.classList.remove('fullscreen');
                 header.classList.add('top');
+            }
+
+            // If the overview section is clicked, display the projects
+            if (targetId === 'overview') {
+                displayProjects();
             }
 
             // Scroll to the top of the page
