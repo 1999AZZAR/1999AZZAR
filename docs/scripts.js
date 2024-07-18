@@ -140,19 +140,46 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.style.display = 'block';
     });
 
+    // Modal logic
+    const modal = document.getElementById('color-switcher-modal');
+    const settingsButton = document.getElementById('settings-button');
+    const closeButton = document.querySelector('.close-button');
+
+    settingsButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        modal.style.display = 'block';
+        document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
+            element.classList.add('blur');
+        });
+    });
+
     closeButton.addEventListener('click', () => {
         modal.style.display = 'none';
+        document.querySelectorAll('.blur').forEach(element => {
+            element.classList.remove('blur');
+        });
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.style.display = 'none';
+            document.querySelectorAll('.blur').forEach(element => {
+                element.classList.remove('blur');
+            });
         }
     });
+
+    const colorButtons = document.querySelectorAll('.color-btn');
     colorButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const selectedColor = event.currentTarget.getAttribute('data-color');
             document.documentElement.className = selectedColor;
         });
+    });
+
+    const birthDate = new Date('1999-10-09');
+    const today = new Date();
+    const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
+    document.getElementById('age-in-days').textContent = ageInDays;
     });
 });
