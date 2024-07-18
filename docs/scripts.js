@@ -20,7 +20,7 @@ function fetchAndSortProjects() {
         .catch(error => {
             console.error('Error fetching GitHub repositories:', error);
         });
-});
+}
 
 // Function to display projects
 function displayProjects() {
