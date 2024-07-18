@@ -11,7 +11,7 @@
     --denary-color: #FFFFF5;
 }
 
-.blur {
+.blur:not(.active) {
     filter: blur(5px);
     pointer-events: none;
 }
