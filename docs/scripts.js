@@ -64,8 +64,7 @@
              <h3><a href="${repo.html_url}" target="_blank"><i class="${iconClass}"></i> ${repo.name}</a></h3>
              <p>${repo.description || 'No description available'}</p>
              <ul>
-                 <li><i class="fas fa-calendar-alt"></i> Updated on: ${new
- Date(repo.updated_at).toLocaleDateString()}</li>
+                 <li><i class="fas fa-calendar-alt"></i> Updated on: ${new Date(repo.updated_at).toLocaleDateString()}</li>
                  <li><i class="fas fa-code-branch"></i> Forks: ${repo.forks_count}</li>
                  <li><i class="fas fa-star"></i> Stars: ${repo.stargazers_count}</li>
              </ul>
