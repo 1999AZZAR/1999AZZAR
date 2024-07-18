@@ -129,7 +129,12 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Calculate age in days
+    // Color switcher logic
+    const colorSelect = document.getElementById('color-select');
+    colorSelect.addEventListener('change', (event) => {
+        const selectedColor = event.target.value;
+        document.documentElement.className = selectedColor;
+    });
     const birthDate = new Date('1999-10-09');
     const today = new Date();
     const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
