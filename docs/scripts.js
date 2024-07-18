@@ -130,10 +130,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Color switcher logic
-    const colorSelect = document.getElementById('color-select');
-    colorSelect.addEventListener('change', (event) => {
-        const selectedColor = event.target.value;
-        document.documentElement.className = selectedColor;
+    const colorButtons = document.querySelectorAll('.color-btn');
+    colorButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const selectedColor = event.currentTarget.getAttribute('data-color');
+            document.documentElement.className = selectedColor;
+        });
     });
     const birthDate = new Date('1999-10-09');
     const today = new Date();
