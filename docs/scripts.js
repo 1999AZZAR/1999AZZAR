@@ -46,7 +46,6 @@ function displayProjects() {
             </ul>
         `;
         projectsContainer.appendChild(projectCard);
-    });
 }
 
 
@@ -182,4 +181,3 @@ document.addEventListener('DOMContentLoaded', function() {
     const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
     document.getElementById('age-in-days').textContent = ageInDays;
     });
-});
