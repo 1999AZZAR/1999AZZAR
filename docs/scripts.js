@@ -157,7 +157,9 @@
          logActiveSection();
          modal.style.display = 'block';
          document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
-             element.classList.add('blur');
+             if (!element.classList.contains('active')) {
+                 element.classList.add('blur');
+             }
          });
      });
 
