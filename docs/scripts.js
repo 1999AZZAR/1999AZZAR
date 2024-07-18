@@ -129,7 +129,25 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Color switcher logic
+    // Modal logic
+    const modal = document.getElementById('color-switcher-modal');
+    const settingsButton = document.getElementById('settings-button');
+    const closeButton = document.querySelector('.close-button');
+
+    settingsButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        modal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
     const colorButtons = document.querySelectorAll('.color-btn');
     colorButtons.forEach(button => {
         button.addEventListener('click', (event) => {
