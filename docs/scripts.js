@@ -78,15 +78,18 @@
              const targetId = link.getAttribute('href').substring(1);
              const targetSection = document.getElementById(targetId);
 
-             // Hide all sections with animation
+             // Hide all sections with animation, except the active one
              document.querySelectorAll('section').forEach(section => {
-                 section.classList.remove('active');
-                 section.classList.remove('fadeIn');
+                 if (!section.classList.contains('active')) {
+                     section.classList.remove('fadeIn');
+                 }
              });
 
              // Show the target section with animation
-             targetSection.classList.add('active');
-             targetSection.classList.add('fadeIn');
+             if (!targetSection.classList.contains('active')) {
+                 targetSection.classList.add('active');
+                 targetSection.classList.add('fadeIn');
+             }
 
              // Add or remove fullscreen class to header based on the target section
              const header = document.querySelector('header');
