@@ -138,7 +138,7 @@
      settingsButton.addEventListener('click', (event) => {
          event.preventDefault();
          modal.style.display = 'block';
-         document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
+         document.querySelectorAll('body > *:not(#color-switcher-modal):not(.active)').forEach(element => {
              element.classList.add('blur');
          });
      });
