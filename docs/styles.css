@@ -204,7 +204,6 @@ section {
 section.active {
     display: block;
     animation: fadeIn 0.5s ease-in-out;
-    opacity: unset;
 }
 
 @keyframes fadeIn {

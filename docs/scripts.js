@@ -60,11 +60,6 @@
          projectsContainer.appendChild(projectCard);
      });
 
-     // Log the active section when the modal is about to be shown
-     document.querySelector('.modal').addEventListener('show', logActiveSection);
-
-     // Restore the active section when the modal is hidden
-     document.querySelector('.modal').addEventListener('hide', restoreActiveSection);
  }
 
  document.addEventListener('DOMContentLoaded', function() {
