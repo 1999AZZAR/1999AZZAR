@@ -1,5 +1,6 @@
  // Global variable to store the sorted projects
  let sortedProjects = [];
+ let activeSection = null;
 
  // Function to fetch and sort GitHub projects
  function fetchAndSortProjects() {
@@ -20,6 +21,16 @@
          .catch(error => {
              console.error('Error fetching GitHub repositories:', error);
          });
+ }
+
+ function logActiveSection() {
+     activeSection = document.querySelector('section.active');
+ }
+
+ function restoreActiveSection() {
+     if (activeSection) {
+         activeSection.classList.add('active');
+     }
  }
 
  // Function to display projects
@@ -48,6 +59,12 @@
          `;
          projectsContainer.appendChild(projectCard);
      });
+
+     // Log the active section when the modal is about to be shown
+     document.querySelector('.modal').addEventListener('show', logActiveSection);
+
+     // Restore the active section when the modal is hidden
+     document.querySelector('.modal').addEventListener('hide', restoreActiveSection);
  }
 
  document.addEventListener('DOMContentLoaded', function() {
