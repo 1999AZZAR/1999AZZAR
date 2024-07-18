@@ -24,10 +24,12 @@
 
 
      // Apply the stored color on page load
-     const storedColor = localStorage.getItem('selectedColor');
-     if (storedColor) {
-         document.documentElement.className = storedColor;
-     }
+     document.addEventListener('DOMContentLoaded', function() {
+         const storedColor = localStorage.getItem('selectedColor');
+         if (storedColor) {
+             document.documentElement.className = storedColor;
+         }
+     });
  }
 
  function logActiveSection() {
