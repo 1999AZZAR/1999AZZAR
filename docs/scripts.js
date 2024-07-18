@@ -20,7 +20,15 @@
          })
          .catch(error => {
              console.error('Error fetching GitHub repositories:', error);
+             // Store the selected color in localStorage
+             localStorage.setItem('selectedColor', selectedColor);
          });
+     });
+
+     // Apply the stored color on page load
+     const storedColor = localStorage.getItem('selectedColor');
+     if (storedColor) {
+         document.documentElement.className = storedColor;
  }
 
  function logActiveSection() {
