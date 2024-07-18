@@ -331,6 +331,28 @@ section.active {
     color: var(--quinary-color);
 }
 
+.color-switcher {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.color-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: var(--primary-color);
+}
+
+.color-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: var(--secondary-color);
+}
+
 div#projects-container,
 div#service-container {
     margin: unset;
