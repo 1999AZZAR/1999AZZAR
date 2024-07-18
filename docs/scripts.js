@@ -195,6 +195,8 @@
              const selectedColor = event.currentTarget.getAttribute('data-color');
              document.documentElement.className = selectedColor;
              localStorage.setItem('selectedColor', selectedColor);
+             // Apply the selected color immediately
+             document.documentElement.className = selectedColor;
          });
      });
 
