@@ -165,6 +165,7 @@
          document.querySelectorAll('.blur').forEach(element => {
              element.classList.remove('blur');
          });
+         modal.style.pointerEvents = 'none';
      });
 
      window.addEventListener('click', (event) => {
@@ -173,6 +174,7 @@
              document.querySelectorAll('.blur').forEach(element => {
                  element.classList.remove('blur');
              });
+             modal.style.pointerEvents = 'none';
          }
      });
 
