@@ -20,9 +20,13 @@
          })
          .catch(error => {
              console.error('Error fetching GitHub repositories:', error);
-             // Store the selected color in localStorage
-             localStorage.setItem('selectedColor', selectedColor);
          });
+
+     // Apply the stored color on page load
+     const storedColor = localStorage.getItem('selectedColor');
+     if (storedColor) {
+         document.documentElement.className = storedColor;
+     }
 
      // Apply the stored color on page load
      const storedColor = localStorage.getItem('selectedColor');
@@ -70,6 +74,7 @@
              </ul>
          `;
          projectsContainer.appendChild(projectCard);
+     });
 
  }
 
@@ -191,7 +196,9 @@
      colorButtons.forEach(button => {
          button.addEventListener('click', (event) => {
              const selectedColor = event.currentTarget.getAttribute('data-color');
+             const selectedColor = event.currentTarget.getAttribute('data-color');
              document.documentElement.className = selectedColor;
+             localStorage.setItem('selectedColor', selectedColor);
 
          });
      });
