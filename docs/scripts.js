@@ -150,17 +150,17 @@
      settingsButton.addEventListener('click', (event) => {
          event.preventDefault();
          modal.style.display = 'block';
-         document.querySelectorAll('body > *:not(#color-switcher-modal):not(.active)').forEach(element => {
+         document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
              element.classList.add('blur');
          });
      });
 
      closeButton.addEventListener('click', () => {
          modal.style.display = 'none';
-         document.querySelectorAll('.blur').forEach(element => {
+         document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
              element.classList.remove('blur');
          });
-         modal.style.pointerEvents = 'none';
+         modal.style.pointerEvents = 'auto';
      });
 
      window.addEventListener('click', (event) => {
@@ -169,7 +169,7 @@
              document.querySelectorAll('.blur').forEach(element => {
                  element.classList.remove('blur');
              });
-             modal.style.pointerEvents = 'none';
+             modal.style.pointerEvents = 'auto';
          }
      });
 
