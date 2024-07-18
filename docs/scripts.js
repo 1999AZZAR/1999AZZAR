@@ -22,10 +22,6 @@
              console.error('Error fetching GitHub repositories:', error);
              // Store the selected color in localStorage
              localStorage.setItem('selectedColor', selectedColor);
-         })
-         })
-         .catch(error => {
-             console.error('Error fetching GitHub repositories:', error);
          });
 
      // Apply the stored color on page load
