@@ -22,11 +22,6 @@
              console.error('Error fetching GitHub repositories:', error);
          });
 
-     // Apply the stored color on page load
-     const storedColor = localStorage.getItem('selectedColor');
-     if (storedColor) {
-         document.documentElement.className = storedColor;
-     }
 
      // Apply the stored color on page load
      const storedColor = localStorage.getItem('selectedColor');
@@ -94,40 +89,42 @@
              const targetId = link.getAttribute('href').substring(1);
              const targetSection = document.getElementById(targetId);
 
-             // Hide all sections
-             document.querySelectorAll('section').forEach(section => {
-                 section.classList.remove('active');
-                 section.classList.remove('fadeIn');
-             });
+             if (targetSection) {
+                 // Hide all sections
+                 document.querySelectorAll('section').forEach(section => {
+                     section.classList.remove('active');
+                     section.classList.remove('fadeIn');
+                 });
 
-             // Show the target section with animation
-             targetSection.classList.add('active');
-             targetSection.classList.add('fadeIn');
+                 // Show the target section with animation
+                 targetSection.classList.add('active');
+                 targetSection.classList.add('fadeIn');
 
-             // Add or remove fullscreen class to header based on the target section
-             const header = document.querySelector('header');
-             if (targetId === 'home') {
-                 header.classList.add('fullscreen');
-                 header.classList.remove('top');
-                 document.querySelector('.social-links').style.display = 'flex';
-                 document.getElementById('home-description').style.display = 'block';
-             } else {
-                 document.getElementById('home-description').style.display = 'none';
-                 document.querySelector('.social-links').style.display = 'none';
-                 header.classList.remove('fullscreen');
-                 header.classList.add('top');
+                 // Add or remove fullscreen class to header based on the target section
+                 const header = document.querySelector('header');
+                 if (targetId === 'home') {
+                     header.classList.add('fullscreen');
+                     header.classList.remove('top');
+                     document.querySelector('.social-links').style.display = 'flex';
+                     document.getElementById('home-description').style.display = 'block';
+                 } else {
+                     document.getElementById('home-description').style.display = 'none';
+                     document.querySelector('.social-links').style.display = 'none';
+                     header.classList.remove('fullscreen');
+                     header.classList.add('top');
+                 }
+
+                 // If the overview section is clicked, display the projects
+                 if (targetId === 'overview') {
+                     displayProjects();
+                 }
+
+                 // Scroll to the top of the page
+                 window.scrollTo({
+                     top: 0,
+                     behavior: 'smooth'
+                 });
              }
-
-             // If the overview section is clicked, display the projects
-             if (targetId === 'overview') {
-                 displayProjects();
-             }
-
-             // Scroll to the top of the page
-             window.scrollTo({
-                 top: 0,
-                 behavior: 'smooth'
-             });
          });
      });
 
@@ -196,10 +193,8 @@
      colorButtons.forEach(button => {
          button.addEventListener('click', (event) => {
              const selectedColor = event.currentTarget.getAttribute('data-color');
-             const selectedColor = event.currentTarget.getAttribute('data-color');
              document.documentElement.className = selectedColor;
              localStorage.setItem('selectedColor', selectedColor);
-
          });
      });
 
