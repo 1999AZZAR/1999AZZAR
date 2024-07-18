@@ -11,6 +11,58 @@
     --denary-color: #FFFFF5;
 }
 
+:root.blue {
+    --primary-color: #0066cc;
+    --secondary-color: #0073e6;
+    --tertiary-color: #0080ff;
+    --quaternary-color: #3399ff;
+    --quinary-color: #66b2ff;
+    --senary-color: #80bfff;
+    --septenary-color: #99ccff;
+    --octonary-color: #b3d9ff;
+    --nonary-color: #cce6ff;
+    --denary-color: #e6f2ff;
+}
+
+:root.black {
+    --primary-color: #0D0D0D;
+    --secondary-color: #262626;
+    --tertiary-color: #404040;
+    --quaternary-color: #595959;
+    --quinary-color: #737373;
+    --senary-color: #8C8C8C;
+    --septenary-color: #A6A6A6;
+    --octonary-color: #BFBFBF;
+    --nonary-color: #D9D9D9;
+    --denary-color: #F2F2F2;
+}
+
+:root.capucino_yellow {
+    --primary-color: #FFA700;
+    --secondary-color: #e59004;
+    --tertiary-color: #cc7908;
+    --quaternary-color: #b26210;
+    --quinary-color: #994b18;
+    --senary-color: #7f3420;
+    --septenary-color: #661d28;
+    --octonary-color: #4c0630;
+    --nonary-color: #330039;
+    --denary-color: #1A0000;
+}
+
+:root.pink_pastel {
+    --primary-color: #FF7F7F;
+    --secondary-color: #FF9F7F;
+    --tertiary-color: #FFBF7F;
+    --quaternary-color: #FFDF7F;
+    --quinary-color: #FFFF7F;
+    --senary-color: #FFFF9F;
+    --septenary-color: #FFFFBF;
+    --octonary-color: #FFFFDF;
+    --nonary-color: #FFFFFF;
+    --denary-color: #FFF5EE;
+}
+
 html::-webkit-scrollbar {
     display: none;
 }
