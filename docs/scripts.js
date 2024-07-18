@@ -61,7 +61,7 @@
          projectCard.classList.add('service-card');
          const iconClass = 'fas fa-bars-staggered';
          projectCard.innerHTML = `
-             <h3><a href="${repo.html_url}" target="_blank"><i class="${iconClass}"></i> ${repo.name}</a></h3
+             <h3><a href="${repo.html_url}" target="_blank"><i class="${iconClass}"></i> ${repo.name}</a></h3>
              <p>${repo.description || 'No description available'}</p>
              <ul>
                  <li><i class="fas fa-calendar-alt"></i> Updated on: ${new
