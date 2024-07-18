@@ -20,7 +20,7 @@ function fetchAndSortProjects() {
         .catch(error => {
             console.error('Error fetching GitHub repositories:', error);
         });
-}
+});
 
 // Function to display projects
 function displayProjects() {
@@ -49,6 +49,9 @@ function displayProjects() {
         document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
             element.classList.add('blur');
         });
+        document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
+            element.classList.add('blur');
+        });
     });
 
     closeButton.addEventListener('click', () => {
@@ -65,7 +68,23 @@ function displayProjects() {
                 element.classList.remove('blur');
             });
         }
-}
+    });
+
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.querySelectorAll('.blur').forEach(element => {
+            element.classList.remove('blur');
+        });
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.querySelectorAll('.blur').forEach(element => {
+                element.classList.remove('blur');
+            });
+        }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch and sort projects when the page loads
