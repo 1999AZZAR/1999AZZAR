@@ -46,7 +46,25 @@ function displayProjects() {
             </ul>
         `;
         projectsContainer.appendChild(projectCard);
+        document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
+            element.classList.add('blur');
+        });
     });
+
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.querySelectorAll('.blur').forEach(element => {
+            element.classList.remove('blur');
+        });
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.querySelectorAll('.blur').forEach(element => {
+                element.classList.remove('blur');
+            });
+        }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
