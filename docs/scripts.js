@@ -22,12 +22,17 @@
              console.error('Error fetching GitHub repositories:', error);
              // Store the selected color in localStorage
              localStorage.setItem('selectedColor', selectedColor);
+         })
+         .catch(error => {
+             console.error('Error fetching GitHub repositories:', error);
          });
+     });
 
      // Apply the stored color on page load
      const storedColor = localStorage.getItem('selectedColor');
      if (storedColor) {
          document.documentElement.className = storedColor;
+     }
  }
 
  function logActiveSection() {
@@ -201,4 +206,4 @@
      const today = new Date();
      const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
      document.getElementById('age-in-days').textContent = ageInDays;
- });
+});
