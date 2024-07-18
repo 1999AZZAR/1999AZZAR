@@ -157,16 +157,14 @@
          logActiveSection();
          modal.style.display = 'block';
          document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
-             if (!element.classList.contains('active')) {
-                 element.classList.add('blur');
-             }
+             element.classList.add('blur');
          });
      });
 
      closeButton.addEventListener('click', () => {
          modal.style.display = 'none';
          restoreActiveSection();
-         document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
+         document.querySelectorAll('.blur').forEach(element => {
              element.classList.remove('blur');
          });
          modal.style.pointerEvents = 'auto';
