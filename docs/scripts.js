@@ -25,11 +25,16 @@
 
  function logActiveSection() {
      activeSection = document.querySelector('section.active');
+     if (activeSection) {
+         activeSection.classList.add('logged-active');
+     }
  }
 
  function restoreActiveSection() {
-     if (activeSection) {
-         activeSection.classList.add('active');
+     const loggedActiveSection = document.querySelector('section.logged-active');
+     if (loggedActiveSection) {
+         loggedActiveSection.classList.add('active');
+         loggedActiveSection.classList.remove('logged-active');
      }
  }
 
