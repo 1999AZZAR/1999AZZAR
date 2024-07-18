@@ -149,6 +149,7 @@
 
      settingsButton.addEventListener('click', (event) => {
          event.preventDefault();
+         logActiveSection();
          modal.style.display = 'block';
          document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
              element.classList.add('blur');
@@ -157,6 +158,8 @@
 
      closeButton.addEventListener('click', () => {
          modal.style.display = 'none';
+         restoreActiveSection();
+         restoreActiveSection();
          document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
              element.classList.remove('blur');
          });
