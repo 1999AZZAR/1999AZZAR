@@ -27,6 +27,7 @@
     --octonary-color: #b3d9ff;
     --nonary-color: #cce6ff;
     --denary-color: #e6f2ff;
+    animation: colorSwitch 0.5s ease-in-out;
 }
 
 :root.black {
@@ -40,6 +41,7 @@
     --octonary-color: #BFBFBF;
     --nonary-color: #D9D9D9;
     --denary-color: #F2F2F2;
+    animation: colorSwitch 0.5s ease-in-out;
 }
 
 :root.capucino_yellow {
@@ -53,6 +55,7 @@
     --octonary-color: #4c0630;
     --nonary-color: #330039;
     --denary-color: #1A0000;
+    animation: colorSwitch 0.5s ease-in-out;
 }
 
 :root.pink_pastel {
@@ -66,6 +69,7 @@
     --octonary-color: #FFFFDF;
     --nonary-color: #FFFFFF;
     --denary-color: #FFF5EE;
+    animation: colorSwitch 0.5s ease-in-out;
 }
 
 html::-webkit-scrollbar {
