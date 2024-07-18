@@ -9,7 +9,6 @@
     --octonary-color: #FFF5C7;
     --nonary-color: #FFFAE7;
     --denary-color: #FFFFF5;
-}
 
 .blur:not(.active) {
     filter: blur(5px);
