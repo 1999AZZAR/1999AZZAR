@@ -351,7 +351,7 @@ section.active {
 }
 
 .color-btn:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) rotate(10deg);
     color: var(--secondary-color);
 }
 
@@ -458,4 +458,19 @@ div#skills {
     .box-container form button {
         font-size: 0.9rem;
     }
+}
+@keyframes colorSwitch {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(360deg);
+    }
+    100% {
+        transform: scale(1) rotate(720deg);
+    }
+}
+
+.color-switch-animation {
+    animation: colorSwitch 0.5s ease-in-out;
 }

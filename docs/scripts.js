@@ -188,6 +188,14 @@
          button.addEventListener('click', (event) => {
              const selectedColor = event.currentTarget.getAttribute('data-color');
              document.documentElement.className = selectedColor;
+
+             // Add animation class
+             button.classList.add('color-switch-animation');
+
+             // Remove animation class after animation ends
+             button.addEventListener('animationend', () => {
+                 button.classList.remove('color-switch-animation');
+             }, { once: true });
          });
      });
 
