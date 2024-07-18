@@ -46,46 +46,9 @@ function displayProjects() {
             </ul>
         `;
         projectsContainer.appendChild(projectCard);
-        document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
-            element.classList.add('blur');
-        });
-        document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
-            element.classList.add('blur');
-        });
     });
 }
 
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-        document.querySelectorAll('.blur').forEach(element => {
-            element.classList.remove('blur');
-        });
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-            document.querySelectorAll('.blur').forEach(element => {
-                element.classList.remove('blur');
-            });
-        }
-    });
-
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-        document.querySelectorAll('.blur').forEach(element => {
-            element.classList.remove('blur');
-        });
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-            document.querySelectorAll('.blur').forEach(element => {
-                element.classList.remove('blur');
-            });
-        }
-});
 
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch and sort projects when the page loads
@@ -186,15 +149,10 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'none';
         }
     });
-    const colorButtons = document.querySelectorAll('.color-btn');
     colorButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const selectedColor = event.currentTarget.getAttribute('data-color');
             document.documentElement.className = selectedColor;
         });
     });
-    const birthDate = new Date('1999-10-09');
-    const today = new Date();
-    const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
-    document.getElementById('age-in-days').textContent = ageInDays;
 });
