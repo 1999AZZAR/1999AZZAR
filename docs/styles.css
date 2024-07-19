@@ -1,4 +1,4 @@
-:root, :root.default {
+:root, :root.one {
     --primary-color: #3B3A30;
     --secondary-color: #5C5947;
     --tertiary-color: #7D7A5F;
@@ -11,7 +11,46 @@
     --denary-color: #FFFFF5;
 }
 
-:root.blue {
+:root.two {
+    --primary-color: #0D0D0D;
+    --secondary-color: #262626;
+    --tertiary-color: #404040;
+    --quaternary-color: #595959;
+    --quinary-color: #737373;
+    --senary-color: #8C8C8C;
+    --septenary-color: #A6A6A6;
+    --octonary-color: #BFBFBF;
+    --nonary-color: #D9D9D9;
+    --denary-color: #d5d5d5;
+}
+
+:root.three {
+    --primary-color: #4c0000;
+    --secondary-color: #660000;
+    --tertiary-color: #800000;
+    --quaternary-color: #990000;
+    --quinary-color: #b30000;
+    --senary-color: #e60073;
+    --septenary-color: #ff0080;
+    --octonary-color: #ff5ab4;
+    --nonary-color: #ff66bf;
+    --denary-color: #ff99d9;
+}
+
+:root.four {
+    --primary-color: #FFA700;
+    --secondary-color: #e59004;
+    --tertiary-color: #cc7908;
+    --quaternary-color: #b26210;
+    --quinary-color: #994b18;
+    --senary-color: #7f3420;
+    --septenary-color: #661d28;
+    --octonary-color: #4c0630;
+    --nonary-color: #330039;
+    --denary-color: #2d0b0b;
+}
+
+:root.five {
     --primary-color: #0066cc;
     --secondary-color: #0073e6;
     --tertiary-color: #0080ff;
@@ -24,33 +63,7 @@
     --denary-color: #e6f2ff;
 }
 
-:root.black {
-    --primary-color: #0D0D0D;
-    --secondary-color: #262626;
-    --tertiary-color: #404040;
-    --quaternary-color: #595959;
-    --quinary-color: #737373;
-    --senary-color: #8C8C8C;
-    --septenary-color: #A6A6A6;
-    --octonary-color: #BFBFBF;
-    --nonary-color: #D9D9D9;
-    --denary-color: #F2F2F2;
-}
-
-:root.capucino_yellow {
-    --primary-color: #FFA700;
-    --secondary-color: #e59004;
-    --tertiary-color: #cc7908;
-    --quaternary-color: #b26210;
-    --quinary-color: #994b18;
-    --senary-color: #7f3420;
-    --septenary-color: #661d28;
-    --octonary-color: #4c0630;
-    --nonary-color: #330039;
-    --denary-color: #1A0000;
-}
-
-:root.pink_pastel {
+:root.six {
     --primary-color: #FF7F7F;
     --secondary-color: #FF9F7F;
     --tertiary-color: #FFBF7F;
@@ -336,7 +349,7 @@ section.active {
 .color-switcher {
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    margin: 1rem 0rem 0.5rem;
 }
 
 .color-btn {
