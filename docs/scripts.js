@@ -3,47 +3,38 @@ let sortedProjects = [];
 let activeSection = null;
 
 // Function to fetch and sort GitHub projects
-function fetchAndSortProjects() {
-    return fetch('https://api.github.com/users/1999AZZAR/repos')
-        .then(response => response.json())
-        .then(data => {
-            sortedProjects = data.sort((a, b) => {
-                // Sort by popularity (stars + forks)
-                const popularityA = a.stargazers_count + a.forks_count;
-                const popularityB = b.stargazers_count + b.forks_count;
-                if (popularityB !== popularityA) {
-                    return popularityB - popularityA;
-                }
-                // If popularity is the same, sort by date
-                return new Date(b.updated_at) - new Date(a.updated_at);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching GitHub repositories:', error);
-        });
-}
+async function fetchAndSortProjects() {
+    const username = '1999AZZAR';
+    let allProjects = [];
+    let page = 1;
+    const perPage = 100; // Maximum number of items per page
 
-// Apply the stored color on page load
-function applyStoredColor() {
-    const storedColor = localStorage.getItem('selectedColor');
-    if (storedColor) {
-        document.documentElement.className = storedColor;
-    }
-}
+    while (true) {
+        const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`);
+        const data = await response.json();
 
-function logActiveSection() {
-    activeSection = document.querySelector('section.active');
-    if (activeSection) {
-        activeSection.classList.add('logged-active');
-    }
-}
+        // Break the loop if no more data is returned
+        if (data.length === 0) {
+            break;
+        }
 
-function restoreActiveSection() {
-    const loggedActiveSection = document.querySelector('section.logged-active');
-    if (loggedActiveSection) {
-        loggedActiveSection.classList.add('active');
-        loggedActiveSection.classList.remove('logged-active');
+        allProjects = allProjects.concat(data);
+        page++;
     }
+
+    sortedProjects = allProjects.sort((a, b) => {
+        // Sort by popularity (stars + forks)
+        const popularityA = a.stargazers_count + a.forks_count;
+        const popularityB = b.stargazers_count + b.forks_count;
+        if (popularityB !== popularityA) {
+            return popularityB - popularityA;
+        }
+        // If popularity is the same, sort by date
+        return new Date(b.updated_at) - new Date(a.updated_at);
+    });
+
+    // Call the function to display sorted projects
+    displayProjects();
 }
 
 // Function to display projects
@@ -73,11 +64,32 @@ function displayProjects() {
     });
 }
 
+// Apply the stored color on page load
+function applyStoredColor() {
+    const storedColor = localStorage.getItem('selectedColor');
+    if (storedColor) {
+        document.documentElement.className = storedColor;
+    }
+}
+
+function logActiveSection() {
+    activeSection = document.querySelector('section.active');
+    if (activeSection) {
+        activeSection.classList.add('logged-active');
+    }
+}
+
+function restoreActiveSection() {
+    const loggedActiveSection = document.querySelector('section.logged-active');
+    if (loggedActiveSection) {
+        loggedActiveSection.classList.add('active');
+        loggedActiveSection.classList.remove('logged-active');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch and sort projects when the page loads
-    fetchAndSortProjects().then(() => {
-        console.log('Projects data is ready to be displayed.');
-    });
+    fetchAndSortProjects();
 
     applyStoredColor();
 
