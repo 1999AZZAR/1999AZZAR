@@ -1,6 +1,5 @@
 // Global variable to store the sorted projects
 let sortedProjects = [];
-let activeSection = null;
 
 // Function to fetch and sort GitHub projects
 function fetchAndSortProjects() {
@@ -21,29 +20,6 @@ function fetchAndSortProjects() {
         .catch(error => {
             console.error('Error fetching GitHub repositories:', error);
         });
-}
-
-// Apply the stored color on page load
-function applyStoredColor() {
-    const storedColor = localStorage.getItem('selectedColor');
-    if (storedColor) {
-        document.documentElement.className = storedColor;
-    }
-}
-
-function logActiveSection() {
-    activeSection = document.querySelector('section.active');
-    if (activeSection) {
-        activeSection.classList.add('logged-active');
-    }
-}
-
-function restoreActiveSection() {
-    const loggedActiveSection = document.querySelector('section.logged-active');
-    if (loggedActiveSection) {
-        loggedActiveSection.classList.add('active');
-        loggedActiveSection.classList.remove('logged-active');
-    }
 }
 
 // Function to display projects
@@ -77,9 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch and sort projects when the page loads
     fetchAndSortProjects().then(() => {
         console.log('Projects data is ready to be displayed.');
+        // If the overview section is visible by default, uncomment the next line
+        // displayProjects();
     });
-
-    applyStoredColor();
 
     // Navigation link click handling
     const navLinks = document.querySelectorAll('header nav ul li a');
@@ -89,42 +65,40 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = link.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
 
-            if (targetSection) {
-                // Hide all sections
-                document.querySelectorAll('section').forEach(section => {
-                    section.classList.remove('active');
-                    section.classList.remove('fadeIn');
-                });
+            // Hide all sections with animation
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+                section.classList.remove('fadeIn');
+            });
 
-                // Show the target section with animation
-                targetSection.classList.add('active');
-                targetSection.classList.add('fadeIn');
+            // Show the target section with animation
+            targetSection.classList.add('active');
+            targetSection.classList.add('fadeIn');
 
-                // Add or remove fullscreen class to header based on the target section
-                const header = document.querySelector('header');
-                if (targetId === 'home') {
-                    header.classList.add('fullscreen');
-                    header.classList.remove('top');
-                    document.querySelector('.social-links').style.display = 'flex';
-                    document.getElementById('home-description').style.display = 'block';
-                } else {
-                    document.getElementById('home-description').style.display = 'none';
-                    document.querySelector('.social-links').style.display = 'none';
-                    header.classList.remove('fullscreen');
-                    header.classList.add('top');
-                }
-
-                // If the overview section is clicked, display the projects
-                if (targetId === 'overview') {
-                    displayProjects();
-                }
-
-                // Scroll to the top of the page
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+            // Add or remove fullscreen class to header based on the target section
+            const header = document.querySelector('header');
+            if (targetId === 'home') {
+                header.classList.add('fullscreen');
+                header.classList.remove('top');
+                document.querySelector('.social-links').style.display = 'flex';
+                document.getElementById('home-description').style.display = 'block';
+            } else {
+                document.getElementById('home-description').style.display = 'none';
+                document.querySelector('.social-links').style.display = 'none';
+                header.classList.remove('fullscreen');
+                header.classList.add('top');
             }
+
+            // If the overview section is clicked, display the projects
+            if (targetId === 'overview') {
+                displayProjects();
+            }
+
+            // Scroll to the top of the page
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     });
 
@@ -155,40 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Modal logic
-    const modal = document.getElementById('color-switcher-modal');
-    const settingsButton = document.getElementById('settings-button');
-    const closeButton = document.querySelector('.close-button');
-
-    settingsButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        logActiveSection();
-        modal.style.display = 'block';
-        document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
-            element.classList.add('blur');
-        });
-    });
-
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-        restoreActiveSection();
-        document.querySelectorAll('.blur').forEach(element => {
-            element.classList.remove('blur');
-        });
-        modal.style.pointerEvents = 'auto';
-    });
-
-    const colorButtons = document.querySelectorAll('.color-btn');
-    colorButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const selectedColor = event.currentTarget.getAttribute('data-color');
-            document.documentElement.className = selectedColor;
-            localStorage.setItem('selectedColor', selectedColor);
-            // Apply the selected color immediately
-            document.documentElement.className = selectedColor;
-        });
-    });
-
+    // Calculate age in days
     const birthDate = new Date('1999-10-09');
     const today = new Date();
     const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));

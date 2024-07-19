@@ -1,4 +1,4 @@
-:root, :root.default {
+:root {
     --primary-color: #3B3A30;
     --secondary-color: #5C5947;
     --tertiary-color: #7D7A5F;
@@ -9,62 +9,6 @@
     --octonary-color: #FFF5C7;
     --nonary-color: #FFFAE7;
     --denary-color: #FFFFF5;
-}
-
-:root.blue {
-    --primary-color: #0066cc;
-    --secondary-color: #0073e6;
-    --tertiary-color: #0080ff;
-    --quaternary-color: #3399ff;
-    --quinary-color: #66b2ff;
-    --senary-color: #80bfff;
-    --septenary-color: #99ccff;
-    --octonary-color: #b3d9ff;
-    --nonary-color: #cce6ff;
-    --denary-color: #e6f2ff;
-}
-
-:root.black {
-    --primary-color: #0D0D0D;
-    --secondary-color: #262626;
-    --tertiary-color: #404040;
-    --quaternary-color: #595959;
-    --quinary-color: #737373;
-    --senary-color: #8C8C8C;
-    --septenary-color: #A6A6A6;
-    --octonary-color: #BFBFBF;
-    --nonary-color: #D9D9D9;
-    --denary-color: #F2F2F2;
-}
-
-:root.capucino_yellow {
-    --primary-color: #FFA700;
-    --secondary-color: #e59004;
-    --tertiary-color: #cc7908;
-    --quaternary-color: #b26210;
-    --quinary-color: #994b18;
-    --senary-color: #7f3420;
-    --septenary-color: #661d28;
-    --octonary-color: #4c0630;
-    --nonary-color: #330039;
-    --denary-color: #1A0000;
-}
-
-:root.pink_pastel {
-    --primary-color: #FF7F7F;
-    --secondary-color: #FF9F7F;
-    --tertiary-color: #FFBF7F;
-    --quaternary-color: #FFDF7F;
-    --quinary-color: #FFFF7F;
-    --senary-color: #FFFF9F;
-    --septenary-color: #FFFFBF;
-    --octonary-color: #FFFFDF;
-    --nonary-color: #FFFFFF;
-    --denary-color: #FFF5EE;
-}
-
-.blur {
-    filter: blur(2px);
 }
 
 html::-webkit-scrollbar {
@@ -203,6 +147,7 @@ section {
 section.active {
     display: block;
     animation: fadeIn 0.5s ease-in-out;
+    opacity: unset;
 }
 
 @keyframes fadeIn {
@@ -225,6 +170,7 @@ section.active {
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     border-radius: 8px;
+    opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
@@ -333,69 +279,6 @@ section.active {
     color: var(--quinary-color);
 }
 
-.color-switcher {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-.color-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin: 0 5px;
-    font-size: 2rem;
-    transition: transform 0.3s;
-    color: var(--primary-color);
-}
-
-.color-btn:hover {
-    transform: translateY(-5px) rotate(10deg);
-    color: var(--secondary-color);
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: var(--denary-color);
-    margin: auto;
-    padding: 20px;
-    border: 1px solid var(--primary-color);
-    width: 80%;
-    max-width: 500px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.close-button {
-    color: var(--primary-color);
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: var(--secondary-color);
-    text-decoration: none;
-    cursor: pointer;
-}
-
 div#projects-container,
 div#service-container {
     margin: unset;
@@ -457,5 +340,4 @@ div#skills {
     .box-container form button {
         font-size: 0.9rem;
     }
-}
 }
