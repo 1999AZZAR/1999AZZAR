@@ -384,7 +384,7 @@ section.active {
     background-color: var(--denary-color);
     margin: auto;
     padding: 20px;
-    border: 1px solid var(--primary-color);
+    border: 3px solid var(--primary-color);
     width: 80%;
     max-width: 500px;
     border-radius: 8px;
@@ -448,13 +448,76 @@ div#skills {
     }
 }
 
-@media (max-width: 576px) {
-    header .container {
+@media (max-width: 512px) {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .section {
+        padding: 25px 20px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 20px;
+    }
+
+    ul, ol {
+        margin-bottom: 20px;
+    }
+
+    li {
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 19px;
+    }
+
+    p {
+        font-size: 11px;
+    }
+
+    header nav ul li {
+        margin: 0 10px;
+    }
+
+    header .logo {
+        margin-bottom: 0.5rem;
+    }
+
+    .box-container {
+        padding: 1rem;
+        max-width: 95vw;
+        margin: auto;
+        margin-bottom: 1rem;
+    }
+
+        header .container {
         padding: 0 0.5rem;
     }
 
     header .logo h1 {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
     }
 
     header .logo p {
@@ -462,13 +525,17 @@ div#skills {
     }
 
     .box-container h2 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .box-container form input,
     .box-container form textarea,
     .box-container form button {
-        font-size: 0.9rem;
+        font-size: 0.7rem;
     }
-}
+
+    .social-links a {
+        margin: 0 10px;
+        font-size: 1.4rem;
+    }
 }
