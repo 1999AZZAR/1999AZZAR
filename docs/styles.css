@@ -170,7 +170,6 @@ header nav ul {
     margin: 0;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
 }
 
 header nav ul li {
@@ -449,12 +448,6 @@ div#skills {
 }
 
 @media (max-width: 512px) {
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
     body {
         font-size: 12px;
         line-height: 1.5;
@@ -509,7 +502,6 @@ div#skills {
         padding: 1rem;
         max-width: 95vw;
         margin: auto;
-        margin-bottom: 1rem;
     }
 
         header .container {
@@ -518,10 +510,12 @@ div#skills {
 
     header .logo h1 {
         font-size: 1.8rem;
+        margin-bottom: 0.5rem;
     }
 
     header .logo p {
         font-size: 0.8rem;
+        margin-bottom: 1rem;
     }
 
     .box-container h2 {
@@ -534,8 +528,12 @@ div#skills {
         font-size: 0.7rem;
     }
 
-    .social-links a {
+    header .social-links a, .social-links a {
         margin: 0 10px;
-        font-size: 1.4rem;
+        font-size: 1.65rem;
+    }
+
+    header nav {
+        margin-top: 0.5rem;
     }
 }
