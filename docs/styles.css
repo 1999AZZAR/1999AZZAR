@@ -481,13 +481,7 @@ div#skills {
         margin-bottom: 0.5rem;
     }
 
-    .box-container {
-        padding: 1rem;
-        max-width: 95vw;
-        margin: 0 auto;
-    }
-
-        header .container {
+    header .container {
         padding: 0 0.5rem;
     }
 
@@ -501,16 +495,6 @@ div#skills {
         margin-bottom: 1rem;
     }
 
-    .box-container h2 {
-        font-size: 1.2rem;
-    }
-
-    .box-container form input,
-    .box-container form textarea,
-    .box-container form button {
-        font-size: 0.7rem;
-    }
-
     header .social-links a, .social-links a {
         margin: 0 10px;
         font-size: 1.65rem;
@@ -522,5 +506,21 @@ div#skills {
 
     header.top {
         border-radius: 0 0 35px 35px;
+    }
+
+    .box-container {
+        padding: 1rem;
+        max-width: 95vw;
+        margin: 0 auto;
+    }
+
+    .box-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .box-container form input,
+    .box-container form textarea,
+    .box-container form button {
+        font-size: 0.7rem;
     }
 }
