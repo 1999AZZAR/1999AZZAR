@@ -58,6 +58,7 @@ function displayProjects() {
                 <li><i class="fas fa-calendar-alt"></i> Updated on: ${new Date(repo.updated_at).toLocaleDateString()}</li>
                 <li><i class="fas fa-code-branch"></i> Forks: ${repo.forks_count}</li>
                 <li><i class="fas fa-star"></i> Stars: ${repo.stargazers_count}</li>
+                ${repo.homepage ? `<li><i class="fas fa-globe"></i> <a href="${repo.homepage}" target="_blank">Website</a></li>` : ''}
             </ul>
         `;
         projectsContainer.appendChild(projectCard);
