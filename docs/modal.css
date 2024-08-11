@@ -1,0 +1,354 @@
+/* Root Level Variables for Theme */
+:root {
+    --bg-color: #222;
+    --text-color: #eee;
+    --container-bg: #333;
+    --box-shadow-color: rgba(0, 0, 0, 0.6);
+    --button-bg: #f5a623;
+    --button-text-color: #222;
+    --button-hover-bg: #fff;
+    --header-color: #f5a623;
+    --modal-bg: rgba(0, 0, 0, 0.8);
+    --modal-content-bg: #333;
+    --table-bg: #3c3c3c;
+    --table-header-bg: #444;
+    --table-border: #555;
+    --footer-text-color: #888;
+    --link-color: #f5a623;
+    --link-hover-color: #fff;
+    --script-section-bg: #444;
+}
+
+.light-theme {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --container-bg: #fff;
+    --box-shadow-color: rgba(0, 0, 0, 0.1);
+    --button-bg: #333;
+    --button-text-color: #fff;
+    --button-hover-bg: #f5a623;
+    --header-color: #333;
+    --modal-bg: rgba(255, 255, 255, 0.8);
+    --modal-content-bg: #fff;
+    --table-bg: #fff;
+    --table-header-bg: #f5f5f5;
+    --table-border: #ccc;
+    --footer-text-color: #555;
+    --link-color: #333;
+    --link-hover-color: #f5a623;
+    --script-section-bg: #f5f5f5;
+}
+
+/* General Styles */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Poppins', 'Kalnia', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Container for the Main Content */
+.container {
+    width: 80%;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--container-bg);
+    border-radius: 12px;
+    box-shadow: 0 0 15px var(--box-shadow-color);
+}
+
+.button-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem;
+    background-color: var(--script-section-bg);
+    border-radius: 12px;
+}
+
+/* Headings */
+h1 {
+    font-size: 2.5em;
+    color: var(--header-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--header-color);
+    padding-bottom: 10px;
+    text-align: center!important;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+/* Buttons */
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--button-bg);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px var(--box-shadow-color);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 10px;
+    max-width: 400px;
+    width: 70%;
+    text-align: center;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(1);
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: var(--modal-bg);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: var(--modal-content-bg);
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 80vw;
+    box-shadow: 0 0 15px var(--box-shadow-color);
+    color: var(--text-color);
+    text-align: left;
+}
+
+.modal-content h2 {
+    color: var(--header-color);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Code Blocks (Optional, if needed in modals) */
+pre {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    box-shadow: inset 0 0 10px var(--box-shadow-color);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: var(--table-bg);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid var(--table-border);
+}
+
+th {
+    background-color: var(--table-header-bg);
+    color: var(--header-color);
+    font-weight: bold;
+}
+
+td {
+    background-color: var(--container-bg);
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--footer-text-color);
+}
+
+/* Lists */
+ul {
+    list-style-type: none;
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+.modal-content ul {
+    list-style-type: square;
+}
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--link-hover-color);
+}
+
+/* Sections */
+.script-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--script-section-bg);
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px var(--box-shadow-color);
+}
+
+/* Theme Switcher Wrapper */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Switch Styling */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--button-bg);
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--button-text-color);
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--header-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Text Next to Switch */
+.theme-switch-wrapper span {
+    color: var(--text-color);
+    font-size: 1em;
+}
+
+/* Media Queries */
+
+/* Small Screens (up to 600px wide) */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    h3 {
+        font-size: 1.4em;
+    }
+
+    button {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
+
+/* Medium Screens (up to 900px wide) */
+@media (max-width: 900px) {
+    .container {
+        width: 85%;
+        margin: 30px auto;
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    button {
+        font-size: 15px;
+        width: 80%;
+    }
+
+    .modal-content {
+        width: 85%;
+    }
+}
