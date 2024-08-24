@@ -83,16 +83,16 @@
         </a>
       </p>
     </details>
-    <details>
+    <details open>
       <summary align="left" style="font-size: 1.2em; font-weight: bold; color: #2980b9;">Statistics</summary>
       <p>
         <a href="https://github.com/1999AZZAR/">
-          <img width="69.5%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=1999azzar&theme=gruvbox&hide_border=true" alt="GitHub Profile Summary" style="border-radius: 10px; margin: 0 5px; padding: 0">
+          <img width="75%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=1999azzar&theme=gruvbox&hide_border=true" alt="GitHub Profile Summary" style="border-radius: 10px; margin: 0 5px; padding: 0">
         </a>
       </p>
       <p>
        <a href="https://github.com/1999AZZAR/">
-          <img width="69.5%" src="https://github-readme-streak-stats.herokuapp.com?user=1999AZZAR&theme=gruvbox&hide_border=true&date_format=j%20M%5B%20Y%5D" alt="GitHub Streak" sstyle="border-radius: 10px; margin: 0 5px; padding: 0">
+          <img hwidth="55%" src="https://github-readme-streak-stats.herokuapp.com?user=1999AZZAR&theme=gruvbox&hide_border=true&date_format=j%20M%5B%20Y%5D" alt="GitHub Streak" sstyle="border-radius: 10px; margin: 0 5px; padding: 0">
         </a>
       </p>
    </details>
