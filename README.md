@@ -55,9 +55,6 @@
       </a>
     </p>
     <p style="font-size: 1.2em;">
-      <a href="https://www.codefactor.io/repository/github/1999azzar/1999azzar/overview/main">
-        <img src="https://www.codefactor.io/repository/github/1999azzar/1999azzar/badge/main" alt="CodeFactor" style="height: 30px; margin: 0 5px;">
-      </a>
       <a href="github.com/1999AZZAR" target="_blank">
         <img src="https://github.com/1999AZZAR/1999AZZAR/actions/workflows/pages/pages-build-deployment/badge.svg" alt="page built" style="height: 30px; margin: 0 5px;">
       </a>
@@ -75,49 +72,48 @@
   <div align="center">
     <h2 style="color: #2c3e50;">GitHub Stats</h2>
     <details>
-      <summary align="left" style="font-size: 1.2em; font-weight: bold; color: #2980b9;">Languages</summary>
-      <p>
-        <a href="https://github.com/1999AZZAR/">
-          <img width="45%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=1999azzar&theme=gruvbox&layout=compact&hide_border=true" alt="1999AZZAR :: Top Langs by repo" style="border-radius: 10px; margin: 0 5px; padding: 0">
-          <img width="45%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=1999azzar&theme=gruvbox&layout=compact&hide_border=true" alt="1999AZZAR :: Top Langs by commit" style="border-radius: 10px; margin: 0 5px; padding: 0">
-        </a>
-      </p>
-    </details>
-    <details open>
-      <summary align="left" style="font-size: 1.2em; font-weight: bold; color: #2980b9;">Statistics</summary>
-      <p>
-        <a href="https://github.com/1999AZZAR/">
-          <img width="75%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=1999azzar&theme=gruvbox&hide_border=true" alt="GitHub Profile Summary" style="border-radius: 10px; margin: 0 5px; padding: 0">
-        </a>
-      </p>
-      <p>
-       <a href="https://github.com/1999AZZAR/">
-          <img hwidth="55%" src="https://github-readme-streak-stats.herokuapp.com?user=1999AZZAR&theme=gruvbox&hide_border=true&date_format=j%20M%5B%20Y%5D" alt="GitHub Streak" sstyle="border-radius: 10px; margin: 0 5px; padding: 0">
-        </a>
-      </p>
-   </details>
-   <details>
       <summary align="left" style="font-size: 1.2em; font-weight: bold; color: #2980b9;">General</summary>
-      <p>
-        <a href="https://github.com/1999AZZAR/">
-          <img width="45.5%" src="https://github-readme-stats.vercel.app/api?username=1999AZZAR&show_icons=true&theme=gruvbox&hide_border=true" alt="GitHub Stats" style="border-radius: 10px; margin: 0 5px; padding: 0">
-          <img width="45.5%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=1999AZZAR&langs_count=6&theme=gruvbox&layout=compact&hide_border=true" alt="1999AZZAR :: overall Top Langs" style="border-radius: 10px; margin: 0 5px; padding: 0">
-       </a>
-      </p>
-   </details>
+        <table align="center">
+          <tr border="0">
+            <td width="50%" align="center"> 
+              <img align="center" width="100%" src="https://github-readme-streak-stats.herokuapp.com?user=1999AZZAR&theme=gruvbox&hide_border=true&date_format=j%20M%5B%20Y%5D" alt="GitHub Streak">
+            </td>
+            <td width="50%" align="center">
+              <img align="center" width="100%" src="https://github-readme-stats.vercel.app/api?username=1999AZZAR&show_icons=true&theme=gruvbox&hide_border=true" alt="GitHub Stats">
+            </td>
+          </tr>
+        </table>
+        <div align="center">
+          <p>
+            <a href="https://github.com/1999AZZAR">
+              <img align="center" width="100%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=1999azzar&theme=gruvbox&hide_border=true" alt="GitHub Profile Summary" style="border-radius: 10px; margin: 0 5px;">
+            </a>
+          </p>
+        </div>
+    </details>
+    <details>
+      <summary align="left" style="font-size: 1.2em; font-weight: bold; color: #2980b9;">Language</summary>
+        <table align="center">
+          <tr border="0">
+            <td width="50%" align="center"> 
+              <img align="center" width="100%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=1999azzar&theme=gruvbox&layout=compact&hide_border=true" alt="Top Langs by repo">
+              <br></br>
+              <img align="center" width="100%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=1999azzar&theme=gruvbox&layout=compact&hide_border=true" alt="Top Langs by commit">
+            </td>
+            <td width="50%" align="center">
+              <img align="center" width="100%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=1999AZZAR&langs_count=6&theme=gruvbox&hide_border=true" alt="overall Top Langs">
+            </td>
+          </tr>
+        </table>
+    </details>
   </div>
 
-  <details>
+  <details open>
     <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">Recent Activity</summary>
     <div align="center">
       <p>
         <a href="https://github.com/1999AZZAR">
           <img alt="Azzar's Activity Graph" src="https://github-readme-activity-graph.vercel.app/graph?username=1999azzar&theme=github-compact&hide_border=true" style="border-radius: 10px; margin: 0 5px;">
-        </a>
-      </p>
-      <p>
-        <a href="https://github.com/1999AZZAR">
-          <img src="https://github.com/1999AZZAR/1999AZZAR/actions/workflows/pages/pages-build-deployment/badge.svg" alt="GitHub Pages" style="height: 27px; margin: 0 5px;">
         </a>
       </p>
     </div>
