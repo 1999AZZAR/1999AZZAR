@@ -1,26 +1,27 @@
-// main page js
 // Global variable to store the sorted projects
 let sortedProjects = [];
 let activeSection = null;
 
-// Function to fetch and sort GitHub projects
+// Function to fetch and sort GitHub projects from multiple users
 async function fetchAndSortProjects() {
-    const username = '1999AZZAR';
+    const usernames = ['1999AZZAR', 'lily-osp'];
     let allProjects = [];
-    let page = 1;
-    const perPage = 100; // Maximum number of items per page
 
-    while (true) {
-        const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`);
-        const data = await response.json();
+    for (const username of usernames) {
+        let page = 1;
+        const perPage = 100; // Maximum number of items per page
+        while (true) {
+            const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`);
+            const data = await response.json();
 
-        // Break the loop if no more data is returned
-        if (data.length === 0) {
-            break;
+            // Break the loop if no more data is returned
+            if (data.length === 0) {
+                break;
+            }
+
+            allProjects = allProjects.concat(data);
+            page++;
         }
-
-        allProjects = allProjects.concat(data);
-        page++;
     }
 
     sortedProjects = allProjects.sort((a, b) => {
