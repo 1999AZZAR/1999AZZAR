@@ -116,6 +116,63 @@
 
 <hr style="border: 1px solid #3498db; margin: 20px 0;">
 
+<h4 style="color: #2e8b57; font-size: 1.8em;">Related Account</h4>
+<table align="center" style="border-collapse: collapse; border: none;">
+  <tr>
+    <td align="center" style="border: none;">
+      <a href="https://gist.github.com/1999AZZAR" style="text-decoration: none;">
+        <img alt="Gist" src="https://upload.wikimedia.org/wikipedia/commons/4/4a/GitHub_Mark.png" style="width: 24px; border-radius: 10px; margin: 0 5px;">
+        <br>
+        <span>Gist</span>
+      </a>
+    </td>
+    <td align="center" style="border: none;">
+      <a href="https://github.com/lily-osp/" style="text-decoration: none;">
+        <img alt="Lily Osp" src="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png" style="width: 24px; border-radius: 10px; margin: 0 5px;">
+        <br>
+        <span>Lily Osp</span>
+      </a>
+    </td>
+    <td align="center" style="border: none;">
+      <a href="https://wokwi.com/makers/azzar" style="text-decoration: none;">
+        <img alt="Wokwi" src="https://wokwi.com/favicon-white.png" style="width: 24px; border-radius: 10px; margin: 0 5px;">
+        <br>
+        <span>Wokwi</span>
+      </a>
+    </td>
+    <td align="center" style="border: none;">
+      <a href="https://www.hackerrank.com/profile/azzar_mr_zs" style="text-decoration: none;">
+        <img alt="HackerRank" src="https://cdn.worldvectorlogo.com/logos/hackerrank.svg" style="width: 24px; border-radius: 10px; margin: 0 5px;">
+        <br>
+        <span>HackerRank</span>
+      </a>
+    </td>
+    <td align="center" style="border: none;">
+      <a href="https://codepen.io/azzar" style="text-decoration: none;">
+        <img alt="CodePen" src="https://cdn.worldvectorlogo.com/logos/codepen-icon.svg" style="width: 24px; border-radius: 10px; margin: 0 5px;">
+        <br>
+        <span>CodePen</span>
+      </a>
+    </td>
+    <td align="center" style="border: none;">
+      <a href="https://devpost.com/1999AZZAR" style="text-decoration: none;">
+        <img alt="DevPost" src="https://d2dmyh35ffsxbl.cloudfront.net/assets/reimagine2/devpost-logo-25d0005ec83e3b9ef6fce93235bb6d642d7c828f31758ebdb5b7ee87de7d45c3.svg" style="width: 24px; border-radius: 10px; margin: 0 5px;">
+        <br>
+        <span>DevPost</span>
+      </a>
+    </td>
+    <td align="center" style="border: none;">
+      <a href="https://medium.com/@azzar_budiyanto" style="text-decoration: none;">
+        <img alt="Medium" src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Medium_logo_Monogram.svg" style="width: 24px; border-radius: 10px; margin: 0 5px;">
+        <br>
+        <span>Medium</span>
+      </a>
+    </td>
+  </tr>
+</table>
+  
+<hr style="border: 1px solid #3498db; margin: 20px 0;">
+
 <h3 style="color: #2e8b57; font-size: 1.8em;">Support</h3>
 <p style="font-size: 1.2em;">If you’re feeling generous or just really like caffeine, consider buying me a coffee:</p>
 
