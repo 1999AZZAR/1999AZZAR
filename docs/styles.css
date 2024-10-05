@@ -462,6 +462,30 @@ div#skills {
     box-shadow: 0 0 0 3px var(--quinary-color);
 }
 
+#search-input {
+    width: -webkit-fill-available;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 4px solid var(--primary-color);
+    border-radius: 25px;
+    font-size: 1rem;
+    background-color: var(--octonary-color);
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px var(--quinary-color);
+}
+
+#search-input::placeholder {
+    color: var(--tertiary-color);
+    opacity: 0.7;
+}
+
 /* Media Queries */
 @media (max-width: 640px) {
     body {
@@ -555,5 +579,10 @@ div#skills {
     .box-container form textarea,
     .box-container form button {
         font-size: 0.7rem;
+    }
+
+    #search-input {
+        font-size: 0.9rem;
+        padding: 0.6rem;
     }
 }

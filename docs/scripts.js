@@ -1,6 +1,7 @@
-// Global variable to store the sorted projects
+// Global variables
 let sortedProjects = [];
 let activeSection = null;
+let fuse; // For fuzzy search
 
 // Function to fetch and sort GitHub projects from multiple users
 async function fetchAndSortProjects() {
@@ -35,21 +36,28 @@ async function fetchAndSortProjects() {
         return new Date(b.updated_at) - new Date(a.updated_at);
     });
 
+    // Initialize Fuse.js after sorting the projects
+    fuse = new Fuse(sortedProjects, {
+        keys: ['name', 'description'],
+        threshold: 0.4,
+        shouldSort: true
+    });
+
     // Call the function to display sorted projects
-    displayProjects();
+    displayProjects(sortedProjects);
 }
 
 // Function to display projects
-function displayProjects() {
+function displayProjects(projects) {
     const projectsContainer = document.getElementById('projects-container');
     projectsContainer.innerHTML = ''; // Clear the container
 
-    if (sortedProjects.length === 0) {
+    if (projects.length === 0) {
         projectsContainer.innerHTML = '<p>No projects to display. Please try again later.</p>';
         return;
     }
 
-    sortedProjects.forEach(repo => {
+    projects.forEach(repo => {
         const projectCard = document.createElement('div');
         projectCard.classList.add('service-card');
         const iconClass = 'fas fa-bars-staggered';
@@ -131,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // If the overview section is clicked, display the projects
                 if (targetId === 'overview') {
-                    displayProjects();
+                    displayProjects(sortedProjects);
                 }
 
                 // Scroll to the top of the page
@@ -208,6 +216,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const today = new Date();
     const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
     document.getElementById('age-in-days').textContent = ageInDays;
+
+    // Search functionality
+    document.getElementById('search-input').addEventListener('input', function(e) {
+        const searchQuery = e.target.value;
+        if (searchQuery.length > 0) {
+            const searchResults = fuse.search(searchQuery);
+            displayProjects(searchResults.map(result => result.item));
+        } else {
+            displayProjects(sortedProjects);
+        }
+    });
 });
 
 // details page js
