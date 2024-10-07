@@ -328,20 +328,34 @@ section.active {
     background: var(--secondary-color);
 }
 
-/* Service Card Styles */
+/* Service Card Styles with enhanced animations */
 .service-card {
     background: var(--octonary-color);
     padding: 1.5rem;
     margin: 1rem 0;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     text-align: justify;
+    transform: translateY(20px);
+}
+
+.service-card.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.service-card:hover + .service-card {
+    transform: translateY(-2px);
 }
 
 .service-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-7px) scale(1.02);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-card:has(+ .service-card:hover) {
+    transform: translateY(-2px);
 }
 
 .service-card h3 a {
@@ -364,6 +378,11 @@ section.active {
     margin: 5px 0;
     display: flex;
     align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.service-card ul li:hover {
+    transform: translateX(5px);
 }
 
 .service-card ul li i,
@@ -371,23 +390,35 @@ section.active {
     margin-right: 10px;
     color: var(--secondary-color);
     vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.service-card ul li:hover i,
+.service-card h3:hover i {
+    transform: scale(1.2) rotate(10deg);
 }
 
 .service-card p {
     margin: 0.45rem auto;
+    transition: color 0.3s ease;
 }
 
-/* Other Styles */
+.service-card:hover p {
+    color: var(--secondary-color);
+}
+
+/* Other Styles with enhanced animations */
 .social-links a {
     margin: 0 10px;
     text-decoration: none;
     font-size: 1.6rem;
     color: var(--primary-color);
-    transition: color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .social-links a:hover {
     color: var(--quinary-color);
+    transform: scale(1.2) rotate(10deg);
 }
 
 .color-switcher {
@@ -402,16 +433,16 @@ section.active {
     cursor: pointer;
     margin: 0 5px;
     font-size: 2rem;
-    transition: transform 0.3s;
+    transition: all 0.3s ease;
     color: var(--primary-color);
 }
 
 .color-btn:hover {
-    transform: translateY(-5px) rotate(10deg);
+    transform: translateY(-5px) rotate(20deg) scale(1.1);
     color: var(--secondary-color);
 }
 
-/* Modal Styles */
+/* Modal Styles with enhanced animations */
 .modal {
     display: none;
     position: fixed;
@@ -422,6 +453,7 @@ section.active {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s ease;
 }
 
 .modal-content {
@@ -436,7 +468,13 @@ section.active {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1.1);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.modal.show .modal-content {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
 }
 
 .close-button {
@@ -444,6 +482,7 @@ section.active {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 .close-button:hover,
@@ -451,6 +490,7 @@ section.active {
     color: var(--secondary-color);
     text-decoration: none;
     cursor: pointer;
+    transform: rotate(90deg);
 }
 
 div#projects-container,
@@ -467,6 +507,22 @@ div#service-container:hover {
     transform: none;
 }
 
+/* Staggered animation for project items */
+#projects-container .project-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+}
+
+#projects-container .project-item.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+#projects-container .project-item:nth-child(odd) {
+    transform: translateX(20px);
+}
+
 div#skills {
     display: flex;
     justify-content: space-between;
@@ -474,6 +530,19 @@ div#skills {
     flex-wrap: wrap;
 }
 
+/* New animation for skill items */
+#skills .skill-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+#skills .skill-item.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* details button */
 .details-button {
     text-align: center;
     margin-top: 1rem;
@@ -492,19 +561,190 @@ div#skills {
     border-radius: 25px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .details-button button:hover {
     background-color: var(--primary-color);
     color: var(--octonary-color);
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .details-button button:focus {
     outline: none;
     box-shadow: 0 0 0 3px var(--quinary-color);
+}
+
+/* Pulse animation for important elements */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.highlight-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Typing animation for headings */
+.typing-animation {
+    overflow: hidden;
+    border-right: .15em solid var(--primary-color);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation:
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--primary-color); }
+}
+
+/* Floating animation for cards */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floating {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Slide in animation for content sections */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-300px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(300px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.8s ease-out;
+}
+
+/* Glowing effect for buttons or important elements */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px var(--primary-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--primary-color);
+    }
+    100% {
+        box-shadow: 0 0 5px var(--primary-color);
+    }
+}
+
+.glow {
+    animation: glow 2s infinite;
+}
+
+/* Flip card effect */
+.flip-card {
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+
+/* Loading spinner animation */
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--octonary-color);
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spinner 1s linear infinite;
+}
+
+/* Progressive reveal animation for text */
+@keyframes revealText {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+.reveal-text {
+    animation: revealText 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* Parallax scrolling effect */
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #search-input {
@@ -629,5 +869,16 @@ div#skills {
     #search-input {
         font-size: 0.9rem;
         padding: 0.6rem;
+    }
+
+    .service-card,
+    .project-item {
+        transform: none !important;
+    }
+
+    .floating,
+    .shake,
+    .bounce {
+        animation: none;
     }
 }
