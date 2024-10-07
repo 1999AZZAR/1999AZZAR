@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsButton = document.getElementById('settings-button');
     const closeButton = document.querySelector('.close-button');
 
+    // Open modal when settings button is clicked
     settingsButton.addEventListener('click', (event) => {
         event.preventDefault();
         logActiveSection();
@@ -192,6 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Close modal only when close button is clicked
     closeButton.addEventListener('click', () => {
         modal.style.display = 'none';
         restoreActiveSection();
@@ -199,6 +201,18 @@ document.addEventListener('DOMContentLoaded', function() {
             element.classList.remove('blur');
         });
         modal.style.pointerEvents = 'auto';
+    });
+
+    // Disable closing modal by clicking outside the content
+    // Get all elements that close modals
+    const closeButtons = document.querySelectorAll('.close');
+
+    // Add event listeners to close modals only on clicking the close buttons
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            modal.style.display = 'none';
+        });
     });
 
     const colorButtons = document.querySelectorAll('.color-btn');
@@ -246,36 +260,10 @@ openModalButtons.forEach(button => {
 // Get all elements that close modals
 const closeButtons = document.querySelectorAll('.close');
 
-// Add event listeners to close modals
+// Add event listeners to close modals only on clicking the close buttons
 closeButtons.forEach(button => {
     button.addEventListener('click', function() {
         const modal = this.closest('.modal');
         modal.style.display = 'none';
     });
 });
-
-// Close modal if user clicks outside of modal content
-window.addEventListener('click', function(event) {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
-});
-
-document.getElementById('theme-toggle').addEventListener('change', function () {
-    if (this.checked) {
-        switchTheme(true);
-    } else {
-        switchTheme(false);
-    }
-});
-
-function switchTheme(isLightTheme) {
-    if (isLightTheme) {
-        document.body.classList.add('light-theme');
-    } else {
-        document.body.classList.remove('light-theme');
-    }
-}
