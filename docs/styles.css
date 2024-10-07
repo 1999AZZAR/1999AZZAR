@@ -25,16 +25,16 @@
 }
 
 :root.three {
-    --primary-color: #4d0000;
-    --secondary-color: #660000;
-    --tertiary-color: #800000;
-    --quaternary-color: #990000;
-    --quinary-color: #b30000;
-    --senary-color: #ffd700;
-    --septenary-color: #ffcc00;
-    --octonary-color: #ffb300;
-    --nonary-color: #ff9900;
-    --denary-color: #ff8000;
+    --primary-color: #663300;
+    --secondary-color: #804000;
+    --tertiary-color: #994d00;
+    --quaternary-color: #b35900;
+    --quinary-color: #cc6600;
+    --senary-color: #e67300;
+    --septenary-color: #ff8000;
+    --octonary-color: #ff9933;
+    --nonary-color: #ffb366;
+    --denary-color: #ffcc99;
 }
 
 :root.four {
@@ -127,13 +127,23 @@ header {
 
 header.fullscreen {
     height: 100vh;
+    animation: headerSlideDown1 0.85s ease-out;
 }
 
 header.top {
     height: auto;
     justify-content: flex-start;
     border-radius: 0 0 75px 75px;
-    animation: headerSlideDown 0.8s ease-out;
+    animation: headerSlideDown 0.5s ease-out;
+}
+
+@keyframes headerSlideDown1 {
+    from {
+        transform: translateY(-85%);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
 
 @keyframes headerSlideDown {
@@ -147,7 +157,6 @@ header.top {
 
 header.animated {
     opacity: 1;
-    transform: translateY(0);
 }
 
 header .container {
