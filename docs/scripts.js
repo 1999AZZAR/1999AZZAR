@@ -243,27 +243,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// details page js
-
-// Get all buttons that open modals
-const openModalButtons = document.querySelectorAll('.openModal');
-
-// Add event listeners to open modals
-openModalButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const modalId = this.getAttribute('data-modal');
-        const modal = document.getElementById(modalId);
-        modal.style.display = 'block';
-    });
-});
-
-// Get all elements that close modals
-const closeButtons = document.querySelectorAll('.close');
-
-// Add event listeners to close modals only on clicking the close buttons
-closeButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        const modal = this.closest('.modal');
-        modal.style.display = 'none';
-    });
-});

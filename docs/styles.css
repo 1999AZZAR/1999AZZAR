@@ -264,17 +264,18 @@ header .social-links a:hover {
 /* Section Styles */
 section {
     display: none;
+    transform: translateY(0);
 }
 
 section.active {
     display: block;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 1.2s ease-in-out;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(25px);
     }
     to {
         opacity: 1;
@@ -288,7 +289,7 @@ section.active {
     max-width: 85vw;
     margin: 60px auto;
     background: var(--denary-color);
-    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     border-radius: 8px;
     transform: translateY(20px);
@@ -297,7 +298,8 @@ section.active {
 
 .box-container.animated {
     opacity: 1;
-    transform: translateY(0);
+    /* transform: translateY(0); */
+    /* transition: transform 1s; */
 }
 
 .box-container h2 {
@@ -337,7 +339,7 @@ section.active {
     background: var(--secondary-color);
 }
 
-/* Service Card Styles with enhanced animations */
+/* Service Card Styles */
 .service-card {
     background: var(--octonary-color);
     padding: 1.5rem;
@@ -346,26 +348,12 @@ section.active {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     text-align: justify;
-    /* transform: translateY(20px); */
 }
 
-.service-card.animated {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* .service-card:hover + .service-card {
-    transform: translateY(-2px);
-}
- */
 .service-card:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-5px) scale(1.015);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
-/* .service-card:has(+ .service-card:hover) {
-    transform: translateY(-2px);
-} */
 
 .service-card h3 a {
     color: var(--primary-color);

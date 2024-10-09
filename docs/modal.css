@@ -1,5 +1,5 @@
 /* Root Level Variables for Theme */
-:root {
+:root.one {
     --primary-color: #222;
     --secondary-color: #eee;
     --tertiary-color: #333;
@@ -12,7 +12,7 @@
     --denary-color: #888;
 }
 
-.light-theme {
+:root.two {
     --primary-color: #f5f5f5;
     --secondary-color: #333;
     --tertiary-color: #fff;
