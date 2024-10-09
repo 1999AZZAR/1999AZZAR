@@ -25,6 +25,10 @@
     --denary-color: #555;
 }
 
+html::-webkit-scrollbar {
+    display: none;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -42,8 +46,9 @@ body {
 
 /* Container for the Main Content */
 .container {
+    display: block;
     width: 80%;
-    margin: 40px auto;
+    margin: 5% auto;
     padding: 30px;
     background: var(--tertiary-color);
     border-radius: 12px;
@@ -107,21 +112,21 @@ button:active {
 
 /* Modal Styles */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    display: none;
+    position: fixed;
+    z-index: 50;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Enable scroll if needed */
+    overflow-y: auto;
     background-color: var(--octonary-color);
-    padding-top: 60px;
 }
 
 .modal-content {
+    overflow-y: auto;
     background-color: var(--tertiary-color);
-    margin: 5% auto; /* 5% from the top and centered */
+    margin: 5% auto;
     padding: 20px;
     border-radius: 12px;
     width: 80%;
@@ -149,7 +154,7 @@ button:active {
     cursor: pointer;
 }
 
-/* Code Blocks (Optional, if needed in modals) */
+/* Code Blocks */
 pre {
     background: var(--primary-color);
     padding: 15px;
@@ -282,7 +287,52 @@ input:checked + .slider:before {
     font-size: 1em;
 }
 
-/* Media Queries */
+/* back to top style */
+#backToTopBtn {
+    max-width: 20vw;
+    position: fixed;
+    bottom: 3%;
+    right: -100px;
+    z-index: 1000;
+    outline: none;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--denary-color);
+    border: none;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#backToTopBtn img {
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#backToTopBtn:hover {
+    background-color: var(--denary-color);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Class to show the button with slide-in effect */
+#backToTopBtn.show {
+    right: -3%;
+    opacity: 1;
+}
+
+/* Class to hide the button with slide-out effect */
+#backToTopBtn.hide {
+    right: -100%;
+    opacity: 0;
+}
 
 /* Small Screens (up to 600px wide) */
 @media (max-width: 600px) {
@@ -318,7 +368,7 @@ input:checked + .slider:before {
 @media (max-width: 900px) {
     .container {
         width: 85%;
-        margin: 30px auto;
+        margin: 1%;
         padding: 25px;
     }
 
@@ -340,6 +390,7 @@ input:checked + .slider:before {
     }
 
     .modal-content {
-        width: 85%;
+        width: 95%;
+        margin: 3% auto;
     }
 }

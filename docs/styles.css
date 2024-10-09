@@ -76,6 +76,7 @@
     --denary-color: #FFF5EE;
 }
 
+/* General */
 .blur {
     filter: blur(2px);
 }
@@ -287,7 +288,7 @@ section.active {
     }
 }
 
-/* Box Container Styles */
+/* Box Container */
 .box-container {
     padding: 2rem;
     max-width: 85vw;
@@ -302,8 +303,6 @@ section.active {
 
 .box-container.animated {
     opacity: 1;
-    /* transform: translateY(0); */
-    /* transition: transform 1s; */
 }
 
 .box-container h2 {
@@ -408,7 +407,7 @@ section.active {
     color: var(--secondary-color);
 }
 
-/* Other Styles with enhanced animations */
+/* Other Styles */
 .social-links a {
     margin: 0 10px;
     text-decoration: none;
@@ -443,7 +442,7 @@ section.active {
     color: var(--secondary-color);
 }
 
-/* Modal Styles with enhanced animations */
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -531,7 +530,7 @@ div#skills {
     flex-wrap: wrap;
 }
 
-/* New animation for skill items */
+/* animation for skill items */
 #skills .skill-item {
     opacity: 0;
     transform: translateY(20px);
@@ -578,7 +577,7 @@ div#skills {
     box-shadow: 0 0 0 3px var(--quinary-color);
 }
 
-/* Pulse animation for important elements */
+/* Pulse animation */
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -617,7 +616,7 @@ div#skills {
     50% { border-color: var(--primary-color); }
 }
 
-/* Floating animation for cards */
+/* Floating animation */
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -774,11 +773,10 @@ div#skills {
 
 /* back to top style */
 #backToTopBtn {
-/*     display: none; */
     max-width: 20vw;
     position: fixed;
     bottom: 3%;
-    right: -100px; /* Initially hide the button by positioning it off-screen */
+    right: -100px;
     z-index: 99;
     outline: none;
     padding: 0.75rem 1.5rem;
@@ -786,15 +784,17 @@ div#skills {
     border: none;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     font-size: 1rem;
     cursor: pointer;
-    opacity: 0; /* Start with 0 opacity */
-    transition: all 0.3s ease; /* Add transition for smooth animation */
+    opacity: 0;
+    transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #backToTopBtn img {
-    width: 40px; /* Set the image size */
+    width: 40px;
     height: auto;
     border-radius: 50%;
     transition: background-color 0.3s ease;
@@ -808,14 +808,14 @@ div#skills {
 
 /* Class to show the button with slide-in effect */
 #backToTopBtn.show {
-    right: 0%; /* Bring the button into view */
-    opacity: 1; /* Make it visible */
+    right: -0.01%;
+    opacity: 1;
 }
 
 /* Class to hide the button with slide-out effect */
 #backToTopBtn.hide {
-    right: -100px; /* Slide the button out of view */
-    opacity: 0; /* Make it invisible */
+    right: -100px;
+    opacity: 0;
 }
 
 
