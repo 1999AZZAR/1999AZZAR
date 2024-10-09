@@ -84,6 +84,10 @@ html::-webkit-scrollbar {
     display: none;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Poppins', 'Kalnia', sans-serif;
     margin: 0;
@@ -292,7 +296,7 @@ section.active {
     box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     border-radius: 8px;
-    transform: translateY(20px);
+    transform: translateY(0);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
@@ -767,6 +771,53 @@ div#skills {
     color: var(--tertiary-color);
     opacity: 0.7;
 }
+
+/* back to top style */
+#backToTopBtn {
+/*     display: none; */
+    max-width: 20vw;
+    position: fixed;
+    bottom: 3%;
+    right: -100px; /* Initially hide the button by positioning it off-screen */
+    z-index: 99;
+    outline: none;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--secondary-color);
+    border: none;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0; /* Start with 0 opacity */
+    transition: all 0.3s ease; /* Add transition for smooth animation */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#backToTopBtn img {
+    width: 40px; /* Set the image size */
+    height: auto;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#backToTopBtn:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Class to show the button with slide-in effect */
+#backToTopBtn.show {
+    right: 0%; /* Bring the button into view */
+    opacity: 1; /* Make it visible */
+}
+
+/* Class to hide the button with slide-out effect */
+#backToTopBtn.hide {
+    right: -100px; /* Slide the button out of view */
+    opacity: 0; /* Make it invisible */
+}
+
 
 /* Media Queries */
 @media (max-width: 640px) {

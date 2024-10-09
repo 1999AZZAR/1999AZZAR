@@ -25,6 +25,10 @@
     --denary-color: #555;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* General Styles */
 body {
     background-color: var(--primary-color);
