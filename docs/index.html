@@ -7,39 +7,98 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
       margin: 0;
+      transition: background-color 0.5s, color 0.5s;
     }
+
+    :root {
+      --bg-color: #f4f4f4;
+      --text-color: #333;
+      --accent-color: #007BFF;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #181818;
+        --text-color: #ddd;
+      }
+    }
+
     .container {
       text-align: center;
       padding: 20px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       border-radius: 10px;
-      background-color: #fff;
+      background-color: var(--bg-element-color);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
     }
-    .loading-spinner {
-      border: 4px solid rgba(0, 0, 0, 0.1);
-      border-left-color: #007BFF;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .loading-dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
       margin: 20px auto;
+      animation: pulse 1s ease-in-out infinite;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+
+    .loading-dots span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      opacity: 0.5;
+      animation: dot-pulse 1s ease-in-out infinite;
     }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes dot-pulse-delay {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    .loading-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
     a {
-      color: #007BFF;
+      color: var(--accent-color);
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
@@ -94,23 +153,15 @@
 
   <!-- Language / Localization -->
   <meta name="language" content="English">
-
-  <!-- Additional script -->
-  <script src="scripts.js"></script>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FSN4YM3PW6"></script>
-  <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-FSN4YM3PW6');
-  </script>
 </head>
 <body>
   <div class="container">
     <h1>Redirecting...</h1>
-    <div class="loading-spinner"></div>
+    <div class="loading-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <p>You are being redirected to the new site. If you are not redirected automatically, <a href="https://azzar.netlify.app/porto">click here</a>.</p>
   </div>
 </body>
