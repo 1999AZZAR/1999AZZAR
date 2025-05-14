@@ -778,16 +778,16 @@ div#skills {
     max-width: 20vw;
     position: fixed;
     bottom: 3%;
-    right: -100px;
+    left: -100px;
     z-index: 99;
     outline: none;
     padding: 0.75rem 1.5rem;
     background-color: var(--secondary-color);
     border: none;
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     font-size: 1rem;
     cursor: pointer;
     opacity: 0;
@@ -810,13 +810,13 @@ div#skills {
 
 /* Class to show the button with slide-in effect */
 #backToTopBtn.show {
-    right: -0.01%;
+    left: -0.01%;
     opacity: 1;
 }
 
 /* Class to hide the button with slide-out effect */
 #backToTopBtn.hide {
-    right: -100px;
+    left: -100px;
     opacity: 0;
 }
 
