@@ -857,6 +857,34 @@ div#skills {
     transform: translateY(-20px);
 }
 
+.language-switcher-container {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.language-switcher-container label {
+    font-weight: 500;
+    margin-right: 0.5rem;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+}
+
+#language-switcher {
+    padding: 0.4rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: var(--denary-color);
+    color: var(--primary-color);
+    transition: border 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+#language-switcher:focus {
+    border: 1.5px solid var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
 
 /* Media Queries for Small Devices (max-width: 720px) */
 @media (max-width: 720px) {
@@ -1018,8 +1046,16 @@ div#skills {
 
     /* Modal Adjustments */
     .modal-content {
-        width: 90%;
-        padding: 15px;
+        width: 98vw;
+        max-width: 98vw;
+        left: 50%;
+        top: 50%;
+        position: fixed;
+        transform: translate(-50%, -50%) scale(1);
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 10px;
+        box-sizing: border-box;
     }
 
     .close-button {
