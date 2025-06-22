@@ -237,9 +237,6 @@ function updateLanguage(lang) {
     about: 'about-title',
     summary: 'summary-title',
     summaryText: 'summary-text',
-    resumeLink: 'resume-link',
-    photoPortfolioLink: 'photo-portfolio-link',
-    ageLabel: 'age-label',
     freelanceLabel: 'freelance-label',
     skillsTitle: 'skills-title',
     webdevTitle: 'webdev-title',
@@ -343,6 +340,8 @@ function updateLanguage(lang) {
     overviewTitle: 'overview-title',
     overviewSearchPlaceholder: 'search-input',
   };
+  
+  // Handle regular translations
   for (const key in map) {
     const el = document.getElementById(map[key]);
     if (el && translations[lang][key]) {
@@ -361,6 +360,30 @@ function updateLanguage(lang) {
       } else {
         el.textContent = translations[lang][key];
       }
+    }
+  }
+  
+  // Special handling for download links - preserve the <a> tags but translate the text
+  const resumeLink = document.querySelector('#resume-link a');
+  const photoPortfolioLink = document.querySelector('#photo-portfolio-link a');
+  
+  if (resumeLink && translations[lang].resumeLink) {
+    resumeLink.textContent = translations[lang].resumeLink;
+  }
+  
+  if (photoPortfolioLink && translations[lang].photoPortfolioLink) {
+    photoPortfolioLink.textContent = translations[lang].photoPortfolioLink;
+  }
+  
+  // Special handling for age label - preserve the age value
+  const ageLabel = document.getElementById('age-label');
+  const ageInDays = document.getElementById('age-in-days');
+  if (ageLabel && translations[lang].ageLabel && ageInDays) {
+    const icon = ageLabel.querySelector('i');
+    const ageValue = ageInDays.textContent;
+    const daysText = lang === 'id' ? 'hari' : 'days';
+    if (icon) {
+      ageLabel.innerHTML = icon.outerHTML + ' <strong>' + translations[lang].ageLabel + '</strong> <span id="age-in-days">' + ageValue + '</span>‎ ' + daysText;
     }
   }
 }
@@ -597,21 +620,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Calculate and set age first before language update
     const birthDate = new Date('1999-10-09');
     const today = new Date();
     const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
     document.getElementById('age-in-days').textContent = ageInDays;
-
-    // Search functionality
-    document.getElementById('search-input').addEventListener('input', function(e) {
-        const searchQuery = e.target.value;
-        if (searchQuery.length > 0) {
-            const searchResults = fuse.search(searchQuery);
-            displayProjects(searchResults.map(result => result.item));
-        } else {
-            displayProjects(sortedProjects);
-        }
-    });
 
     // Language switcher logic
     const languageSwitcher = document.getElementById('language-switcher');
@@ -624,4 +637,15 @@ document.addEventListener('DOMContentLoaded', function() {
             updateLanguage(this.value); // update on change
         });
     }
+
+    // Search functionality
+    document.getElementById('search-input').addEventListener('input', function(e) {
+        const searchQuery = e.target.value;
+        if (searchQuery.length > 0) {
+            const searchResults = fuse.search(searchQuery);
+            displayProjects(searchResults.map(result => result.item));
+        } else {
+            displayProjects(sortedProjects);
+        }
+    });
 });
