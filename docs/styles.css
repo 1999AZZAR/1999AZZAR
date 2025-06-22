@@ -750,22 +750,25 @@ div#skills {
 }
 
 #search-input {
-    width: -webkit-fill-available;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 4px solid var(--primary-color);
+    width: 100%;
+    max-width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--primary-color);
     border-radius: 25px;
     font-size: 1rem;
     background-color: var(--octonary-color);
     color: var(--primary-color);
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 #search-input:focus {
     outline: none;
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 3px var(--quinary-color);
+    transform: none;
 }
 
 #search-input::placeholder {
@@ -900,6 +903,7 @@ div#skills {
 
     p {
         margin-bottom: 15px;
+        text-align: left;
     }
 
     ul, ol {
@@ -908,6 +912,7 @@ div#skills {
 
     li {
         margin-bottom: 10px;
+        text-align: left;
     }
 
     h1 {
@@ -924,6 +929,7 @@ div#skills {
 
     p {
         font-size: 14px;
+        text-align: left;
     }
 
     /* Header Adjustments */
@@ -959,6 +965,7 @@ div#skills {
         padding: 1rem;
         max-width: 95vw;
         margin-top: 2rem;
+        text-align: left;
     }
 
     .box-container h2 {
@@ -975,6 +982,7 @@ div#skills {
     /* Service Card Adjustments */
     .service-card {
         margin: 0.5rem 0;
+        text-align: left;
     }
 
     .service-card h3 {
@@ -983,10 +991,12 @@ div#skills {
 
     .service-card p {
         font-size: 0.9rem;
+        text-align: left;
     }
 
     .service-card ul li {
         font-size: 0.9rem;
+        text-align: left;
     }
 
     .service-card:hover {
@@ -1002,8 +1012,12 @@ div#skills {
     /* Search Input Adjustments */
     #search-input {
         font-size: 0.9rem;
-        padding: 0.5rem;
-        margin-bottom: 0.5rem;
+        padding: 0.6rem 0.8rem;
+        margin-bottom: 1rem;
+        border: 1.5px solid var(--primary-color);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     /* Back to Top Button Adjustments */
