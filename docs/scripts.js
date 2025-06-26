@@ -9,7 +9,7 @@ const translations = {
     homeDescriptionText: "Freelance engineer from Yogyakarta, ID.",
     about: "About",
     summary: "Summary",
-    summaryText: "With over 4 years of programming experience, I specialize in IoT, web development, and microcontroller programming. I'm skilled in multiple languages (Arduino, Python, C, C++, C#, HTML, CSS, Flutter, and JavaScript) and tools (Microsoft Office, Canva) to support product and service optimization. I create improvement plans, generate insightful reports, and collaborate effectively across teams. My multilingual abilities in English, Indonesian, Javanese, and Arabic enhance my adaptability in diverse settings.",
+    summaryText: "With over 5 years of programming experience, I specialize in IoT, web development, and microcontroller programming. I'm skilled in multiple languages (Arduino, Python, C, C++, C#, HTML, CSS, Flutter, and JavaScript) and tools (Microsoft Office, Canva) to support product and service optimization. I create improvement plans, generate insightful reports, and collaborate effectively across teams. My multilingual abilities in English, Indonesian, Javanese, and Arabic enhance my adaptability in diverse settings.",
     resumeLink: "General Resume (PDF)",
     photoPortfolioLink: "Photographs portfolio (PDF)",
     ageLabel: "Age:",
@@ -121,7 +121,7 @@ const translations = {
     homeDescriptionText: "Engineer freelance dari Yogyakarta, ID.",
     about: "Tentang",
     summary: "Ringkasan",
-    summaryText: "Dengan pengalaman lebih dari 4 tahun dalam pemrograman, saya mengkhususkan diri dalam IoT, pengembangan web, dan pemrograman mikrokontroler. Saya mahir dalam berbagai bahasa (Arduino, Python, C, C++, C#, HTML, CSS, Flutter, dan JavaScript) serta alat (Microsoft Office, Canva) untuk mendukung optimasi produk dan layanan. Saya membuat rencana perbaikan, menghasilkan laporan yang mendalam, dan berkolaborasi secara efektif di berbagai tim. Kemampuan multibahasa saya dalam Bahasa Inggris, Indonesia, Jawa, dan Arab meningkatkan adaptasi saya di lingkungan yang beragam.",
+    summaryText: "Dengan pengalaman lebih dari 5 tahun dalam pemrograman, saya mengkhususkan diri dalam IoT, pengembangan web, dan pemrograman mikrokontroler. Saya mahir dalam berbagai bahasa (Arduino, Python, C, C++, C#, HTML, CSS, Flutter, dan JavaScript) serta alat (Microsoft Office, Canva) untuk mendukung optimasi produk dan layanan. Saya membuat rencana perbaikan, menghasilkan laporan yang mendalam, dan berkolaborasi secara efektif di berbagai tim. Kemampuan multibahasa saya dalam Bahasa Inggris, Indonesia, Jawa, dan Arab meningkatkan adaptasi saya di lingkungan yang beragam.",
     resumeLink: "Resume Umum (PDF)",
     photoPortfolioLink: "Portofolio Foto (PDF)",
     ageLabel: "Usia:",
@@ -388,93 +388,355 @@ function updateLanguage(lang) {
   }
 }
 
+// Enhanced variables for overview functionality
+let currentView = 'web'; // 'web' or 'repos'
+let allRepos = [];
+
+// Custom live sites from live_site.txt
+const customLiveSites = [
+    {
+        name: "Syaz Travel",
+        description: "Travel haji dan umroh - professional travel services for pilgrimage",
+        homepage: "https://syaztravel.com/beranda",
+        html_url: "https://syaztravel.com/",
+        updated_at: "2024-01-01",
+        stargazers_count: 0,
+        forks_count: 0,
+        language: "Web",
+        topics: ["travel", "haji", "umroh", "pilgrimage"],
+        archived: false
+    },
+    {
+        name: "Beranda Wirson",
+        description: "Berita ekonomi dan UMKM - economic news and small business updates",
+        homepage: "https://berandawirson.com/beranda",
+        html_url: "https://berandawirson.com/",
+        updated_at: "2024-01-01",
+        stargazers_count: 0,
+        forks_count: 0,
+        language: "Web",
+        topics: ["news", "ekonomi", "umkm", "business"],
+        archived: false
+    },
+    {
+        name: "Top Global Farming",
+        description: "TGF - domba berkualitas, quality sheep farming services",
+        homepage: "https://topglobalfarming.com/beranda",
+        html_url: "https://topglobalfarming.com/",
+        updated_at: "2024-01-01",
+        stargazers_count: 0,
+        forks_count: 0,
+        language: "Web",
+        topics: ["farming", "livestock", "agriculture", "sheep"],
+        archived: false
+    },
+    {
+        name: "Sewa Mobil Murah Palu",
+        description: "Rental mobil palu - affordable car rental services in Palu",
+        homepage: "https://sewamobilmurahpalu.com/",
+        html_url: "https://sewamobilmurahpalu.com/",
+        updated_at: "2024-01-01",
+        stargazers_count: 0,
+        forks_count: 0,
+        language: "Web",
+        topics: ["rental", "mobil", "palu", "transportation"],
+        archived: false
+    }
+];
+
 // Function to fetch and sort GitHub projects from multiple users
 async function fetchAndSortProjects() {
-    const usernames = ['1999AZZAR', 'lily-osp'];
-    let allProjects = [];
+    try {
+        // Show loading state
+        showOverviewLoading();
+        
+        const usernames = ['1999AZZAR', 'lily-osp'];
+        let allProjects = [];
 
-    for (const username of usernames) {
-        let page = 1;
-        const perPage = 100; // Maximum number of items per page
-        while (true) {
-            const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`);
-            const data = await response.json();
+        for (const username of usernames) {
+            let page = 1;
+            const perPage = 100; // Maximum number of items per page
+            while (true) {
+                const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`);
+                
+                if (response.status === 403) {
+                    console.warn('Rate limited or forbidden. Using available repos.');
+                    break;
+                }
+                
+                if (!response.ok) {
+                    if (page === 1) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    } else {
+                        console.warn(`Failed to fetch page ${page}, using available repos`);
+                        break;
+                    }
+                }
+                
+                const data = await response.json();
 
-            // Break the loop if no more data is returned
-            if (data.length === 0) {
-                break;
+                // Break the loop if no more data is returned
+                if (data.length === 0) {
+                    break;
+                }
+
+                allProjects = allProjects.concat(data);
+                page++;
+                
+                if (page > 10) break; // Limit to prevent excessive requests
             }
-
-            allProjects = allProjects.concat(data);
-            page++;
         }
+
+        // Add custom live sites to the projects
+        allProjects = allProjects.concat(customLiveSites);
+
+        sortedProjects = allProjects.sort((a, b) => {
+            // Sort by popularity (stars + forks)
+            const popularityA = a.stargazers_count + a.forks_count;
+            const popularityB = b.stargazers_count + b.forks_count;
+            if (popularityB !== popularityA) {
+                return popularityB - popularityA;
+            }
+            // If popularity is the same, sort by date
+            return new Date(b.updated_at) - new Date(a.updated_at);
+        });
+
+        // Store all repos for overview functionality
+        allRepos = sortedProjects;
+
+        // Initialize Fuse.js after sorting the projects
+        fuse = new Fuse(sortedProjects, {
+            keys: ['name', 'description', 'topics'], // Include topics as a searchable key
+            threshold: 0.4,
+            shouldSort: true
+        });
+
+        // Update stats
+        updateOverviewStats(allRepos);
+        
+        // Hide loading state
+        hideOverviewLoading();
+
+        // Call the function to display sorted projects based on current view
+        switchOverviewView(currentView);
+        
+    } catch (error) {
+        console.error('Error loading portfolio:', error);
+        showOverviewError();
     }
-
-    sortedProjects = allProjects.sort((a, b) => {
-        // Sort by popularity (stars + forks)
-        const popularityA = a.stargazers_count + a.forks_count;
-        const popularityB = b.stargazers_count + b.forks_count;
-        if (popularityB !== popularityA) {
-            return popularityB - popularityA;
-        }
-        // If popularity is the same, sort by date
-        return new Date(b.updated_at) - new Date(a.updated_at);
-    });
-
-    // Initialize Fuse.js after sorting the projects
-    fuse = new Fuse(sortedProjects, {
-        keys: ['name', 'description', 'topics'], // Include topics as a searchable key
-        threshold: 0.4,
-        shouldSort: true
-    });
-
-    // Call the function to display sorted projects
-    displayProjects(sortedProjects);
 }
 
-// Function to display projects
-function displayProjects(projects) {
+// Function to update overview stats
+function updateOverviewStats(repos) {
+    const totalRepos = repos.length;
+    const deployedSites = repos.filter(repo => 
+        repo.homepage && 
+        repo.homepage.startsWith('http') && 
+        !repo.archived &&
+        !repo.name.includes('.wiki') &&
+        !repo.homepage.toLowerCase().includes('wikipedia')
+    ).length;
+    const languages = new Set(repos.map(repo => repo.language).filter(lang => lang)).size;
+
+    document.getElementById('total-repos').textContent = totalRepos;
+    document.getElementById('deployed-sites').textContent = deployedSites;
+    document.getElementById('languages-used').textContent = languages;
+}
+
+// Function to show loading state
+function showOverviewLoading() {
+    document.getElementById('overview-loading').style.display = 'flex';
+    document.getElementById('overview-error').style.display = 'none';
+    document.getElementById('projects-container').style.display = 'none';
+}
+
+// Function to hide loading state
+function hideOverviewLoading() {
+    document.getElementById('overview-loading').style.display = 'none';
+    document.getElementById('projects-container').style.display = 'grid';
+}
+
+// Function to show error state
+function showOverviewError() {
+    document.getElementById('overview-loading').style.display = 'none';
+    document.getElementById('overview-error').style.display = 'block';
+    document.getElementById('projects-container').style.display = 'none';
+}
+
+// Function to switch between web sites and all repositories view
+function switchOverviewView(view) {
+    currentView = view;
+    const webBtn = document.getElementById('web-btn');
+    const repoBtn = document.getElementById('repo-btn');
+    
+    if (webBtn && repoBtn) {
+        webBtn.classList.toggle('active', view === 'web');
+        repoBtn.classList.toggle('active', view === 'repos');
+    }
+
+    if (view === 'web') {
+        const sitesWithHomepage = allRepos.filter(repo => 
+            repo.homepage && 
+            repo.homepage.startsWith('http') && 
+            !repo.archived &&
+            !repo.name.includes('.wiki') &&
+            !repo.homepage.toLowerCase().includes('wikipedia')
+        );
+        displayProjects(sitesWithHomepage, 'web');
+    } else {
+        const filteredRepos = allRepos.filter(repo => !repo.archived);
+        displayProjects(filteredRepos, 'repos');
+    }
+}
+
+// Enhanced function to display projects with modern design
+function displayProjects(projects, type = 'repos') {
     const projectsContainer = document.getElementById('projects-container');
     projectsContainer.innerHTML = ''; // Clear the container
 
     if (projects.length === 0) {
-        projectsContainer.innerHTML = '<p>No projects to display. Please try again later.</p>';
+        projectsContainer.innerHTML = `
+            <div class="overview-error-message">
+                <h3>No ${type === 'web' ? 'live sites' : 'repositories'} found</h3>
+                <p>It looks like there are no ${type === 'web' ? 'live sites' : 'repositories'} available yet.</p>
+            </div>
+        `;
         return;
     }
 
-    projects.forEach(repo => {
+    projects.forEach((repo, index) => {
         const projectCard = document.createElement('div');
         projectCard.classList.add('service-card');
-        const iconClass = 'fas fa-bars-staggered';
+        
+        const description = repo.description || 'No description available';
+        const truncatedDescription = description.length > 100 ? 
+            description.substring(0, 100) + '...' : description;
 
         // Limit topics to max 3, add "..." if more
         let topics = repo.topics && repo.topics.length > 0
             ? repo.topics.slice(0, 3).join(', ') + (repo.topics.length > 3 ? ', ....' : '')
             : 'No topics available';
 
-        projectCard.innerHTML = `
-            <h3><a href="${repo.html_url}" target="_blank"><i class="${iconClass}"></i> ${repo.name}</a></h3>
-            <div class="service-card">
-                <p>${repo.description || 'No description available yet'}</p>
-                <ul>
-                    <li><i class="fas fa-calendar-alt"></i> Updated on: ${new Date(repo.updated_at).toLocaleDateString()}</li>
-                    <li><i class="fas fa-code-branch"></i> Forks: ${repo.forks_count}</li>
-                    <li><i class="fas fa-star"></i> Stars: ${repo.stargazers_count}</li>
-                    <li><i class="fas fa-tag"></i> Topics: ${topics}</li>
-                </ul>
-            </div>
-            ${repo.homepage ? `<div class="service-card"> <i class="fas fa-globe"></i> <a href="${repo.homepage}" target="_blank">Website</a></div>` : ''}
-        `;
-        projectsContainer.appendChild(projectCard);
+        const languageColor = getLanguageColor(repo.language);
+
+        if (type === 'web' && repo.homepage) {
+            // Web site card with iframe preview
+            projectCard.innerHTML = `
+                <h3><i class="fas fa-globe"></i> ${repo.name}</h3>
+                <div class="service-card">
+                    <div class="iframe-container" style="position: relative; width: 100%; height: 250px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5;">
+                        <iframe 
+                            src="${repo.homepage}" 
+                            style="width: 100%; height: 100%; border: none; border-radius: 10px;"
+                            loading="lazy"
+                            sandbox="allow-same-origin allow-scripts allow-forms"
+                            title="Preview of ${repo.name}">
+                        </iframe>
+                        <div class="iframe-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="fas fa-external-link-alt"></i> Live Preview
+                        </div>
+                    </div>
+                    <p>${truncatedDescription}</p>
+                    <ul>
+                        <li><i class="fas fa-calendar-alt"></i> Updated: ${new Date(repo.updated_at).toLocaleDateString()}</li>
+                        <li><i class="fas fa-star"></i> Stars: ${repo.stargazers_count}</li>
+                        <li><i class="fas fa-code-branch"></i> Forks: ${repo.forks_count}</li>
+                        ${repo.language ? `<li><i class="fas fa-code"></i> <span style="color: ${languageColor};">●</span> ${repo.language}</li>` : ''}
+                        <li><i class="fas fa-tag"></i> Topics: ${topics}</li>
+                    </ul>
+                    <div style="margin-top: 1rem;">
+                        <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            🚀 Visit Site
+                        </a>
+                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                            📁 View Code
+                        </a>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Repository card with OpenGraph preview
+            const opengraphUrl = `https://opengraph.githubassets.com/1/1999AZZAR/${repo.name}`;
+            projectCard.innerHTML = `
+                <h3><i class="fas fa-bars-staggered"></i> ${repo.name}</h3>
+                <div class="service-card">
+                    <div class="opengraph-container" style="position: relative; width: 100%; height: 200px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5;">
+                        <img 
+                            src="${opengraphUrl}" 
+                            alt="${repo.name} OpenGraph Preview" 
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="fallback-preview" style="display: none; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1rem;">
+                            <i class="fab fa-github" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h4 style="margin: 0; font-size: 1.1rem;">${repo.name}</h4>
+                            <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.8;">${truncatedDescription}</p>
+                        </div>
+                        <div class="opengraph-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="fab fa-github"></i> Repository
+                        </div>
+                    </div>
+                    <p>${truncatedDescription}</p>
+                    <ul>
+                        <li><i class="fas fa-calendar-alt"></i> Updated: ${new Date(repo.updated_at).toLocaleDateString()}</li>
+                        <li><i class="fas fa-star"></i> Stars: ${repo.stargazers_count}</li>
+                        <li><i class="fas fa-code-branch"></i> Forks: ${repo.forks_count}</li>
+                        ${repo.language ? `<li><i class="fas fa-code"></i> <span style="color: ${languageColor};">●</span> ${repo.language}</li>` : ''}
+                        <li><i class="fas fa-tag"></i> Topics: ${topics}</li>
+                    </ul>
+                    <div style="margin-top: 1rem;">
+                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                            📁 View Repository
+                        </a>
+                        ${repo.homepage && repo.homepage.startsWith('http') ? `
+                            <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                                🔗 Live Demo
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Add animation delay for staggered appearance
+        setTimeout(() => {
+            projectCard.style.opacity = '0';
+            projectCard.style.transform = 'translateY(20px)';
+            projectsContainer.appendChild(projectCard);
+            
+            requestAnimationFrame(() => {
+                projectCard.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                projectCard.style.opacity = '1';
+                projectCard.style.transform = 'translateY(0)';
+            });
+        }, index * 100);
     });
 }
 
-// Apply the stored color on page load
-function applyStoredColor() {
-    const storedColor = localStorage.getItem('selectedColor');
-    if (storedColor) {
-        document.documentElement.className = storedColor;
-    }
+// Function to get language color (similar to overview.html)
+function getLanguageColor(language) {
+    const colors = {
+        'JavaScript': '#f1e05a',
+        'Python': '#3572A5',
+        'HTML': '#e34c26',
+        'CSS': '#563d7c',
+        'TypeScript': '#2b7489',
+        'Java': '#b07219',
+        'C++': '#f34b7d',
+        'C': '#555555',
+        'C#': '#239120',
+        'PHP': '#4F5D95',
+        'Ruby': '#701516',
+        'Go': '#00ADD8',
+        'Rust': '#dea584',
+        'Swift': '#ffac45',
+        'Kotlin': '#F18E33',
+        'Dart': '#00B4AB',
+        'Shell': '#89e051',
+        'Vue': '#2c3e50',
+        'Arduino': '#bd79d1'
+    };
+    return colors[language] || '#586069';
 }
 
 function logActiveSection() {
@@ -496,10 +758,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch and sort projects when the page loads
     fetchAndSortProjects();
 
-    applyStoredColor();
-
     // Navigation link click handling
-    const navLinks = document.querySelectorAll('header nav ul li a');
+    const navLinks = document.querySelectorAll('header nav ul li a:not(#language-toggle)');
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
@@ -533,7 +793,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // If the overview section is clicked, display the projects
                 if (targetId === 'overview') {
-                    displayProjects(sortedProjects);
+                    switchOverviewView(currentView);
                 }
 
                 // Scroll to the top of the page
@@ -545,8 +805,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Show the home section by default
-    document.getElementById('home').classList.add('active');
+    // Show the home section by default (header has id="home")
+    const headerElement = document.getElementById('home');
+    if (headerElement) {
+        headerElement.classList.add('fullscreen');
+        headerElement.classList.remove('top');
+    }
+
+    // Hide all sections initially to ensure they start hidden
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+    });
 
     // Intersection Observer for animations with delay
     const observerOptions = {
@@ -572,69 +841,76 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(section);
     });
 
-    // Modal logic
-    const modal = document.getElementById('color-switcher-modal');
-    const settingsButton = document.getElementById('settings-button');
-    const closeButton = document.querySelector('.close-button');
-
-    // Open modal when settings button is clicked
-    settingsButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        logActiveSection();
-        modal.style.display = 'block';
-        document.querySelectorAll('body > *:not(#color-switcher-modal)').forEach(element => {
-            element.classList.add('blur');
-        });
-    });
-
-    // Close modal only when close button is clicked
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-        restoreActiveSection();
-        document.querySelectorAll('.blur').forEach(element => {
-            element.classList.remove('blur');
-        });
-        modal.style.pointerEvents = 'auto';
-    });
-
-    // Disable closing modal by clicking outside the content
-    // Get all elements that close modals
-    const closeButtons = document.querySelectorAll('.close');
-
-    // Add event listeners to close modals only on clicking the close buttons
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const modal = this.closest('.modal');
-            modal.style.display = 'none';
-        });
-    });
-
-    const colorButtons = document.querySelectorAll('.color-btn');
-    colorButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const selectedColor = event.currentTarget.getAttribute('data-color');
-            document.documentElement.className = selectedColor;
-            localStorage.setItem('selectedColor', selectedColor);
-            // Apply the selected color immediately
-            document.documentElement.className = selectedColor;
-        });
-    });
-
     // Calculate and set age first before language update
     const birthDate = new Date('1999-10-09');
     const today = new Date();
     const ageInDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
     document.getElementById('age-in-days').textContent = ageInDays;
 
-    // Language switcher logic
-    const languageSwitcher = document.getElementById('language-switcher');
-    if (languageSwitcher) {
+    // Language toggle logic - new click-based language switcher
+    const languageToggle = document.getElementById('language-toggle');
+    if (languageToggle) {
         const storedLang = localStorage.getItem('selectedLanguage') || 'en';
-        languageSwitcher.value = storedLang;
+        if (storedLang === 'id') {
+            languageToggle.classList.add('id-lang');
+        }
         updateLanguage(storedLang); // update on load
-        languageSwitcher.addEventListener('change', function() {
-            localStorage.setItem('selectedLanguage', this.value);
-            updateLanguage(this.value); // update on change
+        
+        languageToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+            const newLang = currentLang === 'en' ? 'id' : 'en';
+            
+            localStorage.setItem('selectedLanguage', newLang);
+            updateLanguage(newLang);
+            
+            // Update button indicator
+            if (newLang === 'id') {
+                languageToggle.classList.add('id-lang');
+            } else {
+                languageToggle.classList.remove('id-lang');
+            }
+        });
+    }
+
+    // Enhanced Overview section functionality
+    // Toggle buttons event listeners
+    const webBtn = document.getElementById('web-btn');
+    const repoBtn = document.getElementById('repo-btn');
+    
+    if (webBtn && repoBtn) {
+        webBtn.addEventListener('click', () => switchOverviewView('web'));
+        repoBtn.addEventListener('click', () => switchOverviewView('repos'));
+    }
+
+    // Enhanced search functionality
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.trim();
+            if (searchTerm === '') {
+                // Show all projects for current view
+                switchOverviewView(currentView);
+            } else if (fuse && allRepos.length > 0) {
+                // Use Fuse.js for fuzzy search
+                const searchResults = fuse.search(searchTerm).map(result => result.item);
+                
+                // Filter based on current view
+                let filteredResults;
+                if (currentView === 'web') {
+                    filteredResults = searchResults.filter(repo => 
+                        repo.homepage && 
+                        repo.homepage.startsWith('http') && 
+                        !repo.archived &&
+                        !repo.name.includes('.wiki') &&
+                        !repo.homepage.toLowerCase().includes('wikipedia')
+                    );
+                } else {
+                    filteredResults = searchResults.filter(repo => !repo.archived);
+                }
+                
+                displayProjects(filteredResults, currentView);
+            }
         });
     }
 

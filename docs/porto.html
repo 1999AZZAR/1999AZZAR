@@ -42,12 +42,12 @@
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png">
 
     <!-- Stylesheets and Fonts -->
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Kalnia:wght@100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Additional SEO Tags -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -61,13 +61,22 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 </head>
 <body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <header id="home" class="fullscreen">
         <div class="container">
             <div class="logo">
                 <h1 id="main-title">azzar budiyanto</h1>
-                <p id="home-description-text">
-                    Freelance engineer from Yogyakarta, ID.
-                </p>
                 <span class="skills-container" id="home-description">
                     <div class="skills-wrapper" id="skills-wrapper"></div>
                 </span>
@@ -78,7 +87,7 @@
                         <li><a href="#services" aria-label="Services" title="Services"><i class="fas fa-briefcase"></i></a></li>
                         <li><a href="#contact" aria-label="Contact" title="Contact"><i class="fas fa-envelope"></i></a></li>
                         <li><a href="#overview" aria-label="Overview" title="Overview"><i class="fas fa-project-diagram"></i></a></li>
-                        <li><a href="#" id="settings-button" aria-label="Settings" title="Settings"><i class="fas fa-palette"></i></a></li>
+                        <li><a href="#" id="language-toggle" aria-label="Switch Language" title="Switch Language"><i class="fas fa-globe"></i></a></li>
                     </ul>
                 </nav>
             </div>
@@ -104,7 +113,7 @@
         <div class="service-card">
             <h3 id="summary-title"><i class="fas fa-mug-saucer"></i> Sumary</h3>
             <div class="service-card">
-                <p id="summary-text">With over 4 years of programming experience, I specialize in IoT, web development, and microcontroller programming. I'm skilled in multiple languages (Arduino, Python, C, C++, C#, HTML, CSS, Flutter, and JavaScript) and tools (Microsoft Office, Canva) to support product and service optimization. I create improvement plans, generate insightful reports, and collaborate effectively across teams. My multilingual abilities in English, Indonesian, Javanese, and Arabic enhance my adaptability in diverse settings.</p>
+                <p id="summary-text">With over 5 years of programming experience, I specialize in IoT, web development, and microcontroller programming. I'm skilled in multiple languages (Arduino, Python, C, C++, C#, HTML, CSS, Flutter, and JavaScript) and tools (Microsoft Office, Canva) to support product and service optimization. I create improvement plans, generate insightful reports, and collaborate effectively across teams. My multilingual abilities in English, Indonesian, Javanese, and Arabic enhance my adaptability in diverse settings.</p>
             </div>
             <div class="service-card">
                 <ul>
@@ -403,33 +412,49 @@
     </section>
 
     <section id="overview" class="box-container">
-        <h2 id="overview-title"><i class="fas fa-project-diagram"></i> Project Overview</h2>
-        <input type="text" id="search-input" placeholder="Search projects...">
-        <div id="projects-container">
+        <div class="overview-header">
+            <h2 id="overview-title"><i class="fas fa-project-diagram"></i> Project Overview</h2>
+            <p class="overview-subtitle">Exploring the digital frontier, one project at a time</p>
+            <div class="overview-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="total-repos">-</span>
+                    <span class="stat-label">Total Repos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="deployed-sites">-</span>
+                    <span class="stat-label">Live Sites</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="languages-used">-</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+            </div>
+            
+            <div class="overview-controls">
+                <div class="toggle-buttons">
+                    <button class="toggle-btn active" id="web-btn">🌐 Live Sites</button>
+                    <button class="toggle-btn" id="repo-btn">📂 All Repositories</button>
+                </div>
+                <input type="text" id="search-input" placeholder="Search projects...">
+            </div>
+        </div>
+
+        <div id="overview-loading" class="overview-loading">
+            <div class="spinner"></div>
+            <span>Loading amazing projects...</span>
+        </div>
+
+        <div id="overview-error" class="overview-error-message" style="display: none;">
+            <h3>Oops! Something went wrong</h3>
+            <p>Unable to fetch repositories. Please check your internet connection and try again.</p>
+        </div>
+
+        <div id="projects-container" class="projects-grid">
             <!-- Project cards will be dynamically inserted here -->
         </div>
     </section>
 
-    <div id="color-switcher-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h3><i class="fas fa-palette"></i> Color Theme</h3>
-            <div class="color-switcher">
-                <button class="color-btn" data-color="one"><i class="fas fa-circle" style="color: #3B3A30;"></i></button>
-                <button class="color-btn" data-color="two"><i class="fas fa-circle" style="color: #0D0D0D;"></i></button>
-                <button class="color-btn" data-color="three"><i class="fas fa-circle" style="color: #3d5c5c;"></i></button>
-                <button class="color-btn" data-color="four"><i class="fas fa-circle" style="color: #2C0D0D;"></i></button>
-                <button class="color-btn" data-color="five"><i class="fas fa-circle" style="color: #ffcccc;"></i></button>
-            </div>
-            <div class="language-switcher-container" style="margin-top: 1.5rem; text-align: center;">
-                <label for="language-switcher" style="font-weight: 500; margin-right: 0.5rem;"><i class="fas fa-language"></i> Language</label>
-                <select id="language-switcher" style="padding: 0.4rem 1.2rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;">
-                    <option value="en">English</option>
-                    <option value="id">Indonesian</option>
-                </select>
-            </div>
-        </div>
-    </div>
+
 
     <button id="backToTopBtn" title="Go to top">
         <img src="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png" alt="Back to Top" />
@@ -439,5 +464,22 @@
     <script src="btt.js"></script>
     <!-- Azzar AI Chat Widget -->
     <script src="https://llm-test.azzar.workers.dev/widget.js"></script>
+    
+    <script>
+    // Interactive mouse effects for floating shapes
+    document.addEventListener('mousemove', (e) => {
+      const shapes = document.querySelectorAll('.shape');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.5;
+        const xOffset = (x - 0.5) * speed;
+        const yOffset = (y - 0.5) * speed;
+        
+        shape.style.transform += ` translate(${xOffset}px, ${yOffset}px)`;
+      });
+    });
+    </script>
 </body>
 </html>
