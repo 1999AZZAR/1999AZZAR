@@ -1,60 +1,50 @@
-// Skills Rotator with Translation Support
-// Integrates with the translation system to show skills in the current language
+// Ultra-Smooth Skills Rotator with Translation Support
+// Optimized for 60fps smooth animations
 
 class SkillsRotator {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
-        this.currentElement = null;
-        this.nextElement = null;
         this.currentLanguage = localStorage.getItem('language') || 'en';
         this.isRunning = false;
         this.intervalId = null;
-        this.animationQueue = [];
         this.isAnimating = false;
         
-        // Performance optimization: Pre-create elements pool
-        this.elementPool = [];
-        this.poolSize = 3;
-        this.initElementPool();
+        // Single element approach for smoother performance
+        this.skillElement = null;
+        this.nextSkillText = '';
+        this.animationId = null;
+        
+        this.init();
     }
 
-    // Initialize element pool for better performance
-    initElementPool() {
-        for (let i = 0; i < this.poolSize; i++) {
-            const element = document.createElement('div');
-            element.className = 'skill-text';
-            element.style.textAlign = 'center';
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(20px)';
-            element.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-            this.elementPool.push(element);
-        }
+    init() {
+        // Create a single, permanent skill element
+        this.skillElement = document.createElement('div');
+        this.skillElement.className = 'skill-text';
+        this.skillElement.style.cssText = `
+            text-align: center;
+            opacity: 1;
+            transform: translateZ(0);
+            will-change: opacity, transform;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backface-visibility: hidden;
+            perspective: 1000px;
+            position: relative;
+            font-weight: 500;
+        `;
+        this.container.appendChild(this.skillElement);
+        
+        // Initial content
+        const initialSkills = this.getRandomSkills();
+        this.skillElement.textContent = initialSkills.join(' • ');
     }
 
-    // Get element from pool
-    getElementFromPool() {
-        return this.elementPool.find(el => !el.parentNode) || this.createElement();
-    }
-
-    // Return element to pool
-    returnElementToPool(element) {
-        if (element && element.parentNode) {
-            element.parentNode.removeChild(element);
-        }
-        if (element) {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(20px)';
-            element.textContent = '';
-        }
-    }
-
-    // Get skills array for the current language from translations
     getSkillsArray() {
         if (typeof translations !== 'undefined' && translations[this.currentLanguage] && translations[this.currentLanguage].skillsArray) {
             return translations[this.currentLanguage].skillsArray;
         }
         
-        // Fallback to English skills if translation not available
+        // Fallback skills array
         return [
             // Core Software Development
             "Programming", "Python", "C++", "C#", "Rust", "TypeScript", "JavaScript",
@@ -127,74 +117,40 @@ class SkillsRotator {
         return shuffled.slice(0, count);
     }
 
-    createElement() {
-        const div = document.createElement('div');
-        div.className = 'skill-text';
-        div.style.textAlign = 'center';
-        div.style.opacity = '0';
-        div.style.transform = 'translateY(20px)';
-        div.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        return div;
-    }
-
-    createSkillElement(skills) {
-        const element = this.getElementFromPool();
-        element.textContent = skills.join(' • ');
-        return element;
-    }
-
-    // Optimized animation using requestAnimationFrame
-    async animateTransition(element) {
-        return new Promise((resolve) => {
-            // Use requestAnimationFrame for smooth animation
-            requestAnimationFrame(() => {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-                
-                // Resolve after transition completes
-                setTimeout(resolve, 500);
-            });
-        });
-    }
-
-    async rotate() {
-        // Prevent multiple simultaneous animations
+    // Ultra-smooth animation using optimized approach
+    async animateToNewSkills() {
         if (this.isAnimating) return;
         this.isAnimating = true;
 
         try {
-            // Clean up old inactive element
-            if (this.currentElement?.classList.contains('inactive')) {
-                this.returnElementToPool(this.currentElement);
+            const newSkills = this.getRandomSkills();
+            const newText = newSkills.join(' • ');
+            
+            // If same text, skip animation
+            if (this.skillElement.textContent === newText) {
+                this.isAnimating = false;
+                return;
             }
 
-            // Move current to inactive (if exists)
-            if (this.nextElement) {
-                this.currentElement = this.nextElement;
-                if (this.currentElement) {
-                    this.currentElement.classList.remove('active');
-                    this.currentElement.classList.add('inactive');
-                    // Fade out current element
-                    this.currentElement.style.opacity = '0';
-                    this.currentElement.style.transform = 'translateY(-20px)';
-                }
-            }
+            // Phase 1: Smooth fade out with slight upward movement
+            await this.animatePhase({
+                opacity: '0',
+                transform: 'translateY(-8px) translateZ(0)'
+            }, 400);
 
-            // Create and show new element
-            const randomSkills = this.getRandomSkills();
-            this.nextElement = this.createSkillElement(randomSkills);
-            this.container.appendChild(this.nextElement);
+            // Phase 2: Update content and reset position
+            this.skillElement.textContent = newText;
+            this.skillElement.style.transform = 'translateY(8px) translateZ(0)';
 
-            // Animate in the new element
-            await this.animateTransition(this.nextElement);
-            this.nextElement.classList.add('active');
+            // Small delay to ensure content is updated
+            await this.delay(20);
 
-            // Clean up old element after animation
-            if (this.currentElement && this.currentElement !== this.nextElement) {
-                setTimeout(() => {
-                    this.returnElementToPool(this.currentElement);
-                }, 100);
-            }
+            // Phase 3: Smooth fade in with upward movement
+            await this.animatePhase({
+                opacity: '1',
+                transform: 'translateY(0) translateZ(0)'
+            }, 400);
+
         } catch (error) {
             console.warn('Animation error:', error);
         } finally {
@@ -202,25 +158,42 @@ class SkillsRotator {
         }
     }
 
-    // Update the language and refresh the display
+    // Optimized animation phase using requestAnimationFrame
+    animatePhase(styles, duration) {
+        return new Promise((resolve) => {
+            // Apply styles using requestAnimationFrame for smooth rendering
+            this.animationId = requestAnimationFrame(() => {
+                Object.assign(this.skillElement.style, styles);
+                
+                // Resolve after transition duration
+                setTimeout(resolve, duration);
+            });
+        });
+    }
+
+    // Utility delay function
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     updateLanguage(lang) {
         this.currentLanguage = lang;
         if (this.isRunning && !this.isAnimating) {
-            this.rotate(); // Immediate update when language changes
+            // Immediate smooth update when language changes
+            this.animateToNewSkills();
         }
     }
 
-    start(interval = 2500) {
-        if (this.isRunning) return; // Prevent multiple instances
+    start(interval = 3000) {
+        if (this.isRunning) return;
         
         this.isRunning = true;
-        this.rotate();
         
-        // Use optimized interval management
+        // Start the smooth rotation cycle
         this.intervalId = setInterval(() => {
             // Only animate if page is visible (performance optimization)
-            if (!document.hidden) {
-                this.rotate();
+            if (!document.hidden && !this.isAnimating) {
+                this.animateToNewSkills();
             }
         }, interval);
     }
@@ -230,11 +203,15 @@ class SkillsRotator {
             clearInterval(this.intervalId);
             this.intervalId = null;
         }
+        if (this.animationId) {
+            cancelAnimationFrame(this.animationId);
+            this.animationId = null;
+        }
         this.isRunning = false;
         this.isAnimating = false;
     }
 
-    restart(interval = 2500) {
+    restart(interval = 3000) {
         this.stop();
         // Small delay to ensure clean restart
         setTimeout(() => {
@@ -242,45 +219,42 @@ class SkillsRotator {
         }, 50);
     }
 
-    // Clean up resources
     destroy() {
         this.stop();
-        this.elementPool.forEach(el => {
-            if (el.parentNode) {
-                el.parentNode.removeChild(el);
-            }
-        });
-        this.elementPool = [];
+        if (this.skillElement && this.skillElement.parentNode) {
+            this.skillElement.parentNode.removeChild(this.skillElement);
+        }
+        this.skillElement = null;
     }
 }
 
-// Initialize and start the rotator
+// Initialize the ultra-smooth rotator
 const rotator = new SkillsRotator('skills-wrapper');
 
-// Performance optimization: Only start when page is visible
+// Performance-optimized startup
 const startRotator = () => {
     if (document.visibilityState === 'visible') {
-        rotator.start(2500);
+        rotator.start(3000); // Slightly longer interval for better UX
     }
 };
 
-// Handle page visibility changes for better performance
+// Handle page visibility changes for optimal performance
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
         rotator.stop();
     } else {
-        rotator.start(2500);
+        rotator.start(3000);
     }
 });
 
-// Start the rotator once DOM is loaded
+// Smooth startup when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startRotator);
 } else {
     startRotator();
 }
 
-// Export for use in other scripts (language switching)
+// Export for global access
 if (typeof window !== 'undefined') {
     window.skillsRotator = rotator;
 }

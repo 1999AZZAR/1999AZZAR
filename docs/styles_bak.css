@@ -1,25 +1,3 @@
-:root {
-    /* Principle: Material You-inspired Color Palette */
-    --primary-accent: #667eea;
-    --secondary-accent: #764ba2;
-    --primary-gradient: linear-gradient(135deg, var(--primary-accent) 0%, var(--secondary-accent) 100%);
-    --text-primary: #2d3748;
-    --text-secondary: #4a5568;
-    --text-on-accent: #ffffff;
-    --surface-subtle-translucent: rgba(255, 255, 255, 0.15);
-
-    /* Principle: Hierarchical Rounded Corners Scale */
-    --radius-container: 20px;    /* For main containers like .box-container, .modal-content */
-    --radius-nested: 15px;      /* For cards inside containers like .service-card */
-    --radius-interactive: 10px; /* For buttons, inputs */
-    --radius-full: 50%;         /* For circular elements like icons, toggles */
-
-    /* Principle: Consistent Glassmorphism Effect */
-    --glass-background: rgba(255, 255, 255, 0.9);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.2);
-    --glass-blur: blur(8px);
-}
-
 /* General */
 .blur {
     filter: blur(2px);
@@ -41,7 +19,7 @@ html {
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Poppins', 'Kalnia', sans-serif;
-    background: var(--primary-gradient);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     color: #333;
     overflow-x: hidden;
@@ -81,17 +59,20 @@ a:-webkit-any-link {
 
 /* Modern Box Container */
 .box-container {
-    background: var(--glass-background);
-    border-radius: var(--radius-container);
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    /* Changed margin-left and margin-right to 'auto' for centering */
     margin: 14rem auto 2rem auto;
     padding: 2rem;
-    max-width: calc(1200px - (4rem));
+    /* This is the key: limit max-width to ensure min 2rem side margins */
+    max-width: calc(1200px - (2rem * 2)); /* 1200px is your desired max content width */
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    backdrop-filter: var(--glass-blur);
-    border: var(--glass-border);
-    opacity: 0;
-    transform: translateY(30px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    transform: translateY(0); /* Consider if this and the next line are intentional */
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0; /* This will make the box invisible unless an animation/state changes it */
+    transform: translateY(30px); /* This will override the translateY(0) above */
     scroll-margin-top: 60px;
 }
 
@@ -248,8 +229,8 @@ a:-webkit-any-link {
 
 /* Header Styles */
 header {
-    background: var(--primary-gradient);
-    color: var(--text-on-accent);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
     padding: 1rem 0;
     box-shadow: 0px 2px 10px 5px rgba(0, 0, 0, 0.1);
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -277,9 +258,9 @@ header.top {
     z-index: 1000;
     height: auto;
     justify-content: flex-start;
-    border-radius: 0 0 55px 55px;
+    border-radius: 0 0 75px 75px;
     animation: headerSlideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: var(--glass-blur);
+    backdrop-filter: blur(10px);
     background: rgba(102, 126, 234, 0.9);
 }
 
@@ -432,15 +413,21 @@ header nav ul li a i {
 .social-links a {
     width: 50px;
     height: 50px;
-    background: var(--surface-subtle-translucent);
-    border-radius: var(--radius-full); /* Applied full radius */
+    min-width: 50px;
+    min-height: 50px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-on-accent);
+    color: #fff;
     font-size: 1.2rem;
-    text-decoration: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-decoration: none;
+    flex-shrink: 0;
+    aspect-ratio: 1;
 }
 
 .social-links a:hover {
@@ -703,11 +690,11 @@ section.active {
     border: 2px solid rgba(255,255,255,0.3);
     border-radius: 25px;
     font-size: 1rem;
+    background-color: rgba(255,255,255,0.9);
+    color: #2d3748;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    background-color: rgba(255,255,255,0.9);
-    color: var(--text-primary);
 }
 
 #search-input:focus {
@@ -837,15 +824,9 @@ div#skills {
     transform: translateX(-50%) scale(1.1);
 }
 
-/* Enhanced Arabic Text Support for Mobile Devices */
+/* RTL Support for Arabic */
 [dir="rtl"] {
     direction: rtl;
-    text-align: right;
-    font-family: 'Inter', 'Segoe UI', 'Tahoma', 'Arial Unicode MS', 'Noto Sans Arabic', 'Amiri', sans-serif;
-    font-display: swap;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 [dir="rtl"] .container {
@@ -871,100 +852,6 @@ div#skills {
 [dir="rtl"] .service-card ul li i {
     margin-left: 0.75rem;
     margin-right: 0;
-}
-
-/* Enhanced Arabic Typography */
-[dir="rtl"] * {
-    font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-[dir="rtl"] p,
-[dir="rtl"] .service-card p,
-[dir="rtl"] .service-card ul li {
-    line-height: 1.8;
-    word-spacing: 0.1em;
-    letter-spacing: 0.02em;
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-}
-
-[dir="rtl"] h1,
-[dir="rtl"] h2,
-[dir="rtl"] h3,
-[dir="rtl"] h4 {
-    line-height: 1.4;
-    word-spacing: 0.05em;
-    text-align: right;
-}
-
-/* Arabic Numbers Formatting */
-[dir="rtl"] .stat-number,
-[dir="rtl"] .age-in-days,
-[dir="rtl"] .contact-phone-value {
-    direction: ltr;
-    unicode-bidi: embed;
-    text-align: center;
-}
-
-/* Arabic Text Selection and Touch Optimization */
-[dir="rtl"] *::selection {
-    background: rgba(102, 126, 234, 0.3);
-    color: inherit;
-}
-
-[dir="rtl"] *::-moz-selection {
-    background: rgba(102, 126, 234, 0.3);
-    color: inherit;
-}
-
-/* Skills Container Arabic Support */
-[dir="rtl"] .skills-container {
-    height: auto;
-    min-height: 36px;
-    padding: 6px 0;
-    font-size: 0.95rem;
-    overflow: visible;
-    text-align: center;
-}
-
-[dir="rtl"] .skills-wrapper {
-    height: auto;
-    min-height: 32px;
-    padding: 2px 0;
-}
-
-[dir="rtl"] .skill-text {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    min-height: 28px;
-    padding: 4px 8px;
-    word-spacing: 0.12em;
-    letter-spacing: 0.03em;
-}
-
-/* Mobile Touch Optimization for Arabic Text */
-@media (hover: none) and (pointer: coarse) {
-    [dir="rtl"] .service-card,
-    [dir="rtl"] .service-card p,
-    [dir="rtl"] .service-card ul li {
-        -webkit-touch-callout: none;
-        -webkit-user-select: text;
-        -khtml-user-select: text;
-        -moz-user-select: text;
-        -ms-user-select: text;
-        user-select: text;
-        touch-action: manipulation;
-    }
-    
-    [dir="rtl"] .service-card:hover {
-        transform: none;
-    }
 }
 
 /* Force back-to-top button to always stay on left side, even in RTL mode */
@@ -1357,7 +1244,6 @@ div#skills {
     /* Mobile RTL Support */
     [dir="rtl"] .social-links {
         justify-content: center;
-        flex-direction: row-reverse;
     }
     
     [dir="rtl"] header nav ul {
@@ -1368,8 +1254,6 @@ div#skills {
     [dir="rtl"] .service-card ul li {
         flex-direction: row-reverse;
         text-align: right;
-        line-height: 1.9;
-        word-spacing: 0.12em;
     }
     
     [dir="rtl"] .skills-wrapper {
@@ -1380,138 +1264,7 @@ div#skills {
     
     [dir="rtl"] .skill-text {
         text-align: center;
-        line-height: 1.6;
-        font-size: 1rem;
-        padding: 0.5rem;
     }
-
-    /* Enhanced Arabic Mobile Typography */
-    [dir="rtl"] .service-card {
-        padding: 1.25rem;
-        text-align: right;
-    }
-
-    [dir="rtl"] .service-card p {
-        font-size: 0.95rem;
-        line-height: 1.9;
-        margin-bottom: 1rem;
-        text-align: justify;
-        text-justify: inter-word;
-        word-spacing: 0.15em;
-        letter-spacing: 0.03em;
-    }
-
-    [dir="rtl"] .service-card h3 {
-        font-size: 1.1rem;
-        line-height: 1.5;
-        margin-bottom: 0.75rem;
-        text-align: right;
-        word-spacing: 0.08em;
-    }
-
-    [dir="rtl"] .box-container h2 {
-        font-size: 1.6rem;
-        line-height: 1.4;
-        text-align: center;
-        word-spacing: 0.1em;
-    }
-
-    [dir="rtl"] header .logo h1 {
-        font-size: 2rem;
-        line-height: 1.3;
-        text-align: center;
-        word-spacing: 0.05em;
-    }
-
-    [dir="rtl"] .service-card ul li {
-        font-size: 0.9rem;
-        line-height: 1.9;
-        padding: 0.4rem 0;
-        text-align: right;
-        word-spacing: 0.12em;
-    }
-
-    /* Arabic Navigation Improvements */
-    [dir="rtl"] header nav ul li a {
-        padding: 0.75rem;
-        font-size: 0.9rem;
-    }
-
-    /* Arabic Contact Section */
-    [dir="rtl"] #contact .service-card {
-        text-align: right;
-        padding: 1rem;
-    }
-
-    [dir="rtl"] #contact .service-card p {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        direction: ltr;
-        text-align: center;
-    }
-
-    /* Arabic Text Input Fields */
-    [dir="rtl"] input[type="text"],
-    [dir="rtl"] textarea,
-    [dir="rtl"] #search-input {
-        text-align: right;
-        direction: rtl;
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-
-    [dir="rtl"] #search-input::placeholder {
-        text-align: right;
-        direction: rtl;
-    }
-
-    /* Arabic Skills Animation Container */
-    [dir="rtl"] .skills-container {
-        height: auto;
-        min-height: 40px;
-        padding: 8px 0.5rem;
-        font-size: 0.95rem;
-        overflow: visible;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    [dir="rtl"] .skills-wrapper {
-        height: auto;
-        min-height: 36px;
-        padding: 4px 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    [dir="rtl"] .skill-text {
-        font-size: 0.9rem;
-        line-height: 1.7;
-        min-height: 32px;
-        padding: 6px 8px;
-        height: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        word-spacing: 0.12em;
-        letter-spacing: 0.03em;
-    }
-
-          /* Arabic Numbers and Stats */
-      [dir="rtl"] .stat-number {
-          direction: ltr;
-          unicode-bidi: embed;
-      }
-
-      [dir="rtl"] .stat-label {
-          direction: rtl;
-          text-align: center;
-          font-size: 0.85rem;
-          line-height: 1.4;
-      }
 }
 
 /* Overview Section Specific Styles */
@@ -1667,14 +1420,14 @@ div#skills {
 
 /* Enhanced project cards with modern design */
 .projects-grid .service-card {
-    background: var(--glass-background);
-    border-radius: var(--radius-container);
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    backdrop-filter: var(--glass-blur);
-    border: var(--glass-border);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .projects-grid .service-card::before {
@@ -1949,186 +1702,6 @@ div#skills {
         overflow-x: hidden;
         justify-content: center;
         flex-wrap: wrap;
-    }
-
-    #contact .social-links {
-        gap: 0.75rem;
-        justify-content: center;
-    }
-
-    /* Enhanced Arabic Typography for Small Mobile Screens */
-    [dir="rtl"] .container {
-        padding: 1rem;
-        text-align: right;
-    }
-
-    [dir="rtl"] .box-container {
-        margin: 12rem auto 1.5rem auto;
-        padding: 1.25rem;
-    }
-
-    [dir="rtl"] .service-card {
-        padding: 1rem;
-        margin: 0.75rem 0;
-        text-align: right;
-    }
-
-    [dir="rtl"] .service-card > .service-card:not(.service-card .service-card .service-card) {
-        padding: 1rem;
-        margin: 0.75rem 0;
-    }
-
-    [dir="rtl"] .service-card h3 {
-        font-size: 1rem;
-        line-height: 1.5;
-        margin-bottom: 0.5rem;
-        text-align: right;
-        word-spacing: 0.08em;
-        letter-spacing: 0.02em;
-    }
-
-    [dir="rtl"] .service-card p {
-        font-size: 0.9rem;
-        line-height: 2;
-        margin-bottom: 0.75rem;
-        text-align: justify;
-        text-justify: inter-word;
-        word-spacing: 0.18em;
-        letter-spacing: 0.04em;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-    }
-
-    [dir="rtl"] .service-card ul li {
-        font-size: 0.85rem;
-        line-height: 2;
-        padding: 0.35rem 0;
-        text-align: right;
-        word-spacing: 0.15em;
-        margin-bottom: 0.25rem;
-    }
-
-    [dir="rtl"] header .logo h1 {
-        font-size: 1.8rem;
-        line-height: 1.3;
-        text-align: center;
-        word-spacing: 0.05em;
-        letter-spacing: 0.02em;
-    }
-
-    [dir="rtl"] .box-container h2 {
-        font-size: 1.4rem;
-        line-height: 1.4;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        word-spacing: 0.1em;
-    }
-
-    [dir="rtl"] header nav ul {
-        gap: 0.5rem;
-        justify-content: center;
-        flex-direction: row-reverse;
-    }
-
-    [dir="rtl"] header nav ul li a {
-        padding: 0.6rem;
-        font-size: 0.85rem;
-    }
-
-    [dir="rtl"] .social-links {
-        gap: 1rem;
-        justify-content: center;
-        flex-direction: row-reverse;
-        padding: 0.5rem;
-    }
-
-    [dir="rtl"] .social-links a {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-    }
-
-    [dir="rtl"] #contact .service-card {
-        padding: 0.875rem;
-        text-align: right;
-    }
-
-    [dir="rtl"] #contact .social-links {
-        gap: 0.75rem;
-        justify-content: center;
-        flex-direction: row-reverse;
-    }
-
-    /* Arabic Skills Display for Very Small Screens */
-    [dir="rtl"] .skill-text {
-        font-size: 0.85rem;
-        line-height: 1.8;
-        padding: 8px 12px;
-        text-align: center;
-        word-spacing: 0.15em;
-        letter-spacing: 0.04em;
-        height: auto;
-        min-height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    [dir="rtl"] .skills-container {
-        height: auto;
-        min-height: 48px;
-        padding: 10px 0.4rem;
-        overflow: visible;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    [dir="rtl"] .skills-wrapper {
-        height: auto;
-        min-height: 40px;
-        padding: 6px 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* Arabic Input Fields for Small Screens */
-    [dir="rtl"] input[type="text"],
-    [dir="rtl"] textarea,
-    [dir="rtl"] #search-input {
-        font-size: 0.95rem;
-        padding: 0.7rem;
-        text-align: right;
-        direction: rtl;
-    }
-
-    /* Arabic Stats Section */
-    [dir="rtl"] .stat-item {
-        padding: 0.75rem 1rem;
-        margin: 0.25rem;
-    }
-
-    [dir="rtl"] .stat-number {
-        font-size: 1.6rem;
-        direction: ltr;
-        unicode-bidi: embed;
-    }
-
-    [dir="rtl"] .stat-label {
-        font-size: 0.8rem;
-        direction: rtl;
-        text-align: center;
-        line-height: 1.3;
-        word-spacing: 0.05em;
-    }
-
-    /* Arabic Toggle Buttons */
-    [dir="rtl"] .toggle-btn {
-        font-size: 0.8rem;
-        padding: 0.6rem 1rem;
-        text-align: center;
-        word-spacing: 0.05em;
     }
 }
 
