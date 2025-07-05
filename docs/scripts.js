@@ -301,22 +301,25 @@ function displayProjects(projects, type = 'repos') {
         const formattedForks = typeof formatNumber === 'function' ? formatNumber(repo.forks_count, currentLang) : repo.forks_count;
 
         if (type === 'web' && repo.homepage) {
-            // Web site card with iframe preview
+            // Web site card with clickable iframe preview
             projectCard.innerHTML = `
                 <h3><i class="fas fa-globe"></i> ${repo.name}</h3>
                 <div class="service-card">
-                    <div class="iframe-container" style="position: relative; width: 100%; height: 250px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5;">
+                    <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="iframe-link" style="display: block; text-decoration: none; color: inherit; position: relative; width: 100%; height: 250px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                         <iframe 
                             src="${repo.homepage}" 
-                            style="width: 100%; height: 100%; border: none; border-radius: 10px;"
+                            style="width: 100%; height: 100%; border: none; border-radius: 10px; pointer-events: none;"
                             loading="lazy"
                             sandbox="allow-same-origin allow-scripts allow-forms"
                             title="Preview of ${repo.name}">
                         </iframe>
-                        <div class="iframe-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
-                            <i class="fas fa-external-link-alt"></i> Live Preview
+                        <div class="iframe-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; transition: all 0.3s ease;">
+                            <i class="fas fa-external-link-alt"></i> Click to Visit
                         </div>
-                    </div>
+                        <div class="hover-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.1); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; backdrop-filter: blur(2px);">
+                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        </div>
+                    </a>
                     <p>${truncatedDescription}</p>
                     <ul>
                         <li><i class="fas fa-calendar-alt"></i> Updated: ${new Date(repo.updated_at).toLocaleDateString()}</li>
@@ -325,38 +328,33 @@ function displayProjects(projects, type = 'repos') {
                         ${repo.language ? `<li><i class="fas fa-code"></i> <span style="color: ${languageColor};">●</span> ${repo.language}</li>` : ''}
                         <li><i class="fas fa-tag"></i> Topics: ${topics}</li>
                     </ul>
-                    <div style="margin-top: 1rem;">
-                        <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                            🚀 Visit Site
-                        </a>
-                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-                            📁 View Code
-                        </a>
-                    </div>
                 </div>
             `;
         } else {
-            // Repository card with OpenGraph preview
+            // Repository card with clickable OpenGraph preview
             const opengraphUrl = `https://opengraph.githubassets.com/1/1999AZZAR/${repo.name}`;
             projectCard.innerHTML = `
                 <h3><i class="fas fa-bars-staggered"></i> ${repo.name}</h3>
                 <div class="service-card">
-                    <div class="opengraph-container" style="position: relative; width: 100%; height: 200px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5;">
+                    <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="opengraph-link" style="display: block; text-decoration: none; color: inherit; position: relative; width: 100%; height: 200px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                         <img 
                             src="${opengraphUrl}" 
                             alt="${repo.name} OpenGraph Preview" 
-                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; transition: transform 0.3s ease;"
                             loading="lazy"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="fallback-preview" style="display: none; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1rem;">
                             <i class="fab fa-github" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
                             <h4 style="margin: 0; font-size: 1.1rem;">${repo.name}</h4>
                             <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.8;">${truncatedDescription}</p>
                         </div>
-                        <div class="opengraph-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem;">
-                            <i class="fab fa-github"></i> Repository
+                        <div class="opengraph-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; transition: all 0.3s ease;">
+                            <i class="fab fa-github"></i> Click to View
                         </div>
-                    </div>
+                        <div class="hover-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.1); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; backdrop-filter: blur(2px);">
+                            <i class="fab fa-github"></i> View Repository
+                        </div>
+                    </a>
                     <p>${truncatedDescription}</p>
                     <ul>
                         <li><i class="fas fa-calendar-alt"></i> Updated: ${new Date(repo.updated_at).toLocaleDateString()}</li>
@@ -365,16 +363,13 @@ function displayProjects(projects, type = 'repos') {
                         ${repo.language ? `<li><i class="fas fa-code"></i> <span style="color: ${languageColor};">●</span> ${repo.language}</li>` : ''}
                         <li><i class="fas fa-tag"></i> Topics: ${topics}</li>
                     </ul>
-                    <div style="margin-top: 1rem;">
-                        <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                            📁 View Repository
-                        </a>
-                        ${repo.homepage && repo.homepage.startsWith('http') ? `
+                    ${repo.homepage && repo.homepage.startsWith('http') ? `
+                        <div style="margin-top: 1rem;">
                             <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
                                 🔗 Live Demo
                             </a>
-                        ` : ''}
-                    </div>
+                        </div>
+                    ` : ''}
                 </div>
             `;
         }
