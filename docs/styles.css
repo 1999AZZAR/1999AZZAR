@@ -15,9 +15,9 @@
     --radius-full: 50%;         /* For circular elements like icons, toggles */
 
     /* Principle: Consistent Glassmorphism Effect */
-    --glass-background: rgba(255, 255, 255, 0.9);
+    --glass-background: rgba(255, 255, 255, 0.85);
     --glass-border: 1px solid rgba(255, 255, 255, 0.2);
-    --glass-blur: blur(8px);
+    --glass-blur: blur(10px);
 }
 
 /* General */
