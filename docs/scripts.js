@@ -44,64 +44,14 @@ let fuse; // For fuzzy search
 let currentView = 'web'; // 'web' or 'repos'
 let allRepos = [];
 
-// Custom live sites from live_site.txt
-const customLiveSites = [
-    {
-        name: "Syaz Travel",
-        description: "Travel haji dan umroh - professional travel services for pilgrimage",
-        homepage: "https://syaztravel.com/beranda",
-        html_url: "https://syaztravel.com/",
-        updated_at: "2024-01-01",
-        stargazers_count: 0,
-        forks_count: 0,
-        language: "Web",
-        topics: ["travel", "haji", "umroh", "pilgrimage"],
-        archived: false
-    },
-    {
-        name: "Beranda Wirson",
-        description: "Berita ekonomi dan UMKM - economic news and small business updates",
-        homepage: "https://berandawirson.com/beranda",
-        html_url: "https://berandawirson.com/",
-        updated_at: "2024-01-01",
-        stargazers_count: 0,
-        forks_count: 0,
-        language: "Web",
-        topics: ["news", "ekonomi", "umkm", "business"],
-        archived: false
-    },
-    {
-        name: "Top Global Farming",
-        description: "TGF - domba berkualitas, quality sheep farming services",
-        homepage: "https://topglobalfarming.com/beranda",
-        html_url: "https://topglobalfarming.com/",
-        updated_at: "2024-01-01",
-        stargazers_count: 0,
-        forks_count: 0,
-        language: "Web",
-        topics: ["farming", "livestock", "agriculture", "sheep"],
-        archived: false
-    },
-    {
-        name: "Sewa Mobil Murah Palu",
-        description: "Rental mobil palu - affordable car rental services in Palu",
-        homepage: "https://sewamobilmurahpalu.com/",
-        html_url: "https://sewamobilmurahpalu.com/",
-        updated_at: "2024-01-01",
-        stargazers_count: 0,
-        forks_count: 0,
-        language: "Web",
-        topics: ["rental", "mobil", "palu", "transportation"],
-        archived: false
-    }
-];
+// Remove the hardcoded customLiveSites array
+let customLiveSites = [];
 
 // Function to fetch and sort GitHub projects from multiple users
 async function fetchAndSortProjects() {
     try {
-        // Show loading state
         showOverviewLoading();
-        
+
         const usernames = ['1999AZZAR', 'lily-osp'];
         let allProjects = [];
 
@@ -110,12 +60,10 @@ async function fetchAndSortProjects() {
             const perPage = 100; // Maximum number of items per page
             while (true) {
                 const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${page}`);
-                
                 if (response.status === 403) {
                     console.warn('Rate limited or forbidden. Using available repos.');
                     break;
                 }
-                
                 if (!response.ok) {
                     if (page === 1) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -124,22 +72,59 @@ async function fetchAndSortProjects() {
                         break;
                     }
                 }
-                
                 const data = await response.json();
-
-                // Break the loop if no more data is returned
                 if (data.length === 0) {
                     break;
                 }
-
                 allProjects = allProjects.concat(data);
                 page++;
-                
                 if (page > 10) break; // Limit to prevent excessive requests
             }
         }
 
-        // Add custom live sites to the projects
+        // Fetch and parse live_site.txt
+        customLiveSites = [];
+        try {
+            const response = await fetch('live_site.txt');
+            if (response.ok) {
+                const text = await response.text();
+                customLiveSites = text
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line && !line.startsWith('#'))
+                    .map(line => {
+                        const [homepage, nameDesc] = line.split('|').map(s => s.trim());
+                        let name = homepage, description = '';
+                        if (nameDesc) {
+                            // Try to split name and description by the first ' - '
+                            const dashIdx = nameDesc.indexOf(' - ');
+                            if (dashIdx !== -1) {
+                                name = nameDesc.slice(0, dashIdx).trim();
+                                description = nameDesc.slice(dashIdx + 3).trim();
+                            } else {
+                                name = nameDesc;
+                                description = '';
+                            }
+                        }
+                        return {
+                            name,
+                            description,
+                            homepage,
+                            html_url: homepage,
+                            updated_at: new Date().toISOString(),
+                            stargazers_count: 0,
+                            forks_count: 0,
+                            language: "Web",
+                            topics: [],
+                            archived: false
+                        };
+                    });
+            }
+        } catch (e) {
+            console.warn('Could not load live_site.txt:', e);
+        }
+
+        // Add live sites to the projects
         allProjects = allProjects.concat(customLiveSites);
 
         sortedProjects = allProjects.sort((a, b) => {
@@ -153,13 +138,11 @@ async function fetchAndSortProjects() {
             return new Date(b.updated_at) - new Date(a.updated_at);
         });
 
-        // Store all repos for overview functionality
         allRepos = sortedProjects;
 
-        // Initialize Fuse.js after sorting the projects (with safety check)
         if (typeof Fuse !== 'undefined') {
             fuse = new Fuse(sortedProjects, {
-                keys: ['name', 'description', 'topics'], // Include topics as a searchable key
+                keys: ['name', 'description', 'topics'],
                 threshold: 0.4,
                 shouldSort: true
             });
@@ -168,15 +151,9 @@ async function fetchAndSortProjects() {
             fuse = null;
         }
 
-        // Update stats
         updateOverviewStats(allRepos);
-        
-        // Hide loading state
         hideOverviewLoading();
-
-        // Call the function to display sorted projects based on current view
         switchOverviewView(currentView);
-        
     } catch (error) {
         console.error('Error loading portfolio:', error);
         showOverviewError();
