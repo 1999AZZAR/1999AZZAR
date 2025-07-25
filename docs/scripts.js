@@ -270,6 +270,8 @@ function displayProjects(projects, type = 'repos') {
     const projectsContainer = document.getElementById('projects-container');
     projectsContainer.innerHTML = ''; // Clear the container
 
+    const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+
     if (projects.length === 0) {
         projectsContainer.innerHTML = `
             <div class="overview-error-message">
@@ -296,32 +298,23 @@ function displayProjects(projects, type = 'repos') {
         const languageColor = getLanguageColor(repo.language);
 
         // Format stars and forks based on current language
-        const currentLang = localStorage.getItem('selectedLanguage') || 'en';
         const formattedStars = typeof formatNumber === 'function' ? formatNumber(repo.stargazers_count, currentLang) : repo.stargazers_count;
         const formattedForks = typeof formatNumber === 'function' ? formatNumber(repo.forks_count, currentLang) : repo.forks_count;
 
         if (type === 'web' && repo.homepage) {
-            // Web site card with clickable iframe preview
+            // Web site card with dynamic screenshot preview
             projectCard.innerHTML = `
                 <h3><i class="fas fa-globe"></i> ${repo.name}</h3>
                 <div class="service-card">
-                    <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="iframe-link" style="display: block; text-decoration: none; color: inherit; position: relative; width: 100%; height: 250px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                        <iframe 
-                            src="${repo.homepage}" 
-                            style="width: 100%; height: 100%; border: none; border-radius: 10px; pointer-events: none;"
+                    <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="image-link" style="display: block; text-decoration: none; color: inherit; position: relative; width: 100%; height: 250px; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; background: #f5f5f5; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <img 
+                            data-homepage="${repo.homepage}"
+                            alt="Screenshot of ${repo.name}" 
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; transition: transform 0.3s ease;"
                             loading="lazy"
-                            sandbox="allow-scripts"
-                            title="Preview of ${repo.name}"
-                            onerror="this.style.display='none'; this.nextElementSibling.nextElementSibling.style.display='flex';"
-                        ></iframe>
-                        <div class="iframe-fallback" style="display: none; width: 100%; height: 100%; background: #eee; color: #333; align-items: center; justify-content: center; text-align: center; position: absolute; inset: 0; z-index: 2; font-size: 1rem; padding: 1rem;">
-                            <i class='fas fa-exclamation-triangle'></i> Unable to load preview. <br> Click to visit the site directly.
-                        </div>
-                        <div class="iframe-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; transition: all 0.3s ease;">
-                            <i class="fas fa-external-link-alt"></i> Click to Visit
-                        </div>
-                        <div class="hover-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.1); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; backdrop-filter: blur(2px);">
-                            <i class="fas fa-external-link-alt"></i> Visit Website
+                        >
+                        <div class="image-fallback" style="display: none; width: 100%; height: 100%; background: #eee; color: #333; align-items: center; justify-content: center; text-align: center; position: absolute; inset: 0; z-index: 2; font-size: 1rem; padding: 1rem; display: flex; flex-direction: column;">
+                            <i class='fas fa-exclamation-triangle' style='font-size: 2rem; margin-bottom: 0.5rem;'></i> Unable to load preview. <br> Click to visit the site directly.
                         </div>
                     </a>
                     <p>${truncatedDescription}</p>
@@ -334,6 +327,41 @@ function displayProjects(projects, type = 'repos') {
                     </ul>
                 </div>
             `;
+            // After adding to DOM, fetch the screenshot URL
+            setTimeout(() => {
+                const img = projectCard.querySelector('img[data-homepage]');
+                if (img) {
+                    fetch(`https://api.microlink.io/?url=${encodeURIComponent(repo.homepage)}&screenshot=true&meta=false`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success' && data.data && data.data.screenshot && data.data.screenshot.url) {
+                                img.onload = function() {
+                                    img.style.display = 'block';
+                                    if (img.nextElementSibling) {
+                                        img.nextElementSibling.style.display = 'none';
+                                    }
+                                };
+                                img.onerror = function() {
+                                    img.style.display = 'none';
+                                    if (img.nextElementSibling) {
+                                        img.nextElementSibling.style.display = 'flex';
+                                    }
+                                };
+                                img.src = data.data.screenshot.url;
+                                img.removeAttribute('hidden');
+                            } else {
+                                img.style.display = 'none';
+                                if (img.nextElementSibling) {
+                                    img.nextElementSibling.style.display = 'flex';
+                                }
+                            }
+                        })
+                        .catch((err) => {
+                            img.style.display = 'none';
+                            img.nextElementSibling.style.display = 'flex';
+                        });
+                }
+            }, 0);
         } else {
             // Repository card with clickable OpenGraph preview
             const opengraphUrl = `https://opengraph.githubassets.com/1/1999AZZAR/${repo.name}`;
