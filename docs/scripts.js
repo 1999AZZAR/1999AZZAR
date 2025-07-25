@@ -310,9 +310,13 @@ function displayProjects(projects, type = 'repos') {
                             src="${repo.homepage}" 
                             style="width: 100%; height: 100%; border: none; border-radius: 10px; pointer-events: none;"
                             loading="lazy"
-                            sandbox="allow-same-origin allow-scripts allow-forms"
-                            title="Preview of ${repo.name}">
-                        </iframe>
+                            sandbox="allow-scripts"
+                            title="Preview of ${repo.name}"
+                            onerror="this.style.display='none'; this.nextElementSibling.nextElementSibling.style.display='flex';"
+                        ></iframe>
+                        <div class="iframe-fallback" style="display: none; width: 100%; height: 100%; background: #eee; color: #333; align-items: center; justify-content: center; text-align: center; position: absolute; inset: 0; z-index: 2; font-size: 1rem; padding: 1rem;">
+                            <i class='fas fa-exclamation-triangle'></i> Unable to load preview. <br> Click to visit the site directly.
+                        </div>
                         <div class="iframe-overlay" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; transition: all 0.3s ease;">
                             <i class="fas fa-external-link-alt"></i> Click to Visit
                         </div>
