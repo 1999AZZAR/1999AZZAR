@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Azzar Budiyanto — Print-Ready E‑Card</title>
+  <meta name="description" content="A printable and interactive digital business card for Azzar Budiyanto with a 3D flip effect.">
+  <link rel="icon" type="image/png" href="../resources/logo.png">
+  <meta property="og:title" content="Azzar Budiyanto — E‑Card">
+  <meta property="og:description" content="Scan the QR to visit my portfolio.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/azzar.png">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Kalnia:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <style>
+    
+    :root {
+      --primary: #3ec7cf;
+      --ink: #111827;
+      --dark-bg: #0f172a;
+      --light-bg: #ffffff;
+      --light-text: #e5e7eb;
+      --muted-text: #6b7280;
+      --card-radius: 16px;
+      --transition-speed: 0.7s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      display: grid;
+      place-items: center;
+      padding: 2rem 1rem;
+    }
+
+    /* --- 3D Flip Container & Scene --- */
+    .ecard-flipper {
+      perspective: 2000px;
+      cursor: pointer;
+    }
+
+    .ecard-flipper:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 8px;
+      border-radius: 4px;
+    }
+
+    .ecard-container {
+      position: relative;
+      width: min(700px, 90vw);
+      /* Standard business card aspect ratio */
+      aspect-ratio: 3.5 / 2; 
+      transform-style: preserve-3d;
+      transition: transform var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .ecard-flipper.is-flipped .ecard-container {
+      transform: rotateY(180deg);
+    }
+
+    /* --- Card Base Styles --- */
+    .card {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      /* This is the key fix to prevent content bleed-through */
+      transform: translateZ(1px);
+    }
+
+    .card-back {
+      /* Apply rotation and the Z-transform */
+      transform: rotateY(180deg) translateZ(1px);
+    }
+    
+    /* --- Decorative Circuit Patterns --- */
+    .circuit-mural {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+    .circuit-mural svg{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* --- Front Card --- */
+    .card-front {
+      background: var(--light-bg);
+      color: var(--ink);
+      padding: clamp(1rem, 4vw, 2rem);
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .front-left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 45%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    .front-right {
+        width: 55%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        z-index: 1;
+        padding-left: clamp(0.5rem, 4vw, 1.5rem);
+        margin-left: 45%; /* Push content to the right half */
+    }
+
+    .identity h1 {
+      font-family: 'Kalnia', serif;
+      font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .identity p {
+      margin-top: 0.25rem;
+      color: var(--muted-text);
+      font-size: clamp(0.75rem, 2vw, 0.9rem);
+      border-top: 1px solid #e5e7eb;
+      padding-top: 0.5rem;
+    }
+
+    .qr-link {
+      display: block;
+      border-radius: 12px;
+      padding: 6px;
+      background-color: var(--light-bg);
+      margin-top: 1.5rem;
+      margin-left: 5rem;
+      transition: transform 0.3s ease;
+    }
+    .qr-link:hover {
+      transform: scale(1.03);
+    }
+    .qr-link img {
+      display: block;
+      width: 100%;
+      max-width: 140px;
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    .flip-hint {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.8rem;
+        color: var(--muted-text);
+        opacity: 0.7;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        z-index: 2;
+    }
+
+    /* --- Back Card --- */
+    .card-back {
+      background: var(--dark-bg);
+      color: var(--light-text);
+      padding: clamp(1.5rem, 5vw, 3rem);
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    
+    .back-circuit-mural {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .back-left {
+      width: 50%;
+      z-index: 1;
+    }
+    .back-right {
+      width: 50%;
+      z-index: 1;
+      padding-left: 5rem;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding-left: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-text h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      letter-spacing: 0.02em;
+    }
+
+    .brand-text p {
+      margin-top: 0.1rem;
+      color: var(--light-text);
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .contact-details {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-self: flex-start;
+    }
+
+    .contact-details li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .contact-details .fa-fw {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .contact-details a {
+      color: var(--light-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .contact-details a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.30);
+      border: 1px solid rgba(255,255,255,0.65);
+      backdrop-filter: saturate(120%) blur(3px);
+      -webkit-backdrop-filter: saturate(120%) blur(3px);
+      z-index: 2;
+    }
+    .logo-mark img {
+      display: block;
+      width: clamp(16rem, 36vw, 22rem);
+      height: auto;
+      max-width: 100%;
+      filter: invert(1) brightness(1.9) contrast(1.6) drop-shadow(0 2px 10px rgba(0,0,0,0.7));
+      mix-blend-mode: normal;
+    }
+
+    /* --- Print Styles --- */
+    @media print {
+      @page {
+        size: letter;
+        margin: 1in;
+      }
+      body {
+        background: none !important;
+        padding: 0;
+        font-size: 10pt;
+      }
+      .ecard-flipper {
+        display: block;
+        page-break-inside: avoid;
+        width: 3.5in;
+        height: 4.5in; /* Room for both cards + margin */
+        perspective: none;
+        cursor: default;
+        border: none;
+        box-shadow: none;
+      }
+      .ecard-container {
+        transform: none !important;
+        width: 3.5in;
+        height: 2in;
+        position: relative;
+        display: block;
+      }
+      .card {
+        transform: none !important;
+        position: absolute;
+        width: 3.5in;
+        height: 2in;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        border-radius: 0.125in;
+        overflow: hidden;
+      }
+      .card-front {
+        z-index: 2;
+        top: 0;
+        left: 0;
+      }
+      .card-back {
+        top: 2.25in; /* Position below the front card with a small gap */
+        left: 0;
+        z-index: 1;
+      }
+      .flip-hint, .circuit-mural, .back-circuit-mural {
+        display: none !important;
+      }
+      .identity h1 { font-size: 18pt; }
+      .identity p { font-size: 8pt; }
+      .brand-text h2 { font-size: 14pt; }
+      .brand-text p { font-size: 9pt; }
+      .contact-details a { font-size: 9pt; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ecard-flipper" tabindex="0" aria-label="Azzar Budiyanto's E-Card, click or press enter to flip">
+    <div class="ecard-container">
+      <!-- Front Side -->
+      <section class="card card-front">
+        <div class="front-left">
+            <div class="circuit-mural">
+                <svg width="100%" height="100%" viewBox="0 0 350 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" stroke-width="0.5"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                    <g stroke="#8b96a5" stroke-width="1.5" fill="none" stroke-linecap="round">
+                        <path d="M 0 50 L 50 50 L 70 30 L 70 0"/>
+                        <path d="M 170 0 L 170 80 L 120 80"/>
+                        <path d="M 120 120 L 170 120 L 170 200"/>
+                        <path d="M 0 150 L 50 150 L 70 170 L 70 200"/>
+                        <path d="M 220 50 L 270 50 L 270 0"/>
+                        <path d="M 220 150 L 270 150 L 270 200"/>
+                    </g>
+                    <g fill="#b0b8c4">
+                        <circle cx="50" cy="50" r="3"/><circle cx="170" cy="80" r="3"/><circle cx="170" cy="120" r="3"/><circle cx="50" cy="150" r="3"/><circle cx="220" cy="50" r="3"/><circle cx="220" cy="150" r="3"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div class="front-right">
+            <header class="identity">
+                <h1>Azzar Budiyanto</h1>
+                <p>Freelance Engineer & Full‑Stack Developer</p>
+            </header>
+            <a class="qr-link" href="https://azzar.netlify.app/porto" aria-label="Open portfolio" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              <img alt="QR code to portfolio" loading="lazy"
+                   src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=10&data=https%3A%2F%2Fazzar.netlify.app%2Fporto&color=0f172a&bgcolor=ffffff">
+            </a>
+        </div>
+        <div class="flip-hint"><i class="fa-solid fa-hand-pointer"></i> Click to flip</div>
+      </section>
+
+      <!-- Back Side -->
+      <section class="card card-back">
+        <div class="back-circuit-mural">
+            <svg width="100%" height="100%" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="#1e293b" stroke-width="1" fill="none" stroke-linecap="round">
+                    <path d="M 0 100 L 100 100 L 150 50 L 200 50"/>
+                    <path d="M 700 300 L 600 300 L 550 350 L 500 350"/>
+                    <path d="M 0 300 L 100 300"/>
+                    <path d="M 700 100 L 600 100"/>
+                    <path d="M 350 0 L 350 50"/>
+                    <path d="M 350 400 L 350 350"/>
+                    <path d="M 250 200 L 450 200"/>
+                </g>
+                <g fill="#1e293b">
+                    <circle cx="100" cy="100" r="3"/><circle cx="600" cy="300" r="3"/><circle cx="350" cy="50" r="3"/><circle cx="350" cy="350" r="3"/>
+                </g>
+            </svg>
+        </div>
+        <div class="back-left">
+            <div class="brand">
+                <div class="logo-mark" aria-hidden="true">
+                  <picture>
+                    <source srcset="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.svg" type="image/svg+xml">
+                    <img src="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png" alt="Azzar Budiyanto logo">
+                  </picture>
+                </div>
+                <div class="brand-text">
+                  <h2>Azzar Budiyanto</h2>
+                  <p>Crafting IoT, Web, and AI Solutions</p>
+                </div>
+            </div>
+        </div>
+        <div class="back-right">
+            <ul class="contact-details" aria-label="Contact links">
+                <li>
+                  <i class="fa-brands fa-telegram fa-fw"></i>
+                  <a href="https://t.me/azzar_budiyanto" target="_blank" rel="noopener" onclick="event.stopPropagation()">azzar_budiyanto</a>
+                </li>
+                <li>
+                  <i class="fa-solid fa-phone fa-fw"></i>
+                  <a href="tel:+6282232529804" onclick="event.stopPropagation()">+62 822 3252 9804</a>
+                </li>
+                <li>
+                  <i class="fa-solid fa-envelope fa-fw"></i>
+                  <a href="mailto:azzar.mr.zs@gmail.com" onclick="event.stopPropagation()">azzar.mr.zs@gmail.com</a>
+                </li>
+                <li>
+                  <i class="fa-solid fa-globe fa-fw"></i>
+                  <a href="https://azzar.netlify.app/porto" target="_blank" rel="noopener" onclick="event.stopPropagation()">azzar.netlify.app/porto</a>
+                </li>
+            </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const ecardFlipper = document.querySelector('.ecard-flipper');
+
+      if (ecardFlipper) {
+        const flipCard = () => {
+          ecardFlipper.classList.toggle('is-flipped');
+        };
+        ecardFlipper.addEventListener('click', flipCard);
+        ecardFlipper.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            flipCard();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
