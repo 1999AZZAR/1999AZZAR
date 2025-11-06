@@ -674,6 +674,65 @@
                 <p id="contact-phone-value"></p>
             </div>
         </div>
+
+        <div class="service-card">
+            <h3 id="contact-rate-title"><i class="fas fa-calculator"></i> </h3>
+            <div class="service-card">
+                <p id="contact-rate-negotiable"></p>
+                <div style="max-width:420px;margin:auto;text-align:center;font-family:sans-serif;">
+                    <h3 id="contact-rate-calculator-title"></h3>
+                    <p id="contact-rate-hours-label"></p>
+                    <input id="hoursInput" type="number" min="1" placeholder=""
+                           style="padding:8px;width:80%;border-radius:8px;border:1px solid #ccc;">
+
+                    <div style="margin:15px 0;text-align:left;display:inline-block;width:80%;">
+                        <label id="contact-rate-payment-label" style="display:block;margin-bottom:5px;font-weight:bold;"></label>
+                        <select id="paymentPlanSelect" style="padding:8px;width:100%;border-radius:8px;border:1px solid #ccc;">
+                            <option value="2-40-60" id="payment-option-1"></option>
+                            <option value="2-60-40" id="payment-option-2"></option>
+                            <option value="3-20-30-40" id="payment-option-3"></option>
+                            <option value="3-40-30-20" id="payment-option-4"></option>
+                        </select>
+                        <div style="margin-top:10px;text-align:left;">
+                            <label style="display:flex;align-items:center;font-size:14px;">
+                                <input type="checkbox" id="consultationSeparateCheckbox" style="margin-right:6px;">
+                                <span id="consultation-separate-checkbox"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin:15px 0;text-align:left;display:inline-block;width:80%;">
+                        <label id="contact-rate-currency-label" style="display:block;margin-bottom:5px;font-weight:bold;"></label>
+                        <select id="currencySelect" style="padding:8px;width:100%;border-radius:8px;border:1px solid #ccc;">
+                            <option value="USD" id="currency-option-usd"></option>
+                            <option value="EUR" id="currency-option-eur"></option>
+                            <option value="GBP" id="currency-option-gbp"></option>
+                            <option value="IDR" id="currency-option-idr"></option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex;gap:10px;margin-top:10px;">
+                        <button onclick="calcRate()" id="contact-rate-calculate-btn"
+                                style="flex:1;padding:8px 16px;border:none;border-radius:8px;
+                                background:#0078ff;color:white;cursor:pointer;font-weight:600;"></button>
+                        <button onclick="resetCalculator()" id="contact-rate-reset-btn"
+                                style="flex:1;padding:8px 16px;border:2px solid #6c757d;border-radius:8px;
+                                background:white;color:#6c757d;cursor:pointer;font-weight:600;"></button>
+                    </div>
+                    <div id="resultBox" style="margin-top:20px;background:#f8f9fa;border-radius:12px;padding:20px;border:1px solid #e9ecef;">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
+                            <div id="rateResult" style="background:white;padding:12px;border-radius:8px;border-left:4px solid #0078ff;font-weight:600;color:#2c3e50;"></div>
+                            <div id="daysResult" style="background:white;padding:12px;border-radius:8px;border-left:4px solid #28a745;font-weight:600;color:#2c3e50;"></div>
+                        </div>
+                        <div id="totalResult" style="background:linear-gradient(135deg,#0078ff,#0056b3);color:white;padding:15px;border-radius:8px;font-weight:700;font-size:16px;text-align:center;margin-bottom:15px;"></div>
+                    </div>
+                    <div id="paymentBreakdown" style="margin-top:20px;display:none;">
+                        <div id="contact-rate-payment-breakdown" style="font-weight:700;font-size:16px;color:#2c3e50;margin-bottom:12px;text-align:center;"></div>
+                        <div id="paymentSteps" style="display:grid;gap:8px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="overview" class="box-container">

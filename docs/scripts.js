@@ -478,6 +478,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 targetSection.classList.add('active');
                 targetSection.classList.add('fadeIn');
 
+                // Re-apply translations when section becomes active (for elements that might have been missed)
+                const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+                if (typeof updateLanguage === 'function') {
+                    updateLanguage(currentLang);
+                }
+
                 // Add or remove fullscreen class to header based on the target section
                 const header = document.querySelector('header');
                 if (targetId === 'home') {
@@ -655,3 +661,261 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Global exchange rates cache
+let exchangeRates = null;
+let exchangeRatesLoaded = false;
+
+// Load exchange rates from API
+async function loadExchangeRates() {
+    if (exchangeRatesLoaded) return exchangeRates;
+
+    try {
+        const response = await fetch('https://v6.exchangerate-api.com/v6/d04e488a7a2f1d8e44773078/latest/USD');
+        const data = await response.json();
+        if (data.result === 'success') {
+            exchangeRates = data.conversion_rates;
+            exchangeRatesLoaded = true;
+            return exchangeRates;
+        }
+    } catch (error) {
+        console.warn('Failed to load exchange rates:', error);
+        // Fallback rates if API fails
+        exchangeRates = {
+            USD: 1,
+            EUR: 0.85,
+            GBP: 0.75,
+            IDR: 15000
+        };
+        exchangeRatesLoaded = true;
+        return exchangeRates;
+    }
+    return null;
+}
+
+// Format currency based on locale
+function formatCurrency(amount, currency, lang) {
+    const symbols = {
+        USD: '$',
+        EUR: '€',
+        GBP: '£',
+        IDR: 'Rp'
+    };
+
+    const formatted = new Intl.NumberFormat(lang === 'id' ? 'id-ID' : lang === 'ar' ? 'ar-SA' : 'en-US', {
+        minimumFractionDigits: currency === 'IDR' ? 0 : 2,
+        maximumFractionDigits: currency === 'IDR' ? 0 : 2
+    }).format(amount);
+
+    return `${symbols[currency]}${formatted}`;
+}
+
+// Rate Calculator Function
+async function calcRate() {
+    const hours = parseFloat(document.getElementById("hoursInput").value);
+    const paymentPlan = document.getElementById("paymentPlanSelect").value;
+    const currency = document.getElementById("currencySelect").value;
+    const payConsultationSeparate = document.getElementById("consultationSeparateCheckbox").checked;
+    const resultBox = document.getElementById("resultBox");
+    const rateElem = document.getElementById("rateResult");
+    const totalElem = document.getElementById("totalResult");
+    const daysElem = document.getElementById("daysResult");
+    const paymentBreakdown = document.getElementById("paymentBreakdown");
+    const paymentSteps = document.getElementById("paymentSteps");
+
+    // Get current language from localStorage
+    const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+
+    if (isNaN(hours) || hours <= 0) {
+        rateElem.innerText = "";
+        totalElem.innerText = window.translations[currentLang].contactRateInvalidHours;
+        daysElem.innerText = "";
+        paymentBreakdown.style.display = 'none';
+        resultBox.style.display = 'none';
+        return;
+    }
+
+    // Load exchange rates
+    const rates = await loadExchangeRates();
+
+    // Pricing parameters
+    const Rmax = 35;   // Max rate ($)
+    const Rmin = 20;   // Min rate ($)
+    const Hmin = 8;    // Min hours for max rate
+    const Hmax = 208;  // Max hours for min rate
+
+    // Calculate consultation fees automatically (every 30 hours = 1 fee, $70-$120 each)
+    const numConsultationFees = Math.floor(hours / 30);
+    let totalConsultationUSD = 0;
+    const consultationFees = [];
+
+    for (let i = 0; i < numConsultationFees; i++) {
+        // Random fee between $70-$120 for each consultation
+        const fee = 70 + Math.random() * 50; // 70 + (0-50) = 70-120
+        consultationFees.push(fee);
+        totalConsultationUSD += fee;
+    }
+
+    // Calculate hourly rate
+    let rateUSD;
+    if (hours <= Hmin) rateUSD = Rmax;
+    else if (hours >= Hmax) rateUSD = Rmin;
+    else rateUSD = Rmax - ((Rmax - Rmin) / (Hmax - Hmin)) * (hours - Hmin);
+
+    // Calculate totals
+    const projectTotalUSD = rateUSD * hours;
+    const days = Math.ceil(hours / 8);
+
+    // Convert to selected currency
+    const rateConverted = rateUSD * (rates ? rates[currency] : 1);
+    const projectTotalConverted = projectTotalUSD * (rates ? rates[currency] : 1);
+    const consultationTotalConverted = totalConsultationUSD * (rates ? rates[currency] : 1);
+
+    // Calculate payment installments
+    let installments = [];
+    let paymentDescriptions = [];
+
+    if (payConsultationSeparate && numConsultationFees > 0) {
+        // Pay project cost in installments, consultation fees separately
+        if (paymentPlan.startsWith('2-')) {
+            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
+            installments = percentages.map(pct => projectTotalConverted * pct);
+            paymentDescriptions = installments.map((amount, index) =>
+                `${window.translations[currentLang].contactRatePaymentProjectLabel} ${index + 1} (Project): ${formatCurrency(amount, currency, currentLang)}`
+            );
+
+            // Add consultation fees as separate payments
+            for (let i = 0; i < consultationFees.length; i++) {
+                const feeConverted = consultationFees[i] * (rates ? rates[currency] : 1);
+                installments.push(feeConverted);
+                paymentDescriptions.push(`${window.translations[currentLang].contactRatePaymentConsultationLabel} ${i + 1}: ${formatCurrency(feeConverted, currency, currentLang)}`);
+            }
+        } else if (paymentPlan.startsWith('3-')) {
+            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
+            installments = percentages.map(pct => projectTotalConverted * pct);
+            paymentDescriptions = installments.map((amount, index) =>
+                `${window.translations[currentLang].contactRatePaymentProjectLabel} ${index + 1} (Project): ${formatCurrency(amount, currency, currentLang)}`
+            );
+
+            // Add consultation fees as separate payments
+            for (let i = 0; i < consultationFees.length; i++) {
+                const feeConverted = consultationFees[i] * (rates ? rates[currency] : 1);
+                installments.push(feeConverted);
+                paymentDescriptions.push(`${window.translations[currentLang].contactRatePaymentConsultationLabel} ${i + 1}: ${formatCurrency(feeConverted, currency, currentLang)}`);
+            }
+        }
+    } else {
+        // Pay everything together in installments (original logic)
+        const totalUSD = projectTotalUSD + totalConsultationUSD;
+        const totalConverted = totalUSD * (rates ? rates[currency] : 1);
+
+        if (paymentPlan.startsWith('2-')) {
+            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
+            installments = percentages.map(pct => totalConverted * pct);
+            paymentDescriptions = installments.map((amount, index) =>
+                `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}`
+            );
+        } else if (paymentPlan.startsWith('3-')) {
+            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
+            installments = percentages.map(pct => totalConverted * pct);
+            paymentDescriptions = installments.map((amount, index) =>
+                `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}`
+            );
+        }
+    }
+
+    // Show result box
+    resultBox.style.display = 'block';
+
+    // Display results
+    rateElem.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-dollar-sign" style="color:#0078ff;font-size:18px;"></i>
+            <div>
+                <div style="font-size:12px;color:#6c757d;margin-bottom:2px;">${window.translations[currentLang].contactRateResultRate}</div>
+                <div style="font-size:16px;">${formatCurrency(rateConverted, currency, currentLang)}/hour</div>
+            </div>
+        </div>
+    `;
+
+    let totalHTML = `
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+            <i class="fas fa-calculator" style="font-size:20px;"></i>
+            <div>
+                <div style="font-size:14px;margin-bottom:4px;">${window.translations[currentLang].contactRateResultTotal}</div>
+                <div style="font-size:18px;">${formatCurrency(projectTotalConverted, currency, currentLang)}</div>
+                <div style="font-size:12px;margin-top:2px;">for ${hours} hours</div>
+    `;
+
+    if (numConsultationFees > 0) {
+        if (payConsultationSeparate) {
+            totalHTML += `<div style="font-size:12px;margin-top:4px;color:#ffc107;">+ ${formatCurrency(consultationTotalConverted, currency, currentLang)} ${window.translations[currentLang].contactRateConsultationFeesPaidSeparately}</div>`;
+        } else {
+            totalHTML += `<div style="font-size:12px;margin-top:4px;">(${formatCurrency(consultationTotalConverted, currency, currentLang)} ${window.translations[currentLang].contactRateConsultationIncluded})</div>`;
+        }
+    }
+
+    totalHTML += `</div></div>`;
+    totalElem.innerHTML = totalHTML;
+
+    daysElem.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-calendar-alt" style="color:#28a745;font-size:18px;"></i>
+            <div>
+                <div style="font-size:12px;color:#6c757d;margin-bottom:2px;">${window.translations[currentLang].contactRateResultDays}</div>
+                <div style="font-size:16px;">${days} days</div>
+                <div style="font-size:12px;color:#6c757d;">${hours} hours total</div>
+            </div>
+        </div>
+    `;
+
+    // Display payment breakdown
+    if (installments.length > 0) {
+        paymentBreakdown.style.display = 'block';
+        paymentSteps.innerHTML = paymentDescriptions.map((desc, index) => {
+            const isProjectPayment = desc.includes('(Project)');
+            const isConsultation = desc.includes('Consultation Fee') || desc.includes('Biaya Konsultasi') || desc.includes('رسوم الاستشارة');
+            const bgColor = isConsultation ? '#fff3cd' : '#e7f3ff';
+            const borderColor = isConsultation ? '#ffc107' : '#0078ff';
+            const iconClass = isConsultation ? 'fas fa-user-tie' : 'fas fa-project-diagram';
+
+            return `
+                <div style="background:${bgColor};border:1px solid ${borderColor};border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px;">
+                    <div style="background:${borderColor};color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">
+                        ${index + 1}
+                    </div>
+                    <i class="${iconClass}" style="color:${borderColor};font-size:16px;"></i>
+                    <div style="flex:1;">
+                        <div style="font-weight:600;color:#2c3e50;">${desc}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } else {
+        paymentBreakdown.style.display = 'none';
+    }
+}
+
+// Reset Calculator Function
+function resetCalculator() {
+    // Clear input fields
+    document.getElementById("hoursInput").value = "";
+
+    // Reset dropdowns to default values
+    document.getElementById("paymentPlanSelect").selectedIndex = 0;
+    document.getElementById("currencySelect").selectedIndex = 0;
+
+    // Uncheck consultation separate checkbox
+    document.getElementById("consultationSeparateCheckbox").checked = false;
+
+    // Clear result displays
+    document.getElementById("rateResult").innerHTML = "";
+    document.getElementById("totalResult").innerHTML = "";
+    document.getElementById("daysResult").innerHTML = "";
+
+    // Hide payment breakdown
+    document.getElementById("paymentBreakdown").style.display = 'none';
+
+    // Hide result box
+    document.getElementById("resultBox").style.display = 'none';
+}
