@@ -4,7 +4,7 @@
 const translations = {
   en: {
     mainTitle: "azzar budiyanto",
-    homeDescriptionText: "Freelance engineer from Yogyakarta, ID.",
+    homeDescriptionText: "Expert freelance IoT developer & full-stack engineer. Remote projects worldwide.",
     navHome: "Home",
     navAbout: "About",
     navServices: "Services",
@@ -13,7 +13,7 @@ const translations = {
     navPortfolio: "Portfolio",
     about: "About",
     summary: "Summary",
-    summaryText: "A seasoned programmer with over 5 years of experience, specializing in IoT, web development, and embedded systems. Proficient in Python, JavaScript (including TypeScript & Node.js), C/C++, and Arduino, with expertise across modern web frameworks (React, Flask, Django) and microcontroller platforms (ESP32, STM32). Skilled in DevOps, cloud technologies (AWS), AI/Machine Learning, and advanced control systems (PID, Fuzzy Logic). My diverse technical toolkit, combined with fluency in English, Indonesian, Javanese, and Arabic, enables effective problem-solving and collaboration in dynamic environments.",
+    summaryText: "Expert freelance IoT developer and full-stack engineer with 5+ years experience specializing in Arduino programming, Python, JavaScript, AI/ML, and embedded systems. Remote work available worldwide. Proficient in modern web frameworks (React, Node.js, Flask, Django) and microcontroller platforms (ESP32, STM32). Skilled in DevOps, AWS cloud, and advanced control systems. Multilingual developer fluent in English, Indonesian, Arabic, and Javanese. <a href='#services' class='internal-link'>Explore my services</a> or <a href='#pricing' class='internal-link'>view pricing</a> for freelance projects.",
     resumeLink: "General Resume (PDF)",
     photoPortfolioLink: "Photographs portfolio (PDF)",
     ageLabel: "Age:",
@@ -108,7 +108,7 @@ const translations = {
     experienceTitle: "Professional Experience",
     expFreelancerTitle: "freelancer, none",
     expFreelancerDate: "2018/10 - Present",
-    expFreelancerLocation: "Yogyakarta, ID",
+    expFreelancerLocation: "Remote - Worldwide",
     expFreelancer1: "Enhanced production of a Product or Service to exceed goals.",
     expFreelancer2: "Developed effective improvement plans in alignment with goals and specifications.",
     expFreelancer3: "Developed and updated tracking spreadsheets for process monitoring and reporting.",
@@ -153,7 +153,7 @@ const translations = {
     interestTravel: "Traveling",
     servicesTitle: "Our Services",
     serviceArduinoTitle: "Arduino Programming and IoT Solutions",
-    serviceArduinoDesc: "Specializing in creating and deploying embedded software for Arduino platforms, this service develops IoT solutions from concept to execution and designs user-friendly interfaces for seamless interaction with embedded systems and IoT devices.",
+    serviceArduinoDesc: "Specializing in creating and deploying embedded software for Arduino platforms, this service develops IoT solutions from concept to execution and designs user-friendly interfaces for seamless interaction with embedded systems and IoT devices. <a href='#pricing' class='internal-link'>View pricing</a> or <a href='#contact' class='internal-link'>contact me</a> to discuss your IoT project.",
     serviceApiTitle: "API Development and Integration",
     serviceApiDesc: "Robust APIs are crafted to enable smooth communication between software systems and applications. This includes designing secure and efficient endpoints and integrating APIs with existing systems to enhance data exchange and interoperability.",
     serviceAutomationTitle: "Automation Solutions",
@@ -177,7 +177,7 @@ const translations = {
     serviceUiuxTitle: "UI/UX Design",
     serviceUiuxDesc: "Visually appealing and user-friendly interfaces are designed for digital products. Services include conducting user research and testing, and collaborating with developers to ensure seamless integration of design concepts into functional products.",
     serviceWebTitle: "Web Development",
-    serviceWebDesc: "Innovative web applications are designed, developed, and implemented to meet specific business needs. This includes creating and deploying responsive frameworks, ensuring seamless user interaction through intuitive and engaging interface design.",
+    serviceWebDesc: "Innovative web applications are designed, developed, and implemented to meet specific business needs. This includes creating and deploying responsive frameworks, ensuring seamless user interaction through intuitive and engaging interface design. <a href='#overview' class='internal-link'>View my portfolio</a> or <a href='#pricing' class='internal-link'>check pricing</a> for web development projects.",
     serviceAiGenTitle: "Generative AI Application Development",
     serviceAiGenDesc: "Intelligent applications are crafted using cutting-edge generative AI models for creative content generation, intelligent chatbots, and advanced automation.",
     serviceMlSolTitle: "Machine Learning Solutions",
@@ -194,7 +194,7 @@ const translations = {
     serviceCliToolDesc: "Efficient and interactive command-line interface tools are developed for automation, data processing, system management, and productivity enhancements.",
     contactTitle: "Contact",
     contactAddressTitle: "My Address",
-    contactAddressValue: "Sleman, Yogyakarta, ID",
+    contactAddressValue: "Remote - Available Worldwide",
     contactProfilesTitle: "Profiles",
     contactSocialTitle: "Social",
     contactDevTitle: "Dev",
@@ -282,7 +282,7 @@ const translations = {
   },
   id: {
     mainTitle: "azzar budiyanto",
-    homeDescriptionText: "Engineer freelance dari Yogyakarta, ID.",
+    homeDescriptionText: "Pengembang IoT freelance ahli & engineer full-stack. Proyek remote di seluruh dunia.",
     navHome: "Beranda",
     navAbout: "Tentang",
     navServices: "Layanan",
@@ -291,7 +291,7 @@ const translations = {
     navPortfolio: "Portofolio",
     about: "Tentang",
     summary: "Ringkasan",
-    summaryText: "Seorang programmer berpengalaman dengan lebih dari 5 tahun pengalaman, mengkhususkan diri dalam IoT, pengembangan web, dan sistem tertanam. Mahir dalam Python, JavaScript (termasuk TypeScript & Node.js), C/C++, dan Arduino, dengan keahlian di berbagai framework web modern (React, Flask, Django) dan platform mikrokontroler (ESP32, STM32). Terampil dalam DevOps, teknologi cloud (AWS), AI/Machine Learning, dan sistem kontrol lanjutan (PID, Fuzzy Logic). Toolkit teknis yang beragam, dikombinasikan dengan kemahiran dalam bahasa Inggris, Indonesia, Jawa, dan Arab, memungkinkan pemecahan masalah yang efektif dan kolaborasi dalam lingkungan yang dinamis.",
+    summaryText: "Pengembang IoT freelance ahli dan engineer full-stack dengan pengalaman 5+ tahun yang mengkhususkan diri dalam pemrograman Arduino, Python, JavaScript, AI/ML, dan sistem tertanam. Pekerjaan remote tersedia di seluruh dunia. Mahir dalam framework web modern (React, Node.js, Flask, Django) dan platform mikrokontroler (ESP32, STM32). Terampil dalam DevOps, cloud AWS, dan sistem kontrol lanjutan. Pengembang multilingual yang fasih dalam bahasa Inggris, Indonesia, Arab, dan Jawa. <a href='#services' class='internal-link'>Jelajahi layanan saya</a> atau <a href='#pricing' class='internal-link'>lihat harga</a> untuk proyek freelance.",
     resumeLink: "Resume Umum (PDF)",
     photoPortfolioLink: "Portofolio Foto (PDF)",
     ageLabel: "Usia:",
@@ -431,7 +431,7 @@ const translations = {
     interestTravel: "Bepergian",
     servicesTitle: "Layanan Kami",
     serviceArduinoTitle: "Pemrograman Arduino dan Solusi IoT",
-    serviceArduinoDesc: "Mengkhususkan diri dalam membuat dan menerapkan perangkat lunak tertanam untuk platform Arduino, layanan ini mengembangkan solusi IoT dari konsep hingga eksekusi dan merancang antarmuka yang ramah pengguna untuk interaksi yang mulus dengan sistem tertanam dan perangkat IoT.",
+    serviceArduinoDesc: "Mengkhususkan diri dalam membuat dan menerapkan perangkat lunak tertanam untuk platform Arduino, layanan ini mengembangkan solusi IoT dari konsep hingga eksekusi dan merancang antarmuka yang ramah pengguna untuk interaksi yang mulus dengan sistem tertanam dan perangkat IoT. <a href='#pricing' class='internal-link'>Lihat harga</a> atau <a href='#contact' class='internal-link'>hubungi saya</a> untuk mendiskusikan proyek IoT Anda.",
     serviceApiTitle: "Pengembangan dan Integrasi API",
     serviceApiDesc: "API yang kuat dibuat untuk memungkinkan komunikasi yang lancar antara sistem perangkat lunak dan aplikasi. Ini termasuk merancang endpoint yang aman dan efisien serta mengintegrasikan API dengan sistem yang ada untuk meningkatkan pertukaran data dan interoperabilitas.",
     serviceAutomationTitle: "Solusi Otomasi",
@@ -455,7 +455,7 @@ const translations = {
     serviceUiuxTitle: "Desain UI/UX",
     serviceUiuxDesc: "Antarmuka yang menarik secara visual dan ramah pengguna dirancang untuk produk digital. Layanan termasuk melakukan riset dan pengujian pengguna, dan berkolaborasi dengan developer untuk memastikan integrasi konsep desain yang mulus ke dalam produk fungsional.",
     serviceWebTitle: "Pengembangan Web",
-    serviceWebDesc: "Aplikasi web yang inovatif dirancang, dikembangkan, dan diimplementasikan untuk memenuhi kebutuhan bisnis yang spesifik. Ini termasuk membuat dan menerapkan framework responsif, memastikan interaksi pengguna yang mulus melalui desain antarmuka yang intuitif dan menarik.",
+    serviceWebDesc: "Aplikasi web yang inovatif dirancang, dikembangkan, dan diimplementasikan untuk memenuhi kebutuhan bisnis yang spesifik. Ini termasuk membuat dan menerapkan framework responsif, memastikan interaksi pengguna yang mulus melalui desain antarmuka yang intuitif dan menarik. <a href='#overview' class='internal-link'>Lihat portofolio saya</a> atau <a href='#pricing' class='internal-link'>lihat harga</a> untuk proyek pengembangan web.",
     serviceAiGenTitle: "Pengembangan Aplikasi AI Generatif",
     serviceAiGenDesc: "Aplikasi cerdas dibuat menggunakan model AI generatif terdepan untuk pembuatan konten kreatif, chatbot cerdas, dan otomasi lanjutan.",
     serviceMlSolTitle: "Solusi Machine Learning",
@@ -472,7 +472,7 @@ const translations = {
     serviceCliToolDesc: "Tool antarmuka baris perintah yang efisien dan interaktif dikembangkan untuk otomasi, pemrosesan data, manajemen sistem, dan peningkatan produktivitas.",
     contactTitle: "Kontak",
     contactAddressTitle: "Alamat Saya",
-    contactAddressValue: "Sleman, Yogyakarta, ID",
+    contactAddressValue: "Remote - Tersedia di Seluruh Dunia",
     contactProfilesTitle: "Profil",
     contactSocialTitle: "Sosial",
     contactDevTitle: "Dev",
@@ -560,7 +560,7 @@ const translations = {
   },
   ar: {
     mainTitle: "عزار بودييانتو",
-    homeDescriptionText: "مهندس مستقل من يوجياكارتا، إندونيسيا.",
+    homeDescriptionText: "مطور IoT حر خبير ومهندس full-stack. مشاريع عن بعد في جميع أنحاء العالم.",
     navHome: "الرئيسية",
     navAbout: "حول",
     navServices: "الخدمات",
@@ -569,7 +569,7 @@ const translations = {
     navPortfolio: "المحفظة",
     about: "حول",
     summary: "ملخص",
-    summaryText: "مبرمج متمرس مع أكثر من ٥ سنوات من الخبرة، متخصص في إنترنت الأشياء وتطوير الويب والأنظمة المدمجة. ماهر في بايثون وجافا سكريبت (بما في ذلك TypeScript و Node.js) و C/C++ و Arduino، مع خبرة عبر أطر عمل الويب الحديثة (React، Flask، Django) ومنصات الميكروكنترولر (ESP32، STM32). ماهر في DevOps وتقنيات السحابة (AWS) والذكاء الاصطناعي/التعلم الآلي وأنظمة التحكم المتقدمة (PID، Fuzzy Logic). مجموعة أدواتي التقنية المتنوعة، جنبًا إلى جنب مع الطلاقة في الإنجليزية والإندونيسية والجاوية والعربية، تمكن من حل المشاكل بفعالية والتعاون في البيئات الديناميكية.",
+    summaryText: "مطور IoT حر خبير ومهندس full-stack مع خبرة تزيد عن 5 سنوات متخصص في برمجة Arduino، Python، JavaScript، AI/ML، والأنظمة المدمجة. العمل عن بعد متاح في جميع أنحاء العالم. ماهر في أطر عمل الويب الحديثة (React، Node.js، Flask، Django) ومنصات الميكروكنترولر (ESP32، STM32). ماهر في DevOps، سحابة AWS، وأنظمة التحكم المتقدمة. مطور متعدد اللغات يتحدث الإنجليزية، الإندونيسية، العربية، والجاوية بطلاقة. <a href='#services' class='internal-link'>استكشف خدماتي</a> أو <a href='#pricing' class='internal-link'>عرض الأسعار</a> لمشاريع العمل الحر.",
     resumeLink: "السيرة الذاتية العامة (PDF)",
     photoPortfolioLink: "ملف الصور الشخصية (PDF)",
     ageLabel: "العمر:",
@@ -709,7 +709,7 @@ const translations = {
     interestTravel: "السفر",
     servicesTitle: "خدماتنا",
     serviceArduinoTitle: "برمجة Arduino وحلول إنترنت الأشياء",
-    serviceArduinoDesc: "متخصص في إنشاء ونشر البرمجيات المدمجة لمنصات Arduino، تطور هذه الخدمة حلول إنترنت الأشياء من المفهوم إلى التنفيذ وتصمم واجهات سهلة الاستخدام للتفاعل السلس مع الأنظمة المدمجة وأجهزة إنترنت الأشياء.",
+    serviceArduinoDesc: "متخصص في إنشاء ونشر البرمجيات المدمجة لمنصات Arduino، تطور هذه الخدمة حلول إنترنت الأشياء من المفهوم إلى التنفيذ وتصمم واجهات سهلة الاستخدام للتفاعل السلس مع الأنظمة المدمجة وأجهزة إنترنت الأشياء. <a href='#pricing' class='internal-link'>عرض الأسعار</a> أو <a href='#contact' class='internal-link'>اتصل بي</a> لمناقشة مشروع إنترنت الأشياء الخاص بك.",
     serviceApiTitle: "تطوير وتكامل واجهة برمجة التطبيقات",
     serviceApiDesc: "يتم إنشاء واجهات برمجة تطبيقات قوية لتمكين التواصل السلس بين أنظمة البرمجيات والتطبيقات. يشمل هذا تصميم نقاط نهاية آمنة وفعالة وتكامل واجهات برمجة التطبيقات مع الأنظمة الموجودة لتعزيز تبادل البيانات والتشغيل البيني.",
     serviceAutomationTitle: "حلول الأتمتة",
@@ -733,7 +733,7 @@ const translations = {
     serviceUiuxTitle: "تصميم واجهة المستخدم/تجربة المستخدم",
     serviceUiuxDesc: "يتم تصميم واجهات جذابة بصريًا وسهلة الاستخدام للمنتجات الرقمية. تشمل الخدمات إجراء بحوث واختبارات المستخدمين والتعاون مع المطورين لضمان التكامل السلس لمفاهيم التصميم في المنتجات الوظيفية.",
     serviceWebTitle: "تطوير الويب",
-    serviceWebDesc: "يتم تصميم وتطوير وتنفيذ تطبيقات ويب مبتكرة لتلبية احتياجات الأعمال المحددة. يشمل هذا إنشاء ونشر أطر عمل متجاوبة، وضمان تفاعل المستخدم السلس من خلال تصميم واجهة بديهي وجذاب.",
+    serviceWebDesc: "يتم تصميم وتطوير وتنفيذ تطبيقات ويب مبتكرة لتلبية احتياجات الأعمال المحددة. يشمل هذا إنشاء ونشر أطر عمل متجاوبة، وضمان تفاعل المستخدم السلس من خلال تصميم واجهة بديهي وجذاب. <a href='#overview' class='internal-link'>عرض معرض أعمالي</a> أو <a href='#pricing' class='internal-link'>تحقق من الأسعار</a> لمشاريع تطوير الويب.",
     serviceAiGenTitle: "تطوير تطبيقات الذكاء الاصطناعي التوليدي",
     serviceAiGenDesc: "يتم إنشاء تطبيقات ذكية باستخدام نماذج الذكاء الاصطناعي التوليدي المتطورة لإنتاج المحتوى الإبداعي وروبوتات الدردشة الذكية والأتمتة المتقدمة.",
     serviceMlSolTitle: "حلول التعلم الآلي",
@@ -750,7 +750,7 @@ const translations = {
     serviceCliToolDesc: "يتم تطوير أدوات واجهة سطر الأوامر الفعالة والتفاعلية للأتمتة ومعالجة البيانات وإدارة النظام وتحسينات الإنتاجية.",
     contactTitle: "اتصال",
     contactAddressTitle: "عنواني",
-    contactAddressValue: "سليمان، يوجياكارتا، إندونيسيا",
+    contactAddressValue: "عن بعد - متاح في جميع أنحاء العالم",
     contactProfilesTitle: "الملفات الشخصية",
     contactSocialTitle: "اجتماعي",
     contactDevTitle: "تطوير",
@@ -1079,8 +1079,13 @@ function updateLanguage(lang) {
       if (el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4' || el.tagName === 'P' || el.tagName === 'LI') {
         // Preserve icons if present
         const icon = el.querySelector('i');
+        // Check if content contains HTML tags (like links)
+        const hasHtmlTags = translations[lang][key] && translations[lang][key].includes('<a');
         if (icon) {
           el.innerHTML = icon.outerHTML + ' ' + translations[lang][key];
+        } else if (hasHtmlTags) {
+          // Use innerHTML for content with HTML tags
+          el.innerHTML = translations[lang][key];
         } else {
           el.textContent = translations[lang][key];
         }

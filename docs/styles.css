@@ -2247,4 +2247,22 @@ div#skills {
     }
 }
 
+/* Internal link styling for SEO */
+.internal-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.internal-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.internal-link:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
 

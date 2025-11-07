@@ -459,57 +459,72 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch and sort projects when the page loads
     fetchAndSortProjects();
 
+    // Navigation function for consistent behavior
+    function navigateToSection(targetId) {
+        const targetSection = document.getElementById(targetId);
+
+        if (targetSection) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+                section.classList.remove('fadeIn');
+            });
+
+            // Show the target section with animation
+            targetSection.classList.add('active');
+            targetSection.classList.add('fadeIn');
+
+            // Re-apply translations when section becomes active (for elements that might have been missed)
+            const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+            if (typeof updateLanguage === 'function') {
+                updateLanguage(currentLang);
+            }
+
+            // Add or remove fullscreen class to header based on the target section
+            const header = document.querySelector('header');
+            if (targetId === 'home') {
+                header.classList.add('fullscreen');
+                header.classList.remove('top');
+                document.querySelector('.social-links').style.display = 'flex';
+                document.getElementById('home-description').style.display = 'block';
+            } else {
+                document.getElementById('home-description').style.display = 'none';
+                document.querySelector('.social-links').style.display = 'none';
+                header.classList.remove('fullscreen');
+                header.classList.add('top');
+            }
+
+            // If the overview section is clicked, display the projects
+            if (targetId === 'overview') {
+                switchOverviewView(currentView);
+            }
+
+            // Scroll to the top of the page
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }
+
     // Navigation link click handling
     const navLinks = document.querySelectorAll('header nav ul li a:not(#language-toggle)');
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
             const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-
-            if (targetSection) {
-                // Hide all sections
-                document.querySelectorAll('section').forEach(section => {
-                    section.classList.remove('active');
-                    section.classList.remove('fadeIn');
-                });
-
-                // Show the target section with animation
-                targetSection.classList.add('active');
-                targetSection.classList.add('fadeIn');
-
-                // Re-apply translations when section becomes active (for elements that might have been missed)
-                const currentLang = localStorage.getItem('selectedLanguage') || 'en';
-                if (typeof updateLanguage === 'function') {
-                    updateLanguage(currentLang);
-                }
-
-                // Add or remove fullscreen class to header based on the target section
-                const header = document.querySelector('header');
-                if (targetId === 'home') {
-                    header.classList.add('fullscreen');
-                    header.classList.remove('top');
-                    document.querySelector('.social-links').style.display = 'flex';
-                    document.getElementById('home-description').style.display = 'block';
-                } else {
-                    document.getElementById('home-description').style.display = 'none';
-                    document.querySelector('.social-links').style.display = 'none';
-                    header.classList.remove('fullscreen');
-                    header.classList.add('top');
-                }
-
-                // If the overview section is clicked, display the projects
-                if (targetId === 'overview') {
-                    switchOverviewView(currentView);
-                }
-
-                // Scroll to the top of the page
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
+            navigateToSection(targetId);
         });
+    });
+
+    // Internal link click handling (for dynamically added links)
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('internal-link') || event.target.closest('.internal-link')) {
+            event.preventDefault();
+            const link = event.target.classList.contains('internal-link') ? event.target : event.target.closest('.internal-link');
+            const targetId = link.getAttribute('href').substring(1);
+            navigateToSection(targetId);
+        }
     });
 
     // Show the home section by default (header has id="home")
