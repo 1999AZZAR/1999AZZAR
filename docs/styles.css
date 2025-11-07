@@ -820,32 +820,6 @@ div#skills {
     position: relative;
 }
 
-#language-toggle::after {
-    content: 'EN';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.6rem;
-    color: rgba(255,255,255,0.8);
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-}
-
-#language-toggle.id-lang::after {
-    content: 'ID';
-}
-
-#language-toggle.ar-lang::after {
-    content: 'AR';
-}
-
-#language-toggle:hover::after {
-    color: #fff;
-    transform: translateX(-50%) scale(1.1);
-}
-
 /* Enhanced Arabic Text Support for Mobile Devices */
 [dir="rtl"] {
     direction: rtl;
@@ -1365,10 +1339,6 @@ div#skills {
         padding-top: 50px; /* Reduced padding for mobile */
     }
 
-    #language-toggle::after {
-        font-size: 0.5rem;
-        bottom: -6px;
-    }
 
     /* Mobile RTL Support */
     [dir="rtl"] .social-links {
