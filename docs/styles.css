@@ -2115,28 +2115,6 @@ div#skills {
     overflow: hidden;
 }
 
-/* .pricing-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-}
-
-.pricing-card:nth-child(1)::before {
-    background: linear-gradient(90deg, #667eea, #764ba2);
-}
-
-.pricing-card:nth-child(2)::before {
-    background: linear-gradient(90deg, #764ba2, #667eea);
-}
-
-.pricing-card:nth-child(3)::before {
-    background: linear-gradient(90deg, #28a745, #20c997);
-} */
-
 .pricing-card h3 {
     color: var(--text-primary);
     font-size: 1.2rem;
