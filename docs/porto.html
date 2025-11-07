@@ -239,6 +239,22 @@
 
     <!-- Additional Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // Load QRCode library dynamically to ensure it's available
+        (function() {
+            if (typeof QRCode === 'undefined') {
+                var script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js';
+                script.onload = function() {
+                    console.log('QRCode library loaded successfully');
+                };
+                script.onerror = function() {
+                    console.warn('Failed to load QRCode library');
+                };
+                document.head.appendChild(script);
+            }
+        })();
+    </script>
     <script src="translation.js"></script>
     <script src="scripts.js"></script>
 </head>
@@ -264,12 +280,12 @@
                 </span>
                 <nav id="nav-menu">
                     <ul>
-                        <li><a href="#home" aria-label="Home" title="Home"><i class="fas fa-home"></i></a></li>
-                        <li><a href="#about" aria-label="About" title="About"><i class="fas fa-user"></i></a></li>
-                        <li><a href="#services" aria-label="Services" title="Services"><i class="fas fa-briefcase"></i></a></li>
-                        <li><a href="#contact" aria-label="Contact" title="Contact"><i class="fas fa-envelope"></i></a></li>
-                        <li><a href="#overview" aria-label="Overview" title="Overview"><i class="fas fa-project-diagram"></i></a></li>
-                        <li><a href="#" id="language-toggle" aria-label="Switch Language" title="Switch Language"><i class="fas fa-globe"></i></a></li>
+                        <li><a href="#home" aria-label="Home" title="Home"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li>
+                        <li><a href="#about" aria-label="About" title="About"><i class="fas fa-user"></i><span class="nav-label">About</span></a></li>
+                        <li><a href="#services" aria-label="Services" title="Services"><i class="fas fa-briefcase"></i><span class="nav-label">Services</span></a></li>
+                        <li><a href="#contact" aria-label="Contact" title="Contact"><i class="fas fa-envelope"></i><span class="nav-label">Contact</span></a></li>
+                        <li><a href="#overview" aria-label="Overview" title="Overview"><i class="fas fa-project-diagram"></i><span class="nav-label">Portfolio</span></a></li>
+                        <li><a href="#" id="language-toggle" aria-label="Switch Language" title="Switch Language"><i class="fas fa-globe"></i><span class="nav-label" id="language-label">EN</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -719,6 +735,13 @@
                                 style="flex:1;padding:8px 16px;border:2px solid #6c757d;border-radius:8px;
                                 background:white;color:#6c757d;cursor:pointer;font-weight:600;"></button>
                     </div>
+                    <div style="margin-top:15px;text-align:center;">
+                        <button onclick="generateReceipt()" id="contact-rate-generate-receipt-btn"
+                                style="padding:10px 20px;border:2px solid #28a745;border-radius:8px;
+                                background:#28a745;color:white;cursor:pointer;font-weight:600;display:none;">
+                            <i class="fas fa-receipt"></i> Generate Receipt & Pay
+                        </button>
+                    </div>
                     <div id="resultBox" style="margin-top:20px;background:#f8f9fa;border-radius:12px;padding:20px;border:1px solid #e9ecef;">
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
                             <div id="rateResult" style="background:white;padding:12px;border-radius:8px;border-left:4px solid #0078ff;font-weight:600;color:#2c3e50;"></div>
@@ -734,6 +757,24 @@
             </div>
         </div>
     </section>
+
+    <!-- Receipt Modal -->
+    <div id="receiptModal" class="receipt-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;padding:20px;box-sizing:border-box;">
+        <div class="receipt-container" style="max-width:800px;margin:0 auto;background:white;border-radius:12px;padding:30px;max-height:90vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h2 style="margin:0;color:#2c3e50;"><i class="fas fa-receipt"></i> Project Receipt</h2>
+                <div style="display:flex;gap:10px;">
+                    <button onclick="printReceipt()" style="background:#28a745;border:none;color:white;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:14px;">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    <button onclick="closeReceipt()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#6c757d;">&times;</button>
+                </div>
+            </div>
+            <div id="receiptContent">
+                <!-- Receipt content will be generated here -->
+            </div>
+        </div>
+    </div>
 
     <section id="overview" class="box-container">
         <div class="overview-header">
@@ -783,8 +824,8 @@
     </button>
 
     <script src="skillscroll.js"></script>
-    <!-- Azzar AI Chat Widget -->
-    <script src="https://llm-test.azzar.workers.dev/widget.js" data-color="light"></script>
+    <!-- Azzar AI Live Chat Widget -->
+    <script src="https://live-chat-widget.azzar.workers.dev/widget.js" data-color="light"></script>
     
     <script>
     // Interactive mouse effects for floating shapes

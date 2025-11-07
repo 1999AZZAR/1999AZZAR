@@ -5,6 +5,11 @@ const translations = {
   en: {
     mainTitle: "azzar budiyanto",
     homeDescriptionText: "Freelance engineer from Yogyakarta, ID.",
+    navHome: "Home",
+    navAbout: "About",
+    navServices: "Services",
+    navContact: "Contact",
+    navPortfolio: "Portfolio",
     about: "About",
     summary: "Summary",
     summaryText: "A seasoned programmer with over 5 years of experience, specializing in IoT, web development, and embedded systems. Proficient in Python, JavaScript (including TypeScript & Node.js), C/C++, and Arduino, with expertise across modern web frameworks (React, Flask, Django) and microcontroller platforms (ESP32, STM32). Skilled in DevOps, cloud technologies (AWS), AI/Machine Learning, and advanced control systems (PID, Fuzzy Logic). My diverse technical toolkit, combined with fluency in English, Indonesian, Javanese, and Arabic, enables effective problem-solving and collaboration in dynamic environments.",
@@ -250,6 +255,11 @@ const translations = {
   id: {
     mainTitle: "azzar budiyanto",
     homeDescriptionText: "Engineer freelance dari Yogyakarta, ID.",
+    navHome: "Beranda",
+    navAbout: "Tentang",
+    navServices: "Layanan",
+    navContact: "Kontak",
+    navPortfolio: "Portofolio",
     about: "Tentang",
     summary: "Ringkasan",
     summaryText: "Seorang programmer berpengalaman dengan lebih dari 5 tahun pengalaman, mengkhususkan diri dalam IoT, pengembangan web, dan sistem tertanam. Mahir dalam Python, JavaScript (termasuk TypeScript & Node.js), C/C++, dan Arduino, dengan keahlian di berbagai framework web modern (React, Flask, Django) dan platform mikrokontroler (ESP32, STM32). Terampil dalam DevOps, teknologi cloud (AWS), AI/Machine Learning, dan sistem kontrol lanjutan (PID, Fuzzy Logic). Toolkit teknis yang beragam, dikombinasikan dengan kemahiran dalam bahasa Inggris, Indonesia, Jawa, dan Arab, memungkinkan pemecahan masalah yang efektif dan kolaborasi dalam lingkungan yang dinamis.",
@@ -495,6 +505,11 @@ const translations = {
   ar: {
     mainTitle: "عزار بودييانتو",
     homeDescriptionText: "مهندس مستقل من يوجياكارتا، إندونيسيا.",
+    navHome: "الرئيسية",
+    navAbout: "حول",
+    navServices: "الخدمات",
+    navContact: "اتصل",
+    navPortfolio: "المحفظة",
     about: "حول",
     summary: "ملخص",
     summaryText: "مبرمج متمرس مع أكثر من ٥ سنوات من الخبرة، متخصص في إنترنت الأشياء وتطوير الويب والأنظمة المدمجة. ماهر في بايثون وجافا سكريبت (بما في ذلك TypeScript و Node.js) و C/C++ و Arduino، مع خبرة عبر أطر عمل الويب الحديثة (React، Flask، Django) ومنصات الميكروكنترولر (ESP32، STM32). ماهر في DevOps وتقنيات السحابة (AWS) والذكاء الاصطناعي/التعلم الآلي وأنظمة التحكم المتقدمة (PID، Fuzzy Logic). مجموعة أدواتي التقنية المتنوعة، جنبًا إلى جنب مع الطلاقة في الإنجليزية والإندونيسية والجاوية والعربية، تمكن من حل المشاكل بفعالية والتعاون في البيئات الديناميكية.",
@@ -1106,15 +1121,19 @@ function updateOverviewNumbers(lang) {
 // Language indicator update function
 function updateLanguageIndicator(lang) {
   const languageToggle = document.getElementById('language-toggle');
+  const languageLabel = document.getElementById('language-label');
+
   if (languageToggle) {
     // Remove all language classes
     languageToggle.classList.remove('id-lang', 'ar-lang');
-    
+
     // Add appropriate class based on language
     if (lang === 'id') {
       languageToggle.classList.add('id-lang');
+      if (languageLabel) languageLabel.textContent = 'ID';
     } else if (lang === 'ar') {
       languageToggle.classList.add('ar-lang');
+      if (languageLabel) languageLabel.textContent = 'عر';
       // Set RTL direction for Arabic
       document.documentElement.setAttribute('dir', 'rtl');
       document.documentElement.setAttribute('lang', 'ar');
@@ -1122,7 +1141,8 @@ function updateLanguageIndicator(lang) {
       document.body.classList.add('arabic-lang');
       document.body.classList.remove('ltr-lang');
     } else {
-      // Reset to LTR for English and Indonesian
+      // Reset to LTR for English
+      if (languageLabel) languageLabel.textContent = 'EN';
       document.documentElement.setAttribute('dir', 'ltr');
       document.documentElement.setAttribute('lang', lang);
       // Add LTR-specific styling class
@@ -1130,6 +1150,28 @@ function updateLanguageIndicator(lang) {
       document.body.classList.remove('arabic-lang');
     }
   }
+
+  // Update navigation labels
+  updateNavigationLabels(lang);
+}
+
+// Function to update navigation labels based on selected language
+function updateNavigationLabels(lang) {
+  const navLabels = {
+    'home': 'navHome',
+    'about': 'navAbout',
+    'services': 'navServices',
+    'contact': 'navContact',
+    'overview': 'navPortfolio'
+  };
+
+  // Update each navigation label
+  Object.keys(navLabels).forEach(section => {
+    const labelElement = document.querySelector(`a[href="#${section}"] .nav-label`);
+    if (labelElement && translations[lang] && translations[lang][navLabels[section]]) {
+      labelElement.textContent = translations[lang][navLabels[section]];
+    }
+  });
 }
 
 // Function to update project numbers in overview section
@@ -1160,6 +1202,7 @@ function updateProjectNumbers(lang) {
 
 // Make translations globally available for browser scripts
 window.translations = translations;
+window.updateNavigationLabels = updateNavigationLabels;
 
 // Export functions for use in other files
 if (typeof module !== 'undefined' && module.exports) {
@@ -1167,6 +1210,7 @@ if (typeof module !== 'undefined' && module.exports) {
     translations,
     updateLanguage,
     updateLanguageIndicator,
+    updateNavigationLabels,
     formatNumber,
     convertToArabicNumerals,
     updateOverviewNumbers,

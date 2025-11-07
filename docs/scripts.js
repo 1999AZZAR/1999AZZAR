@@ -710,7 +710,7 @@ function formatCurrency(amount, currency, lang) {
     return `${symbols[currency]}${formatted}`;
 }
 
-// Rate Calculator Function
+// Rate Calculator Function with improved reliability
 async function calcRate() {
     const hours = parseFloat(document.getElementById("hoursInput").value);
     const paymentPlan = document.getElementById("paymentPlanSelect").value;
@@ -726,12 +726,19 @@ async function calcRate() {
     // Get current language from localStorage
     const currentLang = localStorage.getItem('selectedLanguage') || 'en';
 
-    if (isNaN(hours) || hours <= 0) {
+    // Enhanced input validation
+    if (isNaN(hours) || hours <= 0 || hours > 10000) {
         rateElem.innerText = "";
-        totalElem.innerText = window.translations[currentLang].contactRateInvalidHours;
+        totalElem.innerText = window.translations[currentLang]?.contactRateInvalidHours || "Please enter valid hours (1-10000)";
         daysElem.innerText = "";
         paymentBreakdown.style.display = 'none';
         resultBox.style.display = 'none';
+        return;
+    }
+
+    // Validate payment plan format
+    if (!paymentPlan || !/^(\d+)-(.+)$/.test(paymentPlan)) {
+        console.warn('Invalid payment plan format');
         return;
     }
 
@@ -749,11 +756,15 @@ async function calcRate() {
     let totalConsultationUSD = 0;
     const consultationFees = [];
 
+    // Use deterministic calculation based on hours for consistent pricing
     for (let i = 0; i < numConsultationFees; i++) {
-        // Random fee between $70-$120 for each consultation
-        const fee = 70 + Math.random() * 50; // 70 + (0-50) = 70-120
-        consultationFees.push(fee);
-        totalConsultationUSD += fee;
+        // Create consistent variation based on project size and consultation number
+        // This ensures same input always gives same result (deterministic)
+        const baseFee = 95; // Base consultation fee
+        const variation = Math.sin(hours * 0.1 + i * 0.5) * 15; // Consistent variation based on input
+        const fee = Math.max(70, Math.min(120, baseFee + variation)); // Clamp between 70-120
+        consultationFees.push(Math.round(fee)); // Round to nearest dollar
+        totalConsultationUSD += Math.round(fee);
     }
 
     // Calculate hourly rate
@@ -771,61 +782,45 @@ async function calcRate() {
     const projectTotalConverted = projectTotalUSD * (rates ? rates[currency] : 1);
     const consultationTotalConverted = totalConsultationUSD * (rates ? rates[currency] : 1);
 
-    // Calculate payment installments
+    // Calculate payment installments with optimized logic
     let installments = [];
     let paymentDescriptions = [];
 
+    // Pre-calculate currency conversion rate once
+    const currencyRate = rates ? rates[currency] : 1;
+
     if (payConsultationSeparate && numConsultationFees > 0) {
         // Pay project cost in installments, consultation fees separately
-        if (paymentPlan.startsWith('2-')) {
-            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
-            installments = percentages.map(pct => projectTotalConverted * pct);
-            paymentDescriptions = installments.map((amount, index) =>
-                `${window.translations[currentLang].contactRatePaymentProjectLabel} ${index + 1} (Project): ${formatCurrency(amount, currency, currentLang)}`
-            );
+        const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
 
-            // Add consultation fees as separate payments
-            for (let i = 0; i < consultationFees.length; i++) {
-                const feeConverted = consultationFees[i] * (rates ? rates[currency] : 1);
-                installments.push(feeConverted);
-                paymentDescriptions.push(`${window.translations[currentLang].contactRatePaymentConsultationLabel} ${i + 1}: ${formatCurrency(feeConverted, currency, currentLang)}`);
-            }
-        } else if (paymentPlan.startsWith('3-')) {
-            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
-            installments = percentages.map(pct => projectTotalConverted * pct);
-            paymentDescriptions = installments.map((amount, index) =>
-                `${window.translations[currentLang].contactRatePaymentProjectLabel} ${index + 1} (Project): ${formatCurrency(amount, currency, currentLang)}`
-            );
+        // Add project payments
+        installments.push(...percentages.map(pct => projectTotalConverted * pct));
+        paymentDescriptions.push(...installments.slice(0, percentages.length).map((amount, index) =>
+            `${window.translations[currentLang].contactRatePaymentProjectLabel} ${index + 1} (Project): ${formatCurrency(amount, currency, currentLang)}`
+        ));
 
-            // Add consultation fees as separate payments
-            for (let i = 0; i < consultationFees.length; i++) {
-                const feeConverted = consultationFees[i] * (rates ? rates[currency] : 1);
-                installments.push(feeConverted);
-                paymentDescriptions.push(`${window.translations[currentLang].contactRatePaymentConsultationLabel} ${i + 1}: ${formatCurrency(feeConverted, currency, currentLang)}`);
-            }
-        }
+        // Add consultation fees as separate payments (convert once and cache)
+        const consultationPayments = consultationFees.map(fee => fee * currencyRate);
+        installments.push(...consultationPayments);
+        paymentDescriptions.push(...consultationPayments.map((feeConverted, i) =>
+            `${window.translations[currentLang].contactRatePaymentConsultationLabel} ${i + 1}: ${formatCurrency(feeConverted, currency, currentLang)}`
+        ));
     } else {
         // Pay everything together in installments (original logic)
-        const totalUSD = projectTotalUSD + totalConsultationUSD;
-        const totalConverted = totalUSD * (rates ? rates[currency] : 1);
+        const totalConverted = (projectTotalUSD + totalConsultationUSD) * currencyRate;
+        const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
 
-        if (paymentPlan.startsWith('2-')) {
-            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
-            installments = percentages.map(pct => totalConverted * pct);
-            paymentDescriptions = installments.map((amount, index) =>
-                `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}`
-            );
-        } else if (paymentPlan.startsWith('3-')) {
-            const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
-            installments = percentages.map(pct => totalConverted * pct);
-            paymentDescriptions = installments.map((amount, index) =>
-                `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}`
-            );
-        }
+        installments = percentages.map(pct => totalConverted * pct);
+        paymentDescriptions = installments.map((amount, index) =>
+            `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}`
+        );
     }
 
     // Show result box
     resultBox.style.display = 'block';
+
+    // Show generate receipt button
+    document.getElementById("contact-rate-generate-receipt-btn").style.display = 'inline-block';
 
     // Display results
     rateElem.innerHTML = `
@@ -918,4 +913,350 @@ function resetCalculator() {
 
     // Hide result box
     document.getElementById("resultBox").style.display = 'none';
+
+    // Hide generate receipt button
+    document.getElementById("contact-rate-generate-receipt-btn").style.display = 'none';
+}
+
+// Generate Receipt Function
+async function generateReceipt() {
+    const hours = parseFloat(document.getElementById("hoursInput").value);
+    const paymentPlan = document.getElementById("paymentPlanSelect").value;
+    const currency = document.getElementById("currencySelect").value;
+    const payConsultationSeparate = document.getElementById("consultationSeparateCheckbox").checked;
+    const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+
+    if (isNaN(hours) || hours <= 0) {
+        alert(window.translations[currentLang]?.contactRateInvalidHours || "Please enter valid hours first");
+        return;
+    }
+
+    // Load exchange rates
+    const rates = await loadExchangeRates();
+
+    // Pricing parameters
+    const Rmax = 35;   // Max rate ($)
+    const Rmin = 20;   // Min rate ($)
+    const Hmin = 8;    // Min hours for max rate
+    const Hmax = 208;  // Max hours for min rate
+
+    // Calculate consultation fees
+    const numConsultationFees = Math.floor(hours / 30);
+    let totalConsultationUSD = 0;
+    const consultationFees = [];
+
+    for (let i = 0; i < numConsultationFees; i++) {
+        const baseFee = 95;
+        const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
+        const fee = Math.max(70, Math.min(120, baseFee + variation));
+        consultationFees.push(Math.round(fee));
+        totalConsultationUSD += Math.round(fee);
+    }
+
+    // Calculate hourly rate
+    let rateUSD;
+    if (hours <= Hmin) rateUSD = Rmax;
+    else if (hours >= Hmax) rateUSD = Rmin;
+    else rateUSD = Rmax - ((Rmax - Rmin) / (Hmax - Hmin)) * (hours - Hmin);
+
+    // Calculate totals
+    const projectTotalUSD = rateUSD * hours;
+    const days = Math.ceil(hours / 8);
+
+    // Convert to selected currency
+    const rateConverted = rateUSD * (rates ? rates[currency] : 1);
+    const projectTotalConverted = projectTotalUSD * (rates ? rates[currency] : 1);
+    const consultationTotalConverted = totalConsultationUSD * (rates ? rates[currency] : 1);
+
+    // Generate PayPal payment link
+    const paypalLink = generatePayPalLink(projectTotalUSD + totalConsultationUSD, currency, `Project Development - ${hours} hours`);
+
+    // Generate WhatsApp link
+    const whatsappMessage = encodeURIComponent(
+        `Hi Azzar! I'm interested in your ${hours} hour project (${formatCurrency(projectTotalConverted, currency, currentLang)}). ` +
+        `Please find the details in the receipt I just generated. Let's discuss the next steps!`
+    );
+    const whatsappLink = `https://wa.me/+6282232529804?text=${whatsappMessage}`;
+
+    // Generate receipt content
+    const receiptHTML = `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+            <!-- Header -->
+            <div style="text-align:center;border-bottom:2px solid #0078ff;padding-bottom:20px;margin-bottom:20px;">
+                <img src="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png"
+                     alt="Azzar Budiyanto Logo"
+                     style="width:80px;height:80px;border-radius:50%;margin-bottom:10px;">
+                <h1 style="color:#0078ff;margin:0;font-size:24px;">Azzar Budiyanto</h1>
+                <p style="color:#6c757d;margin:5px 0;">Freelance Engineer & Full-Stack Developer</p>
+                <p style="color:#6c757d;margin:0;font-size:12px;">Receipt #${Date.now()}</p>
+            </div>
+
+            <!-- Project Details -->
+            <div style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px;">
+                <h3 style="color:#2c3e50;margin-top:0;"><i class="fas fa-project-diagram"></i> Project Details</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                    <div>
+                        <strong>Hours:</strong> ${hours}<br>
+                        <strong>Estimated Days:</strong> ${days}<br>
+                        <strong>Hourly Rate:</strong> ${formatCurrency(rateConverted, currency, currentLang)}<br>
+                        <strong>Currency:</strong> ${currency}
+                    </div>
+                    <div>
+                        <strong>Project Total:</strong> ${formatCurrency(projectTotalConverted, currency, currentLang)}<br>
+                        ${numConsultationFees > 0 ? `<strong>Consultation Fees:</strong> ${formatCurrency(consultationTotalConverted, currency, currentLang)}<br>` : ''}
+                        <strong>Grand Total:</strong> <span style="font-size:18px;font-weight:bold;color:#0078ff;">${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Plan -->
+            <div style="background:#e7f3ff;padding:20px;border-radius:8px;margin-bottom:20px;">
+                <h3 style="color:#2c3e50;margin-top:0;"><i class="fas fa-calendar-check"></i> Payment Plan</h3>
+                <p><strong>Plan:</strong> ${paymentPlan}</p>
+                <p><strong>Consultation Fees:</strong> ${payConsultationSeparate ? 'Paid Separately' : 'Included in installments'}</p>
+                <div style="background:white;padding:15px;border-radius:6px;margin-top:10px;">
+                    ${generatePaymentBreakdownHTML(projectTotalUSD, totalConsultationUSD, paymentPlan, currency, payConsultationSeparate, currentLang)}
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <div style="background:#fff3cd;padding:20px;border-radius:8px;margin-bottom:20px;">
+                <h3 style="color:#2c3e50;margin-top:0;"><i class="fas fa-credit-card"></i> Payment Options</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
+                    <a href="${paypalLink}" target="_blank"
+                       style="background:#0070ba;color:white;padding:12px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+                        <i class="fab fa-paypal"></i> Pay with PayPal
+                    </a>
+                    <a href="${whatsappLink}" target="_blank"
+                       style="background:#25d366;color:white;padding:12px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+                        <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+                    </a>
+                    <a href="mailto:azzar.mr.zs@gmail.com?subject=Project%20Inquiry%20-%20${hours}%20hours&body=Hi%20Azzar,%0A%0AI'm%20interested%20in%20your%20services%20for%20a%20${hours}%20hour%20project.%0A%0APlease%20find%20the%20details%20below:%0A- Total: ${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}%0A- Hours: ${hours}%0A- Currency: ${currency}%0A%0ALet's discuss the project requirements!"
+                       style="background:#ea4335;color:white;padding:12px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </a>
+                </div>
+                <div style="text-align:center;">
+                    <div id="qrContainer" style="display:inline-block;margin:10px;">
+                        <p style="margin:5px 0;font-size:12px;color:#6c757d;">Scan for WhatsApp</p>
+                        <canvas id="whatsappQR"></canvas>
+                    </div>
+                    <div id="paypalQRContainer" style="display:inline-block;margin:10px;">
+                        <p style="margin:5px 0;font-size:12px;color:#6c757d;">PayPal Payment</p>
+                        <canvas id="paypalQR"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px;font-size:12px;color:#6c757d;">
+                <h4 style="margin-top:0;color:#2c3e50;">Terms & Conditions</h4>
+                <ul style="margin:0;padding-left:20px;">
+                    ${generatePaymentTerms(paymentPlan)}
+                    <li>Project timeline: Approximately ${days} working days</li>
+                    <li>Communication via WhatsApp/Email for updates</li>
+                    <li>All rights reserved to the delivered code/assets</li>
+                    <li>Revisions included within the agreed scope</li>
+                </ul>
+            </div>
+
+            <!-- Footer -->
+            <div style="text-align:center;border-top:1px solid #dee2e6;padding-top:20px;color:#6c757d;font-size:12px;">
+                <p>Thank you for choosing Azzar Budiyanto!</p>
+                <p>Yogyakarta, Indonesia | +62 82232529804 | azzar.mr.zs@gmail.com</p>
+                <p>Generated on ${new Date().toLocaleDateString()}</p>
+            </div>
+        </div>
+    `;
+
+    // Set receipt content and show modal
+    document.getElementById('receiptContent').innerHTML = receiptHTML;
+    document.getElementById('receiptModal').style.display = 'block';
+
+    // Generate QR codes with proper error handling
+    setTimeout(() => {
+        if (typeof QRCode !== 'undefined') {
+            generateQRCode('whatsappQR', whatsappLink);
+            generateQRCode('paypalQR', paypalLink);
+        } else {
+            console.warn('QRCode library not loaded, QR codes will not be generated');
+            // Fallback: show text links instead
+            document.getElementById('whatsappQR').style.display = 'none';
+            document.getElementById('paypalQR').style.display = 'none';
+            document.getElementById('qrContainer').innerHTML = `
+                <p style="margin:5px 0;font-size:12px;color:#6c757d;">WhatsApp Contact</p>
+                <a href="${whatsappLink}" target="_blank" style="display:inline-block;padding:8px 16px;background:#25d366;color:white;text-decoration:none;border-radius:4px;font-size:12px;">Open WhatsApp</a>
+            `;
+            document.getElementById('paypalQRContainer').innerHTML = `
+                <p style="margin:5px 0;font-size:12px;color:#6c757d;">PayPal Payment</p>
+                <a href="${paypalLink}" target="_blank" style="display:inline-block;padding:8px 16px;background:#0070ba;color:white;text-decoration:none;border-radius:4px;font-size:12px;">Pay with PayPal</a>
+            `;
+        }
+    }, 500); // Increased timeout to ensure library is loaded
+}
+
+// Close Receipt Modal
+function closeReceipt() {
+    document.getElementById('receiptModal').style.display = 'none';
+}
+
+// Print Receipt
+function printReceipt() {
+    const receiptContent = document.getElementById('receiptContent').innerHTML;
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Project Receipt - Azzar Budiyanto</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+                .print-header { text-align: center; border-bottom: 2px solid #0078ff; padding-bottom: 20px; margin-bottom: 20px; }
+                .print-header img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+                .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+                .payment-breakdown { background: #f8f8f8; padding: 10px; border-radius: 6px; }
+                .total { font-size: 18px; font-weight: bold; color: #0078ff; }
+                .payment-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+                .payment-link { display: inline-block; padding: 8px 16px; background: #0078ff; color: white; text-decoration: none; border-radius: 4px; }
+                .qr-codes { text-align: center; margin: 20px 0; }
+                .qr-codes div { display: inline-block; margin: 0 20px; }
+                .terms { font-size: 12px; color: #666; }
+                .footer { text-align: center; border-top: 1px solid #ddd; padding-top: 20px; margin-top: 20px; font-size: 12px; color: #666; }
+                @media print {
+                    body { margin: 0; }
+                    .payment-links { display: none; }
+                    .qr-codes { page-break-inside: avoid; }
+                }
+            </style>
+        </head>
+        <body>
+            ${receiptContent}
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+
+    // Wait for images to load before printing
+    setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+    }, 500);
+}
+
+// Generate PayPal Payment Link
+function generatePayPalLink(amount, currency, description) {
+    // PayPal payment link structure
+    const paypalBase = 'https://www.paypal.com/cgi-bin/webscr';
+    const params = new URLSearchParams({
+        cmd: '_xclick',
+        business: 'azzar.mr.zs@gmail.com', // Replace with your PayPal email
+        item_name: description,
+        amount: amount.toFixed(2),
+        currency_code: currency,
+        return: window.location.origin + '/porto',
+        cancel_return: window.location.origin + '/porto'
+    });
+
+    return `${paypalBase}?${params.toString()}`;
+}
+
+// Generate Payment Breakdown HTML
+function generatePaymentBreakdownHTML(projectTotalUSD, consultationTotalUSD, paymentPlan, currency, payConsultationSeparate, currentLang) {
+    const rates = exchangeRates || { USD: 1, EUR: 0.85, GBP: 0.75, IDR: 15000 };
+    const currencyRate = rates[currency] || 1;
+
+    let html = '';
+    const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
+
+    if (payConsultationSeparate && Math.floor(parseFloat(document.getElementById("hoursInput").value) / 30) > 0) {
+        // Separate payments
+        html += '<h4>Project Payments:</h4>';
+        percentages.forEach((pct, index) => {
+            const amount = (projectTotalUSD * pct) * currencyRate;
+            html += `<div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                <span>Payment ${index + 1} (Project):</span>
+                <strong>${formatCurrency(amount, currency, currentLang)}</strong>
+            </div>`;
+        });
+
+        // Add consultation fees
+        const numConsultationFees = Math.floor(parseFloat(document.getElementById("hoursInput").value) / 30);
+        for (let i = 0; i < numConsultationFees; i++) {
+            const baseFee = 95;
+            const hours = parseFloat(document.getElementById("hoursInput").value);
+            const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
+            const fee = Math.max(70, Math.min(120, baseFee + variation));
+            const amount = Math.round(fee) * currencyRate;
+            html += `<div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                <span>Consultation Fee ${i + 1}:</span>
+                <strong>${formatCurrency(amount, currency, currentLang)}</strong>
+            </div>`;
+        }
+    } else {
+        // Combined payments
+        const totalUSD = projectTotalUSD + consultationTotalUSD;
+        html += '<h4>Combined Payments:</h4>';
+        percentages.forEach((pct, index) => {
+            const amount = (totalUSD * pct) * currencyRate;
+            html += `<div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                <span>Payment ${index + 1}:</span>
+                <strong>${formatCurrency(amount, currency, currentLang)}</strong>
+            </div>`;
+        });
+    }
+
+    return html;
+}
+
+// Generate Payment Terms based on Payment Plan
+function generatePaymentTerms(paymentPlan) {
+    const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p));
+    const numPayments = parseInt(paymentPlan.split('-')[0]);
+
+    let termsHTML = '';
+
+    if (numPayments === 2) {
+        termsHTML += `<li>${percentages[0]}% advance payment required to start the project</li>`;
+        termsHTML += `<li>${percentages[1]}% payment due upon project completion</li>`;
+    } else if (numPayments === 3) {
+        termsHTML += `<li>${percentages[0]}% advance payment required to start the project</li>`;
+        termsHTML += `<li>${percentages[1]}% payment due at project midpoint</li>`;
+        termsHTML += `<li>${percentages[2]}% final payment due upon project completion</li>`;
+    }
+
+    return termsHTML;
+}
+
+// Generate QR Code function
+function generateQRCode(elementId, text) {
+    const canvas = document.getElementById(elementId);
+    if (!canvas) return;
+
+    // Use QRCode library to generate proper QR code
+    QRCode.toCanvas(canvas, text, {
+        width: 120,
+        height: 120,
+        color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+        },
+        errorCorrectionLevel: 'M'
+    }, function (error) {
+        if (error) {
+            console.error('QR Code generation error:', error);
+            // Fallback to simple placeholder
+            const ctx = canvas.getContext('2d');
+            canvas.width = 120;
+            canvas.height = 120;
+            ctx.fillStyle = '#f0f0f0';
+            ctx.fillRect(0, 0, 120, 120);
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('QR Error', 60, 60);
+        }
+    });
 }
