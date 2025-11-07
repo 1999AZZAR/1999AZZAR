@@ -283,6 +283,7 @@
                         <li><a href="#home" aria-label="Home" title="Home"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li>
                         <li><a href="#about" aria-label="About" title="About"><i class="fas fa-user"></i><span class="nav-label">About</span></a></li>
                         <li><a href="#services" aria-label="Services" title="Services"><i class="fas fa-briefcase"></i><span class="nav-label">Services</span></a></li>
+                        <li><a href="#pricing" aria-label="Pricing" title="Pricing"><i class="fas fa-calculator"></i><span class="nav-label">Pricing</span></a></li>
                         <li><a href="#contact" aria-label="Contact" title="Contact"><i class="fas fa-envelope"></i><span class="nav-label">Contact</span></a></li>
                         <li><a href="#overview" aria-label="Overview" title="Overview"><i class="fas fa-project-diagram"></i><span class="nav-label">Portfolio</span></a></li>
                         <li><a href="#" id="language-toggle" aria-label="Switch Language" title="Switch Language"><i class="fas fa-globe"></i><span class="nav-label" id="language-label">EN</span></a></li>
@@ -606,6 +607,115 @@
         </div>
     </section>
 
+    <section id="pricing" class="box-container">
+        <h2 id="pricing-title"><i class="fas fa-calculator"></i></h2>
+
+        <!-- Why Choose My Services Card -->
+        <div class="service-card pricing-card">
+            <h3 id="pricing-why-title"><i class="fas fa-star"></i></h3>
+            <div class="service-card">
+                <p id="pricing-why-desc"></p>
+                <div class="pricing-benefits" style="text-align: left; margin-top: 15px;">
+                    <div style="display: flex; align-items: center; margin: 8px 0; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                        <span id="pricing-benefit-1"></span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin: 8px 0; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                        <span id="pricing-benefit-2"></span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin: 8px 0; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                        <span id="pricing-benefit-3"></span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin: 8px 0; gap: 10px;">
+                        <i class="fas fa-clock" style="color: #ffc107;"></i>
+                        <span id="pricing-benefit-4"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Card -->
+        <div class="service-card pricing-card">
+            <h3 id="pricing-calculator-title"><i class="fas fa-calculator"></i></h3>
+            <div class="service-card">
+                <p id="pricing-negotiable" style="margin-bottom: 20px; font-weight: 500;"></p>
+                <div style="max-width:420px;margin:auto;text-align:center;font-family:sans-serif;">
+                    <h3 id="pricing-rate-calculator-title" style="margin-bottom: 20px;"></h3>
+
+                    <div style="margin:15px 0;text-align:left;display:inline-block;width:80%;">
+                        <label id="pricing-hours-label" style="display:block;margin-bottom:8px;font-weight:bold;text-align:left;"></label>
+                        <input id="hoursInput" type="number" min="1" placeholder=""
+                               style="padding:12px;width:100%;border-radius:8px;border:2px solid #e1e5e9;font-size:16px;">
+                    </div>
+
+                    <div style="margin:15px 0;text-align:left;display:inline-block;width:80%;">
+                        <label id="pricing-payment-label" style="display:block;margin-bottom:8px;font-weight:bold;text-align:left;"></label>
+                        <select id="paymentPlanSelect" style="padding:12px;width:100%;border-radius:8px;border:2px solid #e1e5e9;font-size:16px;">
+                            <option value="2-40-60" id="payment-option-1"></option>
+                            <option value="2-60-40" id="payment-option-2"></option>
+                            <option value="3-20-30-40" id="payment-option-3"></option>
+                            <option value="3-40-30-20" id="payment-option-4"></option>
+                        </select>
+                        <div style="margin-top:10px;text-align:left;">
+                            <label style="display:flex;align-items:center;font-size:14px;">
+                                <input type="checkbox" id="consultationSeparateCheckbox" style="margin-right:8px;transform:scale(1.2);">
+                                <span id="pricing-consultation-separate"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin:15px 0;text-align:left;display:inline-block;width:80%;">
+                        <label id="pricing-currency-label" style="display:block;margin-bottom:8px;font-weight:bold;text-align:left;"></label>
+                        <select id="currencySelect" style="padding:12px;width:100%;border-radius:8px;border:2px solid #e1e5e9;font-size:16px;">
+                            <option value="USD" id="currency-option-usd"></option>
+                            <option value="EUR" id="currency-option-eur"></option>
+                            <option value="GBP" id="currency-option-gbp"></option>
+                            <option value="IDR" id="currency-option-idr"></option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex;gap:15px;margin-top:20px;">
+                        <button onclick="calcRate()" id="pricing-calculate-btn"
+                                style="flex:1;padding:12px 20px;border:none;border-radius:8px;
+                                background:linear-gradient(135deg,#667eea,#764ba2);color:white;cursor:pointer;font-weight:600;font-size:16px;transform: translateY(0);transition:all 0.3s ease;"></button>
+                        <button onclick="resetCalculator()" id="pricing-reset-btn"
+                                style="flex:1;padding:12px 20px;border:2px solid #6c757d;border-radius:8px;
+                                background:white;color:#6c757d;cursor:pointer;font-weight:600;font-size:16px;transform: translateY(0);transition:all 0.3s ease;"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="service-card pricing-card" id="results-card" style="display: none;">
+            <h3 id="pricing-results-title"><i class="fas fa-chart-line"></i></h3>
+            <div class="service-card">
+                <div id="resultBox" style="background:#f8f9fa;border-radius:12px;padding:20px;border:1px solid #e9ecef;margin-bottom:20px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
+                        <div id="rateResult" style="background:white;padding:15px;border-radius:8px;border-left:4px solid #0078ff;font-weight:600;color:#2c3e50;text-align:center;"></div>
+                        <div id="daysResult" style="background:white;padding:15px;border-radius:8px;border-left:4px solid #28a745;font-weight:600;color:#2c3e50;text-align:center;"></div>
+                    </div>
+                    <div id="totalResult" style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:18px;border-radius:8px;font-weight:700;font-size:18px;text-align:center;margin-bottom:15px;"></div>
+                </div>
+
+                <div id="paymentBreakdown" style="margin-top:20px;display:none;">
+                    <div id="pricing-payment-breakdown" style="font-weight:700;font-size:16px;color:#2c3e50;margin-bottom:12px;text-align:center;"></div>
+                    <div id="paymentSteps" style="display:grid;gap:8px;"></div>
+                </div>
+
+                <div style="text-align:center;margin-top:20px;">
+                    <button onclick="generateReceipt()" id="pricing-generate-receipt-btn"
+                            style="padding:12px 25px;border:2px solid #28a745;border-radius:8px;
+                            background:#28a745;color:white;cursor:pointer;font-weight:600;font-size:16px;display:none;transform: translateY(0);transition:all 0.3s ease;">
+                        <i class="fas fa-receipt"></i> Generate Receipt & Pay
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="box-container">
         <h2 id="contact-title"><i class="fas fa-envelope"></i></h2>
         <div class="service-card">
@@ -691,76 +801,11 @@
             </div>
         </div>
 
-        <div class="service-card">
-            <h3 id="contact-rate-title"><i class="fas fa-calculator"></i> </h3>
-            <div class="service-card">
-                <p id="contact-rate-negotiable"></p>
-                <div style="max-width:420px;margin:auto;text-align:center;font-family:sans-serif;">
-                    <h3 id="contact-rate-calculator-title"></h3>
-                    <p id="contact-rate-hours-label"></p>
-                    <input id="hoursInput" type="number" min="1" placeholder=""
-                           style="padding:8px;width:80%;border-radius:8px;border:1px solid #ccc;">
-
-                    <div style="margin:15px 0;text-align:left;display:inline-block;width:80%;">
-                        <label id="contact-rate-payment-label" style="display:block;margin-bottom:5px;font-weight:bold;"></label>
-                        <select id="paymentPlanSelect" style="padding:8px;width:100%;border-radius:8px;border:1px solid #ccc;">
-                            <option value="2-40-60" id="payment-option-1"></option>
-                            <option value="2-60-40" id="payment-option-2"></option>
-                            <option value="3-20-30-40" id="payment-option-3"></option>
-                            <option value="3-40-30-20" id="payment-option-4"></option>
-                        </select>
-                        <div style="margin-top:10px;text-align:left;">
-                            <label style="display:flex;align-items:center;font-size:14px;">
-                                <input type="checkbox" id="consultationSeparateCheckbox" style="margin-right:6px;">
-                                <span id="consultation-separate-checkbox"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div style="margin:15px 0;text-align:left;display:inline-block;width:80%;">
-                        <label id="contact-rate-currency-label" style="display:block;margin-bottom:5px;font-weight:bold;"></label>
-                        <select id="currencySelect" style="padding:8px;width:100%;border-radius:8px;border:1px solid #ccc;">
-                            <option value="USD" id="currency-option-usd"></option>
-                            <option value="EUR" id="currency-option-eur"></option>
-                            <option value="GBP" id="currency-option-gbp"></option>
-                            <option value="IDR" id="currency-option-idr"></option>
-                        </select>
-                    </div>
-
-                    <div style="display:flex;gap:10px;margin-top:10px;">
-                        <button onclick="calcRate()" id="contact-rate-calculate-btn"
-                                style="flex:1;padding:8px 16px;border:none;border-radius:8px;
-                                background:#0078ff;color:white;cursor:pointer;font-weight:600;"></button>
-                        <button onclick="resetCalculator()" id="contact-rate-reset-btn"
-                                style="flex:1;padding:8px 16px;border:2px solid #6c757d;border-radius:8px;
-                                background:white;color:#6c757d;cursor:pointer;font-weight:600;"></button>
-                    </div>
-                    <div style="margin-top:15px;text-align:center;">
-                        <button onclick="generateReceipt()" id="contact-rate-generate-receipt-btn"
-                                style="padding:10px 20px;border:2px solid #28a745;border-radius:8px;
-                                background:#28a745;color:white;cursor:pointer;font-weight:600;display:none;">
-                            <i class="fas fa-receipt"></i> Generate Receipt & Pay
-                        </button>
-                    </div>
-                    <div id="resultBox" style="margin-top:20px;background:#f8f9fa;border-radius:12px;padding:20px;border:1px solid #e9ecef;">
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
-                            <div id="rateResult" style="background:white;padding:12px;border-radius:8px;border-left:4px solid #0078ff;font-weight:600;color:#2c3e50;"></div>
-                            <div id="daysResult" style="background:white;padding:12px;border-radius:8px;border-left:4px solid #28a745;font-weight:600;color:#2c3e50;"></div>
-                        </div>
-                        <div id="totalResult" style="background:linear-gradient(135deg,#0078ff,#0056b3);color:white;padding:15px;border-radius:8px;font-weight:700;font-size:16px;text-align:center;margin-bottom:15px;"></div>
-                    </div>
-                    <div id="paymentBreakdown" style="margin-top:20px;display:none;">
-                        <div id="contact-rate-payment-breakdown" style="font-weight:700;font-size:16px;color:#2c3e50;margin-bottom:12px;text-align:center;"></div>
-                        <div id="paymentSteps" style="display:grid;gap:8px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- Receipt Modal -->
     <div id="receiptModal" class="receipt-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;padding:20px;box-sizing:border-box;">
-        <div class="receipt-container" style="max-width:800px;margin:0 auto;background:white;border-radius:12px;padding:30px;max-height:90vh;overflow-y:auto;">
+        <div class="receipt-container" style="max-width:775px;margin:0 auto;background:white;border-radius:12px;padding:30px;max-height:97vh;overflow-y:auto;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
                 <h2 style="margin:0;color:#2c3e50;"><i class="fas fa-receipt"></i> Project Receipt</h2>
                 <div style="display:flex;gap:10px;">

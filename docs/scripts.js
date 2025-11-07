@@ -729,7 +729,7 @@ async function calcRate() {
     // Enhanced input validation
     if (isNaN(hours) || hours <= 0 || hours > 10000) {
         rateElem.innerText = "";
-        totalElem.innerText = window.translations[currentLang]?.contactRateInvalidHours || "Please enter valid hours (1-10000)";
+        totalElem.innerText = window.translations[currentLang]?.pricingInvalidHours || "Please enter valid hours (1-10000)";
         daysElem.innerText = "";
         paymentBreakdown.style.display = 'none';
         resultBox.style.display = 'none';
@@ -796,14 +796,14 @@ async function calcRate() {
         // Add project payments
         installments.push(...percentages.map(pct => projectTotalConverted * pct));
         paymentDescriptions.push(...installments.slice(0, percentages.length).map((amount, index) =>
-            `${window.translations[currentLang].contactRatePaymentProjectLabel} ${index + 1} (Project): ${formatCurrency(amount, currency, currentLang)}`
+            `${window.translations[currentLang].pricingPaymentProjectLabel} ${index + 1} (Project): ${formatCurrency(amount, currency, currentLang)}`
         ));
 
         // Add consultation fees as separate payments (convert once and cache)
         const consultationPayments = consultationFees.map(fee => fee * currencyRate);
         installments.push(...consultationPayments);
         paymentDescriptions.push(...consultationPayments.map((feeConverted, i) =>
-            `${window.translations[currentLang].contactRatePaymentConsultationLabel} ${i + 1}: ${formatCurrency(feeConverted, currency, currentLang)}`
+            `${window.translations[currentLang].pricingPaymentConsultationLabel} ${i + 1}: ${formatCurrency(feeConverted, currency, currentLang)}`
         ));
     } else {
         // Pay everything together in installments (original logic)
@@ -819,15 +819,18 @@ async function calcRate() {
     // Show result box
     resultBox.style.display = 'block';
 
+    // Show results card
+    document.getElementById("results-card").style.display = 'block';
+
     // Show generate receipt button
-    document.getElementById("contact-rate-generate-receipt-btn").style.display = 'inline-block';
+    document.getElementById("pricing-generate-receipt-btn").style.display = 'inline-block';
 
     // Display results
     rateElem.innerHTML = `
         <div style="display:flex;align-items:center;gap:8px;">
             <i class="fas fa-dollar-sign" style="color:#0078ff;font-size:18px;"></i>
             <div>
-                <div style="font-size:12px;color:#6c757d;margin-bottom:2px;">${window.translations[currentLang].contactRateResultRate}</div>
+                <div style="font-size:12px;color:#6c757d;margin-bottom:2px;">${window.translations[currentLang].pricingResultRate}</div>
                 <div style="font-size:16px;">${formatCurrency(rateConverted, currency, currentLang)}/hour</div>
             </div>
         </div>
@@ -837,16 +840,16 @@ async function calcRate() {
         <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
             <i class="fas fa-calculator" style="font-size:20px;"></i>
             <div>
-                <div style="font-size:14px;margin-bottom:4px;">${window.translations[currentLang].contactRateResultTotal}</div>
+                <div style="font-size:14px;margin-bottom:4px;">${window.translations[currentLang].pricingResultTotal}</div>
                 <div style="font-size:18px;">${formatCurrency(projectTotalConverted, currency, currentLang)}</div>
                 <div style="font-size:12px;margin-top:2px;">for ${hours} hours</div>
     `;
 
     if (numConsultationFees > 0) {
         if (payConsultationSeparate) {
-            totalHTML += `<div style="font-size:12px;margin-top:4px;color:#ffc107;">+ ${formatCurrency(consultationTotalConverted, currency, currentLang)} ${window.translations[currentLang].contactRateConsultationFeesPaidSeparately}</div>`;
+            totalHTML += `<div style="font-size:12px;margin-top:4px;color:#ffc107;">+ ${formatCurrency(consultationTotalConverted, currency, currentLang)} ${window.translations[currentLang].pricingConsultationFeesPaidSeparately}</div>`;
         } else {
-            totalHTML += `<div style="font-size:12px;margin-top:4px;">(${formatCurrency(consultationTotalConverted, currency, currentLang)} ${window.translations[currentLang].contactRateConsultationIncluded})</div>`;
+            totalHTML += `<div style="font-size:12px;margin-top:4px;">(${formatCurrency(consultationTotalConverted, currency, currentLang)} ${window.translations[currentLang].pricingConsultationIncluded})</div>`;
         }
     }
 
@@ -857,7 +860,7 @@ async function calcRate() {
         <div style="display:flex;align-items:center;gap:8px;">
             <i class="fas fa-calendar-alt" style="color:#28a745;font-size:18px;"></i>
             <div>
-                <div style="font-size:12px;color:#6c757d;margin-bottom:2px;">${window.translations[currentLang].contactRateResultDays}</div>
+                <div style="font-size:12px;color:#6c757d;margin-bottom:2px;">${window.translations[currentLang].pricingResultDays}</div>
                 <div style="font-size:16px;">${days} days</div>
                 <div style="font-size:12px;color:#6c757d;">${hours} hours total</div>
             </div>
@@ -914,8 +917,11 @@ function resetCalculator() {
     // Hide result box
     document.getElementById("resultBox").style.display = 'none';
 
+    // Hide results card
+    document.getElementById("results-card").style.display = 'none';
+
     // Hide generate receipt button
-    document.getElementById("contact-rate-generate-receipt-btn").style.display = 'none';
+    document.getElementById("pricing-generate-receipt-btn").style.display = 'none';
 }
 
 // Generate Receipt Function
@@ -927,7 +933,7 @@ async function generateReceipt() {
     const currentLang = localStorage.getItem('selectedLanguage') || 'en';
 
     if (isNaN(hours) || hours <= 0) {
-        alert(window.translations[currentLang]?.contactRateInvalidHours || "Please enter valid hours first");
+        alert(window.translations[currentLang]?.pricingInvalidHours || "Please enter valid hours first");
         return;
     }
 
