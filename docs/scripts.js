@@ -8,7 +8,7 @@ const PerformanceUtils = {
             timeoutId = setTimeout(() => func.apply(null, args), delay);
         };
     },
-    
+
     // Throttle function for performance-critical operations
     throttle: (func, limit) => {
         let inThrottle;
@@ -20,10 +20,10 @@ const PerformanceUtils = {
             }
         };
     },
-    
+
     // Check if animations should be reduced (respects user preference)
     reduceMotion: () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-    
+
     // Optimize animation frame scheduling
     scheduleAnimation: (callback) => {
         if (!document.hidden && !PerformanceUtils.reduceMotion()) {
@@ -32,6 +32,263 @@ const PerformanceUtils = {
             // Fallback for reduced motion or hidden tab
             setTimeout(callback, 16); // ~60fps fallback
         }
+    }
+};
+
+// Header Spacing Utilities - Ensures sections are not covered by fixed header
+const HeaderSpacingUtils = {
+    // Get current header height including any dynamic changes
+    getHeaderHeight: () => {
+        const header = document.querySelector('header');
+        if (!header) return 0;
+
+        // Get computed height to account for dynamic changes
+        const computedStyle = window.getComputedStyle(header);
+        const height = header.offsetHeight;
+
+        // Add small buffer for visual separation
+        return height + 20; // 20px buffer
+    },
+
+    // Adjust section spacing based on header height
+    adjustSectionSpacing: () => {
+        const headerHeight = HeaderSpacingUtils.getHeaderHeight();
+        const sections = document.querySelectorAll('section[id]');
+
+        sections.forEach(section => {
+            // Skip home section if header is fullscreen
+            if (section.id === 'home') {
+                const header = document.querySelector('header');
+                if (header && header.classList.contains('fullscreen')) {
+                    // Home section gets minimal spacing when header is fullscreen
+                    section.style.paddingTop = '2rem';
+                    section.style.marginTop = '0';
+                    return;
+                }
+            }
+
+            // Apply dynamic spacing for other sections
+            if (ViewportUtils.isMobile()) {
+                // On mobile, use padding-top instead of margin-top for better control
+                section.style.paddingTop = `${headerHeight}px`;
+                section.style.marginTop = '0';
+                section.style.scrollMarginTop = `${headerHeight}px`;
+            } else {
+                // On desktop, use margin-top for cleaner spacing
+                section.style.marginTop = `${headerHeight}px`;
+                section.style.paddingTop = '';
+                section.style.scrollMarginTop = `${headerHeight}px`;
+            }
+        });
+    },
+
+    // Initialize header spacing adjustments
+    init: () => {
+        // Initial adjustment
+        HeaderSpacingUtils.adjustSectionSpacing();
+
+        // Adjust on header class changes (fullscreen/top toggle)
+        const headerObserver = new MutationObserver(PerformanceUtils.debounce(() => {
+            HeaderSpacingUtils.adjustSectionSpacing();
+        }, 100));
+
+        const header = document.querySelector('header');
+        if (header) {
+            headerObserver.observe(header, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        }
+
+        // Adjust on resize
+        const handleResize = PerformanceUtils.throttle(() => {
+            HeaderSpacingUtils.adjustSectionSpacing();
+        }, 100);
+
+        window.addEventListener('resize', handleResize);
+
+        // Adjust on orientation change
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                HeaderSpacingUtils.adjustSectionSpacing();
+            }, 100);
+        });
+
+        console.log('Header spacing adjustments initialized');
+    }
+};
+
+// Viewport Containment Utilities - Prevents elements from rendering outside viewport on mobile
+const ViewportUtils = {
+    // Check if device is mobile/tablet
+    isMobile: () => window.innerWidth <= 1024,
+
+    // Get safe viewport dimensions (accounting for mobile browser UI)
+    getSafeViewport: () => {
+        const viewport = {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+
+        // Account for mobile browser UI (address bar, etc.)
+        if (ViewportUtils.isMobile()) {
+            // On mobile, viewport height can change when scrolling
+            const visualViewport = window.visualViewport;
+            if (visualViewport) {
+                viewport.width = visualViewport.width;
+                viewport.height = visualViewport.height;
+                viewport.offsetX = visualViewport.offsetLeft;
+                viewport.offsetY = visualViewport.offsetTop;
+            }
+        }
+
+        return viewport;
+    },
+
+    // Constrain element position and size within viewport
+    constrainToViewport: (element, options = {}) => {
+        if (!element || !ViewportUtils.isMobile()) return;
+
+        const viewport = ViewportUtils.getSafeViewport();
+        const rect = element.getBoundingClientRect();
+
+        // Default options
+        const settings = {
+            margin: 8, // Minimum margin from viewport edges
+            maxWidth: true,
+            maxHeight: true,
+            centerIfNeeded: false,
+            ...options
+        };
+
+        let needsAdjustment = false;
+        const styles = {};
+
+        // Check horizontal overflow
+        if (settings.maxWidth && (rect.right > viewport.width - settings.margin || rect.left < settings.margin)) {
+            const maxWidth = viewport.width - (settings.margin * 2);
+            if (rect.width > maxWidth) {
+                styles.width = `${maxWidth}px`;
+                styles.maxWidth = `${maxWidth}px`;
+                needsAdjustment = true;
+            }
+
+            // Center element if it's wider than viewport
+            if (settings.centerIfNeeded && rect.width >= viewport.width - (settings.margin * 2)) {
+                styles.left = `${settings.margin}px`;
+                styles.right = `${settings.margin}px`;
+                styles.marginLeft = 'auto';
+                styles.marginRight = 'auto';
+            }
+        }
+
+        // Check vertical overflow
+        if (settings.maxHeight && (rect.bottom > viewport.height - settings.margin || rect.top < settings.margin)) {
+            const maxHeight = viewport.height - (settings.margin * 2);
+            if (rect.height > maxHeight) {
+                styles.height = `${maxHeight}px`;
+                styles.maxHeight = `${maxHeight}px`;
+                styles.overflowY = 'auto';
+                needsAdjustment = true;
+            }
+        }
+
+        // Apply adjustments if needed
+        if (needsAdjustment) {
+            Object.assign(element.style, styles);
+        }
+
+        return needsAdjustment;
+    },
+
+    // Fix common problematic elements
+    fixCommonElements: () => {
+        if (!ViewportUtils.isMobile()) return;
+
+        const viewport = ViewportUtils.getSafeViewport();
+
+        // Fix navigation elements
+        const navElements = document.querySelectorAll('header nav ul');
+        navElements.forEach(nav => {
+            ViewportUtils.constrainToViewport(nav, {
+                margin: 4,
+                maxWidth: true,
+                centerIfNeeded: true
+            });
+        });
+
+        // Fix modal elements
+        const modals = document.querySelectorAll('.modal, .receipt-modal');
+        modals.forEach(modal => {
+            const modalContent = modal.querySelector('.modal-content, .receipt-container');
+            if (modalContent) {
+                ViewportUtils.constrainToViewport(modalContent, {
+                    margin: 10,
+                    maxWidth: true,
+                    maxHeight: true
+                });
+            }
+        });
+
+        // Fix service cards
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            ViewportUtils.constrainToViewport(card, {
+                margin: 8,
+                maxWidth: true
+            });
+        });
+
+        // Fix calculator inputs
+        const calculator = document.querySelector('#pricing-calculator');
+        if (calculator) {
+            ViewportUtils.constrainToViewport(calculator, {
+                margin: 10,
+                maxWidth: true
+            });
+        }
+    },
+
+    // Initialize viewport containment
+    init: () => {
+        // Initial fix
+        ViewportUtils.fixCommonElements();
+
+        // Fix on resize (throttled for performance)
+        const handleResize = PerformanceUtils.throttle(() => {
+            ViewportUtils.fixCommonElements();
+        }, 100);
+
+        window.addEventListener('resize', handleResize);
+
+        // Fix on orientation change (mobile specific)
+        window.addEventListener('orientationchange', () => {
+            // Delay to account for mobile browser UI changes
+            setTimeout(() => {
+                ViewportUtils.fixCommonElements();
+            }, 100);
+        });
+
+        // Fix when visual viewport changes (mobile keyboard, etc.)
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', PerformanceUtils.throttle(() => {
+                ViewportUtils.fixCommonElements();
+            }, 50));
+        }
+
+        // Fix after dynamic content loads
+        const observer = new MutationObserver(PerformanceUtils.debounce(() => {
+            ViewportUtils.fixCommonElements();
+        }, 200));
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style', 'class']
+        });
+
+        console.log('Viewport containment initialized for mobile devices');
     }
 };
 
@@ -456,6 +713,12 @@ function restoreActiveSection() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize viewport containment for mobile devices
+    ViewportUtils.init();
+
+    // Initialize header spacing adjustments
+    HeaderSpacingUtils.init();
+
     // Fetch and sort projects when the page loads
     fetchAndSortProjects();
 
@@ -498,6 +761,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetId === 'overview') {
                 switchOverviewView(currentView);
             }
+
+            // Adjust header spacing for the new active section
+            setTimeout(() => {
+                HeaderSpacingUtils.adjustSectionSpacing();
+            }, 100); // Small delay to ensure header class changes are applied
 
             // Scroll to the top of the page
             window.scrollTo({
@@ -851,12 +1119,17 @@ async function calcRate() {
         </div>
     `;
 
+    // Calculate the total amount to display
+    const totalAmountToDisplay = payConsultationSeparate ?
+        projectTotalConverted :
+        projectTotalConverted + consultationTotalConverted;
+
     let totalHTML = `
         <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
             <i class="fas fa-calculator" style="font-size:20px;"></i>
             <div>
                 <div style="font-size:14px;margin-bottom:4px;">${window.translations[currentLang].pricingResultTotal}</div>
-                <div style="font-size:18px;">${formatCurrency(projectTotalConverted, currency, currentLang)}</div>
+                <div style="font-size:18px;">${formatCurrency(totalAmountToDisplay, currency, currentLang)}</div>
                 <div style="font-size:12px;margin-top:2px;">for ${hours} hours</div>
     `;
 
@@ -1043,11 +1316,10 @@ async function generateReceipt() {
             <!-- Payment Options -->
             <div style="background:#fff3cd;padding:20px;border-radius:8px;margin-bottom:20px;">
                 <h3 style="color:#2c3e50;margin-top:0;"><i class="fas fa-credit-card"></i> Payment Options</h3>
+                <div style="margin-bottom:15px;">
+                    ${generatePaymentOptionsHTML(projectTotalUSD, totalConsultationUSD, paymentPlan, currency, payConsultationSeparate, currentLang, hours)}
+                </div>
                 <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
-                    <a href="${paypalLink}" target="_blank"
-                       style="background:#0070ba;color:white;padding:12px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-                        <i class="fab fa-paypal"></i> Pay with PayPal
-                    </a>
                     <a href="${whatsappLink}" target="_blank"
                        style="background:#25d366;color:white;padding:12px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
                         <i class="fab fa-whatsapp"></i> Contact via WhatsApp
@@ -1062,10 +1334,16 @@ async function generateReceipt() {
                         <p style="margin:5px 0;font-size:12px;color:#6c757d;">Scan for WhatsApp</p>
                         <canvas id="whatsappQR"></canvas>
                     </div>
+                    ${paymentPlan === '1-100' ? `
                     <div id="paypalQRContainer" style="display:inline-block;margin:10px;">
                         <p style="margin:5px 0;font-size:12px;color:#6c757d;">PayPal Payment</p>
                         <canvas id="paypalQR"></canvas>
                     </div>
+                    ` : `
+                    <div style="display:inline-block;margin:10px;padding:20px;background:#f8f9fa;border-radius:8px;">
+                        <p style="margin:0;font-size:12px;color:#6c757d;">For installment payments,<br>contact via WhatsApp or Email</p>
+                    </div>
+                    `}
                 </div>
             </div>
 
@@ -1184,6 +1462,74 @@ function generatePayPalLink(amount, currency, description) {
     return `${paypalBase}?${params.toString()}`;
 }
 
+// Generate Payment Options HTML
+function generatePaymentOptionsHTML(projectTotalUSD, consultationTotalUSD, paymentPlan, currency, payConsultationSeparate, currentLang, hours) {
+    const rates = exchangeRates || { USD: 1, EUR: 0.85, GBP: 0.75, IDR: 15000 };
+    const currencyRate = rates[currency] || 1;
+    const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
+    const numPayments = parseInt(paymentPlan.split('-')[0]);
+
+    let html = '';
+
+    if (numPayments === 1) {
+        // Single payment - show PayPal link
+        const totalAmount = (projectTotalUSD + consultationTotalUSD) * currencyRate;
+        const paypalLink = generatePayPalLink(projectTotalUSD + consultationTotalUSD, currency, `Project Development - ${hours} hours`);
+        html += `
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin-bottom:10px;">
+                <h4 style="margin:0 0 10px 0;color:#2c3e50;">Full Payment</h4>
+                <p style="margin:5px 0;font-size:14px;">Total: <strong>${formatCurrency(totalAmount, currency, currentLang)}</strong></p>
+                <a href="${paypalLink}" target="_blank"
+                   style="background:#0070ba;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
+                    <i class="fab fa-paypal"></i> Pay Full Amount
+                </a>
+            </div>
+        `;
+    } else {
+        // Installment payments - show breakdown with contact instruction
+        html += `
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin-bottom:10px;">
+                <h4 style="margin:0 0 10px 0;color:#2c3e50;">${numPayments} Payment Installments</h4>
+                <p style="margin:5px 0;font-size:14px;color:#6c757d;">Please contact me via WhatsApp or Email to arrange installment payments</p>
+                <div style="margin-top:10px;padding:10px;background:#fff;border-radius:4px;">
+        `;
+
+        if (payConsultationSeparate && Math.floor(hours / 30) > 0) {
+            // Separate payments
+            const numConsultationFees = Math.floor(hours / 30);
+            html += '<strong>Project Payments:</strong><br>';
+            percentages.forEach((pct, index) => {
+                const amount = (projectTotalUSD * pct) * currencyRate;
+                html += `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}<br>`;
+            });
+
+            html += '<br><strong>Consultation Fees:</strong><br>';
+            for (let i = 0; i < numConsultationFees; i++) {
+                const baseFee = 95;
+                const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
+                const fee = Math.max(70, Math.min(120, baseFee + variation));
+                const amount = Math.round(fee) * currencyRate;
+                html += `Consultation Fee ${i + 1}: ${formatCurrency(amount, currency, currentLang)}<br>`;
+            }
+        } else {
+            // Combined payments
+            const totalUSD = projectTotalUSD + consultationTotalUSD;
+            html += '<strong>Combined Payments:</strong><br>';
+            percentages.forEach((pct, index) => {
+                const amount = (totalUSD * pct) * currencyRate;
+                html += `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}<br>`;
+            });
+        }
+
+        html += `
+                </div>
+            </div>
+        `;
+    }
+
+    return html;
+}
+
 // Generate Payment Breakdown HTML
 function generatePaymentBreakdownHTML(projectTotalUSD, consultationTotalUSD, paymentPlan, currency, payConsultationSeparate, currentLang) {
     const rates = exchangeRates || { USD: 1, EUR: 0.85, GBP: 0.75, IDR: 15000 };
@@ -1239,7 +1585,10 @@ function generatePaymentTerms(paymentPlan) {
 
     let termsHTML = '';
 
-    if (numPayments === 2) {
+    if (numPayments === 1) {
+        termsHTML += `<li>100% payment required to start the project</li>`;
+        termsHTML += `<li>Project begins immediately after payment confirmation</li>`;
+    } else if (numPayments === 2) {
         termsHTML += `<li>${percentages[0]}% advance payment required to start the project</li>`;
         termsHTML += `<li>${percentages[1]}% payment due upon project completion</li>`;
     } else if (numPayments === 3) {

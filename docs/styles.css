@@ -83,7 +83,8 @@ a:-webkit-any-link {
 .box-container {
     background: var(--glass-background);
     border-radius: var(--radius-container);
-    margin: 15rem auto 2rem auto;
+    /* Dynamic margin handled by HeaderSpacingUtils */
+    margin: 2rem auto;
     padding: 2rem;
     max-width: calc(1200px - (4rem));
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
@@ -92,7 +93,6 @@ a:-webkit-any-link {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    scroll-margin-top: 60px;
 }
 
 .box-container.animated {
@@ -856,17 +856,17 @@ div#skills {
     margin-right: 0;
 }
 
-/* Enhanced Arabic Typography */
-[dir="rtl"] * {
+/* Enhanced Typography for All Languages (Arabic-style rendering) */
+* {
     font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-[dir="rtl"] p,
-[dir="rtl"] .service-card p,
-[dir="rtl"] .service-card ul li {
+p,
+.service-card p,
+.service-card ul li {
     line-height: 1.8;
     word-spacing: 0.1em;
     letter-spacing: 0.02em;
@@ -877,12 +877,19 @@ div#skills {
     -ms-hyphens: auto;
 }
 
+h1,
+h2,
+h3,
+h4 {
+    line-height: 1.4;
+    word-spacing: 0.05em;
+}
+
+/* RTL-specific layout overrides */
 [dir="rtl"] h1,
 [dir="rtl"] h2,
 [dir="rtl"] h3,
 [dir="rtl"] h4 {
-    line-height: 1.4;
-    word-spacing: 0.05em;
     text-align: right;
 }
 
@@ -1125,6 +1132,11 @@ div#skills {
         font-size: 14px;
         line-height: 1.6;
         padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    html {
+        overflow-x: hidden; /* Prevent horizontal scrolling */
     }
 
     .container {
@@ -1150,9 +1162,11 @@ div#skills {
     }
 
     .box-container {
-        margin: 12rem 1rem 1rem 1rem;
-        padding: 1.5rem;
-        max-width: 95vw;
+        /* Dynamic margin handled by HeaderSpacingUtils */
+        margin: 1rem;
+        padding: 1rem;
+        max-width: calc(100vw - 2rem);
+        overflow-x: hidden;
     }
 
     header .logo h1 {
@@ -1166,7 +1180,8 @@ div#skills {
     }
 
     header nav ul {
-        gap: 0.5rem;
+        gap: 0.3rem;
+        padding: 0 0.5rem;
     }
 
     header nav ul li {
@@ -1326,8 +1341,13 @@ div#skills {
         transform: none;
     }
 
+    /* Completely disable floating shapes on mobile for better performance */
+    .floating-shapes {
+        display: none !important;
+    }
+
     .shape {
-        animation-duration: 30s; /* Slower animation on mobile */
+        display: none !important;
     }
 
     .color-btn:hover {
@@ -1387,26 +1407,35 @@ div#skills {
         letter-spacing: 0.03em;
     }
 
-    [dir="rtl"] .service-card h3 {
+    .service-card h3 {
         font-size: 1.1rem;
-        line-height: 1.5;
+        line-height: 1.3;
         margin-bottom: 0.75rem;
-        text-align: right;
         word-spacing: 0.08em;
     }
 
-    [dir="rtl"] .box-container h2 {
+    [dir="rtl"] .service-card h3 {
+        text-align: right;
+    }
+
+    .box-container h2 {
         font-size: 1.6rem;
-        line-height: 1.4;
+        line-height: 1.3;
+        word-spacing: 0.08em;
+    }
+
+    header .logo h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        word-spacing: 0.05em;
+    }
+
+    [dir="rtl"] .box-container h2 {
         text-align: center;
-        word-spacing: 0.1em;
     }
 
     [dir="rtl"] header .logo h1 {
-        font-size: 2rem;
-        line-height: 1.3;
         text-align: center;
-        word-spacing: 0.05em;
     }
 
     [dir="rtl"] .service-card ul li {
@@ -1762,14 +1791,20 @@ div#skills {
 
 /* Small mobile devices - Enhanced responsive design */
 @media (max-width: 480px) {
+    body, html {
+        overflow-x: hidden; /* Extra prevention for very small screens */
+    }
+
     .container {
-        padding: 1rem;
+        padding: 0.5rem;
     }
     
     .box-container {
-        margin: 12rem 1rem 2rem 1rem;
-        padding: 1rem;
-        max-width: calc(100% - 2rem);
+        /* Dynamic margin handled by HeaderSpacingUtils */
+        margin: 0.5rem;
+        padding: 0.8rem;
+        max-width: calc(100vw - 1rem);
+        overflow-x: hidden;
     }
     
     .service-card {
@@ -1784,24 +1819,23 @@ div#skills {
     
     .service-card h3 {
         font-size: 1rem;
-        line-height: 1.4;
+        line-height: 1.3;
         word-wrap: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
     }
-    
+
     .service-card p {
         font-size: 0.85rem;
-        line-height: 1.5;
-        text-align: left;
+        line-height: 1.7;
         word-wrap: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
     }
-    
+
     .service-card ul li {
         font-size: 0.85rem;
-        line-height: 1.4;
+        line-height: 1.7;
         word-wrap: break-word;
         overflow-wrap: break-word;
         flex-wrap: wrap;
@@ -1818,17 +1852,31 @@ div#skills {
     
     header nav ul {
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 0.2rem;
+        justify-content: center;
+        padding: 0 0.2rem;
+        max-width: 100vw;
+    }
+
+    header nav ul li {
+        min-width: 0;
+        flex-shrink: 1;
+    }
+
+    header nav ul li a {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: 44px; /* Better touch target */
+        display: flex;
+        align-items: center;
         justify-content: center;
     }
-    
-    header nav ul li a {
-        width: 55px;
-        height: 55px;
-        font-size: 1.1rem;
-        padding: 0.3rem;
-        gap: 0.15rem;
-        flex-direction: column;
+
+    header nav ul li a i {
+        font-size: 1rem;
     }
 
     header nav ul li a .nav-label {
@@ -2104,8 +2152,29 @@ div#skills {
     /* Button spacing on mobile */
     #pricing-calculate-btn,
     #pricing-reset-btn {
-        padding: 10px 15px !important;
+        padding: 12px 16px !important;
         font-size: 15px !important;
+        min-height: 44px !important; /* Better touch target */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Better touch targets for social links */
+    .social-links a {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Improve form inputs touch targets */
+    input[type="number"],
+    input[type="text"],
+    select {
+        min-height: 44px;
+        font-size: 16px; /* Prevent zoom on iOS */
     }
 }
 
