@@ -1186,6 +1186,7 @@ async function calcRate() {
 function resetCalculator() {
     // Clear input fields
     document.getElementById("hoursInput").value = "";
+    document.getElementById("projectDescriptionInput").value = "";
 
     // Reset dropdowns to default values
     document.getElementById("paymentPlanSelect").selectedIndex = 0;
@@ -1218,6 +1219,7 @@ async function generateReceipt() {
     const paymentPlan = document.getElementById("paymentPlanSelect").value;
     const currency = document.getElementById("currencySelect").value;
     const payConsultationSeparate = document.getElementById("consultationSeparateCheckbox").checked;
+    const projectDescription = document.getElementById("projectDescriptionInput").value.trim();
     const currentLang = localStorage.getItem('selectedLanguage') || 'en';
 
     if (isNaN(hours) || hours <= 0) {
@@ -1225,6 +1227,356 @@ async function generateReceipt() {
         return;
     }
 
+    // Calculate pricing using shared function
+    const pricing = await calculatePricing(hours, currency);
+    const {
+        rates,
+        numConsultationFees,
+        totalConsultationUSD,
+        consultationFees,
+        rateUSD,
+        projectTotalUSD,
+        projectTotalConverted,
+        consultationTotalConverted
+    } = pricing;
+
+    const days = Math.ceil(hours / 8);
+    const rateConverted = rateUSD * (rates ? rates[currency] : 1);
+
+    // Generate PayPal payment link
+    const paypalLink = generatePayPalLink(projectTotalUSD + totalConsultationUSD, currency, `Project Development - ${hours} hours`);
+
+    // Generate comprehensive WhatsApp message with full payment details
+    let whatsappMessage = `Hi Azzar! I'm interested in your development services.\n\n`;
+
+    if (projectDescription) {
+        whatsappMessage += `Project Description:\n${projectDescription}\n\n`;
+    }
+
+    whatsappMessage += `PROJECT DETAILS:\n`;
+    whatsappMessage += `- Hours: ${hours}\n`;
+    whatsappMessage += `- Currency: ${currency}\n\n`;
+
+    whatsappMessage += `PAYMENT BREAKDOWN:\n`;
+    if (payConsultationSeparate) {
+        whatsappMessage += `- Project Cost: ${formatCurrency(projectTotalConverted, currency, currentLang)}\n`;
+        whatsappMessage += `- Consultation Fee: ${formatCurrency(consultationTotalConverted, currency, currentLang)}\n`;
+        whatsappMessage += `- Total Amount: ${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}\n\n`;
+    } else {
+        whatsappMessage += `- Project Cost (incl. consultation): ${formatCurrency(projectTotalConverted, currency, currentLang)}\n`;
+        whatsappMessage += `- Consultation Fee: Included\n`;
+        whatsappMessage += `- Total Amount: ${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}\n\n`;
+    }
+
+    whatsappMessage += `PAYMENT PLAN: ${getPaymentPlanName(paymentPlan)}\n\n`;
+
+    // Add payment schedule details
+    const paymentBreakdown = generatePaymentBreakdownHTML(paymentPlan, projectTotalConverted + (payConsultationSeparate ? 0 : consultationTotalConverted), consultationTotalConverted, currency, payConsultationSeparate, currentLang);
+    // Extract just the payment schedule from the HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = paymentBreakdown;
+    const paymentText = tempDiv.textContent || tempDiv.innerText || '';
+    whatsappMessage += `PAYMENT SCHEDULE:\n${paymentText.replace(/Payment \d+:/g, '• Payment $&').replace(/\n/g, '\n')}\n\n`;
+
+    whatsappMessage += `I've generated a detailed receipt. Let's discuss the project timeline and get started!`;
+
+    const whatsappMessageEncoded = encodeURIComponent(whatsappMessage);
+    const whatsappLink = `https://wa.me/+6282232529804?text=${whatsappMessageEncoded}`;
+
+    // Generate QR codes using reliable online API
+    const generateQRURL = (text) => {
+        return `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(text)}&ecc=M&margin=2`;
+    };
+
+    const whatsappQRDataURL = generateQRURL(whatsappLink);
+    const paypalQRDataURL = paymentPlan === '1-100' ? generateQRURL(paypalLink) : '';
+
+    // Generate receipt content
+    const receiptHTML = `
+        <div class="receipt-container" style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;max-width:800px;margin:0 auto;background:white;color:#2c3e50;">
+            <!-- Professional Header -->
+            <div style="background:linear-gradient(135deg,#1e3c72,#2a5298);color:white;padding:30px;text-align:center;border-radius:10px 10px 0 0;">
+                <div style="display:flex;align-items:center;justify-content:center;margin-bottom:15px;">
+                <img src="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png"
+                     alt="Azzar Budiyanto Logo"
+                         style="width:70px;height:70px;border-radius:50%;border:3px solid white;margin-right:15px;">
+                    <div style="text-align:left;">
+                        <h1 style="margin:0;font-size:28px;font-weight:300;letter-spacing:1px;">Azzar Budiyanto</h1>
+                        <p style="margin:5px 0;font-size:14px;opacity:0.9;">Freelance Engineer & Full-Stack Developer</p>
+                    </div>
+                </div>
+                <div style="border-top:1px solid rgba(255,255,255,0.3);padding-top:15px;margin-top:15px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div style="text-align:left;">
+                            <p style="margin:0;font-size:12px;opacity:0.8;">RECEIPT</p>
+                            <p style="margin:5px 0;font-size:16px;font-weight:500;">#${Date.now().toString().slice(-8).toUpperCase()}</p>
+                        </div>
+                        <div style="text-align:right;">
+                            <p style="margin:0;font-size:12px;opacity:0.8;">DATE ISSUED</p>
+                            <p style="margin:5px 0;font-size:14px;">${new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Project Details -->
+            <div style="padding:30px;background:#f8f9fa;border-left:4px solid #3498db;">
+                <h2 style="color:#2c3e50;margin:0 0 25px 0;font-size:22px;border-bottom:2px solid #3498db;padding-bottom:10px;">
+                    <i class="fas fa-project-diagram" style="color:#3498db;margin-right:10px;"></i>Project Details
+                </h2>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:25px;">
+                    <div style="background:white;padding:20px;border-radius:8px;border:1px solid #e9ecef;">
+                        <h4 style="margin:0 0 15px 0;color:#3498db;font-size:16px;">Project Specifications</h4>
+                        <div style="line-height:1.6;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7f8c8d;">Hours:</span>
+                                <strong style="color:#2c3e50;">${hours}</strong>
+                    </div>
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7f8c8d;">Estimated Days:</span>
+                                <strong style="color:#2c3e50;">${days}</strong>
+                    </div>
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7f8c8d;">Hourly Rate:</span>
+                                <strong style="color:#2c3e50;">${formatCurrency(rateConverted, currency, currentLang)}</strong>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;">
+                                <span style="color:#7f8c8d;">Currency:</span>
+                                <strong style="color:#2c3e50;">${currency}</strong>
+                            </div>
+                </div>
+            </div>
+
+                    <div style="background:white;padding:20px;border-radius:8px;border:1px solid #e9ecef;">
+                        <h4 style="margin:0 0 15px 0;color:#3498db;font-size:16px;">Financial Summary</h4>
+                        <div style="line-height:1.6;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7f8c8d;">Project Total:</span>
+                                <strong style="color:#2c3e50;">${formatCurrency(projectTotalConverted, currency, currentLang)}</strong>
+                            </div>
+                            ${numConsultationFees > 0 ? `
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7f8c8d;">Consultation Fees:</span>
+                                <strong style="color:#2c3e50;">${formatCurrency(consultationTotalConverted, currency, currentLang)}</strong>
+                            </div>
+                            ` : ''}
+                            <div style="border-top:2px solid #3498db;padding-top:10px;margin-top:10px;">
+                                <div style="display:flex;justify-content:space-between;">
+                                    <span style="color:#2c3e50;font-weight:600;">Grand Total:</span>
+                                    <strong style="color:#e74c3c;font-size:18px;">${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}</strong>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+                ${projectDescription ? `
+                <div style="background:white;padding:20px;border-radius:8px;border:1px solid #e9ecef;">
+                    <h4 style="margin:0 0 15px 0;color:#3498db;font-size:16px;">
+                        <i class="fas fa-file-alt" style="margin-right:8px;"></i>Project Description
+                    </h4>
+                    <div style="color:#2c3e50;line-height:1.6;white-space:pre-wrap;font-size:14px;">${projectDescription}</div>
+                </div>
+                ` : ''}
+            </div>
+
+            <!-- Professional Payment Plan -->
+            <div style="padding:30px;background:#f8f9fa;border-left:4px solid #27ae60;">
+                <h2 style="color:#2c3e50;margin:0 0 25px 0;font-size:22px;border-bottom:2px solid #27ae60;padding-bottom:10px;">
+                    <i class="fas fa-calendar-check" style="color:#27ae60;margin-right:10px;"></i>Payment Plan
+                </h2>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:25px;">
+                    <div style="background:white;padding:20px;border-radius:8px;border:1px solid #e9ecef;">
+                        <h4 style="margin:0 0 15px 0;color:#27ae60;font-size:16px;">Plan Overview</h4>
+                        <div style="line-height:1.6;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7f8c8d;">Payment Plan:</span>
+                                <strong style="color:#2c3e50;">${paymentPlan.replace('2-40-60', '2 Payments (40/60)').replace('2-60-40', '2 Payments (60/40)').replace('3-20-30-40', '3 Payments (20/30/40)').replace('3-40-30-20', '3 Payments (40/30/20)').replace('1-100', 'Full Payment')}</strong>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;">
+                                <span style="color:#7f8c8d;">Consultation Fees:</span>
+                                <strong style="color:#2c3e50;">${payConsultationSeparate ? 'Paid Separately' : 'Included'}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background:white;padding:20px;border-radius:8px;border:1px solid #e9ecef;">
+                        <h4 style="margin:0 0 15px 0;color:#27ae60;font-size:16px;">Payment Breakdown</h4>
+                        <div style="max-height:120px;overflow-y:auto;">
+                            ${generatePaymentBreakdownHTML(paymentPlan, projectTotalUSD + (payConsultationSeparate ? 0 : totalConsultationUSD), totalConsultationUSD, currency, payConsultationSeparate, currentLang)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Payment Options with QR Codes -->
+            <div style="padding:30px;background:#f8f9fa;border-left:4px solid #e67e22;">
+                <h2 style="color:#2c3e50;margin:0 0 25px 0;font-size:22px;border-bottom:2px solid #e67e22;padding-bottom:10px;">
+                    <i class="fas fa-credit-card" style="color:#e67e22;margin-right:10px;"></i>Payment Options
+                </h2>
+
+                <div style="margin-bottom:30px;">
+                    ${generatePaymentOptionsHTML(projectTotalUSD, totalConsultationUSD, paymentPlan, currency, payConsultationSeparate, currentLang, hours)}
+                </div>
+
+                <!-- QR Codes Section -->
+                <div style="background:white;padding:25px;border-radius:10px;border:1px solid #e9ecef;margin-bottom:25px;">
+                    <h3 style="margin:0 0 20px 0;color:#2c3e50;text-align:center;font-size:18px;">Scan QR Codes for Quick Access</h3>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;text-align:center;">
+                        <!-- WhatsApp QR -->
+                        <div style="padding:20px;border:2px solid #25d366;border-radius:10px;background:#f8fff9;">
+                            <h4 style="margin:0 0 15px 0;color:#25d366;font-size:16px;">
+                                <i class="fab fa-whatsapp" style="margin-right:8px;"></i>Contact via WhatsApp
+                            </h4>
+                            <div style="margin-bottom:10px;">
+                                <img src="${whatsappQRDataURL}" style="width:150px;height:150px;border:1px solid #e9ecef;border-radius:6px;" alt="WhatsApp QR Code" />
+                            </div>
+                            <p style="margin:5px 0;font-size:12px;color:#7f8c8d;">Scan to discuss project details</p>
+                    <a href="${whatsappLink}" target="_blank"
+                               style="display:inline-block;margin-top:10px;padding:8px 16px;background:#25d366;color:white;text-decoration:none;border-radius:6px;font-size:12px;">
+                                <i class="fab fa-whatsapp" style="margin-right:5px;"></i>Open WhatsApp
+                            </a>
+                        </div>
+
+                        <!-- PayPal QR (only for full payment) -->
+                        ${paymentPlan === '1-100' ? `
+                        <div style="padding:20px;border:2px solid #0070ba;border-radius:10px;background:#f7fbff;">
+                            <h4 style="margin:0 0 15px 0;color:#0070ba;font-size:16px;">
+                                <i class="fab fa-paypal" style="margin-right:8px;"></i>PayPal Payment
+                            </h4>
+                            <div style="margin-bottom:10px;">
+                                <img src="${paypalQRDataURL}" style="width:150px;height:150px;border:1px solid #e9ecef;border-radius:6px;" alt="PayPal QR Code" />
+                            </div>
+                            <p style="margin:5px 0;font-size:12px;color:#7f8c8d;">Scan to make payment</p>
+                            <a href="${generatePayPalLink(projectTotalUSD + totalConsultationUSD, currency, `Project Development - ${hours} hours`)}" target="_blank"
+                               style="display:inline-block;margin-top:10px;padding:8px 16px;background:#0070ba;color:white;text-decoration:none;border-radius:6px;font-size:12px;">
+                                <i class="fab fa-paypal" style="margin-right:5px;"></i>Pay with PayPal
+                    </a>
+                </div>
+                        ` : `
+                        <div style="padding:20px;border:2px solid #95a5a6;border-radius:10px;background:#f8f9fa;text-align:center;">
+                            <h4 style="margin:0 0 15px 0;color:#95a5a6;font-size:16px;">
+                                <i class="fas fa-calendar-alt" style="margin-right:8px;"></i>Installment Payments
+                            </h4>
+                            <div style="padding:20px;background:#ecf0f1;border-radius:6px;margin-bottom:10px;">
+                                <i class="fas fa-handshake" style="font-size:24px;color:#95a5a6;margin-bottom:10px;display:block;"></i>
+                                <p style="margin:0;font-size:14px;color:#2c3e50;">For installment payments, please contact me directly to arrange your payment schedule.</p>
+                    </div>
+                            <p style="margin:5px 0;font-size:12px;color:#7f8c8d;">Use WhatsApp or Email to discuss terms</p>
+                    </div>
+                        `}
+                </div>
+            </div>
+
+                <!-- Contact Options -->
+                <div style="text-align:center;">
+                    <h3 style="margin:0 0 20px 0;color:#2c3e50;font-size:18px;">Alternative Contact Methods</h3>
+                    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:15px;">
+                        <a href="${whatsappLink}" target="_blank"
+                           style="padding:12px 25px;background:#25d366;color:white;text-decoration:none;border-radius:8px;display:inline-flex;align-items:center;gap:8px;font-weight:500;min-width:160px;justify-content:center;">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="mailto:azzar.mr.zs@gmail.com?subject=Project%20Inquiry%20-%20${hours}%20Hours%20Development%20Project&body=Hi%20Azzar,%0A%0AI'm%20interested%20in%20your%20professional%20development%20services.%0A%0A${projectDescription ? 'PROJECT DESCRIPTION:%0A' + encodeURIComponent(projectDescription) + '%0A%0A' : ''}PROJECT DETAILS:%0A- Hours: ${hours}%0A- Currency: ${currency}%0A- Payment Plan: ${encodeURIComponent(getPaymentPlanName(paymentPlan))}%0A%0A${payConsultationSeparate ? 'PAYMENT BREAKDOWN:%0A- Project Cost: ' + encodeURIComponent(formatCurrency(projectTotalConverted, currency, currentLang)) + '%0A- Consultation Fee: ' + encodeURIComponent(formatCurrency(consultationTotalConverted, currency, currentLang)) + '%0A- Total Amount: ' + encodeURIComponent(formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)) : 'PAYMENT BREAKDOWN:%0A- Project Cost (incl. consultation): ' + encodeURIComponent(formatCurrency(projectTotalConverted, currency, currentLang)) + '%0A- Consultation Fee: Included in project cost%0A- Total Amount: ' + encodeURIComponent(formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang))}%0A%0APAYMENT SCHEDULE:%0A${(() => { const breakdown = generatePaymentBreakdownHTML(paymentPlan, projectTotalConverted + (payConsultationSeparate ? 0 : consultationTotalConverted), consultationTotalConverted, currency, payConsultationSeparate, currentLang); const tempDiv = document.createElement('div'); tempDiv.innerHTML = breakdown; return encodeURIComponent((tempDiv.textContent || tempDiv.innerText || '').replace(/\n\s*\n/g, '\n').trim()); })()}%0A%0AI've%20generated%20a%20detailed%20receipt%20with%20QR%20codes%20for%20easy%20payment.%0A%0ALet's%20discuss%20the%20project%20timeline%20and%20next%20steps!"
+                           style="padding:12px 25px;background:#ea4335;color:white;text-decoration:none;border-radius:8px;display:inline-flex;align-items:center;gap:8px;font-weight:500;min-width:160px;justify-content:center;">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Terms & Conditions -->
+            <div style="padding:30px;background:#f8f9fa;border-left:4px solid #9b59b6;">
+                <h2 style="color:#2c3e50;margin:0 0 25px 0;font-size:22px;border-bottom:2px solid #9b59b6;padding-bottom:10px;">
+                    <i class="fas fa-file-contract" style="color:#9b59b6;margin-right:10px;"></i>Terms & Conditions
+                </h2>
+
+                <div style="background:white;padding:25px;border-radius:8px;border:1px solid #e9ecef;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;">
+                        <div>
+                            <h4 style="margin:0 0 15px 0;color:#9b59b6;font-size:16px;">Payment Terms</h4>
+                            <ul style="margin:0;padding-left:20px;color:#2c3e50;line-height:1.6;">
+                    ${generatePaymentTerms(paymentPlan)}
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 style="margin:0 0 15px 0;color:#9b59b6;font-size:16px;">Project Terms</h4>
+                            <ul style="margin:0;padding-left:20px;color:#2c3e50;line-height:1.6;">
+                    <li>Project timeline: Approximately ${days} working days</li>
+                    <li>Communication via WhatsApp/Email for updates</li>
+                                <li>All rights reserved to delivered code/assets</li>
+                                <li>Revisions included within agreed scope</li>
+                                <li>Project commences upon payment confirmation</li>
+                </ul>
+                        </div>
+            </div>
+
+                    <div style="border-top:1px solid #e9ecef;padding-top:20px;margin-top:20px;">
+                        <div style="background:#f8f9fa;padding:15px;border-radius:6px;border-left:4px solid #f39c12;">
+                            <p style="margin:0;font-size:14px;color:#2c3e50;">
+                                <strong style="color:#e74c3c;">Important:</strong> All payments are final once work has commenced.
+                                Please review all details carefully before proceeding with payment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Footer -->
+            <div style="background:#2c3e50;color:white;padding:30px;text-align:center;border-radius:0 0 10px 10px;">
+                <div style="margin-bottom:20px;">
+                    <h3 style="margin:0 0 10px 0;font-size:18px;opacity:0.9;">Thank You for Your Business!</h3>
+                    <p style="margin:0;font-size:14px;opacity:0.8;">We look forward to bringing your project to life</p>
+                </div>
+
+                <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:20px;">
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:15px;">
+                        <div>
+                            <h4 style="margin:0 0 8px 0;font-size:14px;opacity:0.9;">Contact Information</h4>
+                            <div style="font-size:13px;opacity:0.8;line-height:1.4;">
+                                <p style="margin:0;"><i class="fas fa-map-marker-alt" style="margin-right:5px;"></i>Yogyakarta, Indonesia</p>
+                                <p style="margin:0;"><i class="fas fa-phone" style="margin-right:5px;"></i>+62 82232529804</p>
+                                <p style="margin:0;"><i class="fas fa-envelope" style="margin-right:5px;"></i>azzar.mr.zs@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 style="margin:0 0 8px 0;font-size:14px;opacity:0.9;">Professional Services</h4>
+                            <div style="font-size:13px;opacity:0.8;line-height:1.4;">
+                                <p style="margin:0;">• IoT Development & Embedded Systems</p>
+                                <p style="margin:0;">• Full-Stack Web Development</p>
+                                <p style="margin:0;">• Python, JavaScript & C++ Programming</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:15px;">
+                        <p style="margin:0;font-size:12px;opacity:0.7;">
+                            Receipt generated on ${new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'})}
+                        </p>
+                        <p style="margin:5px 0 0 0;font-size:12px;opacity:0.7;">
+                            © 2025 Azzar Budiyanto. All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Set receipt content and show modal
+    document.getElementById('receiptContent').innerHTML = receiptHTML;
+    document.getElementById('receiptModal').style.display = 'block';
+}
+
+// Close Receipt Modal
+function closeReceipt() {
+    document.getElementById('receiptModal').style.display = 'none';
+}
+
+// Calculate Pricing Function (reusable for both receipt generation and printing)
+async function calculatePricing(hours, currency) {
     // Load exchange rates
     const rates = await loadExchangeRates();
 
@@ -1255,182 +1607,476 @@ async function generateReceipt() {
 
     // Calculate totals
     const projectTotalUSD = rateUSD * hours;
-    const days = Math.ceil(hours / 8);
 
     // Convert to selected currency
-    const rateConverted = rateUSD * (rates ? rates[currency] : 1);
     const projectTotalConverted = projectTotalUSD * (rates ? rates[currency] : 1);
     const consultationTotalConverted = totalConsultationUSD * (rates ? rates[currency] : 1);
 
-    // Generate PayPal payment link
-    const paypalLink = generatePayPalLink(projectTotalUSD + totalConsultationUSD, currency, `Project Development - ${hours} hours`);
+    return {
+        rates,
+        Rmax,
+        Rmin,
+        Hmin,
+        Hmax,
+        numConsultationFees,
+        totalConsultationUSD,
+        consultationFees,
+        rateUSD,
+        projectTotalUSD,
+        projectTotalConverted,
+        consultationTotalConverted
+    };
+}
 
-    // Generate WhatsApp link
-    const whatsappMessage = encodeURIComponent(
-        `Hi Azzar! I'm interested in your ${hours} hour project (${formatCurrency(projectTotalConverted, currency, currentLang)}). ` +
-        `Please find the details in the receipt I just generated. Let's discuss the next steps!`
-    );
-    const whatsappLink = `https://wa.me/+6282232529804?text=${whatsappMessage}`;
+// Create clean print-optimized receipt
+async function createPrintOptimizedReceipt() {
+    const hours = parseFloat(document.getElementById("hoursInput").value);
+    const paymentPlan = document.getElementById("paymentPlanSelect").value;
+    const currency = document.getElementById("currencySelect").value;
+    const payConsultationSeparate = document.getElementById("consultationSeparateCheckbox").checked;
+    const projectDescription = document.getElementById("projectDescriptionInput").value.trim();
+    const currentLang = localStorage.getItem('selectedLanguage') || 'en';
 
-    // Generate receipt content
-    const receiptHTML = `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+    // Calculate pricing using shared function
+    const pricing = await calculatePricing(hours, currency);
+    const {
+        projectTotalConverted,
+        consultationTotalConverted
+    } = pricing;
+
+    // Generate QR codes
+    const generateQRURL = (text) => {
+        return `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(text)}&ecc=M&margin=1`;
+    };
+
+    // Generate comprehensive WhatsApp message for print version
+    let printWhatsappMessage = `Hi Azzar! I'm interested in your professional development services.\n\n`;
+
+    if (projectDescription) {
+        printWhatsappMessage += `PROJECT DESCRIPTION:\n${projectDescription}\n\n`;
+    }
+
+    printWhatsappMessage += `DETAILED PROJECT INFORMATION:\n`;
+    printWhatsappMessage += `- Hours Required: ${hours}\n`;
+    printWhatsappMessage += `- Currency: ${currency}\n`;
+    printWhatsappMessage += `- Payment Plan: ${getPaymentPlanName(paymentPlan)}\n\n`;
+
+    printWhatsappMessage += `COMPREHENSIVE PAYMENT BREAKDOWN:\n`;
+    if (payConsultationSeparate) {
+        printWhatsappMessage += `- Base Project Cost: ${formatCurrency(projectTotalConverted, currency, currentLang)}\n`;
+        printWhatsappMessage += `- Consultation Fee: ${formatCurrency(consultationTotalConverted, currency, currentLang)}\n`;
+        printWhatsappMessage += `- Total Project Amount: ${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}\n\n`;
+    } else {
+        printWhatsappMessage += `- Project Cost (including consultation): ${formatCurrency(projectTotalConverted, currency, currentLang)}\n`;
+        printWhatsappMessage += `- Consultation Fee: Included in project cost\n`;
+        printWhatsappMessage += `- Total Amount: ${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}\n\n`;
+    }
+
+    printWhatsappMessage += `PAYMENT SCHEDULE:\n`;
+    const paymentSchedule = generatePaymentBreakdownHTML(paymentPlan, projectTotalConverted + (payConsultationSeparate ? 0 : consultationTotalConverted), consultationTotalConverted, currency, payConsultationSeparate, currentLang);
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = paymentSchedule;
+    const scheduleText = (tempDiv.textContent || tempDiv.innerText || '').trim();
+    printWhatsappMessage += scheduleText.split('\n').map(line => line.trim() ? `• ${line.trim()}` : '').filter(line => line).join('\n');
+    printWhatsappMessage += `\n\nI've generated a professional receipt with payment QR codes. Ready to discuss project timeline and begin development!`;
+
+    const whatsappLink = `https://wa.me/6282232529804?text=${encodeURIComponent(printWhatsappMessage)}`;
+    const paypalLink = generatePayPalLink(projectTotalConverted + (payConsultationSeparate ? 0 : consultationTotalConverted), currency, `Project Development - ${hours} hours`);
+
+    const whatsappQR = generateQRURL(whatsappLink);
+    const paypalQR = paymentPlan === '1-100' ? generateQRURL(paypalLink) : null;
+
+    // Build clean HTML
+    const currentYear = new Date().getFullYear();
+
+    let html = `
+        <div class="print-receipt">
+
             <!-- Header -->
-            <div style="text-align:center;border-bottom:2px solid #0078ff;padding-bottom:20px;margin-bottom:20px;">
-                <img src="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png"
-                     alt="Azzar Budiyanto Logo"
-                     style="width:80px;height:80px;border-radius:50%;margin-bottom:10px;">
-                <h1 style="color:#0078ff;margin:0;font-size:24px;">Azzar Budiyanto</h1>
-                <p style="color:#6c757d;margin:5px 0;">Freelance Engineer & Full-Stack Developer</p>
-                <p style="color:#6c757d;margin:0;font-size:12px;">Receipt #${Date.now()}</p>
+            <div class="print-header">
+                <div class="logo-section">
+                    <h1 class="company-name">AZZAR BUDIYANTO</h1>
+                    <p class="company-tagline">Crafting Digital Solutions</p>
+                </div>
+                <div class="contact-section">
+                    <p class="contact-info">azzar.mr.zs@gmail.com</p>
+                    <p class="contact-info">+62 822 3252 9804</p>
+                </div>
+                <div class="branding-section">
+                    <p class="branding-text">Freelance Engineer & Full-Stack Developer</p>
+                    <p class="branding-text">Since 2023</p>
+                </div>
             </div>
 
             <!-- Project Details -->
-            <div style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px;">
-                <h3 style="color:#2c3e50;margin-top:0;"><i class="fas fa-project-diagram"></i> Project Details</h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
-                    <div>
-                        <strong>Hours:</strong> ${hours}<br>
-                        <strong>Estimated Days:</strong> ${days}<br>
-                        <strong>Hourly Rate:</strong> ${formatCurrency(rateConverted, currency, currentLang)}<br>
-                        <strong>Currency:</strong> ${currency}
-                    </div>
-                    <div>
-                        <strong>Project Total:</strong> ${formatCurrency(projectTotalConverted, currency, currentLang)}<br>
-                        ${numConsultationFees > 0 ? `<strong>Consultation Fees:</strong> ${formatCurrency(consultationTotalConverted, currency, currentLang)}<br>` : ''}
-                        <strong>Grand Total:</strong> <span style="font-size:18px;font-weight:bold;color:#0078ff;">${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}</span>
-                    </div>
-                </div>
+            <div class="print-section">
+                <h2>Project Details</h2>
+                <table class="financial-table">
+                    <tr><td class="label">Hours:</td><td class="value">${hours}</td></tr>
+                    <tr><td class="label">Currency:</td><td class="value">${currency}</td></tr>
+                    <tr><td class="label">Payment Plan:</td><td class="value">${getPaymentPlanName(paymentPlan)}</td></tr>
+                </table>
+                ${projectDescription ? `<p><strong>Description:</strong> ${projectDescription}</p>` : ''}
             </div>
 
-            <!-- Payment Plan -->
-            <div style="background:#e7f3ff;padding:20px;border-radius:8px;margin-bottom:20px;">
-                <h3 style="color:#2c3e50;margin-top:0;"><i class="fas fa-calendar-check"></i> Payment Plan</h3>
-                <p><strong>Plan:</strong> ${paymentPlan}</p>
-                <p><strong>Consultation Fees:</strong> ${payConsultationSeparate ? 'Paid Separately' : 'Included in installments'}</p>
-                <div style="background:white;padding:15px;border-radius:6px;margin-top:10px;">
-                    ${generatePaymentBreakdownHTML(projectTotalUSD, totalConsultationUSD, paymentPlan, currency, payConsultationSeparate, currentLang)}
-                </div>
+            <!-- Pricing Breakdown -->
+            <div class="print-section">
+                <h2>Pricing Breakdown</h2>
+                <table class="financial-table">
+                    <tr><td class="label">Project Cost:</td><td class="value">${formatCurrency(projectTotalConverted, currency, currentLang)}</td></tr>
+                    ${payConsultationSeparate ?
+                        `<tr><td class="label">Consultation Fee:</td><td class="value">${formatCurrency(consultationTotalConverted, currency, currentLang)}</td></tr>` :
+                        `<tr><td class="label">Including Consultation:</td><td class="value">${formatCurrency(consultationTotalConverted, currency, currentLang)}</td></tr>`
+                    }
+                    <tr style="border-top: 2px solid #3498db;"><td class="label"><strong>Total Amount:</strong></td><td class="value"><strong>${formatCurrency(projectTotalConverted + (payConsultationSeparate ? 0 : consultationTotalConverted), currency, currentLang)}</strong></td></tr>
+                </table>
             </div>
 
-            <!-- Payment Options -->
-            <div style="background:#fff3cd;padding:20px;border-radius:8px;margin-bottom:20px;">
-                <h3 style="color:#2c3e50;margin-top:0;"><i class="fas fa-credit-card"></i> Payment Options</h3>
-                <div style="margin-bottom:15px;">
-                    ${generatePaymentOptionsHTML(projectTotalUSD, totalConsultationUSD, paymentPlan, currency, payConsultationSeparate, currentLang, hours)}
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
-                    <a href="${whatsappLink}" target="_blank"
-                       style="background:#25d366;color:white;padding:12px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-                        <i class="fab fa-whatsapp"></i> Contact via WhatsApp
-                    </a>
-                    <a href="mailto:azzar.mr.zs@gmail.com?subject=Project%20Inquiry%20-%20${hours}%20hours&body=Hi%20Azzar,%0A%0AI'm%20interested%20in%20your%20services%20for%20a%20${hours}%20hour%20project.%0A%0APlease%20find%20the%20details%20below:%0A- Total: ${formatCurrency(projectTotalConverted + consultationTotalConverted, currency, currentLang)}%0A- Hours: ${hours}%0A- Currency: ${currency}%0A%0ALet's discuss the project requirements!"
-                       style="background:#ea4335;color:white;padding:12px 20px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-                        <i class="fas fa-envelope"></i> Send Email
-                    </a>
-                </div>
-                <div style="text-align:center;">
-                    <div id="qrContainer" style="display:inline-block;margin:10px;">
-                        <p style="margin:5px 0;font-size:12px;color:#6c757d;">Scan for WhatsApp</p>
-                        <canvas id="whatsappQR"></canvas>
+            <!-- Payment Schedule -->
+            <div class="print-section">
+                <h2>Payment Schedule</h2>
+                ${generatePaymentBreakdownHTML(paymentPlan, projectTotalConverted + (payConsultationSeparate ? consultationTotalConverted : 0), consultationTotalConverted, currency, payConsultationSeparate, currentLang)}
+            </div>
+
+            <!-- QR Codes -->
+            <div class="qr-section">
+                <h2>Payment & Contact</h2>
+                <div class="qr-container">
+                    <div class="qr-item">
+                        <h4>📱 WhatsApp Contact</h4>
+                        <img src="${whatsappQR}" alt="WhatsApp QR" class="qr-code" />
+                        <p class="qr-caption">Scan to contact via WhatsApp</p>
                     </div>
-                    ${paymentPlan === '1-100' ? `
-                    <div id="paypalQRContainer" style="display:inline-block;margin:10px;">
-                        <p style="margin:5px 0;font-size:12px;color:#6c757d;">PayPal Payment</p>
-                        <canvas id="paypalQR"></canvas>
+                    ${paypalQR ? `
+                    <div class="qr-item">
+                        <h4>💳 PayPal Payment</h4>
+                        <img src="${paypalQR}" alt="PayPal QR" class="qr-code" />
+                        <p class="qr-caption">Scan to make payment</p>
                     </div>
                     ` : `
-                    <div style="display:inline-block;margin:10px;padding:20px;background:#f8f9fa;border-radius:8px;">
-                        <p style="margin:0;font-size:12px;color:#6c757d;">For installment payments,<br>contact via WhatsApp or Email</p>
+                    <div class="qr-item">
+                        <h4>💳 Payment Options</h4>
+                        <p style="text-align: center; margin: 20px 0;">For installment payments,<br>please contact via WhatsApp<br>or email to arrange terms</p>
                     </div>
                     `}
                 </div>
             </div>
 
             <!-- Terms & Conditions -->
-            <div style="background:#f8f9fa;padding:20px;border-radius:8px;margin-bottom:20px;font-size:12px;color:#6c757d;">
-                <h4 style="margin-top:0;color:#2c3e50;">Terms & Conditions</h4>
-                <ul style="margin:0;padding-left:20px;">
-                    ${generatePaymentTerms(paymentPlan)}
-                    <li>Project timeline: Approximately ${days} working days</li>
-                    <li>Communication via WhatsApp/Email for updates</li>
-                    <li>All rights reserved to the delivered code/assets</li>
-                    <li>Revisions included within the agreed scope</li>
+            <div class="print-section">
+                <h2>Terms & Conditions</h2>
+                <ul>
+                    <li>50% advance payment required to start the project</li>
+                    <li>Remaining balance due upon project completion</li>
+                    <li>All payments are non-refundable once work has commenced</li>
+                    <li>Project timeline will be agreed upon before starting</li>
+                    <li>Source code remains property of developer unless otherwise agreed</li>
+                    <li>Client responsible for providing clear project requirements</li>
                 </ul>
             </div>
 
             <!-- Footer -->
-            <div style="text-align:center;border-top:1px solid #dee2e6;padding-top:20px;color:#6c757d;font-size:12px;">
-                <p>Thank you for choosing Azzar Budiyanto!</p>
-                <p>Yogyakarta, Indonesia | +62 82232529804 | azzar.mr.zs@gmail.com</p>
-                <p>Generated on ${new Date().toLocaleDateString()}</p>
+            <div class="print-footer">
+                <h3>Thank You for Your Business!</h3>
+                <p>Ready to bring your ideas to life with professional development</p>
+                <p>Generated on: ${new Date().toLocaleDateString()}</p>
+                <p>© ${currentYear} Azzar Budiyanto - Professional Developer</p>
             </div>
+
         </div>
     `;
 
-    // Set receipt content and show modal
-    document.getElementById('receiptContent').innerHTML = receiptHTML;
-    document.getElementById('receiptModal').style.display = 'block';
-
-    // Generate QR codes with proper error handling
-    setTimeout(() => {
-        if (typeof QRCode !== 'undefined') {
-            generateQRCode('whatsappQR', whatsappLink);
-            generateQRCode('paypalQR', paypalLink);
-        } else {
-            console.warn('QRCode library not loaded, QR codes will not be generated');
-            // Fallback: show text links instead
-            document.getElementById('whatsappQR').style.display = 'none';
-            document.getElementById('paypalQR').style.display = 'none';
-            document.getElementById('qrContainer').innerHTML = `
-                <p style="margin:5px 0;font-size:12px;color:#6c757d;">WhatsApp Contact</p>
-                <a href="${whatsappLink}" target="_blank" style="display:inline-block;padding:8px 16px;background:#25d366;color:white;text-decoration:none;border-radius:4px;font-size:12px;">Open WhatsApp</a>
-            `;
-            document.getElementById('paypalQRContainer').innerHTML = `
-                <p style="margin:5px 0;font-size:12px;color:#6c757d;">PayPal Payment</p>
-                <a href="${paypalLink}" target="_blank" style="display:inline-block;padding:8px 16px;background:#0070ba;color:white;text-decoration:none;border-radius:4px;font-size:12px;">Pay with PayPal</a>
-            `;
-        }
-    }, 500); // Increased timeout to ensure library is loaded
-}
-
-// Close Receipt Modal
-function closeReceipt() {
-    document.getElementById('receiptModal').style.display = 'none';
+    return html;
 }
 
 // Print Receipt
-function printReceipt() {
-    const receiptContent = document.getElementById('receiptContent').innerHTML;
+async function printReceipt() {
+    const printContent = await createPrintOptimizedReceipt();
     const printWindow = window.open('', '_blank', 'width=800,height=600');
 
     printWindow.document.write(`
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Project Receipt - Azzar Budiyanto</title>
+            <title>Professional Receipt - Azzar Budiyanto</title>
             <style>
-                body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
-                .print-header { text-align: center; border-bottom: 2px solid #0078ff; padding-bottom: 20px; margin-bottom: 20px; }
-                .print-header img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
-                .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
-                .payment-breakdown { background: #f8f8f8; padding: 10px; border-radius: 6px; }
-                .total { font-size: 18px; font-weight: bold; color: #0078ff; }
-                .payment-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
-                .payment-link { display: inline-block; padding: 8px 16px; background: #0078ff; color: white; text-decoration: none; border-radius: 4px; }
-                .qr-codes { text-align: center; margin: 20px 0; }
-                .qr-codes div { display: inline-block; margin: 0 20px; }
-                .terms { font-size: 12px; color: #666; }
-                .footer { text-align: center; border-top: 1px solid #ddd; padding-top: 20px; margin-top: 20px; font-size: 12px; color: #666; }
+                @page {
+                    size: A4;
+                    margin: 15mm;
+                }
+
+                body {
+                    font-family: 'Times New Roman', serif;
+                    margin: 0;
+                    padding: 0;
+                    color: #2c3e50;
+                    background: white;
+                    line-height: 1.4;
+                    font-size: 11px;
+                }
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                .print-receipt {
+                    max-width: none;
+                    margin: 0;
+                }
+
+                /* Header */
+                .print-header {
+                    background: #1e3c72;
+                    color: white;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                    -webkit-print-color-adjust: exact;
+                    color-adjust: exact;
+                    display: table;
+                    width: 100%;
+                }
+
+                .logo-section {
+                    display: table-cell;
+                    vertical-align: top;
+                    width: 40%;
+                    text-align: left;
+                }
+
+                .contact-section {
+                    display: table-cell;
+                    vertical-align: top;
+                    width: 30%;
+                    text-align: center;
+                }
+
+                .branding-section {
+                    display: table-cell;
+                    vertical-align: top;
+                    width: 30%;
+                    text-align: right;
+                }
+
+                .company-name {
+                    font-size: 28px;
+                    font-weight: bold;
+                    margin: 0 0 3px 0;
+                    letter-spacing: 2px;
+                    color: #ffffff;
+                }
+
+                .company-tagline {
+                    font-size: 12px;
+                    margin: 0;
+                    font-style: italic;
+                    color: #e8f4f8;
+                }
+
+                .contact-info {
+                    margin: 2px 0;
+                    font-size: 10px;
+                    line-height: 1.3;
+                }
+
+                .branding-text {
+                    margin: 2px 0;
+                    font-size: 10px;
+                    text-align: right;
+                }
+
+                /* Section headers */
+                .print-section h2 {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #2c3e50;
+                    margin: 20px 0 10px 0;
+                    padding-bottom: 3px;
+                    border-bottom: 2px solid #3498db;
+                    page-break-after: avoid;
+                }
+
+                .print-section h3 {
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: #2c3e50;
+                    margin: 15px 0 8px 0;
+                }
+
+                /* Content sections */
+                .print-section {
+                    margin-bottom: 15px;
+                    page-break-inside: avoid;
+                }
+
+                /* Financial data tables */
+                .financial-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 10px 0;
+                }
+
+                .financial-table td {
+                    padding: 4px 8px;
+                    border-bottom: 1px solid #e9ecef;
+                }
+
+                .financial-table .label {
+                    font-weight: normal;
+                    width: 60%;
+                }
+
+                .financial-table .value {
+                    text-align: right;
+                    font-weight: bold;
+                    width: 40%;
+                }
+
+                /* QR Code section */
+                .qr-section {
+                    margin: 20px 0;
+                    page-break-inside: avoid;
+                }
+
+                .qr-container {
+                    display: table;
+                    width: 100%;
+                    border-collapse: separate;
+                    border-spacing: 10px 0;
+                }
+
+                .qr-item {
+                    display: table-cell;
+                    width: 50%;
+                    vertical-align: top;
+                    padding: 15px;
+                    border: 1px solid #e9ecef;
+                    background: #f8f9fa;
+                    -webkit-print-color-adjust: exact;
+                    color-adjust: exact;
+                }
+
+                .qr-item h4 {
+                    font-size: 11px;
+                    margin: 0 0 10px 0;
+                    text-align: center;
+                }
+
+                .qr-code {
+                    display: block;
+                    width: 100px;
+                    height: 100px;
+                    margin: 0 auto 8px auto;
+                    border: 1px solid #ddd;
+                    background: white;
+                    -webkit-print-color-adjust: exact;
+                    color-adjust: exact;
+                }
+
+                .qr-caption {
+                    font-size: 9px;
+                    text-align: center;
+                    color: #666;
+                    margin: 0;
+                }
+
+                /* Contact section */
+                .contact-section {
+                    margin: 15px 0;
+                }
+
+                .contact-item {
+                    margin-bottom: 8px;
+                    padding: 8px;
+                    border: 1px solid #e9ecef;
+                    background: #f9f9f9;
+                }
+
+                .contact-item strong {
+                    display: block;
+                    font-size: 11px;
+                    margin-bottom: 3px;
+                }
+
+                .contact-item span {
+                    font-size: 10px;
+                    color: #666;
+                }
+
+                /* Footer */
+                .print-footer {
+                    background: #2c3e50;
+                    color: white;
+                    padding: 15px;
+                    margin-top: 20px;
+                    text-align: center;
+                    -webkit-print-color-adjust: exact;
+                    color-adjust: exact;
+                }
+
+                .print-footer h3 {
+                    font-size: 13px;
+                    margin: 0 0 10px 0;
+                }
+
+                .print-footer p {
+                    margin: 3px 0;
+                    font-size: 9px;
+                }
+
+                /* Lists */
+                ul {
+                    padding-left: 15px;
+                    margin: 5px 0;
+                }
+
+                li {
+                    margin-bottom: 2px;
+                    line-height: 1.3;
+                    font-size: 10px;
+                }
+
+                /* General text */
+                p {
+                    margin: 3px 0;
+                    line-height: 1.3;
+                }
+
+                /* Images */
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    -webkit-print-color-adjust: exact !important;
+                    color-adjust: exact !important;
+                }
+
+                /* Force QR codes to load */
+                img[alt*="QR"] {
+                    display: block !important;
+                    image-rendering: pixelated !important;
+                }
+
                 @media print {
-                    body { margin: 0; }
-                    .payment-links { display: none; }
-                    .qr-codes { page-break-inside: avoid; }
+                    body {
+                        -webkit-print-color-adjust: exact;
+                        color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+
+                    .print-receipt {
+                        box-shadow: none;
+                    }
+
+                    /* Ensure all sections stay together */
+                    .print-section,
+                    .qr-section,
+                    .contact-section {
+                        page-break-inside: avoid;
+                    }
                 }
             </style>
         </head>
         <body>
-            ${receiptContent}
+            ${printContent}
         </body>
         </html>
     `);
@@ -1438,11 +2084,11 @@ function printReceipt() {
     printWindow.document.close();
     printWindow.focus();
 
-    // Wait for images to load before printing
+    // Wait for images to load before printing (increased delay for QR code API)
     setTimeout(() => {
         printWindow.print();
         printWindow.close();
-    }, 500);
+    }, 1500);
 }
 
 // Generate PayPal Payment Link
@@ -1495,28 +2141,28 @@ function generatePaymentOptionsHTML(projectTotalUSD, consultationTotalUSD, payme
         `;
 
         if (payConsultationSeparate && Math.floor(hours / 30) > 0) {
-            // Separate payments
+        // Separate payments
             const numConsultationFees = Math.floor(hours / 30);
             html += '<strong>Project Payments:</strong><br>';
-            percentages.forEach((pct, index) => {
-                const amount = (projectTotalUSD * pct) * currencyRate;
+        percentages.forEach((pct, index) => {
+            const amount = (projectTotalUSD * pct) * currencyRate;
                 html += `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}<br>`;
-            });
+        });
 
             html += '<br><strong>Consultation Fees:</strong><br>';
-            for (let i = 0; i < numConsultationFees; i++) {
-                const baseFee = 95;
-                const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
-                const fee = Math.max(70, Math.min(120, baseFee + variation));
-                const amount = Math.round(fee) * currencyRate;
+        for (let i = 0; i < numConsultationFees; i++) {
+            const baseFee = 95;
+            const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
+            const fee = Math.max(70, Math.min(120, baseFee + variation));
+            const amount = Math.round(fee) * currencyRate;
                 html += `Consultation Fee ${i + 1}: ${formatCurrency(amount, currency, currentLang)}<br>`;
-            }
-        } else {
-            // Combined payments
-            const totalUSD = projectTotalUSD + consultationTotalUSD;
+        }
+    } else {
+        // Combined payments
+        const totalUSD = projectTotalUSD + consultationTotalUSD;
             html += '<strong>Combined Payments:</strong><br>';
-            percentages.forEach((pct, index) => {
-                const amount = (totalUSD * pct) * currencyRate;
+        percentages.forEach((pct, index) => {
+            const amount = (totalUSD * pct) * currencyRate;
                 html += `Payment ${index + 1}: ${formatCurrency(amount, currency, currentLang)}<br>`;
             });
         }
@@ -1530,53 +2176,6 @@ function generatePaymentOptionsHTML(projectTotalUSD, consultationTotalUSD, payme
     return html;
 }
 
-// Generate Payment Breakdown HTML
-function generatePaymentBreakdownHTML(projectTotalUSD, consultationTotalUSD, paymentPlan, currency, payConsultationSeparate, currentLang) {
-    const rates = exchangeRates || { USD: 1, EUR: 0.85, GBP: 0.75, IDR: 15000 };
-    const currencyRate = rates[currency] || 1;
-
-    let html = '';
-    const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
-
-    if (payConsultationSeparate && Math.floor(parseFloat(document.getElementById("hoursInput").value) / 30) > 0) {
-        // Separate payments
-        html += '<h4>Project Payments:</h4>';
-        percentages.forEach((pct, index) => {
-            const amount = (projectTotalUSD * pct) * currencyRate;
-            html += `<div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-                <span>Payment ${index + 1} (Project):</span>
-                <strong>${formatCurrency(amount, currency, currentLang)}</strong>
-            </div>`;
-        });
-
-        // Add consultation fees
-        const numConsultationFees = Math.floor(parseFloat(document.getElementById("hoursInput").value) / 30);
-        for (let i = 0; i < numConsultationFees; i++) {
-            const baseFee = 95;
-            const hours = parseFloat(document.getElementById("hoursInput").value);
-            const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
-            const fee = Math.max(70, Math.min(120, baseFee + variation));
-            const amount = Math.round(fee) * currencyRate;
-            html += `<div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-                <span>Consultation Fee ${i + 1}:</span>
-                <strong>${formatCurrency(amount, currency, currentLang)}</strong>
-            </div>`;
-        }
-    } else {
-        // Combined payments
-        const totalUSD = projectTotalUSD + consultationTotalUSD;
-        html += '<h4>Combined Payments:</h4>';
-        percentages.forEach((pct, index) => {
-            const amount = (totalUSD * pct) * currencyRate;
-            html += `<div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-                <span>Payment ${index + 1}:</span>
-                <strong>${formatCurrency(amount, currency, currentLang)}</strong>
-            </div>`;
-        });
-    }
-
-    return html;
-}
 
 // Generate Payment Terms based on Payment Plan
 function generatePaymentTerms(paymentPlan) {
@@ -1600,33 +2199,44 @@ function generatePaymentTerms(paymentPlan) {
     return termsHTML;
 }
 
-// Generate QR Code function
-function generateQRCode(elementId, text) {
-    const canvas = document.getElementById(elementId);
-    if (!canvas) return;
-
-    // Use QRCode library to generate proper QR code
-    QRCode.toCanvas(canvas, text, {
-        width: 120,
-        height: 120,
-        color: {
-            dark: '#000000',
-            light: '#FFFFFF'
-        },
-        errorCorrectionLevel: 'M'
-    }, function (error) {
-        if (error) {
-            console.error('QR Code generation error:', error);
-            // Fallback to simple placeholder
-            const ctx = canvas.getContext('2d');
-            canvas.width = 120;
-            canvas.height = 120;
-            ctx.fillStyle = '#f0f0f0';
-            ctx.fillRect(0, 0, 120, 120);
-            ctx.fillStyle = '#666';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('QR Error', 60, 60);
-        }
-    });
+// Helper functions for print receipt
+function getPaymentPlanName(plan) {
+    const plans = {
+        '1-100': 'Full Payment',
+        '2-40-60': '50/50 Split',
+        '2-60-40': '60/40 Split',
+        '3-20-30-40': '20/30/50 Split',
+        '3-40-30-20': '40/30/30 Split'
+    };
+    return plans[plan] || 'Custom Plan';
 }
+
+function generatePaymentBreakdownHTML(plan, totalAmount, consultationAmount, currency, paySeparate, currentLang) {
+    const rates = exchangeRates || { USD: 1, EUR: 0.85, GBP: 0.75, IDR: 15000 };
+    const currencyRate = rates[currency] || 1;
+    const percentages = plan.split('-').slice(1).map(p => parseInt(p) / 100);
+
+    let html = '<table class="financial-table">';
+
+    if (paySeparate && consultationAmount > 0) {
+        // Separate payments
+        html += '<tr><td colspan="2"><strong>Project Payments:</strong></td></tr>';
+        percentages.forEach((pct, index) => {
+            const amount = totalAmount * pct;
+            html += `<tr><td class="label">Payment ${index + 1} (${(pct * 100).toFixed(0)}%):</td><td class="value">${formatCurrency(amount, currency, currentLang)}</td></tr>`;
+        });
+        html += '<tr><td colspan="2"><strong>Consultation Fee:</strong></td></tr>';
+        html += `<tr><td class="label">Separate Payment:</td><td class="value">${formatCurrency(consultationAmount, currency, currentLang)}</td></tr>`;
+    } else {
+        // Combined payments
+        percentages.forEach((pct, index) => {
+            const amount = totalAmount * pct;
+            html += `<tr><td class="label">Payment ${index + 1} (${(pct * 100).toFixed(0)}%):</td><td class="value">${formatCurrency(amount, currency, currentLang)}</td></tr>`;
+        });
+    }
+
+    html += '</table>';
+    return html;
+}
+
+// QR codes are now generated using online API - no local generation functions needed
