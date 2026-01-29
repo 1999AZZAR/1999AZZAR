@@ -15,6 +15,8 @@
     <img src="/resources/grid-snake.svg" alt="Azzar Logo"
          style="border: 3px solid #3498db; border-radius: 10px; box-shadow: 5px 5px 15px rgba(0,0,0,0.2); max-width:200px;">
   </a>
+  <br><br>
+  <img src="https://komarev.com/ghpvc/?username=1999AZZAR&style=for-the-badge&label=PROFILE+VIEWS" alt="Profile Views" style="height: 30px;">
 </div>
 
 <hr style="border: 1px solid #3498db; margin: 20px 0;">
@@ -72,30 +74,6 @@
 </details>
 
 <details>
-  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">Profile Insights</summary>
-  <div align="center">
-    <table align="center">
-      <tr>
-        <td align="center">
-          <img src="https://komarev.com/ghpvc/?username=1999AZZAR&style=for-the-badge&label=PROFILE+VIEWS" alt="Profile Views" style="height: 40px; margin: 0 10px;">
-        </td>
-        <td align="center">
-          <img src="https://img.shields.io/website?down_message=offline&style=for-the-badge&up_message=online&url=https%3A%2F%2F1999azzar.github.io%2F1999AZZAR%2F" alt="Website Status" style="height: 40px; margin: 0 10px;">
-        </td>
-      </tr>
-      <tr>
-        <td align="center">
-          <img src="https://github.com/1999AZZAR/1999AZZAR/actions/workflows/pages/pages-build-deployment/badge.svg" alt="Page Build Status" style="height: 40px; margin: 10px;">
-        </td>
-        <td align="center">
-          <img src="https://img.shields.io/github/license/1999AZZAR/1999AZZAR?color=purple&style=for-the-badge" alt="License" style="height: 40px; margin: 10px;">
-        </td>
-      </tr>
-    </table>
-  </div>
-</details>
-
-<details>
   <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">Recent Activity</summary>
   <div align="center">
     <a href="https://github.com/1999AZZAR" target="_blank">
@@ -121,64 +99,54 @@
   <tr>
     <td style="padding: 10px;">
       <a href="https://gist.github.com/1999AZZAR" target="_blank" style="text-decoration: none;">
-        <i class="fa fa-github" style="font-size: 40px; color: #333;"></i>
-        <br>Gist
+        <img src="https://img.shields.io/badge/Gist-181717?style=for-the-badge&logo=github&logoColor=white" alt="Gist" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://github.com/lily-osp/" target="_blank" style="text-decoration: none;">
-        <i class="fa fa-github" style="font-size: 40px; color: #333;"></i>
-        <br>Lily Osp
+        <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Lily Osp" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://wokwi.com/makers/azzar" target="_blank" style="text-decoration: none;">
-        <i class="fas fa-microchip" style="font-size: 40px; color: #3498db;"></i>
-        <br>Wokwi
+        <img src="https://img.shields.io/badge/Wokwi-2E8B57?style=for-the-badge&logo=arduino&logoColor=white" alt="Wokwi" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://www.hackerrank.com/profile/azzar_mr_zs" target="_blank" style="text-decoration: none;">
-        <i class="fab fa-hackerrank" style="font-size: 40px; color: #2ecc71;"></i>
-        <br>HackerRank
+        <img src="https://img.shields.io/badge/HackerRank-00EA64?style=for-the-badge&logo=hackerrank&logoColor=white" alt="HackerRank" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://codepen.io/azzar" target="_blank" style="text-decoration: none;">
-        <i class="fab fa-codepen" style="font-size: 40px; color: #000;"></i>
-        <br>CodePen
+        <img src="https://img.shields.io/badge/CodePen-000000?style=for-the-badge&logo=codepen&logoColor=white" alt="CodePen" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
   </tr>
   <tr>
     <td style="padding: 10px;">
       <a href="https://devpost.com/1999AZZAR" target="_blank" style="text-decoration: none;">
-        <i class="fas fa-laptop-code" style="font-size: 40px; color: #3498db;"></i>
-        <br>DevPost
+        <img src="https://img.shields.io/badge/DevPost-003E54?style=for-the-badge&logo=devpost&logoColor=white" alt="DevPost" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://medium.com/@azzar_budiyanto" target="_blank" style="text-decoration: none;">
-        <i class="fab fa-medium" style="font-size: 40px; color: #000;"></i>
-        <br>Medium
+        <img src="https://img.shields.io/badge/Medium-000000?style=for-the-badge&logo=medium&logoColor=white" alt="Medium" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://app.codecrafters.io/users/1999AZZAR" target="_blank" style="text-decoration: none;">
-        <i class="fas fa-code" style="font-size: 40px; color: #e74c3c;"></i>
-        <br>Codecrafters
+        <img src="https://img.shields.io/badge/Codecrafters-E74C3C?style=for-the-badge&logo=codeforces&logoColor=white" alt="Codecrafters" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://www.linkedin.com/in/azzar-budiyanto/" target="_blank" style="text-decoration: none;">
-        <i class="fab fa-linkedin" style="font-size: 40px; color: #0077b5;"></i>
-        <br>LinkedIn
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
     <td style="padding: 10px;">
       <a href="https://twitter.com/siapa_hayosiapa" target="_blank" style="text-decoration: none;">
-        <i class="fab fa-twitter" style="font-size: 40px; color: #1da1f2;"></i>
-        <br>X
+        <img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="X" style="height: 30px; margin: 0 5px;">
       </a>
     </td>
   </tr>
