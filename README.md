@@ -4,7 +4,7 @@
     Freelance Software Developer | IoT & Embedded Systems Enthusiast
   </h4>
   <p style="max-width:600px; margin:auto; color:#555;">
-    I build scalable web applications and innovative IoT solutions that bridge hardware and software. Passionate about open source, mentoring, and continuous learning.
+    I build web applications and IoT solutions. Focused on open source development and continuous learning.
   </p>
 </div>
 
@@ -20,7 +20,7 @@
 <hr style="border: 1px solid #3498db; margin: 20px 0;">
 
 <details>
-  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">📫 Contact Me</summary>
+  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">Contact Me</summary>
   <div align="center">
     <p>
       <a href="mailto:azzar.mr.zs@gmail.com" target="_blank">
@@ -42,21 +42,21 @@
 </details>
 
 <details>
-  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">👤 About Me</summary>
+  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">About Me</summary>
   <div align="center">
     <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: auto; color: #555;">
-      <li>🔹 <strong>Languages:</strong> JavaScript, TypeScript, Python, C/C++</li>
-      <li>🔹 <strong>Web Development:</strong> React, Node.js, Express, Django</li>
-      <li>🔹 <strong>Embedded Systems:</strong> Arduino, ESP32, STM32</li>
-      <li>🔹 <strong>DevOps & Cloud:</strong> Docker, Kubernetes, AWS, CI/CD</li>
+      <li><strong>Languages:</strong> JavaScript, TypeScript, Python, C/C++</li>
+      <li><strong>Web Development:</strong> React, Node.js, Express, Django</li>
+      <li><strong>Embedded Systems:</strong> Arduino, ESP32, STM32</li>
+      <li><strong>DevOps & Cloud:</strong> Docker, Kubernetes, AWS, CI/CD</li>
     </ul>
-    <p>🔭 Currently developing a scalable e-commerce platform with integrated IoT monitoring.</p>
-    <p>🌱 Learning microservices, cloud-native designs, and edge computing architectures.</p>
+    <p>Currently developing an e-commerce platform with integrated IoT monitoring.</p>
+    <p>Learning microservices, cloud-native designs, and edge computing architectures.</p>
   </div>
 </details>
 
 <details>
-  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">💻 GitHub Stats</summary>
+  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">GitHub Stats</summary>
   <div align="center">
     <table align="center">
       <tr>
@@ -72,7 +72,7 @@
 </details>
 
 <details>
-  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">🔍 Profile Insights</summary>
+  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">Profile Insights</summary>
   <div align="center">
     <table align="center">
       <tr>
@@ -96,7 +96,7 @@
 </details>
 
 <details>
-  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">📅 Recent Activity</summary>
+  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">Recent Activity</summary>
   <div align="center">
     <a href="https://github.com/1999AZZAR" target="_blank">
       <img src="https://github-readme-activity-graph.vercel.app/graph?username=1999azzar&theme=github-compact&hide_border=true" alt="Activity Graph" style="border-radius: 10px; margin: 0 5px;">
@@ -107,16 +107,16 @@
 <hr style="border: 1px solid #3498db; margin: 20px 0;">
 
 <details>
-  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">💖 Support Me</summary>
+  <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">Support Me</summary>
   <div align="center">
-    <p>If you’d like to support my work, you can donate via PayPal:</p>
+    <p>If you'd like to support my work, you can donate via PayPal:</p>
     <a href="https://paypal.me/azzarbudiyanto" target="_blank">
       <img src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal" alt="PayPal Donation" style="height: 40px; margin: 0 5px;">
     </a>
   </div>
 </details>
 
-<h5 style="color: #2e8b57; font-size: 1.4em;">🔗 Related Accounts</h5>
+<h5 style="color: #2e8b57; font-size: 1.4em;">Related Accounts</h5>
 <table align="center" style="border-collapse: collapse; text-align: center;">
   <tr>
     <td style="padding: 10px;">
