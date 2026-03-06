@@ -1056,8 +1056,8 @@ async function calcRate() {
     else if (hours >= Hmax) rateUSD = Rmin;
     else rateUSD = Rmax - ((Rmax - Rmin) / (Hmax - Hmin)) * (hours - Hmin);
 
-    // Calculate totals
-    const projectTotalUSD = rateUSD * hours;
+    // Calculate totals (minimum project price $250)
+    const projectTotalUSD = Math.max(rateUSD * hours, 250);
     const days = Math.ceil(hours / 8);
 
     // Convert to selected currency
@@ -1605,8 +1605,8 @@ async function calculatePricing(hours, currency) {
     else if (hours >= Hmax) rateUSD = Rmin;
     else rateUSD = Rmax - ((Rmax - Rmin) / (Hmax - Hmin)) * (hours - Hmin);
 
-    // Calculate totals
-    const projectTotalUSD = rateUSD * hours;
+    // Calculate totals (minimum project price $250)
+    const projectTotalUSD = Math.max(rateUSD * hours, 250);
 
     // Convert to selected currency
     const projectTotalConverted = projectTotalUSD * (rates ? rates[currency] : 1);
