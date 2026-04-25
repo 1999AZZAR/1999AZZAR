@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #e8e0d0; /* Organic Yearbook Cream */
+  --foreground: #2a2520; /* Yearbook Charcoal */
+  --card: #efe9dc;      /* Yearbook Card Tint */
+  --card-foreground: #2a2520;
+  --primary: #2a2520;
+  --primary-foreground: #e8e0d0;
+  --accent: #8b1a1a;     /* Yearbook Deep Red */
+  --accent-foreground: #efe9dc;
+  --muted: #ddd5c5;
+  --muted-foreground: #7a7068;
+  --border: #cdc4b4;
+  --rule: #bfb6a6;
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    @apply tracking-tight overflow-x-hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-sans), sans-serif;
+    @apply font-black italic uppercase tracking-tighter;
+  }
+
+  p, .body-serif {
+    font-family: var(--font-serif), serif;
+    @apply text-lg md:text-xl leading-relaxed normal-case;
+  }
+}
+
+@layer components {
+  .headline-editorial {
+    @apply font-sans font-black italic tracking-tighter leading-[0.85] uppercase;
+    font-size: clamp(3.5rem, 15vw, 10rem);
+  }
+
+  .marginalia {
+    @apply font-sans font-bold text-[9px] tracking-[0.2em] text-muted-foreground uppercase opacity-60;
+    writing-mode: vertical-rl;
+  }
+
+  .box-blueprint {
+    @apply p-8 md:p-12 bg-card border-2 border-border relative transition-all duration-500 hover:border-accent shadow-sm;
+  }
+
+  .btn-editorial {
+    @apply relative px-10 py-6 bg-foreground text-background font-sans font-black italic text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-accent;
+  }
+
+  .rule-accent {
+    @apply h-1 w-20 bg-accent;
+  }
+}
