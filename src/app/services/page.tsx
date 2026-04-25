@@ -13,21 +13,26 @@ export default function ServicesPage() {
   const { t } = useLanguage();
 
   const services = [
-    { icon: <Cpu />, key: "arduino" },
-    { icon: <Globe />, key: "web" },
-    { icon: <Layers />, key: "api" },
-    { icon: <Zap />, key: "automation" },
-    { icon: <Brain />, key: "ai" },
-    { icon: <Server />, key: "linux" },
-    { icon: <Database />, key: "backend" },
-    { icon: <Code />, key: "customSoftware" },
-    { icon: <Terminal />, key: "cliTool" },
-    { icon: <ShieldCheck />, key: "security" },
-    { icon: <Search />, key: "seo" },
-    { icon: <Layout />, key: "uiux" },
-    { icon: <PenTool />, key: "writing" },
-    { icon: <Activity />, key: "project" },
-    { icon: <Settings />, key: "consulting" },
+    { icon: <Cpu />, key: "Arduino" },
+    { icon: <Layers />, key: "Api" },
+    { icon: <Zap />, key: "Automation" },
+    { icon: <Settings />, key: "Consulting" },
+    { icon: <Database />, key: "Data" },
+    { icon: <Cpu />, key: "Embedded" },
+    { icon: <ShieldCheck />, key: "Security" },
+    { icon: <Settings />, key: "Training" },
+    { icon: <Activity />, key: "Project" },
+    { icon: <PenTool />, key: "Writing" },
+    { icon: <Layout />, key: "Uiux" },
+    { icon: <Globe />, key: "Web" },
+    { icon: <Brain />, key: "AiGen" },
+    { icon: <Brain />, key: "MlSol" },
+    { icon: <Server />, key: "DevopsCloud" },
+    { icon: <Server />, key: "LinuxSys" },
+    { icon: <Database />, key: "BackendWeb" },
+    { icon: <Code />, key: "CustomSoftware" },
+    { icon: <Terminal />, key: "CliTool" },
+    { icon: <Search />, key: "Seo" }
   ];
 
   return (
@@ -69,13 +74,20 @@ export default function ServicesPage() {
 }
 
 function ServiceCard({ service, index }: { service: any; index: number }) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   
-  // Try to find the translation, fallback to English if ID/AR is missing
-  const serviceData = (t('services' as any) as any)?.find((s: any) => s.id === service.key) || 
-                      (translations['en'].services as any).find((s: any) => s.id === service.key);
+  let titleKey = `service${service.key}Title`;
+  let descKey = `service${service.key}Desc`;
+  
+  if (service.key === 'DevopsCloud') {
+    titleKey = 'serviceDevopsCloudTitle2';
+    descKey = 'serviceDevopsCloudDesc2';
+  }
+  
+  const title = t(titleKey as any);
+  const desc = t(descKey as any);
 
-  if (!serviceData) return null;
+  if (!title || title === titleKey) return null;
 
   return (
     <motion.div
@@ -94,11 +106,11 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
         </div>
         
         <h3 className="text-2xl font-black italic uppercase tracking-tighter leading-tight group-hover:text-accent transition-colors">
-          {serviceData.title}
+          {title}
         </h3>
         
         <p className="text-xs font-bold text-muted-foreground uppercase italic leading-relaxed tracking-wider">
-          {serviceData.desc.replace(/<[^>]*>?/gm, '')}
+          {desc.replace(/<[^>]*>?/gm, '')}
         </p>
       </div>
 
@@ -110,6 +122,3 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
     </motion.div>
   );
 }
-
-// Access translations directly for fallback logic
-import { translations } from '@/lib/translations';
