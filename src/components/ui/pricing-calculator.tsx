@@ -2,14 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { Calculator, Calendar, DollarSign, User, Briefcase } from 'lucide-react';
+import { 
+  Calculator, Calendar, DollarSign, User, Briefcase, 
+  Receipt, X, Send, Mail, Download, Printer, ExternalLink
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PricingCalculator() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [hours, setHours] = useState<number>(0);
   const [currency, setCurrency] = useState<'USD' | 'IDR' | 'EUR' | 'GBP'>('USD');
-  const [paymentPlan, setPaymentPlan] = useState('2-50-50'); // Default: 2 installments
+  const [paymentPlan, setPaymentPlan] = useState('2-50-50'); 
   const [payConsultationSeparate, setPayConsultationSeparate] = useState(false);
+  const [projectDescription, setProjectDescription] = useState('');
+  const [showReceipt, setShowReceipt] = useState(false);
 
   // Results State
   const [results, setResults] = useState<{
@@ -20,7 +26,6 @@ export default function PricingCalculator() {
     installments: { desc: string; amount: number; isConsultation: boolean }[];
   } | null>(null);
 
-  // Fixed conversion rates (In real app, fetch these)
   const exchangeRates = {
     USD: 1,
     IDR: 15500,
@@ -34,19 +39,16 @@ export default function PricingCalculator() {
       return;
     }
 
-    // Original Pricing Constants
-    const Rmax = 35;   // Max rate ($)
-    const Rmin = 20;   // Min rate ($)
-    const Hmin = 8;    // Min hours for max rate
-    const Hmax = 208;  // Max hours for min rate
+    const Rmax = 35;
+    const Rmin = 20;
+    const Hmin = 8;
+    const Hmax = 208;
 
-    // 1. Calculate Rate
     let rateUSD;
     if (hours <= Hmin) rateUSD = Rmax;
     else if (hours >= Hmax) rateUSD = Rmin;
     else rateUSD = Rmax - ((Rmax - Rmin) / (Hmax - Hmin)) * (hours - Hmin);
 
-    // 2. Calculate Consultation Fees (every 30 hours = 1 fee)
     const numConsultationFees = Math.floor(hours / 30);
     let totalConsultationUSD = 0;
     const consultationFees: number[] = [];
@@ -60,16 +62,13 @@ export default function PricingCalculator() {
         totalConsultationUSD += roundedFee;
     }
 
-    // 3. Project Total (Min $250)
     const projectTotalUSD = Math.max(rateUSD * hours, 250);
     const days = Math.ceil(hours / 8);
 
-    // 4. Installments
     const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
     let installments: { desc: string; amount: number; isConsultation: boolean }[] = [];
 
     if (payConsultationSeparate && numConsultationFees > 0) {
-      // Split Project Cost
       percentages.forEach((pct, i) => {
         installments.push({
           desc: `Project Payment ${i + 1}`,
@@ -77,7 +76,6 @@ export default function PricingCalculator() {
           isConsultation: false
         });
       });
-      // Separate Consultation
       consultationFees.forEach((fee, i) => {
         installments.push({
           desc: `Consultation Fee ${i + 1}`,
@@ -114,11 +112,22 @@ export default function PricingCalculator() {
     }).format(converted);
   };
 
+  const getWhatsAppLink = () => {
+    if (!results) return '';
+    let msg = `Hi Azzar! I'm interested in your development services.\n\n`;
+    if (projectDescription) msg += `PROJECT DESCRIPTION:\n${projectDescription}\n\n`;
+    msg += `PROJECT DETAILS:\n- Hours: ${hours}\n- Currency: ${currency}\n- Plan: ${paymentPlan}\n\n`;
+    msg += `TOTAL: ${formatValue(results.projectTotalUSD + results.totalConsultationUSD)}`;
+    return `https://wa.me/+6282232529804?text=${encodeURIComponent(msg)}`;
+  };
+
   return (
-    <div className="p-12 bg-card border-[6px] border-foreground shadow-[20px_20px_0px_0px_rgba(42,37,32,1)] relative overflow-hidden">
-      <div className="flex items-center gap-3 text-accent mb-8">
-         <Calculator size={24} strokeWidth={3} />
-         <span className="text-xs font-black uppercase tracking-[0.3em] italic">Project_Estimator_v2.0</span>
+    <div className="p-8 md:p-12 bg-card border-[6px] border-foreground shadow-[20px_20px_0px_0px_rgba(42,37,32,1)] relative overflow-hidden">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3 text-accent">
+           <Calculator size={24} strokeWidth={3} />
+           <span className="text-xs font-black uppercase tracking-[0.3em] italic">Project_Estimator_v3.0</span>
+        </div>
       </div>
       
       <div className="space-y-10">
@@ -150,6 +159,16 @@ export default function PricingCalculator() {
           </div>
         </div>
 
+        <div>
+          <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">Project_Brief (Optional)</label>
+          <textarea 
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
+            placeholder={t('pricingProjectDescriptionPlaceholder' as any)}
+            className="w-full bg-background border-4 border-foreground p-6 min-h-[120px] focus:outline-none focus:border-accent transition-all font-sans font-bold text-sm uppercase italic"
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">Payment_Plan</label>
@@ -179,7 +198,7 @@ export default function PricingCalculator() {
 
         {/* RESULTS */}
         {results && (
-          <div className="pt-10 border-t-4 border-foreground/10 space-y-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="pt-10 border-t-4 border-foreground/10 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
                 <DollarSign size={20} className="text-accent" />
@@ -206,27 +225,116 @@ export default function PricingCalculator() {
               </div>
             </div>
 
-            {/* BREAKDOWN */}
-            <div className="space-y-4">
-               <h4 className="text-[11px] font-black uppercase italic tracking-widest text-accent">Payment_Breakdown_</h4>
-               <div className="grid grid-cols-1 gap-2">
-                 {results.installments.map((inst, i) => (
-                   <div key={i} className={`p-4 border-2 border-foreground flex justify-between items-center ${inst.isConsultation ? 'bg-accent/10 border-accent italic' : 'bg-background'}`}>
-                      <div className="flex items-center gap-3">
-                        <span className="w-6 h-6 bg-foreground text-background text-[10px] flex items-center justify-center font-black">{i+1}</span>
-                        <span className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                          {inst.isConsultation ? <User size={14} /> : <Briefcase size={14} />}
-                          {inst.desc}
-                        </span>
-                      </div>
-                      <span className="text-lg font-black italic tracking-tighter">{formatValue(inst.amount)}</span>
-                   </div>
-                 ))}
-               </div>
-            </div>
-          </div>
+            <button 
+              onClick={() => setShowReceipt(true)}
+              className="w-full bg-accent text-background py-6 font-black italic uppercase text-sm tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-foreground transition-all shadow-[8px_8px_0px_0px_rgba(26,24,20,1)]"
+            >
+              <Receipt size={20} /> GENERATE_PROJECT_RECEIPT_
+            </button>
+          </motion.div>
         )}
       </div>
+
+      {/* RECEIPT MODAL */}
+      <AnimatePresence>
+        {showReceipt && results && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-foreground/90 backdrop-blur-sm overflow-y-auto">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-background border-[12px] border-foreground max-w-2xl w-full p-8 md:p-16 relative shadow-2xl"
+            >
+              <button 
+                onClick={() => setShowReceipt(false)}
+                className="absolute top-8 right-8 p-2 hover:text-accent transition-colors"
+              >
+                <X size={32} strokeWidth={3} />
+              </button>
+
+              <div id="printable-receipt" className="space-y-12">
+                 {/* Header */}
+                 <div className="border-b-4 border-foreground pb-8 flex justify-between items-end">
+                    <div className="space-y-2">
+                       <h2 className="text-4xl font-black italic uppercase tracking-tighter">PROJECT_RECEIPT</h2>
+                       <p className="text-[10px] font-black opacity-50 uppercase tracking-widest">NO. #{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                    </div>
+                    <div className="text-right">
+                       <p className="text-[10px] font-black uppercase tracking-widest opacity-50">DATE_ISSUED</p>
+                       <p className="font-sans font-black italic">{new Date().toLocaleDateString()}</p>
+                    </div>
+                 </div>
+
+                 {/* Content */}
+                 <div className="grid grid-cols-2 gap-12">
+                    <div className="space-y-4">
+                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">01 // PROJECT_SPECS</p>
+                       <div className="space-y-2 text-sm font-bold uppercase italic">
+                          <div className="flex justify-between"><span>HOURS:</span> <span>{hours}</span></div>
+                          <div className="flex justify-between"><span>DURATION:</span> <span>{results.days} DAYS</span></div>
+                          <div className="flex justify-between"><span>CURRENCY:</span> <span>{currency}</span></div>
+                       </div>
+                    </div>
+                    <div className="space-y-4">
+                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">02 // FINANCIAL_DATA</p>
+                       <div className="space-y-2 text-sm font-bold uppercase italic">
+                          <div className="flex justify-between"><span>PROJECT:</span> <span>{formatValue(results.projectTotalUSD)}</span></div>
+                          <div className="flex justify-between"><span>CONSULT:</span> <span>{formatValue(results.totalConsultationUSD)}</span></div>
+                          <div className="flex justify-between border-t-2 border-foreground pt-2 mt-2 text-accent">
+                             <span>TOTAL:</span> <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD)}</span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+
+                 {projectDescription && (
+                    <div className="space-y-4">
+                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">03 // PROJECT_DESCRIPTION_</p>
+                       <p className="font-serif italic text-sm text-foreground/80 leading-relaxed border-2 border-border p-4 bg-white">
+                          {projectDescription}
+                       </p>
+                    </div>
+                 )}
+
+                 {/* QR Codes Section */}
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-y-4 border-foreground/10">
+                    <div className="flex flex-col items-center gap-4 text-center">
+                       <p className="text-[9px] font-black uppercase tracking-widest italic">CHANNEL_WHATSAPP</p>
+                       <div className="p-4 bg-white border-2 border-foreground">
+                          <img 
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(getWhatsAppLink())}`}
+                            alt="WhatsApp QR"
+                            className="w-32 h-32"
+                          />
+                       </div>
+                       <a href={getWhatsAppLink()} target="_blank" className="text-[10px] font-black uppercase italic underline flex items-center gap-2">
+                          OPEN_WHATSAPP <ExternalLink size={12} />
+                       </a>
+                    </div>
+                    <div className="flex flex-col items-center justify-center gap-4 text-center border-l-2 border-foreground/10 pl-8">
+                       <p className="text-xs font-black uppercase italic leading-tight">Ready to initiate development?</p>
+                       <p className="text-[10px] font-bold uppercase italic opacity-50">Project commences upon initial milestone clearance.</p>
+                       <div className="flex gap-4">
+                          <button onClick={() => window.print()} className="p-3 border-2 border-foreground hover:bg-foreground hover:text-background transition-all">
+                             <Printer size={20} />
+                          </button>
+                          <a href={`mailto:azzar.mr.zs@gmail.com?subject=Project Inquiry&body=${encodeURIComponent(projectDescription)}`} className="p-3 border-2 border-foreground hover:bg-foreground hover:text-background transition-all">
+                             <Mail size={20} />
+                          </a>
+                       </div>
+                    </div>
+                 </div>
+
+                 <div className="pt-8 text-center">
+                    <p className="text-[9px] font-black uppercase tracking-[0.5em] italic text-muted-foreground">
+                       ENGINEERED BY AZZAR BUDIYANTO // EST. 1999
+                    </p>
+                 </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
