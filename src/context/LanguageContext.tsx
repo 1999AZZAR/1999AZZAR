@@ -16,7 +16,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('language') as Language;
-    if (saved && translations[saved]) {
+    if (saved && (translations as any)[saved]) {
       setLanguageState(saved);
     }
   }, []);
@@ -24,17 +24,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem('language', lang);
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
   };
 
   useEffect(() => {
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
   }, [language]);
 
   const t = (key: TranslationKeys): string => {
-    const currentTranslations = translations[language] as any;
+    const currentTranslations = (translations as any)[language];
     const fallbackTranslations = translations['en'] as any;
     return currentTranslations[key] || fallbackTranslations[key] || key;
   };

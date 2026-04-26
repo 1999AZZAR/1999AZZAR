@@ -25,10 +25,8 @@ export default function Navbar() {
   }, [isOpen]);
 
   const toggleLanguage = () => {
-    const langs: ('en' | 'id' | 'ar')[] = ['en', 'id', 'ar'];
-    const currentIndex = langs.indexOf(language as any);
-    const nextIndex = (currentIndex + 1) % langs.length;
-    setLanguage(langs[nextIndex]);
+    const nextLang = language === 'en' ? 'id' : 'en';
+    setLanguage(nextLang as any);
   };
 
   return (
@@ -66,7 +64,7 @@ export default function Navbar() {
           </button>
           
           <Link href="/contact" className="hidden lg:flex items-center gap-2 px-8 py-3 bg-foreground text-background font-black text-[11px] uppercase tracking-widest hover:bg-accent transition-all group shadow-ambient italic">
-            HIRE_ME <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            {t('contact' as any).toUpperCase()} <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </Link>
 
           <button 
@@ -103,7 +101,7 @@ export default function Navbar() {
               
               <div className="mt-12 space-y-8">
                 <button onClick={() => { toggleLanguage(); }} className="text-2xl font-black uppercase italic border-t-4 border-background pt-8 flex items-center gap-4 w-full">
-                  <Globe size={32} /> {language === 'en' ? 'Indonesian' : language === 'id' ? 'Arabic' : 'English'}
+                  <Globe size={32} /> {language === 'en' ? 'Indonesian' : 'English'}
                 </button>
               </div>
             </div>
