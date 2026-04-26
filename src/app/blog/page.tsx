@@ -2,6 +2,9 @@ import Parser from 'rss-parser';
 import { Newspaper, ArrowUpRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
+export const revalidate = 3600; // revalidate every hour
+export const dynamic = 'force-dynamic';
+
 const parser = new Parser();
 
 async function getBlogPosts() {
