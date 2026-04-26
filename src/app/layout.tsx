@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Instrument_Serif } from 'next/font/google'
+import { Plus_Jakarta_Sans, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/context/LanguageContext'
 import Navbar from '@/components/ui/navbar'
 import Footer from '@/components/ui/footer'
 import BackToTop from '@/components/ui/back-to-top'
 import Script from 'next/script'
+import ScrollProgress from '@/components/ui/scroll-progress'
+import CustomCursor from '@/components/ui/custom-cursor'
 
 const sans = Plus_Jakarta_Sans({ 
   subsets: ['latin'],
@@ -17,6 +19,11 @@ const serif = Instrument_Serif({
   weight: '400',
   style: ['italic', 'normal'],
   variable: '--font-serif',
+})
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
 })
 
 export const metadata: Metadata = {
@@ -31,7 +38,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${sans.variable} ${serif.variable} font-sans antialiased`}>
+      <body className={`${sans.variable} ${serif.variable} ${mono.variable} font-sans antialiased`}>
+        <ScrollProgress />
+        <CustomCursor />
         <LanguageProvider>
           <div className="min-h-screen flex flex-col">
             <Navbar />

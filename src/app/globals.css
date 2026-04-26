@@ -3,21 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: #e8e0d0; /* Organic Yearbook Cream */
-  --foreground: #2a2520; /* Yearbook Charcoal */
-  --card: #efe9dc;      /* Yearbook Card Tint */
-  --card-foreground: #2a2520;
-  --primary: #2a2520;
-  --primary-foreground: #e8e0d0;
-  --accent: #8b1a1a;     /* Yearbook Deep Red */
-  --accent-foreground: #efe9dc;
-  --muted: #ddd5c5;
-  --muted-foreground: #7a7068;
-  --border: #cdc4b4;
-  --rule: #bfb6a6;
+  --background: #E8E0D0; /* Canvas */
+  --foreground: #2A2520; /* Content */
+  --card: #EFE9DC;      /* Elevation */
+  --card-foreground: #2A2520;
+  --accent: #8B1A1A;     /* Focus (Burgundy) */
+  --accent-foreground: #EFE9DC;
+  --muted: #DDD5C5;      /* Structure */
+  --muted-foreground: #7A7068; /* Metadata */
+  --border: #CDC4B4;     /* Separation */
 }
 
 @layer base {
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
@@ -25,6 +27,16 @@
     -webkit-font-smoothing: antialiased;
     @apply tracking-tight overflow-x-hidden;
     position: relative;
+    cursor: default; /* Fallback */
+  }
+
+  @media (min-width: 1024px) {
+    body:not(.no-custom-cursor) {
+      cursor: none;
+    }
+    a, button, .group {
+      cursor: none;
+    }
   }
 
   body::before {
@@ -40,26 +52,35 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
-  h1, h2, h3 {
-    font-family: var(--font-sans), sans-serif;
-    @apply font-black italic uppercase tracking-tighter;
+  /* 3. Typographic Hierarchy: Primary (Headings) */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-bold uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
 
-  p, .body-serif {
-    font-family: var(--font-serif), serif;
-    @apply text-lg md:text-xl leading-relaxed normal-case;
+  /* 3. Typographic Hierarchy: Primary (Body) */
+  p, .body-text {
+    @apply font-sans font-normal normal-case;
+    line-height: 1.6;
+    font-size: 1.125rem;
   }
 }
 
 @layer components {
+  /* 3. Typographic Hierarchy: Secondary (Technical Mono) */
+  .mono-label {
+    @apply font-mono font-semibold text-[0.75rem] uppercase tracking-[0.1em] text-muted-foreground;
+  }
+
   .headline-editorial {
-    @apply font-sans font-black italic tracking-tighter leading-[0.85] uppercase;
+    @apply font-sans font-bold italic tracking-[-0.03em] leading-[0.85] uppercase;
     font-size: clamp(3.5rem, 15vw, 10rem);
   }
 
-  .marginalia {
-    @apply font-sans font-bold text-[9px] tracking-[0.2em] text-muted-foreground uppercase opacity-60;
-    writing-mode: vertical-rl;
+  /* Still keeping serif as an editorial option */
+  .font-serif {
+    font-family: var(--font-serif), serif;
   }
 
   .box-blueprint {
@@ -67,7 +88,7 @@
   }
 
   .btn-editorial {
-    @apply relative px-10 py-6 bg-foreground text-background font-sans font-black italic text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-accent;
+    @apply relative px-10 py-6 bg-foreground text-background font-mono font-semibold italic text-[0.75rem] tracking-[0.1em] uppercase transition-all duration-300 hover:bg-accent;
   }
 
   .rule-accent {
