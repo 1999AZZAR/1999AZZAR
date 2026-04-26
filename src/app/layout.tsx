@@ -42,9 +42,16 @@ export default function RootLayout({
         <ScrollProgress />
         <CustomCursor />
         <LanguageProvider>
-          <div className="min-h-screen flex flex-col">
+          {/* 4A. Global Blueprint Grid wrapping everything */}
+          <div className="min-h-screen flex flex-col relative blueprint-grid">
+            <div className="blueprint-line left-0" />
+            <div className="blueprint-line left-1/4 hidden md:block" />
+            <div className="blueprint-line left-1/2 hidden md:block" />
+            <div className="blueprint-line left-3/4 hidden md:block" />
+            <div className="blueprint-line right-0" />
+            
             <Navbar />
-            <main className="flex-grow">
+            <main className="flex-grow relative z-10">
               {children}
             </main>
             <Footer />

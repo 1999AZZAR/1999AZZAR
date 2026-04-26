@@ -7,6 +7,8 @@
   --foreground: #2A2520; /* Content */
   --card: #EFE9DC;      /* Elevation */
   --card-foreground: #2A2520;
+  --primary: #2A2520;
+  --primary-foreground: #E8E0D0;
   --accent: #8B1A1A;     /* Focus (Burgundy) */
   --accent-foreground: #EFE9DC;
   --muted: #DDD5C5;      /* Structure */
@@ -27,7 +29,7 @@
     -webkit-font-smoothing: antialiased;
     @apply tracking-tight overflow-x-hidden;
     position: relative;
-    cursor: default; /* Fallback */
+    cursor: default;
   }
 
   @media (min-width: 1024px) {
@@ -52,25 +54,26 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
-  /* 3. Typographic Hierarchy: Primary (Headings) */
+  /* 1. SANS: Headings (Brand Identity) */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-bold uppercase;
+    font-family: var(--font-sans), sans-serif;
+    @apply font-bold uppercase;
     letter-spacing: -0.03em;
     line-height: 1.05;
   }
 
-  /* 3. Typographic Hierarchy: Primary (Body) */
-  p, .body-text {
-    @apply font-sans font-normal normal-case;
-    line-height: 1.6;
-    font-size: 1.125rem;
+  /* 2. SERIF: Narrative Body (Storytelling) */
+  p, .body-narrative {
+    font-family: var(--font-serif), serif;
+    @apply font-normal italic leading-relaxed normal-case;
+    font-size: 1.25rem;
   }
 }
 
 @layer components {
-  /* 3. Typographic Hierarchy: Secondary (Technical Mono) */
+  /* 3. MONO: Technical Metadata & Navigation */
   .mono-label {
-    @apply font-mono font-semibold text-[0.75rem] uppercase tracking-[0.1em] text-muted-foreground;
+    @apply font-mono font-semibold text-[0.75rem] uppercase tracking-[0.15em] text-muted-foreground;
   }
 
   .headline-editorial {
@@ -78,20 +81,30 @@
     font-size: clamp(3.5rem, 15vw, 10rem);
   }
 
-  /* Still keeping serif as an editorial option */
-  .font-serif {
-    font-family: var(--font-serif), serif;
+  .bracket {
+    @apply absolute w-3 h-3 border-accent opacity-0 transition-all duration-500 z-10;
   }
+  .group:hover .bracket {
+    @apply opacity-100;
+  }
+  .bracket-tl { @apply top-0 left-0 border-t-2 border-l-2 group-hover:-translate-x-1 group-hover:-translate-y-1; }
+  .bracket-tr { @apply top-0 right-0 border-t-2 border-r-2 group-hover:translate-x-1 group-hover:-translate-y-1; }
+  .bracket-bl { @apply bottom-0 left-0 border-b-2 border-l-2 group-hover:-translate-x-1 group-hover:translate-y-1; }
+  .bracket-br { @apply bottom-0 right-0 border-b-2 border-r-2 group-hover:translate-x-1 group-hover:translate-y-1; }
 
-  .box-blueprint {
-    @apply p-8 md:p-12 bg-card border-2 border-border relative transition-all duration-500 hover:border-accent shadow-sm;
+  .marginalia {
+    @apply font-mono font-bold text-[9px] tracking-[0.3em] text-accent opacity-60 uppercase;
+    writing-mode: vertical-rl;
   }
 
   .btn-editorial {
-    @apply relative px-10 py-6 bg-foreground text-background font-mono font-semibold italic text-[0.75rem] tracking-[0.1em] uppercase transition-all duration-300 hover:bg-accent;
+    @apply relative px-8 py-4 bg-foreground text-background font-mono font-semibold text-[0.75rem] tracking-[0.1em] uppercase transition-all duration-300 hover:bg-accent;
   }
 
-  .rule-accent {
-    @apply h-1 w-20 bg-accent;
+  .blueprint-grid {
+    @apply relative mx-auto max-w-[80rem];
+  }
+  .blueprint-line {
+    @apply absolute top-0 bottom-0 w-[1px] bg-foreground opacity-[0.2] z-[-1] pointer-events-none;
   }
 }
