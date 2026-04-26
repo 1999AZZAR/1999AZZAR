@@ -80,7 +80,7 @@ export default function AboutPage() {
             </div>
             
             <div className="text-xl font-bold text-muted-foreground italic uppercase leading-relaxed space-y-8 mb-12">
-              <p>{t('summaryText' as any)}</p>
+              <div dangerouslySetInnerHTML={{ __html: t('summaryText' as any) }} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
