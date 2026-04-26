@@ -79,7 +79,7 @@ export default function AboutPage() {
               "Blending engineering precision with creative problem-solving to build connected systems."
             </div>
             
-            <div className="font-serif text-2xl md:text-4xl italic text-muted-foreground leading-relaxed mb-12 normal-case">
+            <div className="text-xl font-bold text-muted-foreground italic uppercase leading-relaxed space-y-8 mb-12">
               <div dangerouslySetInnerHTML={{ __html: t('summaryText' as any) }} />
             </div>
 
