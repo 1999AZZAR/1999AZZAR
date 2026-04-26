@@ -18,7 +18,6 @@ export default function ContactPage() {
     { name: 'Instagram', url: 'https://www.instagram.com/azzar_budiyanto/', handle: '@azzar_budiyanto' },
     { name: 'LinkedIn', url: 'https://linkedin.com/in/azzar-budiyanto/', handle: 'Azzar Budiyanto' },
     { name: 'Telegram', url: 'https://t.me/azzar_budiyanto', handle: '@azzar_budiyanto' },
-    { name: 'WhatsApp', url: 'https://wa.me/+6282232529804', handle: '+62 822 3252 9804' },
     { name: 'YouTube', url: 'https://www.youtube.com/@azzar.', handle: '@azzar.' },
     { name: 'Pinterest', url: 'https://id.pinterest.com/azzar_budiyanto/', handle: 'azzar_budiyanto' },
     { name: 'DeviantArt', url: 'https://www.deviantart.com/azzar01', handle: 'azzar01' },
