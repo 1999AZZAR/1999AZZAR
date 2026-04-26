@@ -2,14 +2,14 @@
 
 import { ArrowUpRight, Cpu, Search, Activity, Globe, Newspaper, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
 import RotatingSkills from '@/components/ui/rotating-skills';
 
 export default function HomePage() {
+  const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
-  const currentHalf = new Date().getMonth() < 6 ? 'first' : 'second';
-  const currentHalfId = new Date().getMonth() < 6 ? 'pertama' : 'kedua';
-  const currentHalfAr = new Date().getMonth() < 6 ? 'الأول' : 'الثاني';
+  const currentHalf = new Date().getMonth() < 6 ? (language === 'id' ? 'pertama' : 'first') : (language === 'id' ? 'kedua' : 'second');
 
   return (
     <main className="min-h-screen pt-32 pb-40">
@@ -24,21 +24,17 @@ export default function HomePage() {
                  <div className="h-[1px] w-12 bg-accent" />
                </div>
 
-               <h1 className="headline-editorial text-foreground leading-none">
-                Azzar<br />Budiyanto<span className="text-accent">.</span>
-               </h1>
+               <h1 className="headline-editorial text-foreground leading-none" dangerouslySetInnerHTML={{ __html: `Azzar<br />Budiyanto<span class="text-accent">.</span>` }} />
 
                <div className="max-w-2xl">
-                 <p className="text-2xl md:text-3xl font-serif italic text-muted-foreground leading-snug mb-12">
-                  "Engineering resilient <span className="text-foreground font-bold">digital ecosystems</span> and <span className="text-accent font-bold">connected hardware</span> with precision and purpose."
-                 </p>
+                 <p className="text-2xl md:text-3xl font-serif italic text-muted-foreground leading-snug mb-12" dangerouslySetInnerHTML={{ __html: t('heroQuote' as any) }} />
                  
                  <div className="flex flex-wrap gap-6 pt-4">
                     <Link href="/projects" className="btn-editorial">
-                      EXPLORE WORKS
+                      {t('exploreWorks' as any) || 'EXPLORE WORKS'}
                     </Link>
                     <Link href="/contact" className="group flex items-center gap-3 font-sans font-black italic text-xs tracking-[0.2em] uppercase hover:text-accent transition-all">
-                      HIRE THE ENGINEER <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      {t('hireTheEngineer' as any) || 'HIRE THE ENGINEER'} <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </Link>
                  </div>
                </div>
@@ -60,11 +56,11 @@ export default function HomePage() {
                 <div className="space-y-6">
                   <div className="flex items-center gap-3 text-accent">
                     <Activity size={20} strokeWidth={3} />
-                    <span className="font-sans font-black text-[10px] tracking-[0.3em] italic uppercase">Current_Availability</span>
+                    <span className="font-sans font-black text-[10px] tracking-[0.3em] italic uppercase">{t('statusTitle' as any)}</span>
                   </div>
-                  <h3 className="text-6xl md:text-8xl font-sans font-black italic tracking-tighter text-foreground group-hover:text-accent transition-colors leading-none">ONLINE.</h3>
+                  <h3 className="text-6xl md:text-8xl font-sans font-black italic tracking-tighter text-foreground group-hover:text-accent transition-colors leading-none">{t('statusOnline' as any)}</h3>
                   <p className="font-serif italic text-lg text-muted-foreground leading-relaxed">
-                    Currently accepting high-impact project contracts for the {currentHalf} half of {currentYear}.
+                    {t('statusAvailability' as any).replace('${half}', currentHalf).replace('${year}', currentYear.toString())}
                   </p>
                 </div>
               </div>
@@ -74,10 +70,10 @@ export default function HomePage() {
                  <div className="space-y-8 relative z-10">
                    <div className="flex items-center gap-3 text-accent">
                       <Globe size={20} strokeWidth={3} />
-                      <span className="font-sans font-black text-[10px] tracking-[0.3em] italic uppercase">Core_Specialization</span>
+                      <span className="font-sans font-black text-[10px] tracking-[0.3em] italic uppercase">{t('specializationTitle' as any)}</span>
                    </div>
                    <div className="font-sans text-4xl md:text-7xl font-black italic uppercase leading-[0.9] tracking-tighter">
-                      Mastering the Art of 
+                      {t('masteringArt' as any)} 
                       <div className="mt-8 text-accent h-24 md:h-32"><RotatingSkills /></div>
                    </div>
                  </div>
@@ -89,9 +85,9 @@ export default function HomePage() {
         {/* JOURNAL - YEARBOOK THEME */}
         <section className="mb-20">
            <div className="flex flex-col md:flex-row justify-between items-end gap-8 pb-8 border-b-2 border-border mb-12">
-              <h2 className="text-5xl md:text-8xl font-sans font-black italic tracking-tighter uppercase leading-none">Journal<span className="text-accent">.</span></h2>
+              <h2 className="text-5xl md:text-8xl font-sans font-black italic tracking-tighter uppercase leading-none">{t('journalTitle' as any)}<span className="text-accent">.</span></h2>
               <Link href="/blog" className="group flex items-center gap-2 font-sans font-black italic text-xs tracking-widest uppercase hover:text-accent transition-all">
-                VIEW_ALL_THOUGHTS <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                {t('viewAllThoughts' as any)} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
            </div>
 
@@ -100,10 +96,10 @@ export default function HomePage() {
                  <div className="space-y-6 max-w-4xl">
                     <div className="flex items-center gap-4">
                        <Newspaper size={32} className="text-accent" />
-                       <span className="font-sans font-black text-xs tracking-[0.3em] italic uppercase">FROM THE LAB_</span>
+                       <span className="font-sans font-black text-xs tracking-[0.3em] italic uppercase">{t('fromTheLab' as any)}</span>
                     </div>
                     <h3 className="font-serif italic text-3xl md:text-6xl leading-[1.1] tracking-tight group-hover:text-accent transition-colors">
-                       "Accessing the latest engineering research and architectural project updates."
+                       "{t('blogQuote' as any)}"
                     </h3>
                  </div>
                  <ArrowUpRight size={80} className="shrink-0 opacity-10 group-hover:opacity-100 group-hover:text-accent transition-all duration-700" strokeWidth={3} />

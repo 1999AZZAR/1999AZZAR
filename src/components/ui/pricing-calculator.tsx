@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { 
   Calculator, Calendar, DollarSign, User, Briefcase, 
-  Receipt, X, Send, Mail, Download, Printer, ExternalLink
+  Receipt, X, Send, Mail, Download, Printer, ExternalLink, Info
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -71,14 +71,14 @@ export default function PricingCalculator() {
     if (payConsultationSeparate && numConsultationFees > 0) {
       percentages.forEach((pct, i) => {
         installments.push({
-          desc: `Project Payment ${i + 1}`,
+          desc: `${t('pricingPaymentProjectLabel' as any)} ${i + 1}`,
           amount: projectTotalUSD * pct,
           isConsultation: false
         });
       });
       consultationFees.forEach((fee, i) => {
         installments.push({
-          desc: `Consultation Fee ${i + 1}`,
+          desc: `${t('pricingPaymentConsultationLabel' as any)} ${i + 1}`,
           amount: fee,
           isConsultation: true
         });
@@ -87,7 +87,7 @@ export default function PricingCalculator() {
       const combinedTotal = projectTotalUSD + totalConsultationUSD;
       percentages.forEach((pct, i) => {
         installments.push({
-          desc: `Payment ${i + 1}`,
+          desc: `${t('pricingPaymentProjectLabel' as any)} ${i + 1}`,
           amount: combinedTotal * pct,
           isConsultation: false
         });
@@ -101,11 +101,11 @@ export default function PricingCalculator() {
       days,
       installments
     });
-  }, [hours, paymentPlan, payConsultationSeparate]);
+  }, [hours, paymentPlan, payConsultationSeparate, t]);
 
   const formatValue = (usdAmount: number) => {
     const converted = usdAmount * exchangeRates[currency];
-    return new Intl.NumberFormat(currency === 'IDR' ? 'id-ID' : 'en-US', {
+    return new Intl.NumberFormat(language === 'id' ? 'id-ID' : 'en-US', {
       style: 'currency',
       currency: currency,
       maximumFractionDigits: currency === 'IDR' ? 0 : 2
@@ -126,7 +126,7 @@ export default function PricingCalculator() {
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3 text-accent">
            <Calculator size={24} strokeWidth={3} />
-           <span className="text-xs font-black uppercase tracking-[0.3em] italic">Project_Estimator_v3.0</span>
+           <span className="text-xs font-black uppercase tracking-[0.3em] italic">{t('calcTitle' as any)}</span>
         </div>
       </div>
       
@@ -134,7 +134,7 @@ export default function PricingCalculator() {
         {/* INPUTS */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">Hours_Quantity</label>
+            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcHoursLabel' as any)}</label>
             <input 
               type="number" 
               value={hours || ''} 
@@ -144,7 +144,7 @@ export default function PricingCalculator() {
             />
           </div>
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">Currency</label>
+            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcCurrencyLabel' as any)}</label>
             <div className="grid grid-cols-2 gap-2">
               {(['USD', 'IDR', 'EUR', 'GBP'] as const).map((cur) => (
                 <button
@@ -160,7 +160,7 @@ export default function PricingCalculator() {
         </div>
 
         <div>
-          <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">Project_Brief (Optional)</label>
+          <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcProjectBriefLabel' as any)}</label>
           <textarea 
             value={projectDescription}
             onChange={(e) => setProjectDescription(e.target.value)}
@@ -171,16 +171,16 @@ export default function PricingCalculator() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">Payment_Plan</label>
+            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcPlanLabel' as any)}</label>
             <select 
               value={paymentPlan}
               onChange={(e) => setPaymentPlan(e.target.value)}
               className="w-full bg-background border-4 border-foreground p-4 font-black italic uppercase text-xs outline-none focus:bg-foreground focus:text-background transition-all"
             >
-              <option value="1-100">Single Payment (100%)</option>
-              <option value="2-50-50">Milestones (50/50)</option>
-              <option value="3-30-40-30">Progressive (30/40/30)</option>
-              <option value="4-25-25-25-25">Quarters (25x4)</option>
+              <option value="1-100">{t('calcPlanSingle' as any)}</option>
+              <option value="2-50-50">{t('calcPlanMilestones' as any)}</option>
+              <option value="3-30-40-30">{t('calcPlanProgressive' as any)}</option>
+              <option value="4-25-25-25-25">{t('calcPlanQuarters' as any)}</option>
             </select>
           </div>
           <div className="flex items-end">
@@ -191,7 +191,7 @@ export default function PricingCalculator() {
                 onChange={(e) => setPayConsultationSeparate(e.target.checked)}
                 className="w-8 h-8 border-4 border-foreground rounded-none appearance-none checked:bg-accent transition-all cursor-pointer"
               />
-              <span className="text-[11px] font-black uppercase italic group-hover:text-accent transition-colors">Separate Consultation Fees</span>
+              <span className="text-[11px] font-black uppercase italic group-hover:text-accent transition-colors">{t('calcConsSeparate' as any)}</span>
             </label>
           </div>
         </div>
@@ -203,21 +203,21 @@ export default function PricingCalculator() {
               <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
                 <DollarSign size={20} className="text-accent" />
                 <div>
-                  <p className="text-[9px] font-black text-muted-foreground uppercase italic">Rate/Hr</p>
+                  <p className="text-[9px] font-black text-muted-foreground uppercase italic">{t('calcRateHr' as any)}</p>
                   <p className="text-xl font-black italic">{formatValue(results.rateUSD)}</p>
                 </div>
               </div>
               <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
                 <Calendar size={20} className="text-accent" />
                 <div>
-                  <p className="text-[9px] font-black text-muted-foreground uppercase italic">Duration</p>
-                  <p className="text-xl font-black italic">{results.days} DAYS</p>
+                  <p className="text-[9px] font-black text-muted-foreground uppercase italic">{t('calcDuration' as any)}</p>
+                  <p className="text-xl font-black italic">{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</p>
                 </div>
               </div>
               <div className="p-4 bg-foreground text-background border-2 border-foreground flex items-center gap-4">
                 <Calculator size={20} className="text-accent" />
                 <div>
-                  <p className="text-[9px] font-black text-accent uppercase italic">Total_Est</p>
+                  <p className="text-[9px] font-black text-accent uppercase italic">{t('calcTotalEst' as any)}</p>
                   <p className="text-xl font-black italic">
                     {formatValue(results.projectTotalUSD + results.totalConsultationUSD)}
                   </p>
@@ -229,7 +229,7 @@ export default function PricingCalculator() {
               onClick={() => setShowReceipt(true)}
               className="w-full bg-accent text-background py-6 font-black italic uppercase text-sm tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-foreground transition-all shadow-[8px_8px_0px_0px_rgba(26,24,20,1)]"
             >
-              <Receipt size={20} /> GENERATE_PROJECT_RECEIPT_
+              <Receipt size={20} /> {t('calcGenReceipt' as any)}
             </button>
           </motion.div>
         )}
@@ -256,27 +256,27 @@ export default function PricingCalculator() {
                  {/* Header */}
                  <div className="border-b-4 border-foreground pb-8 flex justify-between items-end">
                     <div className="space-y-2">
-                       <h2 className="text-4xl font-black italic uppercase tracking-tighter">PROJECT_RECEIPT</h2>
+                       <h2 className="text-4xl font-black italic uppercase tracking-tighter">{t('receiptTitle' as any)}</h2>
                        <p className="text-[10px] font-black opacity-50 uppercase tracking-widest">NO. #{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
                     </div>
                     <div className="text-right">
-                       <p className="text-[10px] font-black uppercase tracking-widest opacity-50">DATE_ISSUED</p>
-                       <p className="font-sans font-black italic">{new Date().toLocaleDateString()}</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest opacity-50">{t('receiptDate' as any)}</p>
+                       <p className="font-sans font-black italic">{new Date().toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US')}</p>
                     </div>
                  </div>
 
                  {/* Content */}
                  <div className="grid grid-cols-2 gap-12">
                     <div className="space-y-4">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">01 // PROJECT_SPECS</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">{t('receiptSpecs' as any)}</p>
                        <div className="space-y-2 text-sm font-bold uppercase italic">
                           <div className="flex justify-between"><span>HOURS:</span> <span>{hours}</span></div>
-                          <div className="flex justify-between"><span>DURATION:</span> <span>{results.days} DAYS</span></div>
+                          <div className="flex justify-between"><span>DURATION:</span> <span>{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</span></div>
                           <div className="flex justify-between"><span>CURRENCY:</span> <span>{currency}</span></div>
                        </div>
                     </div>
                     <div className="space-y-4">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">02 // FINANCIAL_DATA</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">{t('receiptFinancial' as any)}</p>
                        <div className="space-y-2 text-sm font-bold uppercase italic">
                           <div className="flex justify-between"><span>PROJECT:</span> <span>{formatValue(results.projectTotalUSD)}</span></div>
                           <div className="flex justify-between"><span>CONSULT:</span> <span>{formatValue(results.totalConsultationUSD)}</span></div>
@@ -289,7 +289,7 @@ export default function PricingCalculator() {
 
                  {projectDescription && (
                     <div className="space-y-4">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">03 // PROJECT_DESCRIPTION_</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">{t('receiptBrief' as any)}</p>
                        <p className="font-serif italic text-sm text-foreground/80 leading-relaxed border-2 border-border p-4 bg-white">
                           {projectDescription}
                        </p>
@@ -299,7 +299,7 @@ export default function PricingCalculator() {
                  {/* QR Codes Section */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-y-4 border-foreground/10">
                     <div className="flex flex-col items-center gap-4 text-center">
-                       <p className="text-[9px] font-black uppercase tracking-widest italic">CHANNEL_WHATSAPP</p>
+                       <p className="text-[9px] font-black uppercase tracking-widest italic">{t('receiptWhatsapp' as any)}</p>
                        <div className="p-4 bg-white border-2 border-foreground">
                           <img 
                             src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(getWhatsAppLink())}`}
@@ -312,8 +312,8 @@ export default function PricingCalculator() {
                        </a>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-4 text-center border-l-2 border-foreground/10 pl-8">
-                       <p className="text-xs font-black uppercase italic leading-tight">Ready to initiate development?</p>
-                       <p className="text-[10px] font-bold uppercase italic opacity-50">Project commences upon initial milestone clearance.</p>
+                       <p className="text-xs font-black uppercase italic leading-tight">{t('receiptReady' as any)}</p>
+                       <p className="text-[10px] font-bold uppercase italic opacity-50">{t('receiptCommence' as any)}</p>
                        <div className="flex gap-4">
                           <button onClick={() => window.print()} className="p-3 border-2 border-foreground hover:bg-foreground hover:text-background transition-all">
                              <Printer size={20} />
@@ -327,7 +327,7 @@ export default function PricingCalculator() {
 
                  <div className="pt-8 text-center">
                     <p className="text-[9px] font-black uppercase tracking-[0.5em] italic text-muted-foreground">
-                       ENGINEERED BY AZZAR BUDIYANTO // EST. 1999
+                       {t('receiptFooter' as any)}
                     </p>
                  </div>
               </div>

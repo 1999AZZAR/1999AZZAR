@@ -22,18 +22,17 @@ async function getBlogPosts() {
   }
 }
 
+// We need client context for translation, so we'll wrap the server component content 
+// or simply use the translation file directly if needed, but for RSS feed and standard UI
+// let's use a client wrapper for the header translation.
+import BlogHeader from '@/components/ui/blog-header';
+
 export default async function BlogPage() {
   const posts = await getBlogPosts();
 
   return (
     <main className="min-h-screen pt-40 pb-24 px-6 max-w-7xl mx-auto">
-      <section className="mb-24 border-b-[16px] border-foreground pb-16">
-        <div className="flex items-center gap-3 text-accent mb-8">
-          <Newspaper size={24} strokeWidth={3} />
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4">Editorial_Feed</span>
-        </div>
-        <h1 className="headline-main mb-12">LATEST<br />THOUGHTS<span className="text-accent">.</span></h1>
-      </section>
+      <BlogHeader />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {posts.map((post, index) => (

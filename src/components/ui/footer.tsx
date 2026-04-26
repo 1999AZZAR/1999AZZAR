@@ -33,7 +33,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-2xl text-muted-foreground leading-tight max-w-sm font-black italic uppercase">
-              Engineering Resilient Digital & Physical Systems.
+              {t('heroDesc' as any)}
             </p>
           </div>
 

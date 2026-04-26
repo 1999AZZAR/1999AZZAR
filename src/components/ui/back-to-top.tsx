@@ -3,13 +3,14 @@
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const toggleVisibility = () => {
-      // Use window.scrollY for better compatibility
       if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
@@ -17,12 +18,8 @@ export default function BackToTop() {
       }
     };
 
-    // Add listener with passive option for performance
     window.addEventListener('scroll', toggleVisibility, { passive: true });
-    
-    // Initial check in case page is already scrolled
     toggleVisibility();
-
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
@@ -42,11 +39,11 @@ export default function BackToTop() {
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           onClick={scrollToTop}
           className="fixed bottom-8 left-8 z-[100] w-16 h-16 bg-accent text-background border-4 border-foreground shadow-[6px_6px_0px_0px_rgba(26,24,20,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center group"
-          aria-label="Back to top"
+          aria-label={t('bttLabel' as any)}
         >
           <ArrowUp size={32} strokeWidth={3} className="group-hover:-translate-y-1 transition-transform" />
           <span className="absolute -top-12 left-0 bg-foreground text-background text-[9px] font-black uppercase italic px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            RETURN_TO_SUMMIT
+            {t('bttLabel' as any)}
           </span>
         </motion.button>
       )}

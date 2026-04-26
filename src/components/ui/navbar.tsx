@@ -64,7 +64,7 @@ export default function Navbar() {
           </button>
           
           <Link href="/contact" className="hidden lg:flex items-center gap-2 px-8 py-3 bg-foreground text-background font-black text-[11px] uppercase tracking-widest hover:bg-accent transition-all group shadow-ambient italic">
-            {t('contact' as any).toUpperCase()} <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            {t('hireMe' as any).toUpperCase()} <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </Link>
 
           <button 

@@ -45,17 +45,15 @@ export default function ProjectsPage() {
       <section className="mb-24 border-b-[16px] border-foreground pb-16">
         <div className="flex items-center gap-3 text-accent mb-8">
           <Briefcase size={24} strokeWidth={3} />
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4">Engineering_Portfolio</span>
+          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4">{t('portoHeaderLabel' as any)}</span>
         </div>
         
-        <h1 className="headline-main mb-12">
-          SELECTED<br />WORKS<span className="text-accent">.</span>
-        </h1>
+        <h1 className="headline-main mb-12" dangerouslySetInnerHTML={{ __html: t('portoHeadline' as any) }} />
 
         <div className="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-12">
           <div className="space-y-8 w-full max-w-2xl">
             <p className="text-xl md:text-3xl font-black italic text-muted-foreground leading-tight uppercase tracking-tighter">
-              A deep dive into industrial IoT architectures and scalable systems.
+              {t('portoSubheadline' as any)}
             </p>
             
             <div className="relative group max-w-lg">
@@ -64,7 +62,7 @@ export default function ProjectsPage() {
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH_PROJECTS_DATABASE..."
+                placeholder={t('portoSearchPlaceholder' as any)}
                 className="w-full bg-card border-4 border-foreground p-6 pl-16 font-sans font-black italic text-xs tracking-widest uppercase outline-none focus:bg-white focus:border-accent transition-all shadow-[8px_8px_0px_0px_rgba(42,37,32,1)]"
               />
             </div>
@@ -75,13 +73,13 @@ export default function ProjectsPage() {
               onClick={() => setCurrentView('web')}
               className={`px-8 py-4 text-[10px] font-black uppercase italic tracking-widest transition-all flex items-center gap-3 ${currentView === 'web' ? 'bg-accent text-background' : 'text-background hover:bg-accent/50'}`}
             >
-              <Globe size={16} /> LIVE_SITES
+              <Globe size={16} /> {t('portoLiveSites' as any)}
             </button>
             <button 
               onClick={() => setCurrentView('repos')}
               className={`px-8 py-4 text-[10px] font-black uppercase italic tracking-widest transition-all flex items-center gap-3 ${currentView === 'repos' ? 'bg-accent text-background' : 'text-background hover:bg-accent/50'}`}
             >
-              <Code2 size={16} /> REPOSITORIES
+              <Code2 size={16} /> {t('portoRepositories' as any)}
             </button>
           </div>
         </div>
@@ -99,7 +97,7 @@ export default function ProjectsPage() {
         <div className="space-y-12">
           <div className="flex justify-between items-end border-b-4 border-foreground/10 pb-4">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent italic">
-              MATCH_RESULTS: {filteredProjects.length} FOUND_
+              {t('portoMatchResults' as any)} {filteredProjects.length} {t('portoFound' as any)}
             </span>
           </div>
 
@@ -120,8 +118,8 @@ export default function ProjectsPage() {
               animate={{ opacity: 1 }}
               className="p-32 border-4 border-dashed border-muted text-center bg-card/30"
             >
-               <p className="text-3xl font-black italic uppercase text-muted-foreground opacity-50 mb-4">Query yielded null response_</p>
-               <button onClick={() => setSearchQuery('')} className="btn-swiss-outline !py-4 !px-8 mx-auto">CLEAR_FILTERS</button>
+               <p className="text-3xl font-black italic uppercase text-muted-foreground opacity-50 mb-4">{t('portoNoResults' as any)}</p>
+               <button onClick={() => setSearchQuery('')} className="btn-swiss-outline !py-4 !px-8 mx-auto">{t('portoClearFilters' as any)}</button>
             </motion.div>
           )}
         </div>
@@ -131,6 +129,7 @@ export default function ProjectsPage() {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const { t } = useLanguage();
   return (
     <motion.a 
       layout

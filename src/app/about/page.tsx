@@ -66,17 +66,15 @@ export default function AboutPage() {
       <section className="mb-32 border-b-[16px] border-foreground pb-16">
         <div className="flex items-center gap-3 text-accent mb-8">
           <ArrowDownCircle size={24} strokeWidth={3} />
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic">Biographical_Data</span>
+          <span className="text-xs font-black uppercase tracking-[0.4em] italic">{t('aboutIdentityTitle' as any)}</span>
         </div>
         
-        <h1 className="headline-main mb-16">
-          THE<br />ENGINEER<span className="text-accent">.</span>
-        </h1>
+        <h1 className="headline-main mb-16" dangerouslySetInnerHTML={{ __html: t('aboutEngineerHeadline' as any) }} />
 
         <div className="grid grid-cols-12 gap-12">
           <div className="col-span-12 lg:col-span-7">
             <div className="text-3xl md:text-5xl font-black italic text-foreground leading-[1.1] uppercase tracking-tighter mb-12">
-              "Blending engineering precision with creative problem-solving to build connected systems."
+              "{t('aboutBlueprintQuote' as any)}"
             </div>
             
             <div className="text-xl font-bold text-muted-foreground italic uppercase leading-relaxed space-y-8 mb-12">
@@ -87,14 +85,14 @@ export default function AboutPage() {
                <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
                   <Calendar size={20} className="text-accent" />
                   <div>
-                    <p className="text-[9px] font-black uppercase opacity-50">Operational_Age</p>
-                    <p className="text-xl font-black italic tracking-tighter">{ageInDays.toLocaleString()} DAYS</p>
+                    <p className="text-[9px] font-black uppercase opacity-50">{t('aboutOperationalAge' as any)}</p>
+                    <p className="text-xl font-black italic tracking-tighter">{ageInDays.toLocaleString()} {t('aboutDays' as any)}</p>
                   </div>
                </div>
                <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
                   <Briefcase size={20} className="text-accent" />
                   <div>
-                    <p className="text-[9px] font-black uppercase opacity-50">Status</p>
+                    <p className="text-[9px] font-black uppercase opacity-50">{t('aboutStatusLabel' as any)}</p>
                     <p className="text-xl font-black italic tracking-tighter text-accent uppercase">{t('freelanceStatus' as any)}</p>
                   </div>
                </div>
@@ -102,10 +100,10 @@ export default function AboutPage() {
 
             <div className="flex flex-wrap gap-6">
               <a href="/rcv_en_azzar.pdf" target="_blank" className="btn-swiss-primary !w-fit group">
-                DOWNLOAD FULL_CV.PDF <FileText size={20} className="group-hover:rotate-12 transition-transform" />
+                {t('aboutDownloadCV' as any)} <FileText size={20} className="group-hover:rotate-12 transition-transform" />
               </a>
               <a href="/porto_photo_azzar.pdf" target="_blank" className="btn-swiss-outline !w-fit group">
-                PHOTO_PORTFOLIO.PDF <Camera size={20} className="group-hover:scale-110 transition-transform" />
+                {t('aboutPhotoPorto' as any)} <Camera size={20} className="group-hover:scale-110 transition-transform" />
               </a>
             </div>
           </div>
@@ -122,8 +120,8 @@ export default function AboutPage() {
       {/* SKILLS SECTION */}
       <section className="mb-32">
         <div className="flex flex-col md:flex-row justify-between items-end gap-12 pb-12 border-b-8 border-foreground mb-16">
-          <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none">TECH_STACK<span className="text-accent">.</span></h2>
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-accent italic pb-2">Core Competencies</span>
+          <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none" dangerouslySetInnerHTML={{ __html: t('aboutTechStack' as any) }} />
+          <span className="text-xs font-black uppercase tracking-[0.3em] text-accent italic pb-2">{t('aboutCoreCompetencies' as any)}</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -146,7 +144,7 @@ export default function AboutPage() {
       {/* EXPERIENCE SECTION */}
       <section className="mb-32">
         <div className="flex items-center gap-3 text-accent mb-12">
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4">Operational_Timeline</span>
+          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4">{t('aboutTimelineTitle' as any)}</span>
         </div>
         <div className="grid grid-cols-1 gap-12">
           {experiences.map((exp, i) => (
@@ -176,15 +174,15 @@ export default function AboutPage() {
       {/* INTERESTS SECTION */}
       <section className="mb-32">
         <div className="flex flex-col md:flex-row justify-between items-end gap-12 pb-12 border-b-8 border-foreground mb-16">
-          <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none">PERSONAL<span className="text-accent">.</span></h2>
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-accent italic pb-2">Human Interests</span>
+          <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none" dangerouslySetInnerHTML={{ __html: t('aboutPersonalTitle' as any) }} />
+          <span className="text-xs font-black uppercase tracking-[0.3em] text-accent italic pb-2">{t('aboutHumanInterests' as any)}</span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {interests.map((item, i) => (
-            <div key={i} className="p-6 bg-foreground text-background border-4 border-foreground flex flex-col items-center text-center gap-4 shadow-ambient hover:bg-accent transition-all duration-300">
+            <div key={i} className="p-6 bg-foreground text-background border-4 border-foreground flex flex-col items-center text-center gap-4 shadow-ambient hover:bg-accent transition-all duration-300 group">
                <div className="text-accent group-hover:text-background">{item.icon}</div>
-               <span className="text-[10px] font-black uppercase italic tracking-widest leading-tight">{t(item.key as any)}</span>
+               <span className="text-[10px] font-black uppercase italic tracking-widest leading-tight group-hover:text-background">{t(item.key as any)}</span>
             </div>
           ))}
         </div>
