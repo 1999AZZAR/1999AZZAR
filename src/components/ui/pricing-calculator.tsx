@@ -39,10 +39,11 @@ export default function PricingCalculator() {
       return;
     }
 
-    const Rmax = 35;
-    const Rmin = 20;
-    const Hmin = 8;
-    const Hmax = 208;
+    // Updated Pricing Constants (25-45)
+    const Rmax = 45;   // New Max rate ($)
+    const Rmin = 25;   // New Min rate ($)
+    const Hmin = 8;    // Min hours for max rate
+    const Hmax = 208;  // Max hours for min rate
 
     let rateUSD;
     if (hours <= Hmin) rateUSD = Rmax;
@@ -137,8 +138,9 @@ export default function PricingCalculator() {
             <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcHoursLabel' as any)}</label>
             <input 
               type="number" 
+              min="0"
               value={hours || ''} 
-              onChange={(e) => setHours(Number(e.target.value))}
+              onChange={(e) => setHours(Math.max(0, Number(e.target.value)))}
               placeholder="0.00"
               className="w-full bg-background border-4 border-foreground p-6 focus:outline-none focus:bg-accent focus:text-background transition-all font-black text-4xl italic tracking-tighter"
             />
