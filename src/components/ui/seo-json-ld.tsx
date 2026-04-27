@@ -60,7 +60,8 @@ export default function SEOJsonLd() {
           "https://www.linkedin.com/in/azzar-budiyanto/", 
           "https://twitter.com/siapa_hayosiapa",
           "https://www.instagram.com/azzar_budiyanto/",
-          "https://medium.com/@azzar_budiyanto"
+          "https://medium.com/@azzar_budiyanto",
+          "https://wp.glassgallery.my.id/"
         ]
       },
       {
