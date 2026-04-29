@@ -61,7 +61,8 @@ export default function SEOJsonLd() {
           "https://twitter.com/siapa_hayosiapa",
           "https://www.instagram.com/azzar_budiyanto/",
           "https://medium.com/@azzar_budiyanto",
-          "https://wp.glassgallery.my.id/"
+          "https://wp.glassgallery.my.id/",
+          "https://orcid.org/0009-0003-6856-7820"
         ]
       },
       {
