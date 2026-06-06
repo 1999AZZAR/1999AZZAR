@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AZZAR BUDIYANTO — DAFTAR RIWAYAT HIDUP</title>
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#2a2a2a;
+    --muted:#5a5a5a;
+    --rule:#cfcfcf;
+    --rule-strong:#111111;
+    --paper:#ffffff;
+    --accent:#8b1a1a;
+    --gutter:24mm;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{
+    margin:0;
+    font-family: "Inter","Helvetica Neue",Arial,sans-serif;
+    font-size:10.5pt;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:geometricPrecision;
+  }
+  .mono{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:8.5pt;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .serif{ font-family:"Times New Roman",Georgia,serif; }
+  .ital{ font-style:italic; }
+
+  @page{ size:A4; margin:0; }
+  .sheet{
+    width:210mm;
+    min-height:297mm;
+    padding:18mm var(--gutter) 18mm var(--gutter);
+    margin:0 auto;
+    background:var(--paper);
+  }
+  .sheet + .sheet{ page-break-before:always; }
+
+  header.cv{
+    border-top:8px solid var(--rule-strong);
+    border-bottom:2px solid var(--rule-strong);
+    padding:14px 0 14px 0;
+    display:grid;
+    grid-template-columns: 1fr auto;
+    align-items:end;
+    gap:12mm;
+    margin-bottom:10mm;
+  }
+  .id-block .stamp{
+    color:var(--accent);
+    font-weight:800;
+    font-size:9pt;
+    letter-spacing:.32em;
+  }
+  .id-block h1{
+    font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+    font-weight:900;
+    font-style:italic;
+    font-size:38pt;
+    line-height:.95;
+    letter-spacing:-.02em;
+    margin:6px 0 4px 0;
+  }
+  .id-block .sub{
+    font-size:10.5pt;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+  .meta{
+    text-align:right;
+    font-size:9pt;
+    line-height:1.55;
+    color:var(--ink-soft);
+  }
+  .meta .mono{ display:block; margin-bottom:4px; color:var(--accent); }
+  .meta a{ color:inherit; text-decoration:none; }
+
+  .contacts{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6mm;
+    border-bottom:1px solid var(--rule);
+    padding:8px 0 10px 0;
+    margin-bottom:10mm;
+  }
+  .contacts .item .mono{ display:block; color:var(--accent); margin-bottom:2px; }
+  .contacts .item span.v{ font-weight:700; font-size:9.5pt; }
+
+  section{ margin-bottom:9mm; }
+  section h2{
+    font-size:11pt;
+    font-weight:900;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    margin:0 0 6mm 0;
+    padding-bottom:4px;
+    border-bottom:2px solid var(--rule-strong);
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  section h2 .num{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    color:var(--accent);
+    font-weight:900;
+    letter-spacing:0;
+    font-size:12pt;
+  }
+
+  .profile{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:8mm;
+  }
+  .profile p{
+    margin:0;
+    font-size:10.5pt;
+    text-align:justify;
+  }
+  .profile p.lede{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    font-size:14pt;
+    line-height:1.25;
+    color:var(--ink);
+  }
+  .profile p.lede::before{ content:"\201C"; color:var(--accent); font-size:1.1em; margin-right:4px;}
+  .profile p.lede::after{ content:"\201D"; color:var(--accent); font-size:1.1em; margin-left:2px;}
+
+  .skills{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4mm 6mm;
+  }
+  .skill{
+    border-left:2px solid var(--rule-strong);
+    padding:2px 0 2px 8px;
+  }
+  .skill h3{
+    font-size:9.5pt;
+    font-weight:900;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    margin:0 0 4px 0;
+  }
+  .skill p{ margin:0; font-size:9pt; color:var(--ink-soft); }
+
+  .xp{ display:grid; grid-template-columns: 28mm 1fr; gap:6mm; }
+  .xp .when{ font-family:"JetBrains Mono",monospace; font-size:8.5pt; color:var(--accent); font-weight:700; letter-spacing:.08em; padding-top:2px;}
+  .xp .what h3{
+    margin:0;
+    font-size:12pt;
+    font-weight:900;
+    font-style:italic;
+    letter-spacing:-.01em;
+  }
+  .xp .what .role{ font-weight:800; font-size:9.5pt; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin:2px 0 6px 0; }
+  .xp .what ul{ margin:0; padding-left:14px; }
+  .xp .what li{ font-size:9.7pt; margin-bottom:3px; }
+  .xp-block{ padding:6mm 0; border-bottom:1px dashed var(--rule); }
+  .xp-block:last-child{ border-bottom:none; }
+
+  .projects{ display:grid; grid-template-columns:repeat(2,1fr); gap:4mm 6mm; }
+  .proj{ border-top:2px solid var(--rule-strong); padding-top:6px; }
+  .proj h4{ margin:0; font-size:10.5pt; font-weight:900; font-style:italic; letter-spacing:-.01em; }
+  .proj .tag{ font-family:"JetBrains Mono",monospace; font-size:7.5pt; color:var(--accent); letter-spacing:.16em; text-transform:uppercase; }
+  .proj p{ margin:4px 0 0 0; font-size:9pt; color:var(--ink-soft); }
+
+  .certs{ display:grid; grid-template-columns:1fr 1fr; gap:2mm 8mm; }
+  .cert{ display:grid; grid-template-columns: 4mm 1fr; column-gap:6px; align-items:start; padding:3px 0; border-bottom:1px dotted var(--rule); }
+  .cert .bullet{ width:4mm; height:4mm; background:var(--accent); margin-top:3px; }
+  .cert .body .t{ font-weight:800; font-size:9.5pt; }
+  .cert .body .m{ font-size:8.5pt; color:var(--ink-soft); }
+  .cert .body .y{ font-family:"JetBrains Mono",monospace; font-size:8pt; color:var(--accent); letter-spacing:.1em; }
+
+  .langs{ display:grid; grid-template-columns:repeat(4,1fr); gap:4mm; }
+  .lang{ text-align:center; border:1.5px solid var(--rule-strong); padding:8px 6px; }
+  .lang .lname{ font-weight:900; font-size:10pt; letter-spacing:.06em; }
+  .lang .lvl{ font-family:"JetBrains Mono",monospace; font-size:8pt; color:var(--accent); letter-spacing:.18em; }
+
+  footer.cv{
+    border-top:2px solid var(--rule-strong);
+    margin-top:8mm;
+    padding-top:6px;
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:"JetBrains Mono",monospace;
+    font-size:8pt;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .sheet{ width:auto; min-height:0; margin:0; padding:0; }
+    @page{ size:A4; margin:14mm 14mm 14mm 14mm; }
+    header.cv{ border-top-width:6px; }
+    section{ page-break-inside: avoid; }
+    .xp-block{ page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="cv">
+    <div class="id-block">
+      <div class="mono stamp">REF_001999 // SPESIFIKASI_SISTEM_V1.1</div>
+      <h1>AZZAR<br/>BUDIYANTO<span style="color:var(--accent)">.</span></h1>
+      <div class="sub">Pengembang Software Freelance · IoT &amp; Sistem Tertanam · Full-Stack Engineer</div>
+    </div>
+    <div class="meta">
+      <span class="mono">Daftar Riwayat Hidup</span>
+      <div>EST. 1999 · Yogyakarta, ID</div>
+      <div>Remote — Tersedia di Seluruh Dunia</div>
+      <div>Tarif mulai USD 35/jam · Min. proyek USD 250</div>
+    </div>
+  </header>
+
+  <div class="contacts">
+    <div class="item"><span class="mono">Surat_Elektronik</span><span class="v">azzar.mr.zs@gmail.com</span></div>
+    <div class="item"><span class="mono">Saluran_Telepon</span><span class="v">+62 822 3252 9804</span></div>
+    <div class="item"><span class="mono">Basis_Operasi</span><span class="v">Yogyakarta, Indonesia</span></div>
+    <div class="item"><span class="mono">Kanal_Web</span><span class="v">1999azzar.github.io/1999AZZAR</span></div>
+  </div>
+
+  <section>
+    <h2>01 // Profil<span class="num">Ringkasan.</span></h2>
+    <div class="profile">
+      <p class="lede">Merekayasa ekosistem digital yang tangguh dan perangkat keras terhubung dengan presisi serta tujuan yang jelas.</p>
+      <p>Pengembang IoT freelance dan full-stack engineer dengan 5+ tahun pengalaman membangun sistem produksi yang mencakup firmware tertanam, algoritma kontrol, dan stack web modern. Nyaman mengambilOwnership proyek dari skematik hingga dashboard. Multilingual, remote-first, dan pragmatis terhadap scope, tenggat, dan dokumentasi. Saat ini membuka kontrak untuk paruh kedua 2026.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>02 // Kompetensi_Inti<span class="num">Stack.</span></h2>
+    <div class="skills">
+      <div class="skill">
+        <h3>Pemrograman</h3>
+        <p>Python · TypeScript · JavaScript · C/C++ · Rust · Go · Bash · SQL</p>
+      </div>
+      <div class="skill">
+        <h3>Stack Web</h3>
+        <p>React · Next.js · Node.js · Express · Django · Flask · Tailwind · REST/GraphQL</p>
+      </div>
+      <div class="skill">
+        <h3>Tertanam &amp; IoT</h3>
+        <p>ESP32 · STM32 · Arduino · Raspberry Pi · LoRa · MQTT · Integrasi Sensor/Aktuator</p>
+      </div>
+      <div class="skill">
+        <h3>Sistem Kontrol</h3>
+        <p>PID · Fuzzy Logic · LQR · Ziegler–Nichols · Cohen–Coon · Algoritma Genetika</p>
+      </div>
+      <div class="skill">
+        <h3>DevOps &amp; Cloud</h3>
+        <p>Docker · Kubernetes · AWS · GCP · Firebase · Terraform · CI/CD · NGINX</p>
+      </div>
+      <div class="skill">
+        <h3>AI / Machine Learning</h3>
+        <p>TensorFlow · PyTorch · Scikit-learn · Pandas · NumPy · OpenCV · NLP</p>
+      </div>
+      <div class="skill">
+        <h3>Data &amp; Database</h3>
+        <p>PostgreSQL · MySQL · SQLite · MongoDB · Redis · Elasticsearch</p>
+      </div>
+      <div class="skill">
+        <h3>Keamanan &amp; Jaringan</h3>
+        <p>Desain API · Kriptografi · Penetration Testing · Pengamanan IoT</p>
+      </div>
+      <div class="skill">
+        <h3>UI/UX &amp; CAD</h3>
+        <p>Figma · Tailwind · SolidWorks · AutoCAD · Blender · 3D Printing</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>03 // Linimasa_Kerja<span class="num">Pengalaman.</span></h2>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2018/10<br/>— Sekarang</div>
+        <div class="what">
+          <h3>Pengembang Software Freelance</h3>
+          <div class="role">Bekerja Mandiri · Remote — Seluruh Dunia</div>
+          <ul>
+            <li>Menyelesaikan proyek IoT dan web end-to-end: firmware, pipeline cloud, dashboard, deployment.</li>
+            <li>Merancang algoritma kontrol (PID, Fuzzy, LQR) untuk purwarupa industri dan riset.</li>
+            <li>Membangun API REST dan GraphQL di Node.js, Django, dan Flask; deploy di AWS dan GCP.</li>
+            <li>Membangun front-end responsif dengan React dan Next.js + Tailwind; integrasi telemetri WebSocket.</li>
+            <li>Kontainerisasi beban kerja dengan Docker; pemeliharaan CI/CD di GitHub Actions dan Jenkins.</li>
+            <li>Menerjemahkan mockup menjadi web produksi menggunakan HTML, CSS, dan JavaScript.</li>
+            <li>Menyusun spesifikasi perangkat keras, diagram wiring, dan manual pengguna untuk stakeholder non-teknis.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2022/01<br/>— 2023/01</div>
+        <div class="what">
+          <h3>Trainer Mikrokontroler</h3>
+          <div class="role">Indobot Academy · Yogyakarta, ID</div>
+          <ul>
+            <li>Merancang kurikulum untuk track Arduino, ESP32, dan STM32; mengajar 4 angkatan dengan 20+ peserta.</li>
+            <li>Menyampaikan modul IoT yang mencakup MQTT, telemetri cloud, dan integrasi dashboard.</li>
+            <li>Memberikan mentoring 1:1; menyusun laporan progres belajar dan dokumen sertifikasi.</li>
+            <li>Menulis modul lab dan pustaka kode reusable yang diadopsi lintas angkatan.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2020/09<br/>— 2021/09</div>
+        <div class="what">
+          <h3>Fotografer</h3>
+          <div class="role">Lembaran Kasih · Tuban, ID</div>
+          <ul>
+            <li>Memotret gambar berkualitas tinggi untuk kampanye cetak dan digital dengan tenggat ketat.</li>
+            <li>Mengedit, memberi tone, caption, dan mengunggah deliverable untuk alur publikasi.</li>
+            <li>Menentukan sudut kamera, properti, dan pencahayaan untuk hasil optimal.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2020/01<br/>— 2021/04</div>
+        <div class="what">
+          <h3>Student Ambassador</h3>
+          <div class="role">cicil.co.id · Yogyakarta, ID</div>
+          <ul>
+            <li>Memperlancar proses registrasi mahasiswa, onboarding teknis, dan alur dokumentasi.</li>
+            <li>Menangani isu administrasi dan akun langsung bersama pengguna akhir.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>04 // Karya_Terpilih<span class="num">Proyek.</span></h2>
+    <div class="projects">
+      <div class="proj">
+        <span class="tag">IoT / Industri</span>
+        <h4>Stack Telemetri Multi-Sensor</h4>
+        <p>Firmware ESP32 dengan sensor SHT20, termistor, dan MQ-137 yang mengirim data ke broker MQTT; dashboard Node.js + React untuk data live dan historis.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">Web / Full-Stack</span>
+        <h4>Platform E-commerce IoT</h4>
+        <p>Storefront produksi dengan backend monitoring perangkat terintegrasi; front-end React, API Django, PostgreSQL, deploy di AWS dengan CI/CD.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">Sistem Kontrol</span>
+        <h4>Loop Suhu Fuzzy + PID</h4>
+        <p>PID auto-tuned dengan Ziegler–Nichols dan Cohen–Coon; supervisor fuzzy untuk rezim non-linier. Simulasi MATLAB, deployment STM32.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">Tertanam / Robotika</span>
+        <h4>Akses RFID &amp; Kontrol Relay</h4>
+        <p>ESP8266 + RFID reader + modul relay dengan notifikasi Telegram dan panel kontrol perangkat berbasis web.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">ML / Data</span>
+        <h4>Model Predictive Maintenance</h4>
+        <p>Pipeline Scikit-learn (klasifikasi + regresi) pada log sensor; dashboard Plotly; deploy di belakang Flask.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">DevOps</span>
+        <h4>Stack Deployment Cloud-Native</h4>
+        <p>Servis terkontainerisasi, manifest Kubernetes, infrastruktur Terraform, pipeline GitHub Actions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>05 // Sertifikasi &amp; Penghargaan<span class="num">Terverifikasi.</span></h2>
+    <div class="certs">
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">IoT Practitioner — BNSP</div><div class="m">Badan Nasional Sertifikasi Profesi</div><div class="y">2024</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Sertifikat freeCodeCamp</div><div class="m">freeCodeCamp — Responsive Web &amp; Algorithms</div><div class="y">2022</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Belajar Fundamental Deep Learning</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Membangun Sistem Machine Learning</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Belajar Machine Learning untuk Pemula</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Belajar Dasar AI</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Memulai Pemrograman dengan Python</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Problem Solving (Intermediate)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Problem Solving (Basic)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Python (Basic)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">SQL (Intermediate)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">SQL (Basic)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">CSS</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">REST API (Intermediate)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Membangun Mobile Backend (Kotlin)</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Build Your Beautiful Apps Using SwiftUI</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Scrum Introduction</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Lean-Agile Mindset</div><div class="m">Dicoding Indonesia</div><div class="y">2021</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Careerhacks: How to start?!</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Baparekraf Developer Day 2020</div><div class="m">Dicoding × Baparekraf</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Peserta Merdeka Makers Fest</div><div class="m">Kampus Merdeka</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Sertifikat Student Ambassador</div><div class="m">cicil.co.id</div><div class="y">2021</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Sertifikat Kursus Udemy (×5)</div><div class="m">Berbagai topik — Web, DevOps, dan Embedded</div><div class="y">2021–2023</div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>06 // Bahasa<span class="num">Multibahasa.</span></h2>
+    <div class="langs">
+      <div class="lang"><div class="lname">Inggris</div><div class="lvl">Profesional</div></div>
+      <div class="lang"><div class="lname">Indonesia</div><div class="lvl">Penutur Asli</div></div>
+      <div class="lang"><div class="lname">Arab</div><div class="lvl">Aktif</div></div>
+      <div class="lang"><div class="lname">Jawa</div><div class="lvl">Penutur Asli</div></div>
+    </div>
+  </section>
+
+  <footer class="cv">
+    <span>DIREKAYASA OLEH AZZAR BUDIYANTO</span>
+    <span>EST. 1999</span>
+    <span>Halaman 1 / 1</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SURAT LAMARAN — IoT &amp; OTOMASI — AZZAR BUDIYANTO</title>
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#2a2a2a;
+    --muted:#5a5a5a;
+    --rule:#cfcfcf;
+    --rule-strong:#111111;
+    --paper:#ffffff;
+    --accent:#8b1a1a;
+    --gutter:22mm;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{
+    margin:0;
+    font-family: "Inter","Helvetica Neue",Arial,sans-serif;
+    font-size:11pt;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:geometricPrecision;
+  }
+  .mono{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:9pt;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  @page{ size:A4; margin:0; }
+  .sheet{
+    width:210mm;
+    min-height:297mm;
+    padding:18mm var(--gutter) 18mm var(--gutter);
+    margin:0 auto;
+    background:var(--paper);
+    display:flex; flex-direction:column;
+  }
+
+  header.cl{
+    border-top:6px solid var(--rule-strong);
+    border-bottom:1.5px solid var(--rule-strong);
+    padding:10px 0 12px 0;
+    display:grid;
+    grid-template-columns: 1fr auto;
+    align-items:end;
+    gap:10mm;
+    margin-bottom:8mm;
+  }
+  .id h1{
+    margin:4px 0 0 0;
+    font-size:22pt;
+    font-weight:900;
+    font-style:italic;
+    letter-spacing:-.015em;
+    line-height:1;
+  }
+  .id .tag{ color:var(--accent); font-weight:800; }
+  .id .role{ font-weight:800; font-size:10pt; letter-spacing:.04em; margin-top:3px; }
+  .ref{
+    text-align:right;
+    font-size:9pt;
+    line-height:1.6;
+    color:var(--ink-soft);
+  }
+  .ref .mono{ display:block; color:var(--accent); margin-bottom:4px; }
+
+  .meta{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10mm;
+    margin-bottom:8mm;
+    padding-bottom:6mm;
+    border-bottom:1px solid var(--rule);
+  }
+  .meta .lbl{ display:block; }
+  .meta .lbl .mono{ color:var(--accent); display:block; margin-bottom:2px; }
+  .meta .to p, .meta .doc p{ margin:0; font-size:10pt; }
+
+  .salute{ margin-bottom:4mm; font-weight:800; }
+  .body p{ margin:0 0 4mm 0; text-align:justify; }
+  .body p.lede{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    font-size:13pt;
+    line-height:1.3;
+  }
+  .body p.lede::before{ content:"\201C"; color:var(--accent); font-size:1.1em; margin-right:3px;}
+  .body p.lede::after{ content:"\201D"; color:var(--accent); font-size:1.1em; margin-left:2px;}
+
+  .bullets{
+    border-left:3px solid var(--accent);
+    padding:2mm 0 2mm 6mm;
+    margin:4mm 0;
+  }
+  .bullets ul{ margin:0; padding-left:18px; }
+  .bullets li{ font-size:10pt; margin-bottom:3px; }
+
+  .close{
+    margin-top:auto;
+    padding-top:8mm;
+    border-top:1.5px solid var(--rule-strong);
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap:10mm;
+    align-items:end;
+  }
+  .signoff .name{ font-weight:900; font-style:italic; font-size:14pt; letter-spacing:-.01em; }
+  .signoff .meta{ display:block; border:none; padding:0; margin:2px 0 0 0; font-size:9pt; color:var(--ink-soft); }
+  .signoff .sig{
+    margin-top:6mm;
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    font-size:24pt;
+    color:var(--ink);
+  }
+  .channels{ font-size:9pt; line-height:1.6; }
+  .channels .mono{ color:var(--accent); display:block; margin-bottom:4px; }
+
+  footer.cl{
+    border-top:1px solid var(--rule);
+    margin-top:6mm;
+    padding-top:4px;
+    display:flex; justify-content:space-between;
+    font-family:"JetBrains Mono",monospace;
+    font-size:7.5pt;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .sheet{ width:auto; min-height:0; margin:0; padding:0; }
+    @page{ size:A4; margin:14mm 14mm 14mm 14mm; }
+    header.cl{ border-top-width:5px; }
+    .close{ page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="cl">
+    <div class="id">
+      <span class="tag mono">REF_001999 // LINTAS_IoT_OTOMASI</span>
+      <h1>AZZAR BUDIYANTO<span style="color:var(--accent)">.</span></h1>
+      <div class="role">Engineer IoT &amp; Otomasi Freelance · Firmware Tertanam · Sistem Kontrol</div>
+    </div>
+    <div class="ref">
+      <span class="mono">Surat_Lamaran</span>
+      <div>ID Dokumen: CL-IOT-ID-V1</div>
+      <div>Tanggal: 2026</div>
+      <div>Target posisi: IoT &amp; Otomasi</div>
+    </div>
+  </header>
+
+  <div class="meta">
+    <div class="to lbl">
+      <span class="mono">Penerima</span>
+      <p><strong>[Manajer Perekrutan / Lead Engineer]</strong></p>
+      <p>[Nama Perusahaan]</p>
+      <p>[Alamat Perusahaan]</p>
+      <p>[Kota, Negara]</p>
+    </div>
+    <div class="doc lbl">
+      <span class="mono">Pengirim</span>
+      <p>Azzar Budiyanto</p>
+      <p>Yogyakarta, Indonesia · Remote-first</p>
+      <p>azzar.mr.zs@gmail.com · +62 822 3252 9804</p>
+      <p>1999azzar.github.io/1999AZZAR</p>
+    </div>
+  </div>
+
+  <p class="salute">Yth. Bapak/Ibu Perekrut,</p>
+
+  <div class="body">
+    <p class="lede">Saya menulis firmware yang berbicara dengan dunia fisik — dan dashboard yang membuat percakapan itu terbaca oleh manusia.</p>
+
+    <p>Dengan surat ini saya menyatakan minat saya pada posisi IoT dan otomasi di [Nama Perusahaan]. Selama lima tahun terakhir saya telah mengirimkan sistem terhubung secara end-to-end: firmware ESP32 dan STM32, pipeline MQTT, REST dan WebSocket API, dashboard telemetry berbasis React, dan loop kontrol yang berjalan di baliknya. Karya produksi terbaru saya mencakup stack telemetri multi-sensor pada ESP32 (SHT20, termistor, sensor gas MQ-137), pengendali suhu fuzzy-plus-PID yang di-tuning dengan Ziegler–Nichols dan Cohen–Coon, serta sistem akses RFID dengan kontrol relay dan notifikasi Telegram pada ESP8266. Saya memegang sertifikasi BNSP IoT Practitioner (2024) dan telah terverifikasi secara formal di HackerRank untuk problem-solving, Python, SQL, dan REST API.</p>
+
+    <p>Saya bekerja dengan nyaman di lintas stack yang menjadi cakupan peran ini. Di sisi perangkat saya menulis C/C++ yang bersih untuk STM32 HAL, kode Arduino-core untuk ESP32/ESP8266, dan Python untuk tooling serta rig uji. Di sisi cloud saya men-deploy service terkontainerisasi di AWS dan GCP dengan Docker dan Kubernetes, menghubungkan broker MQTT (Mosquitto, EMQX, AWS IoT Core) ke backend Node.js dan Django, dan menampilkan data lewat dashboard React + Next.js dengan WebSocket untuk pembaruan langsung. Saya telah mengimplementasikan pengendali PID, Fuzzy Logic, dan LQR serta menjalankan eksperimen auto-tuning dengan algoritma genetika; saya memilih loop yang tepat untuk plant, bukan mempertahankan satu metode favorit.</p>
+
+    <div class="bullets">
+      <strong>Alasan kecocokan untuk peran ini:</strong>
+      <ul>
+        <li>5+ tahun mengirimkan produk IoT dari skematik hingga dashboard, dengan portofolio sistem live dan 30+ repositori terbuka.</li>
+        <li>Firmware produksi di ESP32, STM32, dan Arduino; integrasi sensor suhu, kelembapan, gas, RFID, dan beban relay.</li>
+        <li>Kedalaman sistem kontrol: PID dengan Ziegler–Nichols dan Cohen–Coon, supervisor Fuzzy Logic, LQR; simulasi MATLAB hingga deployment embedded.</li>
+        <li>Stack telemetri cloud: MQTT, API Node.js / Django, PostgreSQL, caching Redis, dan dashboard React dengan feed WebSocket live.</li>
+        <li>BNSP IoT Practitioner (2024) dan portofolio 20+ sertifikasi yang mencakup embedded, ML, dan delivery web modern.</li>
+      </ul>
+    </div>
+
+    <p>Bekerja secara remote dari Indonesia sejak 2018, saya terbiasa dengan kolaborasi asinkron lintas zona waktu, update berbasis tulisan, dan pengiriman dalam irisan pendek yang mudah di-review. Saya sama nyamannya melakukan pair-debugging masalah soldering iron lewat video call dengan me-review pull request di CI. Tarif standar saya adalah USD 35/jam dengan minimum proyek USD 250, dapat dinegosiasikan tergantung scope dan durasi; saya terbuka untuk retainer pendek untuk pekerjaan otomasi berkelanjutan maupun untuk keterlibatan lebih panjang ketika arsitekturnya memerlukan tangan yang stabil.</p>
+
+    <p>Saya menyambut baik percakapan tentang spesifikasi peran dan sistem yang sedang Anda bangun. Anda dapat menghubungi saya di azzar.mr.zs@gmail.com atau +62 822 3252 9804, dan arsip proyek lengkap tersedia di 1999azzar.github.io/1999AZZAR. Terima kasih atas waktu Anda — saya menantikan kabar dari Anda.</p>
+  </div>
+
+  <div class="close">
+    <div class="signoff">
+      <div>Hormat saya,</div>
+      <div class="sig">Azzar Budiyanto</div>
+      <div class="name">Azzar Budiyanto</div>
+      <span class="meta">Engineer IoT &amp; Otomasi Freelance · Yogyakarta, ID · Remote</span>
+    </div>
+    <div class="channels">
+      <span class="mono">Saluran_Langsung</span>
+      <div>azzar.mr.zs@gmail.com</div>
+      <div>+62 822 3252 9804</div>
+      <div>linkedin.com/in/azzar-budiyanto</div>
+      <div>github.com/1999AZZAR</div>
+    </div>
+  </div>
+
+  <footer class="cl">
+    <span>CL-IOT-ID-V1</span>
+    <span>DIREKAYASA OLEH AZZAR BUDIYANTO</span>
+    <span>EST. 1999</span>
+  </footer>
+
+</div>
+</body>
+</html>

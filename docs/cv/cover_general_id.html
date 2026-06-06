@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SURAT LAMARAN — UMUM — AZZAR BUDIYANTO</title>
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#2a2a2a;
+    --muted:#5a5a5a;
+    --rule:#cfcfcf;
+    --rule-strong:#111111;
+    --paper:#ffffff;
+    --accent:#8b1a1a;
+    --gutter:22mm;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{
+    margin:0;
+    font-family: "Inter","Helvetica Neue",Arial,sans-serif;
+    font-size:11pt;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:geometricPrecision;
+  }
+  .mono{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:9pt;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  @page{ size:A4; margin:0; }
+  .sheet{
+    width:210mm;
+    min-height:297mm;
+    padding:18mm var(--gutter) 18mm var(--gutter);
+    margin:0 auto;
+    background:var(--paper);
+    display:flex; flex-direction:column;
+  }
+
+  header.cl{
+    border-top:6px solid var(--rule-strong);
+    border-bottom:1.5px solid var(--rule-strong);
+    padding:10px 0 12px 0;
+    display:grid;
+    grid-template-columns: 1fr auto;
+    align-items:end;
+    gap:10mm;
+    margin-bottom:8mm;
+  }
+  .id h1{
+    margin:4px 0 0 0;
+    font-size:22pt;
+    font-weight:900;
+    font-style:italic;
+    letter-spacing:-.015em;
+    line-height:1;
+  }
+  .id .tag{ color:var(--accent); font-weight:800; }
+  .id .role{ font-weight:800; font-size:10pt; letter-spacing:.04em; margin-top:3px; }
+  .ref{
+    text-align:right;
+    font-size:9pt;
+    line-height:1.6;
+    color:var(--ink-soft);
+  }
+  .ref .mono{ display:block; color:var(--accent); margin-bottom:4px; }
+
+  .meta{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10mm;
+    margin-bottom:8mm;
+    padding-bottom:6mm;
+    border-bottom:1px solid var(--rule);
+  }
+  .meta .lbl{ display:block; }
+  .meta .lbl .mono{ color:var(--accent); display:block; margin-bottom:2px; }
+  .meta .to p, .meta .doc p{ margin:0; font-size:10pt; }
+
+  .salute{ margin-bottom:4mm; font-weight:800; }
+  .body p{ margin:0 0 4mm 0; text-align:justify; }
+  .body p.lede{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    font-size:13pt;
+    line-height:1.3;
+  }
+  .body p.lede::before{ content:"\201C"; color:var(--accent); font-size:1.1em; margin-right:3px;}
+  .body p.lede::after{ content:"\201D"; color:var(--accent); font-size:1.1em; margin-left:2px;}
+
+  .bullets{
+    border-left:3px solid var(--accent);
+    padding:2mm 0 2mm 6mm;
+    margin:4mm 0;
+  }
+  .bullets ul{ margin:0; padding-left:18px; }
+  .bullets li{ font-size:10pt; margin-bottom:3px; }
+
+  .close{
+    margin-top:auto;
+    padding-top:8mm;
+    border-top:1.5px solid var(--rule-strong);
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap:10mm;
+    align-items:end;
+  }
+  .signoff .name{ font-weight:900; font-style:italic; font-size:14pt; letter-spacing:-.01em; }
+  .signoff .meta{ display:block; border:none; padding:0; margin:2px 0 0 0; font-size:9pt; color:var(--ink-soft); }
+  .signoff .sig{
+    margin-top:6mm;
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    font-size:24pt;
+    color:var(--ink);
+  }
+  .channels{ font-size:9pt; line-height:1.6; }
+  .channels .mono{ color:var(--accent); display:block; margin-bottom:4px; }
+
+  footer.cl{
+    border-top:1px solid var(--rule);
+    margin-top:6mm;
+    padding-top:4px;
+    display:flex; justify-content:space-between;
+    font-family:"JetBrains Mono",monospace;
+    font-size:7.5pt;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .sheet{ width:auto; min-height:0; margin:0; padding:0; }
+    @page{ size:A4; margin:14mm 14mm 14mm 14mm; }
+    header.cl{ border-top-width:5px; }
+    .close{ page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="cl">
+    <div class="id">
+      <span class="tag mono">REF_001999 // LINTAS_UMUM_FREELANCE</span>
+      <h1>AZZAR BUDIYANTO<span style="color:var(--accent)">.</span></h1>
+      <div class="role">Software Engineer Freelance · IoT · Full-Stack · AI/ML · DevOps</div>
+    </div>
+    <div class="ref">
+      <span class="mono">Surat_Lamaran</span>
+      <div>ID Dokumen: CL-GEN-ID-V1</div>
+      <div>Tanggal: 2026</div>
+      <div>Lintasan: Umum / Lintas-Domain</div>
+    </div>
+  </header>
+
+  <div class="meta">
+    <div class="to lbl">
+      <span class="mono">Penerima</span>
+      <p><strong>[Manajer Perekrutan / Lead Engineer]</strong></p>
+      <p>[Nama Perusahaan]</p>
+      <p>[Alamat Perusahaan]</p>
+      <p>[Kota, Negara]</p>
+    </div>
+    <div class="doc lbl">
+      <span class="mono">Pengirim</span>
+      <p>Azzar Budiyanto</p>
+      <p>Yogyakarta, Indonesia · Remote-first</p>
+      <p>azzar.mr.zs@gmail.com · +62 822 3252 9804</p>
+      <p>1999azzar.github.io/1999AZZAR</p>
+    </div>
+  </div>
+
+  <p class="salute">Yth. Bapak/Ibu Perekrut,</p>
+
+  <div class="body">
+    <p class="lede">Saya membawa proyek dari ide hingga produksi — melintasi perangkat, backend, dan antarmuka yang benar-benar dipakai orang.</p>
+
+    <p>Dengan surat ini saya menyatakan minat untuk bekerja dengan [Nama Perusahaan] sebagai software engineer freelance. Selama lima tahun terakhir saya telah membangun dan mengirimkan sistem produksi yang mencakup keseluruhan stack: firmware ESP32 dan STM32, pipeline telemetri MQTT, backend Node.js dan Django, dashboard React, dan infrastruktur cloud yang menyatukan semuanya. Saya sama nyamannya memilih algoritma kontrol, menulis firmware yang menjalankannya, dan mengirimkan dashboard yang dipakai non-engineer untuk memantau hasilnya. Pekerjaan ini telah diverifikasi melalui sertifikasi BNSP IoT Practitioner (2024), profil HackerRank yang mencakup Problem Solving, Python, SQL, REST API, dan CSS, serta arsip publik berisi 30+ repositori terbuka.</p>
+
+    <p>Yang saya bawa adalah satu engineer yang dapat mengambilOwnership proyek kecil-menengah secara end-to-end dan berintegrasi bersih ke dalam tim yang lebih besar untuk proyek yang lebih besar. Default saya adalah TypeScript di front-end (React, Next.js, Tailwind), Python atau Node.js di back-end (Django, Flask, Express), PostgreSQL atau MySQL untuk data, dan Docker plus Kubernetes di AWS atau GCP untuk delivery. Saya telah mengimplementasikan pengendali PID, Fuzzy Logic, dan LQR serta menjalankan eksperimen optimisasi dengan algoritma genetika. Saya telah melatih dan men-deploy model Scikit-learn serta PyTorch di belakang API Flask dan memvisualisasikan hasilnya di Plotly. Saya menulis dokumentasi yang dibutuhkan engineer berikutnya, diagram wiring yang dibutuhkan teknisi, dan README yang dibutuhkan komunitas open-source.</p>
+
+    <div class="bullets">
+      <strong>Alasan kecocokan untuk peran ini:</strong>
+      <ul>
+        <li>5+ tahun pengiriman lintas domain: firmware embedded, aplikasi web, deployment cloud, loop kontrol, dan pipeline ML.</li>
+        <li>Ownership end-to-end: scoping, arsitektur, implementasi, deployment, dan dokumentasi yang menyertainya.</li>
+        <li>Terverifikasi oleh HackerRank (Problem Solving Intermediate, Python, SQL Intermediate, REST API, CSS) dan BNSP IoT Practitioner (2024).</li>
+        <li>Kolaborator remote multibahasa (Inggris, Indonesia, Arab, Jawa); alur kerja async berbasis tulisan sejak 2018.</li>
+        <li>Tarif standar USD 35/jam dengan minimum proyek USD 250, dapat dinegosiasikan pada scope, durasi, dan bentuk retainer.</li>
+      </ul>
+    </div>
+
+    <p>Saya bekerja paling baik ketika dapat berpasangan dengan technical lead yang jelas dan product owner, menulis dalam increment kecil yang mudah di-review, dan membiarkan hasil berbicara daripada slide. Jika Anda memiliki proyek yang memerlukan tangan stabil melintasi perangkat dan dashboard, atau tim yang memerlukan penguatan di sisi back-end atau cloud, saya ingin mendengar dari Anda.</p>
+
+    <p>Anda dapat menghubungi saya di azzar.mr.zs@gmail.com atau +62 822 3252 9804, dan arsip proyek lengkap tersedia di 1999azzar.github.io/1999AZZAR. Terima kasih atas waktu Anda — saya menantikan kabar dari Anda.</p>
+  </div>
+
+  <div class="close">
+    <div class="signoff">
+      <div>Hormat saya,</div>
+      <div class="sig">Azzar Budiyanto</div>
+      <div class="name">Azzar Budiyanto</div>
+      <span class="meta">Software Engineer Freelance · Yogyakarta, ID · Remote</span>
+    </div>
+    <div class="channels">
+      <span class="mono">Saluran_Langsung</span>
+      <div>azzar.mr.zs@gmail.com</div>
+      <div>+62 822 3252 9804</div>
+      <div>linkedin.com/in/azzar-budiyanto</div>
+      <div>github.com/1999AZZAR</div>
+    </div>
+  </div>
+
+  <footer class="cl">
+    <span>CL-GEN-ID-V1</span>
+    <span>DIREKAYASA OLEH AZZAR BUDIYANTO</span>
+    <span>EST. 1999</span>
+  </footer>
+
+</div>
+</body>
+</html>

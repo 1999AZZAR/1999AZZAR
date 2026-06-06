@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AZZAR BUDIYANTO — CURRICULUM VITAE</title>
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#2a2a2a;
+    --muted:#5a5a5a;
+    --rule:#cfcfcf;
+    --rule-strong:#111111;
+    --paper:#ffffff;
+    --accent:#8b1a1a;
+    --gutter:24mm;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{
+    margin:0;
+    font-family: "Inter","Helvetica Neue",Arial,sans-serif;
+    font-size:10.5pt;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:geometricPrecision;
+  }
+  .mono{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:8.5pt;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .serif{ font-family:"Times New Roman",Georgia,serif; }
+  .ital{ font-style:italic; }
+
+  @page{ size:A4; margin:0; }
+  .sheet{
+    width:210mm;
+    min-height:297mm;
+    padding:18mm var(--gutter) 18mm var(--gutter);
+    margin:0 auto;
+    background:var(--paper);
+  }
+  .sheet + .sheet{ page-break-before:always; }
+
+  /* HEADER */
+  header.cv{
+    border-top:8px solid var(--rule-strong);
+    border-bottom:2px solid var(--rule-strong);
+    padding:14px 0 14px 0;
+    display:grid;
+    grid-template-columns: 1fr auto;
+    align-items:end;
+    gap:12mm;
+    margin-bottom:10mm;
+  }
+  .id-block .stamp{
+    color:var(--accent);
+    font-weight:800;
+    font-size:9pt;
+    letter-spacing:.32em;
+  }
+  .id-block h1{
+    font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+    font-weight:900;
+    font-style:italic;
+    font-size:38pt;
+    line-height:.95;
+    letter-spacing:-.02em;
+    margin:6px 0 4px 0;
+  }
+  .id-block .sub{
+    font-size:10.5pt;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+  .meta{
+    text-align:right;
+    font-size:9pt;
+    line-height:1.55;
+    color:var(--ink-soft);
+  }
+  .meta .mono{ display:block; margin-bottom:4px; color:var(--accent); }
+  .meta a{ color:inherit; text-decoration:none; }
+
+  /* CONTACT BAR */
+  .contacts{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6mm;
+    border-bottom:1px solid var(--rule);
+    padding:8px 0 10px 0;
+    margin-bottom:10mm;
+  }
+  .contacts .item .mono{ display:block; color:var(--accent); margin-bottom:2px; }
+  .contacts .item span.v{ font-weight:700; font-size:9.5pt; }
+
+  /* SECTIONS */
+  section{ margin-bottom:9mm; }
+  section h2{
+    font-size:11pt;
+    font-weight:900;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    margin:0 0 6mm 0;
+    padding-bottom:4px;
+    border-bottom:2px solid var(--rule-strong);
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  section h2 .num{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    color:var(--accent);
+    font-weight:900;
+    letter-spacing:0;
+    font-size:12pt;
+  }
+
+  /* PROFILE */
+  .profile{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:8mm;
+  }
+  .profile p{
+    margin:0;
+    font-size:10.5pt;
+    text-align:justify;
+  }
+  .profile p.lede{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    font-size:14pt;
+    line-height:1.25;
+    color:var(--ink);
+  }
+  .profile p.lede::before{ content:"\201C"; color:var(--accent); font-size:1.1em; margin-right:4px;}
+  .profile p.lede::after{ content:"\201D"; color:var(--accent); font-size:1.1em; margin-left:2px;}
+
+  /* SKILLS GRID */
+  .skills{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4mm 6mm;
+  }
+  .skill{
+    border-left:2px solid var(--rule-strong);
+    padding:2px 0 2px 8px;
+  }
+  .skill h3{
+    font-size:9.5pt;
+    font-weight:900;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    margin:0 0 4px 0;
+  }
+  .skill p{ margin:0; font-size:9pt; color:var(--ink-soft); }
+
+  /* EXPERIENCE */
+  .xp{ display:grid; grid-template-columns: 28mm 1fr; gap:6mm; }
+  .xp .when{ font-family:"JetBrains Mono",monospace; font-size:8.5pt; color:var(--accent); font-weight:700; letter-spacing:.08em; padding-top:2px;}
+  .xp .what h3{
+    margin:0;
+    font-size:12pt;
+    font-weight:900;
+    font-style:italic;
+    letter-spacing:-.01em;
+  }
+  .xp .what .role{ font-weight:800; font-size:9.5pt; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin:2px 0 6px 0; }
+  .xp .what ul{ margin:0; padding-left:14px; }
+  .xp .what li{ font-size:9.7pt; margin-bottom:3px; }
+  .xp-block{ padding:6mm 0; border-bottom:1px dashed var(--rule); }
+  .xp-block:last-child{ border-bottom:none; }
+
+  /* PROJECTS */
+  .projects{ display:grid; grid-template-columns:repeat(2,1fr); gap:4mm 6mm; }
+  .proj{ border-top:2px solid var(--rule-strong); padding-top:6px; }
+  .proj h4{ margin:0; font-size:10.5pt; font-weight:900; font-style:italic; letter-spacing:-.01em; }
+  .proj .tag{ font-family:"JetBrains Mono",monospace; font-size:7.5pt; color:var(--accent); letter-spacing:.16em; text-transform:uppercase; }
+  .proj p{ margin:4px 0 0 0; font-size:9pt; color:var(--ink-soft); }
+
+  /* CERTS */
+  .certs{ display:grid; grid-template-columns:1fr 1fr; gap:2mm 8mm; }
+  .cert{ display:grid; grid-template-columns: 4mm 1fr; column-gap:6px; align-items:start; padding:3px 0; border-bottom:1px dotted var(--rule); }
+  .cert .bullet{ width:4mm; height:4mm; background:var(--accent); margin-top:3px; }
+  .cert .body .t{ font-weight:800; font-size:9.5pt; }
+  .cert .body .m{ font-size:8.5pt; color:var(--ink-soft); }
+  .cert .body .y{ font-family:"JetBrains Mono",monospace; font-size:8pt; color:var(--accent); letter-spacing:.1em; }
+
+  /* LANG */
+  .langs{ display:grid; grid-template-columns:repeat(4,1fr); gap:4mm; }
+  .lang{ text-align:center; border:1.5px solid var(--rule-strong); padding:8px 6px; }
+  .lang .lname{ font-weight:900; font-size:10pt; letter-spacing:.06em; }
+  .lang .lvl{ font-family:"JetBrains Mono",monospace; font-size:8pt; color:var(--accent); letter-spacing:.18em; }
+
+  /* FOOTER */
+  footer.cv{
+    border-top:2px solid var(--rule-strong);
+    margin-top:8mm;
+    padding-top:6px;
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:"JetBrains Mono",monospace;
+    font-size:8pt;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .sheet{ width:auto; min-height:0; margin:0; padding:0; }
+    @page{ size:A4; margin:14mm 14mm 14mm 14mm; }
+    header.cv{ border-top-width:6px; }
+    section{ page-break-inside: avoid; }
+    .xp-block{ page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="cv">
+    <div class="id-block">
+      <div class="mono stamp">REF_001999 // SYSTEM_SPEC_V1.1</div>
+      <h1>AZZAR<br/>BUDIYANTO<span style="color:var(--accent)">.</span></h1>
+      <div class="sub">Freelance Software Developer · IoT &amp; Embedded Systems · Full-Stack Engineer</div>
+    </div>
+    <div class="meta">
+      <span class="mono">CURRICULUM VITAE</span>
+      <div>EST. 1999 · Yogyakarta, ID</div>
+      <div>Remote — Available Worldwide</div>
+      <div>Rates from USD 35/hr · Min. project USD 250</div>
+    </div>
+  </header>
+
+  <div class="contacts">
+    <div class="item"><span class="mono">Electronic_Mail</span><span class="v">azzar.mr.zs@gmail.com</span></div>
+    <div class="item"><span class="mono">Voice_Line</span><span class="v">+62 822 3252 9804</span></div>
+    <div class="item"><span class="mono">Base_Operations</span><span class="v">Yogyakarta, Indonesia</span></div>
+    <div class="item"><span class="mono">Channel_Web</span><span class="v">1999azzar.github.io/1999AZZAR</span></div>
+  </div>
+
+  <!-- PROFILE -->
+  <section>
+    <h2>01 // Profile<span class="num">Profil.</span></h2>
+    <div class="profile">
+      <p class="lede">Engineering resilient digital ecosystems and connected hardware with precision and purpose.</p>
+      <p>Freelance IoT developer and full-stack engineer with 5+ years building production systems across embedded firmware, control algorithms, and modern web stacks. Comfortable owning a project from schematic to dashboard. Multilingual, remote-first, and pragmatic about scope, deadlines, and documentation. Currently booking projects for the second half of 2026.</p>
+    </div>
+  </section>
+
+  <!-- CORE SKILLS -->
+  <section>
+    <h2>02 // Core_Competencies<span class="num">Stack.</span></h2>
+    <div class="skills">
+      <div class="skill">
+        <h3>Programming</h3>
+        <p>Python · TypeScript · JavaScript · C/C++ · Rust · Go · Bash · SQL</p>
+      </div>
+      <div class="skill">
+        <h3>Web Stack</h3>
+        <p>React · Next.js · Node.js · Express · Django · Flask · Tailwind · REST/GraphQL</p>
+      </div>
+      <div class="skill">
+        <h3>Embedded &amp; IoT</h3>
+        <p>ESP32 · STM32 · Arduino · Raspberry Pi · LoRa · MQTT · Sensor/Actuator Integration</p>
+      </div>
+      <div class="skill">
+        <h3>Control Systems</h3>
+        <p>PID · Fuzzy Logic · LQR · Ziegler–Nichols · Cohen–Coon · Genetic Algorithms</p>
+      </div>
+      <div class="skill">
+        <h3>DevOps &amp; Cloud</h3>
+        <p>Docker · Kubernetes · AWS · GCP · Firebase · Terraform · CI/CD · NGINX</p>
+      </div>
+      <div class="skill">
+        <h3>AI / Machine Learning</h3>
+        <p>TensorFlow · PyTorch · Scikit-learn · Pandas · NumPy · OpenCV · NLP</p>
+      </div>
+      <div class="skill">
+        <h3>Data &amp; Databases</h3>
+        <p>PostgreSQL · MySQL · SQLite · MongoDB · Redis · Elasticsearch</p>
+      </div>
+      <div class="skill">
+        <h3>Security &amp; Networking</h3>
+        <p>API Design · Cryptography · Penetration Testing · IoT Hardening</p>
+      </div>
+      <div class="skill">
+        <h3>UI/UX &amp; CAD</h3>
+        <p>Figma · Tailwind · SolidWorks · AutoCAD · Blender · 3D Printing</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <h2>03 // Operational_Timeline<span class="num">Experience.</span></h2>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2018/10<br/>— Present</div>
+        <div class="what">
+          <h3>Freelance Software Developer</h3>
+          <div class="role">Self-employed · Remote — Worldwide</div>
+          <ul>
+            <li>Deliver end-to-end IoT and web projects: firmware, cloud pipeline, dashboard, deployment.</li>
+            <li>Design control algorithms (PID, Fuzzy, LQR) for industrial and research prototypes.</li>
+            <li>Architect REST and GraphQL APIs in Node.js, Django, and Flask; deploy on AWS and GCP.</li>
+            <li>Build responsive front-ends in React and Next.js with Tailwind; integrate WebSocket telemetry.</li>
+            <li>Containerise workloads with Docker; maintain CI/CD on GitHub Actions and Jenkins.</li>
+            <li>Convert mockups into production web presence with HTML, CSS, and JavaScript.</li>
+            <li>Author hardware specs, wiring diagrams, and user manuals for non-engineer stakeholders.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2022/01<br/>— 2023/01</div>
+        <div class="what">
+          <h3>Microcontroller Trainer</h3>
+          <div class="role">Indobot Academy · Yogyakarta, ID</div>
+          <ul>
+            <li>Designed curriculum for Arduino, ESP32, and STM32 tracks; taught 4 cohorts of 20+ participants.</li>
+            <li>Delivered IoT modules covering MQTT, cloud telemetry, and dashboard integration.</li>
+            <li>Provided 1:1 mentoring; produced learning-progress reports and certification documents.</li>
+            <li>Authored lab manuals and reusable code libraries adopted beyond the cohort.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2020/09<br/>— 2021/09</div>
+        <div class="what">
+          <h3>Photographer</h3>
+          <div class="role">Lembaran Kasih · Tuban, ID</div>
+          <ul>
+            <li>Shot high-quality stills for print and digital campaigns under tight deadlines.</li>
+            <li>Edited, toned, captioned, and uploaded deliverables for publication pipelines.</li>
+            <li>Selected camera angles, props, and lighting setups to optimise final output.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2020/01<br/>— 2021/04</div>
+        <div class="what">
+          <h3>Student Ambassador</h3>
+          <div class="role">cicil.co.id · Yogyakarta, ID</div>
+          <ul>
+            <li>Streamlined student registration, technical onboarding, and documentation flow.</li>
+            <li>Resolved administrative and account issues directly with end-users.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED PROJECTS -->
+  <section>
+    <h2>04 // Selected_Works<span class="num">Projects.</span></h2>
+    <div class="projects">
+      <div class="proj">
+        <span class="tag">IoT / Industrial</span>
+        <h4>Multi-Sensor Telemetry Stack</h4>
+        <p>ESP32 firmware with SHT20, thermistor, and MQ-137 sensors streaming to an MQTT broker; Node.js + React dashboard for live and historical data.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">Web / Full-Stack</span>
+        <h4>IoT E-commerce Platform</h4>
+        <p>Production storefront with integrated device-monitoring backend; React front-end, Django API, PostgreSQL, deployed on AWS with CI/CD.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">Control Systems</span>
+        <h4>Fuzzy + PID Temperature Loop</h4>
+        <p>Auto-tuned PID with Ziegler–Nichols and Cohen–Coon; fuzzy supervisor for non-linear regimes. Simulated in MATLAB, deployed on STM32.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">Embedded / Robotics</span>
+        <h4>RFID Access &amp; Relay Control</h4>
+        <p>ESP8266 + RFID reader + relay module with Telegram notifications and web-based device control panel.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">ML / Data</span>
+        <h4>Predictive Maintenance Model</h4>
+        <p>Scikit-learn pipeline (classification + regression) on sensor logs; dashboard in Plotly; deployed behind Flask.</p>
+      </div>
+      <div class="proj">
+        <span class="tag">DevOps</span>
+        <h4>Cloud-Native Deployment Stack</h4>
+        <p>Dockerised services, Kubernetes manifests, Terraform-managed infrastructure, GitHub Actions pipelines.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section>
+    <h2>05 // Certifications &amp; Awards<span class="num">Verified.</span></h2>
+    <div class="certs">
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">IoT Practitioner — BNSP</div><div class="m">Badan Nasional Sertifikasi Profesi (Indonesia)</div><div class="y">2024</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">freeCodeCamp Certificates</div><div class="m">freeCodeCamp — Responsive Web &amp; Algorithms</div><div class="y">2022</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Belajar Fundamental Deep Learning</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Membangun Sistem Machine Learning</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Belajar Machine Learning untuk Pemula</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Belajar Dasar AI</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Memulai Pemrograman dengan Python</div><div class="m">Dicoding Indonesia</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Problem Solving (Intermediate)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Problem Solving (Basic)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Python (Basic)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">SQL (Intermediate)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">SQL (Basic)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">CSS</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">REST API (Intermediate)</div><div class="m">HackerRank</div><div class="y">2023</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Membangun Mobile Backend (Kotlin)</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Build Your Beautiful Apps Using SwiftUI</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Scrum Introduction</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Lean-Agile Mindset</div><div class="m">Dicoding Indonesia</div><div class="y">2021</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Careerhacks: How to start?!</div><div class="m">Dicoding Indonesia</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Baparekraf Developer Day 2020</div><div class="m">Dicoding × Baparekraf</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Merdeka Makers Fest Participant</div><div class="m">Kampus Merdeka</div><div class="y">2020</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Student Ambassador Certificate</div><div class="m">cicil.co.id</div><div class="y">2021</div></div></div>
+      <div class="cert"><div class="bullet"></div><div class="body"><div class="t">Udemy Course Certificates (×5)</div><div class="m">Various — Web, DevOps, and Embedded topics</div><div class="y">2021–2023</div></div></div>
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+  <section>
+    <h2>06 // Languages<span class="num">Multilingual.</span></h2>
+    <div class="langs">
+      <div class="lang"><div class="lname">English</div><div class="lvl">Professional</div></div>
+      <div class="lang"><div class="lname">Indonesian</div><div class="lvl">Native</div></div>
+      <div class="lang"><div class="lname">Arabic</div><div class="lvl">Working</div></div>
+      <div class="lang"><div class="lname">Javanese</div><div class="lvl">Native</div></div>
+    </div>
+  </section>
+
+  <footer class="cv">
+    <span>ENGINEERED BY AZZAR BUDIYANTO</span>
+    <span>EST. 1999</span>
+    <span>Page 1 / 1</span>
+  </footer>
+
+</div>
+</body>
+</html>

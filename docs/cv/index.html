@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CV &amp; COVER LETTER INDEX — AZZAR BUDIYANTO</title>
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#2a2a2a;
+    --muted:#5a5a5a;
+    --rule:#cfcfcf;
+    --rule-strong:#111111;
+    --paper:#ffffff;
+    --accent:#8b1a1a;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink); margin:0;}
+  body{
+    font-family: "Inter","Helvetica Neue",Arial,sans-serif;
+    font-size:11pt;
+    line-height:1.5;
+    padding:32px 28px 64px 28px;
+    max-width:980px;
+    margin:0 auto;
+  }
+  .mono{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:.8rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  header{
+    border-top:6px solid var(--rule-strong);
+    border-bottom:2px solid var(--rule-strong);
+    padding:14px 0;
+    display:flex; justify-content:space-between; align-items:end;
+    gap:24px;
+    margin-bottom:32px;
+  }
+  header h1{
+    margin:0; font-size:32pt; font-weight:900; font-style:italic; letter-spacing:-.02em; line-height:.95;
+  }
+  header .tag{ color:var(--accent); }
+  header .meta{ font-size:9pt; color:var(--ink-soft); text-align:right; }
+  header .meta .mono{ display:block; color:var(--accent); margin-bottom:4px; }
+
+  h2{
+    font-size:11pt; font-weight:900; letter-spacing:.3em; text-transform:uppercase;
+    margin:32px 0 12px 0; padding-bottom:6px;
+    border-bottom:2px solid var(--rule-strong);
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  h2 .num{ font-family:"Times New Roman",serif; font-style:italic; color:var(--accent); font-weight:900; font-size:13pt; }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; }
+  a.tile{
+    display:block;
+    border:1.5px solid var(--rule-strong);
+    padding:14px 16px;
+    text-decoration:none;
+    color:inherit;
+    background:#fff;
+    transition: all .15s ease;
+  }
+  a.tile:hover{ transform: translate(-2px,-2px); box-shadow: 6px 6px 0 0 var(--accent); border-color: var(--accent); }
+  a.tile .lab{ font-family:"JetBrains Mono",monospace; font-size:7.5pt; letter-spacing:.18em; color:var(--accent); text-transform:uppercase; }
+  a.tile .name{ font-weight:900; font-size:13pt; font-style:italic; margin:4px 0 4px 0; }
+  a.tile .desc{ font-size:9pt; color:var(--ink-soft); }
+  a.tile .id{ font-family:"JetBrains Mono",monospace; font-size:7.5pt; color:var(--ink-soft); margin-top:6px; }
+
+  .howto{
+    background:#fafafa;
+    border-left:4px solid var(--accent);
+    padding:14px 18px;
+    margin:18px 0;
+  }
+  .howto p{ margin:0 0 6px 0; font-size:10pt; }
+  .howto p:last-child{ margin-bottom:0; }
+  .howto code{
+    background:#eee; padding:1px 6px; border-radius:2px;
+    font-family:"JetBrains Mono",monospace; font-size:9.5pt;
+  }
+
+  footer{
+    border-top:1px solid var(--rule);
+    margin-top:32px;
+    padding-top:8px;
+    display:flex; justify-content:space-between;
+    font-family:"JetBrains Mono",monospace;
+    font-size:7.5pt; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <span class="tag mono">REF_001999 // CV_AND_COVER_LETTER_INDEX</span>
+    <h1>CV &amp; COVER LETTERS<span style="color:var(--accent)">.</span></h1>
+  </div>
+  <div class="meta">
+    <span class="mono">Print-Ready HTML</span>
+    <div>Azzar Budiyanto · Yogyakarta, ID</div>
+    <div>Last update: 2026</div>
+  </div>
+</header>
+
+<div class="howto">
+  <p><strong>How to use.</strong> Open any file below, then press <code>Ctrl/Cmd + P</code> and choose <em>Save as PDF</em>. The page is sized to A4 with print-specific CSS already applied; margins and typography are calibrated for the Swiss-Archival layout.</p>
+  <p><strong>Personalize.</strong> Replace the bracketed placeholders before sending: <code>[Hiring Manager / Engineering Lead]</code>, <code>[Company Name]</code>, <code>[Company Address Line]</code>, <code>[City, Country]</code>.</p>
+</div>
+
+<h2>01 // Curriculum_Vitae<span class="num">CV.</span></h2>
+<div class="grid">
+  <a class="tile" href="cv_en.html" target="_blank">
+    <div class="lab">English · A4</div>
+    <div class="name">CV — English</div>
+    <div class="desc">Single-page CV. Profile, stack, experience, projects, 23 certifications, languages.</div>
+    <div class="id">cv_en.html</div>
+  </a>
+  <a class="tile" href="cv_id.html" target="_blank">
+    <div class="lab">Bahasa Indonesia · A4</div>
+    <div class="name">CV — Bahasa Indonesia</div>
+    <div class="desc">Versi satu halaman. Profil, stack, pengalaman, proyek, 23 sertifikasi, bahasa.</div>
+    <div class="id">cv_id.html</div>
+  </a>
+</div>
+
+<h2>02 // Cover_Letters — IoT &amp; Automation<span class="num">IoT.</span></h2>
+<div class="grid">
+  <a class="tile" href="cover_iot_en.html" target="_blank">
+    <div class="lab">English · A4</div>
+    <div class="name">CL — IoT &amp; Automation</div>
+    <div class="desc">Embedded firmware, control systems, telemetry stack. Emphasises ESP32, STM32, PID, MQTT, BNSP.</div>
+    <div class="id">cover_iot_en.html</div>
+  </a>
+  <a class="tile" href="cover_iot_id.html" target="_blank">
+    <div class="lab">Bahasa Indonesia · A4</div>
+    <div class="name">CL — IoT &amp; Otomasi</div>
+    <div class="desc">Firmware embedded, sistem kontrol, stack telemetri. Menekankan ESP32, STM32, PID, MQTT, BNSP.</div>
+    <div class="id">cover_iot_id.html</div>
+  </a>
+</div>
+
+<h2>03 // Cover_Letters — Full-Stack Web<span class="num">FS.</span></h2>
+<div class="grid">
+  <a class="tile" href="cover_fullstack_en.html" target="_blank">
+    <div class="lab">English · A4</div>
+    <div class="name">CL — Full-Stack</div>
+    <div class="desc">React, Next.js, Node.js, Django, cloud delivery. Emphasises CI/CD, observability, SQL depth.</div>
+    <div class="id">cover_fullstack_en.html</div>
+  </a>
+  <a class="tile" href="cover_fullstack_id.html" target="_blank">
+    <div class="lab">Bahasa Indonesia · A4</div>
+    <div class="name">CL — Full-Stack</div>
+    <div class="desc">React, Next.js, Node.js, Django, delivery cloud. Menekankan CI/CD, observability, kedalaman SQL.</div>
+    <div class="id">cover_fullstack_id.html</div>
+  </a>
+</div>
+
+<h2>04 // Cover_Letters — General<span class="num">Gen.</span></h2>
+<div class="grid">
+  <a class="tile" href="cover_general_en.html" target="_blank">
+    <div class="lab">English · A4</div>
+    <div class="name">CL — General / Cross-Domain</div>
+    <div class="desc">Balanced pitch for cross-domain roles: IoT, web, ML, DevOps. Default when the role is mixed.</div>
+    <div class="id">cover_general_en.html</div>
+  </a>
+  <a class="tile" href="cover_general_id.html" target="_blank">
+    <div class="lab">Bahasa Indonesia · A4</div>
+    <div class="name">CL — Umum / Lintas-Domain</div>
+    <div class="desc">Pitch seimbang untuk peran lintas domain: IoT, web, ML, DevOps. Default saat role-nya campuran.</div>
+    <div class="id">cover_general_id.html</div>
+  </a>
+</div>
+
+<footer>
+  <span>INDEX_V1</span>
+  <span>ENGINEERED BY AZZAR BUDIYANTO</span>
+  <span>EST. 1999</span>
+</footer>
+
+</body>
+</html>
