@@ -99,7 +99,7 @@ export default function AboutPage() {
             </div>
 
             <div className="flex flex-wrap gap-6">
-              <a href="/rcv_en_azzar.pdf" target="_blank" className="btn-swiss-primary !w-fit group">
+              <a href="/cv/" target="_blank" className="btn-swiss-primary !w-fit group">
                 {t('aboutDownloadCV' as any)} <FileText size={20} className="group-hover:rotate-12 transition-transform" />
               </a>
               <a href="/porto_photo_azzar.pdf" target="_blank" className="btn-swiss-outline !w-fit group">
