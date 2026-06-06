@@ -57,13 +57,13 @@ export default function Footer() {
           <div className="col-span-12 sm:col-span-6 lg:col-span-3 space-y-8">
             <h4 className="font-mono font-semibold text-[0.75rem] uppercase tracking-[0.2em] text-accent">02 // SOCIAL</h4>
             <div className="flex flex-col gap-4 font-sans font-bold italic uppercase text-2xl tracking-tighter">
-              <a href="https://github.com/1999azzar" target="_blank" className="flex items-center gap-3 hover:text-accent transition-colors w-fit">
+              <a href="https://github.com/1999azzar" target="_blank" rel="noopener noreferrer me" className="flex items-center gap-3 hover:text-accent transition-colors w-fit">
                 GitHub <ArrowUpRight size={24} strokeWidth={3} />
               </a>
-              <a href="https://linkedin.com/in/azzar-budiyanto" target="_blank" className="flex items-center gap-3 hover:text-accent transition-colors w-fit">
+              <a href="https://linkedin.com/in/azzar-budiyanto" target="_blank" rel="noopener noreferrer me" className="flex items-center gap-3 hover:text-accent transition-colors w-fit">
                 LinkedIn <ArrowUpRight size={24} strokeWidth={3} />
               </a>
-              <a href="https://x.com/siapa_hayosiapa" target="_blank" className="flex items-center gap-3 hover:text-accent transition-colors w-fit text-accent">
+              <a href="https://x.com/siapa_hayosiapa" target="_blank" rel="noopener noreferrer me" className="flex items-center gap-3 hover:text-accent transition-colors w-fit text-accent">
                 X_Twitter <ArrowUpRight size={24} strokeWidth={3} />
               </a>
             </div>

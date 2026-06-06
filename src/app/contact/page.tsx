@@ -77,10 +77,11 @@ export default function ContactPage() {
               <h2 className="text-3xl md:text-4xl font-black italic uppercase tracking-tighter border-b-4 border-foreground pb-4 mb-10">{t('contactNeuralNets' as any)}</h2>
               <div className="grid grid-cols-1 gap-4">
                 {socialLinks.map((link) => (
-                  <a 
-                    key={link.name} 
-                    href={link.url} 
-                    target="_blank" 
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer me"
                     className="flex justify-between items-center py-4 border-b-2 border-foreground hover:bg-foreground hover:text-background px-4 transition-all group gap-4"
                   >
                     <span className="text-lg font-black uppercase italic tracking-tighter whitespace-nowrap">{link.name}</span>
@@ -95,9 +96,10 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 gap-4">
                 {devLinks.map((link) => (
                   <a 
-                    key={link.name} 
-                    href={link.url} 
-                    target="_blank" 
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer me"
                     className="flex justify-between items-center py-4 border-b-2 border-foreground hover:bg-accent hover:border-accent hover:text-background px-4 transition-all group gap-4"
                   >
                     <span className="text-lg font-black uppercase italic tracking-tighter whitespace-nowrap">{link.name}</span>
@@ -138,9 +140,10 @@ export default function ContactPage() {
 
               <PricingCalculator />
               
-              <a 
-                href="https://t.me/azzar_budiyanto" 
+              <a
+                href="https://t.me/azzar_budiyanto"
                 target="_blank"
+                rel="noopener noreferrer me"
                 className="btn-swiss-primary !text-xl md:!text-3xl !py-10 !px-12 shadow-[min(20px,3vw)_min(20px,3vw)_0px_0px_rgba(139,26,26,1)] w-full flex justify-between items-center group"
               >
                 {t('contactTelegramBtn' as any)}
