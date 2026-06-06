@@ -309,7 +309,7 @@ export default function PricingCalculator() {
                             className="w-32 h-32"
                           />
                        </div>
-                       <a href={getWhatsAppLink()} target="_blank" className="text-[10px] font-black uppercase italic underline flex items-center gap-2">
+                       <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="text-[10px] font-black uppercase italic underline flex items-center gap-2">
                           OPEN_WHATSAPP <ExternalLink size={12} />
                        </a>
                     </div>
