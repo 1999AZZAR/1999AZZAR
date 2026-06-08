@@ -9,4 +9,6 @@ https://wp.glassgallery.my.id/ | Wong edan's - azzar automated blog post through
 https://geometry-vault.glassgallery.my.id/ | geometry vault - glassgallery 3D geometry experience
 https://wikistream.glassgallery.my.id/ | wikistream - glassgallery wiki streaming
 https://sanctuary.glassgallery.my.id/home | sanctuary - glassgallery sanctuary space
+https://yearbook.glassgallery.my.id | yearbook - glassgallery yearbook
+https://invoice.glassgallery.my.id | invoice - glassgallery invoice app
 

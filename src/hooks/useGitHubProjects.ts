@@ -87,9 +87,13 @@ export function useGitHubProjects() {
       const merged: Project[] = [];
 
       for (const p of [...githubProjects, ...liveSiteProjects]) {
-        const key = p.homepage.replace(/\/+$/, '').replace(/^https?:\/\//, '').toLowerCase();
-        if (!seen.has(key)) {
+        const raw = p.homepage || '';
+        const key = raw.replace(/\/+$/, '').replace(/^https?:\/\//, '').toLowerCase();
+        if (key && !seen.has(key)) {
           seen.add(key);
+          merged.push(p);
+        } else if (!key && !seen.has(p.name.toLowerCase())) {
+          seen.add(p.name.toLowerCase());
           merged.push(p);
         }
       }
