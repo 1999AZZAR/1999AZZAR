@@ -86,7 +86,7 @@ export function useGitHubProjects() {
       const seen = new Set<string>();
       const merged: Project[] = [];
 
-      for (const p of [...githubProjects, ...liveSiteProjects]) {
+      for (const p of [...liveSiteProjects, ...githubProjects]) {
         const raw = p.homepage || '';
         const key = raw.replace(/\/+$/, '').replace(/^https?:\/\//, '').toLowerCase();
         if (key && !seen.has(key)) {
