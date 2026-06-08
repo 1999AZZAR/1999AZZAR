@@ -15,6 +15,30 @@ export interface Project {
   archived: boolean;
 }
 
+function parseLiveSiteFile(text: string): Project[] {
+  return text
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line.includes('|'))
+    .map(line => {
+      const [urlPart, metaPart] = line.split('|').map(s => s.trim());
+      const name = metaPart?.split(' - ')[0]?.trim() || urlPart;
+      const description = metaPart?.split(' - ').slice(1).join(' - ').trim() || '';
+      return {
+        name,
+        description,
+        homepage: urlPart,
+        html_url: urlPart,
+        updated_at: new Date().toISOString(),
+        stargazers_count: 0,
+        forks_count: 0,
+        language: 'Web',
+        topics: [],
+        archived: false,
+      };
+    });
+}
+
 export function useGitHubProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,7 +58,7 @@ export function useGitHubProjects() {
           }
         }
 
-        const sorted = allProjects
+        const githubProjects = allProjects
           .filter(repo => !repo.archived)
           .sort((a, b) => {
             const popA = a.stargazers_count + a.forks_count;
@@ -42,7 +66,27 @@ export function useGitHubProjects() {
             return popB - popA || new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
           });
 
-        setProjects(sorted);
+        let liveSiteProjects: Project[] = [];
+        try {
+          const res = await fetch('/live_site.txt');
+          if (res.ok) {
+            const text = await res.text();
+            liveSiteProjects = parseLiveSiteFile(text);
+          }
+        } catch {}
+
+        const seen = new Set<string>();
+        const merged: Project[] = [];
+
+        for (const p of [...githubProjects, ...liveSiteProjects]) {
+          const key = p.homepage.replace(/\/+$/, '').replace(/^https?:\/\//, '').toLowerCase();
+          if (!seen.has(key)) {
+            seen.add(key);
+            merged.push(p);
+          }
+        }
+
+        setProjects(merged);
       } catch (err) {
         setError('Failed to fetch projects');
       } finally {
