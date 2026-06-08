@@ -46,52 +46,56 @@ export function useGitHubProjects() {
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const usernames = ['1999AZZAR', 'lily-osp'];
-        let allProjects: any[] = [];
+      const [githubProjects, liveSiteProjects] = await Promise.all([
+        (async (): Promise<Project[]> => {
+          try {
+            const usernames = ['1999AZZAR', 'lily-osp'];
+            let allProjects: any[] = [];
 
-        for (const username of usernames) {
-          const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
-          if (response.ok) {
-            const data = await response.json();
-            allProjects = [...allProjects, ...data];
+            for (const username of usernames) {
+              const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+              if (response.ok) {
+                const data = await response.json();
+                allProjects = [...allProjects, ...data];
+              }
+            }
+
+            return allProjects
+              .filter(repo => !repo.archived)
+              .sort((a, b) => {
+                const popA = a.stargazers_count + a.forks_count;
+                const popB = b.stargazers_count + b.forks_count;
+                return popB - popA || new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+              });
+          } catch {
+            setError('GitHub API unavailable');
+            return [];
           }
+        })(),
+        (async (): Promise<Project[]> => {
+          try {
+            const res = await fetch('/live_site.txt');
+            if (res.ok) {
+              return parseLiveSiteFile(await res.text());
+            }
+          } catch {}
+          return [];
+        })(),
+      ]);
+
+      const seen = new Set<string>();
+      const merged: Project[] = [];
+
+      for (const p of [...githubProjects, ...liveSiteProjects]) {
+        const key = p.homepage.replace(/\/+$/, '').replace(/^https?:\/\//, '').toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          merged.push(p);
         }
-
-        const githubProjects = allProjects
-          .filter(repo => !repo.archived)
-          .sort((a, b) => {
-            const popA = a.stargazers_count + a.forks_count;
-            const popB = b.stargazers_count + b.forks_count;
-            return popB - popA || new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
-          });
-
-        let liveSiteProjects: Project[] = [];
-        try {
-          const res = await fetch('/live_site.txt');
-          if (res.ok) {
-            const text = await res.text();
-            liveSiteProjects = parseLiveSiteFile(text);
-          }
-        } catch {}
-
-        const seen = new Set<string>();
-        const merged: Project[] = [];
-
-        for (const p of [...githubProjects, ...liveSiteProjects]) {
-          const key = p.homepage.replace(/\/+$/, '').replace(/^https?:\/\//, '').toLowerCase();
-          if (!seen.has(key)) {
-            seen.add(key);
-            merged.push(p);
-          }
-        }
-
-        setProjects(merged);
-      } catch (err) {
-        setError('Failed to fetch projects');
-      } finally {
-        setLoading(false);
       }
+
+      setProjects(merged);
+      setLoading(false);
     }
 
     fetchData();
