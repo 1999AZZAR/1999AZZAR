@@ -156,6 +156,16 @@ export default function RootLayout({
           data-color="light"
           strategy="afterInteractive"
         />
+        <script dangerouslySetInnerHTML={{ __html: `
+          if('serviceWorker' in navigator){
+            navigator.serviceWorker.getRegistrations().then(function(r){
+              for(var i=0;i<r.length;i++){r[i].unregister()}
+            });
+            caches.keys().then(function(k){
+              for(var i=0;i<k.length;i++){caches.delete(k[i])}
+            });
+          }
+        `}} />
       </body>
     </html>
   )
