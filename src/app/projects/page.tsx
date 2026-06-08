@@ -140,7 +140,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         layout: { type: "spring", stiffness: 300, damping: 30 },
         opacity: { duration: 0.2 }
       }}
-      href={project.homepage || project.html_url}
+      href={project.homepage || project.html_url || '#'}
       target="_blank"
       className="group bg-card border-4 border-foreground p-10 shadow-[12px_12px_0px_0px_rgba(42,37,32,1)] hover:shadow-[20px_20px_0px_0px_rgba(139,26,26,1)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between min-h-[450px]"
     >

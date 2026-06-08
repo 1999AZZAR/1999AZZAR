@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 export interface Project {
   name: string;
   description: string;
-  homepage: string;
+  homepage: string | null;
   html_url: string;
   updated_at: string;
   stargazers_count: number;
