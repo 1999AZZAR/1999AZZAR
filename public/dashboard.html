@@ -191,54 +191,40 @@ const SITES = [
   { name: 'invoice.glassgallery.my.id', label: 'Invoice', color: '#eab308', checks: ['sitemap','robots','canonical'] },
 ];
 
-async function checkSite(site) {
-  const results = { name: site.name, label: site.label, color: site.color, items: [] };
+async function fetchSEOStatus() {
   try {
-    const html = await fetch(`https://${site.name}/`, { mode: 'no-cors' }).then(() => 'ok').catch(() => 'fail');
-    const robots = await fetch(`https://${site.name}/robots.txt`).then(r => r.ok ? r.text() : '').catch(() => '');
-    const sitemap = await fetch(`https://${site.name}/sitemap.xml`).then(r => r.ok ? r.text() : '').catch(() => '');
-
-    // robots.txt check
-    const hasDisallow = robots.includes('Disallow: /') && !robots.includes('Allow: /');
-    results.items.push({
-      label: 'robots.txt',
-      status: robots ? (hasDisallow ? 'fail' : 'pass') : 'fail',
-      detail: robots ? (hasDisallow ? 'Blocked' : 'Allowed') : 'Missing'
-    });
-
-    // sitemap check
-    const hasSitemap = sitemap.includes('<urlset') || sitemap.includes('<sitemapindex');
-    results.items.push({
-      label: 'sitemap.xml',
-      status: hasSitemap ? 'pass' : 'fail',
-      detail: hasSitemap ? 'Present' : 'Missing'
-    });
-
-    // For HTML checks, use no-cors proxy approach
-    results.items.push({
-      label: 'canonical tag',
-      status: 'warn',
-      detail: 'Check manually'
-    });
-    results.items.push({
-      label: 'OG meta',
-      status: 'warn',
-      detail: 'Check manually'
-    });
-
-    // WP-specific check
-    if (site.checks.includes('wp-sitemap')) {
-      const wpSitemap = await fetch(`https://wp.glassgallery.my.id/wp-sitemap.xml`).then(r => r.ok ? r.text() : '').catch(() => '');
-      const postMatch = wpSitemap.match(/wp-sitemap-posts-post-\d+\.xml/);
-      results.items.push({
-        label: 'wp-sitemap.xml',
-        status: postMatch ? 'pass' : 'fail',
-        detail: postMatch ? 'Active' : 'Missing'
-      });
-    }
+    const resp = await fetch('/seo-status');
+    return await resp.json();
   } catch (e) {
-    results.items.push({ label: 'Connection', status: 'fail', detail: 'Error' });
+    return null;
   }
+}
+
+async function checkSite(site, statusData) {
+  const results = { name: site.name, label: site.label, color: site.color, items: [] };
+  const status = statusData ? statusData.find(s => s.site === site.name) : null;
+
+  results.items.push({
+    label: 'robots.txt',
+    status: status ? (status.robots ? 'pass' : 'fail') : 'warn',
+    detail: status ? (status.robots ? 'Served by worker' : 'Missing') : 'Unknown'
+  });
+  results.items.push({
+    label: 'sitemap.xml',
+    status: status ? (status.sitemap ? 'pass' : 'fail') : 'warn',
+    detail: status ? (status.sitemap ? 'Served by worker' : 'Missing') : 'Unknown'
+  });
+  results.items.push({
+    label: 'canonical tag',
+    status: status ? (status.canonical ? 'pass' : 'warn') : 'warn',
+    detail: status ? (status.canonical ? 'Present' : 'Not detected') : 'Unknown'
+  });
+  results.items.push({
+    label: 'OG meta',
+    status: 'warn',
+    detail: 'Check manually'
+  });
+
   return results;
 }
 
@@ -324,7 +310,8 @@ async function fetchWorkers() {
 async function refreshAll() {
   document.getElementById('last-updated').textContent = 'Refreshing...';
   try {
-    const results = await Promise.all(SITES.map(checkSite));
+    const statusData = await fetchSEOStatus();
+    const results = await Promise.all(SITES.map(s => checkSite(s, statusData)));
     renderSEOCards(results);
     // Count WP posts
     try {
