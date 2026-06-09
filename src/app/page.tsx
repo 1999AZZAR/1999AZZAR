@@ -57,14 +57,17 @@ export default function HomePage() {
              <div className="max-w-3xl space-y-12">
                <p className="text-3xl md:text-5xl font-serif italic text-foreground leading-[1.1]" dangerouslySetInnerHTML={{ __html: t('heroQuote' as any) }} />
                
-               <div className="flex flex-wrap gap-6 pt-4">
-                  <Link href="/projects" className="btn-editorial">
-                    {t('navPortfolio' as any)}
-                  </Link>
-                  <Link href="/contact" className="group flex items-center gap-3 font-mono font-semibold text-[0.75rem] tracking-[0.1em] uppercase hover:text-accent transition-all">
-                    {t('hireMe' as any)} <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </Link>
-               </div>
+                <div className="flex flex-wrap gap-6 pt-4">
+                   <Link href="/about" className="btn-editorial">
+                     {t('navAbout' as any)}
+                   </Link>
+                   <Link href="/projects" className="btn-editorial">
+                     {t('navPortfolio' as any)}
+                   </Link>
+                   <Link href="/contact" className="group flex items-center gap-3 font-mono font-semibold text-[0.75rem] tracking-[0.1em] uppercase hover:text-accent transition-all">
+                     {t('hireMe' as any)} <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                   </Link>
+                </div>
              </div>
           </motion.div>
 
