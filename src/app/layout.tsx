@@ -27,7 +27,7 @@ const mono = JetBrains_Mono({
   variable: '--font-mono',
 })
 
-const siteUrl = 'https://azzar.netlify.app';
+const siteUrl = 'https://glassgallery.my.id';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

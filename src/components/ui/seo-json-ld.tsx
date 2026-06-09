@@ -1,6 +1,6 @@
 import React from 'react';
 
-const siteUrl = 'https://azzar.netlify.app';
+const siteUrl = 'https://glassgallery.my.id';
 const personId = `${siteUrl}/#person`;
 const websiteId = `${siteUrl}/#website`;
 
