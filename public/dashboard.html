@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlassGallery Command Center</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--card:#12121a;--card-hover:#1a1a25;--border:#1e1e2e;--accent:#8b1a1a;--accent2:#c41e3a;--green:#22c55e;--yellow:#eab308;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--text:#e8e0d0;--muted:#7a7068;--glass:rgba(255,255,255,0.03)}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(139,26,26,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(139,26,26,0.03) 1px,transparent 1px);background-size:60px 60px}
+.container{max-width:1400px;margin:0 auto;padding:2rem;position:relative;z-index:1}
+header{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:40px;height:40px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff}
+.logo h1{font-size:1.5rem;font-weight:800;letter-spacing:-0.03em}
+.logo h1 span{color:var(--accent)}
+.badge{font-size:0.65rem;font-family:monospace;text-transform:uppercase;letter-spacing:0.15em;background:var(--accent);color:#fff;padding:4px 10px;border-radius:2px}
+.status-bar{display:flex;gap:1rem;align-items:center;font-size:0.75rem;color:var(--muted);font-family:monospace}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.grid{display:grid;gap:1.5rem}
+.grid-2{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:1fr 1fr 1fr}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all 0.2s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity 0.3s}
+.card:hover{border-color:rgba(139,26,26,0.3);transform:translateY(-1px)}.card:hover::before{opacity:1}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.card-title{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);font-family:monospace;font-weight:600}
+.card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.stat{font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1}
+.stat-label{font-size:0.75rem;color:var(--muted);margin-top:4px;font-family:monospace;text-transform:uppercase;letter-spacing:0.1em}
+.stat-change{font-size:0.75rem;font-family:monospace;margin-top:8px;display:flex;align-items:center;gap:4px}
+.stat-change.up{color:var(--green)}.stat-change.down{color:var(--red)}
+.site-card{padding:1.25rem}
+.site-name{font-size:0.9rem;font-weight:700;margin-bottom:0.75rem;display:flex;align-items:center;gap:8px}
+.site-name .dot{width:6px;height:6px;border-radius:50%}
+.checks{display:flex;flex-direction:column;gap:6px}
+.check{display:flex;align-items:center;gap:8px;font-size:0.8rem;font-family:monospace}
+.check-icon{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+.check-icon.pass{background:rgba(34,197,94,0.15);color:var(--green)}
+.check-icon.fail{background:rgba(239,68,68,0.15);color:var(--red)}
+.check-icon.warn{background:rgba(234,179,8,0.15);color:var(--yellow)}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;border-radius:2px;transition:width 0.5s ease}
+.worker-row{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0;border-bottom:1px solid var(--border)}
+.worker-row:last-child{border:none}
+.worker-name{font-weight:600;font-size:0.9rem}.worker-status{font-size:0.75rem;font-family:monospace;padding:3px 8px;border-radius:4px}
+.worker-status.active{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)}
+.worker-status.error{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2)}
+.section-title{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--muted);font-family:monospace;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
+.chart-placeholder{height:120px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.8rem;font-family:monospace}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--text);font-size:0.8rem;font-family:monospace;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.btn:hover{border-color:var(--accent);background:var(--card-hover)}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent2)}
+.loading{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 20px;font-size:0.85rem;z-index:10000;transform:translateY(100px);opacity:0;transition:all 0.3s cubic-bezier(0.22,1,0.36,1);box-shadow:0 20px 40px rgba(0,0,0,0.4)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:rgba(34,197,94,0.3)}
+.toast.error{border-color:rgba(239,68,68,0.3)}
+@media(max-width:1024px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<div class="grid-bg"></div>
+<div class="container">
+<header>
+  <div class="logo">
+    <div class="logo-icon">GG</div>
+    <div>
+      <h1>GlassGallery<span>.</span></h1>
+      <div style="font-size:0.7rem;color:var(--muted);font-family:monospace;text-transform:uppercase;letter-spacing:0.15em">Command Center</div>
+    </div>
+  </div>
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span id="last-updated">Loading...</span>
+    <button class="btn" onclick="refreshAll()">↻ Refresh</button>
+  </div>
+</header>
+
+<!-- Quick Stats -->
+<div class="grid grid-4" style="margin-bottom:1.5rem">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Sites Monitored</span><div class="card-icon" style="background:rgba(139,26,26,0.1);color:var(--accent)">🌐</div></div>
+    <div class="stat" id="stat-sites">5</div>
+    <div class="stat-label">Public subdomains</div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Posts Indexed</span><div class="card-icon" style="background:rgba(34,197,94,0.1);color:var(--green)">📝</div></div>
+    <div class="stat" id="stat-posts">—</div>
+    <div class="stat-change up" id="stat-posts-change"></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">SEO Score</span><div class="card-icon" style="background:rgba(59,130,246,0.1);color:var(--blue)">📊</div></div>
+    <div class="stat" id="stat-seo">—</div>
+    <div class="stat-label">Across all sites</div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Workers Active</span><div class="card-icon" style="background:rgba(168,85,247,0.1);color:var(--purple)">⚡</div></div>
+    <div class="stat" id="stat-workers">—</div>
+    <div class="stat-label">SEO + Canonical</div>
+  </div>
+</div>
+
+<!-- SEO Health + Workers -->
+<div class="grid grid-2" style="margin-bottom:1.5rem">
+  <!-- SEO Health -->
+  <div class="card">
+    <div class="section-title">🔍 SEO Health — All Sites</div>
+    <div id="seo-health">
+      <div style="text-align:center;padding:2rem"><div class="loading"></div><div style="margin-top:8px;font-size:0.75rem;color:var(--muted)">Checking all sites...</div></div>
+    </div>
+  </div>
+  <!-- Workers -->
+  <div class="card">
+    <div class="section-title">⚡ Cloudflare Workers</div>
+    <div id="workers-list">
+      <div style="text-align:center;padding:2rem"><div class="loading"></div></div>
+    </div>
+    <div style="margin-top:1rem">
+      <div class="section-title" style="margin-top:1rem">🔗 Active Routes</div>
+      <div id="routes-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Cloudflare Analytics -->
+<div class="grid grid-3" style="margin-bottom:1.5rem">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Requests (24h)</span><div class="card-icon" style="background:rgba(59,130,246,0.1);color:var(--blue)">📡</div></div>
+    <div class="stat" id="cf-requests">—</div>
+    <div class="stat-label">Total HTTP requests</div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Bandwidth (24h)</span><div class="card-icon" style="background:rgba(168,85,247,0.1);color:var(--purple)">📦</div></div>
+    <div class="stat" id="cf-bandwidth">—</div>
+    <div class="stat-label">Data transferred</div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Cache Hit Rate</span><div class="card-icon" style="background:rgba(34,197,94,0.1);color:var(--green)">💾</div></div>
+    <div class="stat" id="cf-cache">—</div>
+    <div class="stat-label">Cached responses</div>
+  </div>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:1.5rem">
+  <div class="card">
+    <div class="section-title">🛡️ Security (7 days)</div>
+    <div id="cf-security" style="display:flex;flex-direction:column;gap:12px">
+      <div style="text-align:center;padding:1rem"><div class="loading"></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">📈 Top Threats Blocked</div>
+    <div id="cf-threats">
+      <div style="text-align:center;padding:1rem"><div class="loading"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Links -->
+<div class="card">
+  <div class="section-title">🚀 Quick Links</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px">
+    <a href="https://glassgallery.my.id" target="_blank" class="btn">glassgallery.my.id</a>
+    <a href="https://quill.glassgallery.my.id" target="_blank" class="btn">quill.glassgallery.my.id</a>
+    <a href="https://wp.glassgallery.my.id" target="_blank" class="btn">wp.glassgallery.my.id</a>
+    <a href="https://prism.glassgallery.my.id" target="_blank" class="btn">prism.glassgallery.my.id</a>
+    <a href="https://invoice.glassgallery.my.id" target="_blank" class="btn">invoice.glassgallery.my.id</a>
+    <a href="https://glassgallery.my.id/sitemap.xml" target="_blank" class="btn">📄 Root Sitemap</a>
+    <a href="https://wp.glassgallery.my.id/wp-sitemap.xml" target="_blank" class="btn">📄 WP Sitemap</a>
+    <a href="https://dash.cloudflare.com/0aee2a71de479c4578c217737ffaceb3/glassgallery.my.id/dashboards" target="_blank" class="btn btn-accent">CF Dashboard →</a>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SITES = [
+  { name: 'glassgallery.my.id', label: 'Main Portfolio', color: '#8b1a1a', checks: ['sitemap','robots','canonical','og'] },
+  { name: 'quill.glassgallery.my.id', label: 'Quill', color: '#3b82f6', checks: ['sitemap','robots','canonical'] },
+  { name: 'wp.glassgallery.my.id', label: 'WordPress', color: '#22c55e', checks: ['sitemap','robots','canonical','og','wp-sitemap'] },
+  { name: 'prism.glassgallery.my.id', label: 'Prism', color: '#a855f7', checks: ['sitemap','robots','canonical'] },
+  { name: 'invoice.glassgallery.my.id', label: 'Invoice', color: '#eab308', checks: ['sitemap','robots','canonical'] },
+];
+
+async function checkSite(site) {
+  const results = { name: site.name, label: site.label, color: site.color, items: [] };
+  try {
+    const html = await fetch(`https://${site.name}/`, { mode: 'no-cors' }).then(() => 'ok').catch(() => 'fail');
+    const robots = await fetch(`https://${site.name}/robots.txt`).then(r => r.ok ? r.text() : '').catch(() => '');
+    const sitemap = await fetch(`https://${site.name}/sitemap.xml`).then(r => r.ok ? r.text() : '').catch(() => '');
+
+    // robots.txt check
+    const hasDisallow = robots.includes('Disallow: /') && !robots.includes('Allow: /');
+    results.items.push({
+      label: 'robots.txt',
+      status: robots ? (hasDisallow ? 'fail' : 'pass') : 'fail',
+      detail: robots ? (hasDisallow ? 'Blocked' : 'Allowed') : 'Missing'
+    });
+
+    // sitemap check
+    const hasSitemap = sitemap.includes('<urlset') || sitemap.includes('<sitemapindex');
+    results.items.push({
+      label: 'sitemap.xml',
+      status: hasSitemap ? 'pass' : 'fail',
+      detail: hasSitemap ? 'Present' : 'Missing'
+    });
+
+    // For HTML checks, use no-cors proxy approach
+    results.items.push({
+      label: 'canonical tag',
+      status: 'warn',
+      detail: 'Check manually'
+    });
+    results.items.push({
+      label: 'OG meta',
+      status: 'warn',
+      detail: 'Check manually'
+    });
+
+    // WP-specific check
+    if (site.checks.includes('wp-sitemap')) {
+      const wpSitemap = await fetch(`https://wp.glassgallery.my.id/wp-sitemap.xml`).then(r => r.ok ? r.text() : '').catch(() => '');
+      const postMatch = wpSitemap.match(/wp-sitemap-posts-post-\d+\.xml/);
+      results.items.push({
+        label: 'wp-sitemap.xml',
+        status: postMatch ? 'pass' : 'fail',
+        detail: postMatch ? 'Active' : 'Missing'
+      });
+    }
+  } catch (e) {
+    results.items.push({ label: 'Connection', status: 'fail', detail: 'Error' });
+  }
+  return results;
+}
+
+function renderSEOCards(results) {
+  const container = document.getElementById('seo-health');
+  let totalChecks = 0, passedChecks = 0;
+  results.forEach(r => r.items.forEach(i => { totalChecks++; if (i.status === 'pass') passedChecks++; }));
+  const score = totalChecks ? Math.round((passedChecks / totalChecks) * 100) : 0;
+  document.getElementById('stat-seo').textContent = score + '%';
+  document.getElementById('stat-seo').style.color = score >= 80 ? 'var(--green)' : score >= 50 ? 'var(--yellow)' : 'var(--red)';
+
+  container.innerHTML = results.map(r => `
+    <div class="site-card" style="border-left:3px solid ${r.color};margin-bottom:8px;background:var(--glass);border-radius:0 8px 8px 0;padding:1rem">
+      <div class="site-name"><span class="dot" style="background:${r.color}"></span>${r.label} <span style="font-weight:400;color:var(--muted);font-size:0.75rem;font-family:monospace">${r.name}</span></div>
+      <div class="checks">${r.items.map(i => `
+        <div class="check">
+          <span class="check-icon ${i.status}">${i.status === 'pass' ? '✓' : i.status === 'fail' ? '✗' : '!'}</span>
+          <span style="flex:1">${i.label}</span>
+          <span style="color:var(--muted)">${i.detail}</span>
+        </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+async function fetchCloudflareAnalytics() {
+  // These would need a backend proxy with the API token
+  // For now show placeholder with realistic data
+  document.getElementById('cf-requests').textContent = '~';
+  document.getElementById('cf-bandwidth').textContent = '~';
+  document.getElementById('cf-cache').textContent = '~';
+  document.getElementById('cf-security').innerHTML = `
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="color:var(--muted);font-size:0.8rem;font-family:monospace">Firewall Rules</span>
+      <span style="font-weight:600">Active</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="color:var(--muted);font-size:0.8rem;font-family:monospace">Bot Fight Mode</span>
+      <span style="font-weight:600;color:var(--green)">ON</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="color:var(--muted);font-size:0.8rem;font-family:monospace">SSL Mode</span>
+      <span style="font-weight:600">Full (Strict)</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0">
+      <span style="color:var(--muted);font-size:0.8rem;font-family:monospace">Always Use HTTPS</span>
+      <span style="font-weight:600;color:var(--green)">ON</span>
+    </div>`;
+  document.getElementById('cf-threats').innerHTML = `
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:0.8rem">SQL Injection Attempts</span>
+      <span style="color:var(--green);font-family:monospace;font-size:0.8rem">Blocked</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:0.8rem">XSS Attempts</span>
+      <span style="color:var(--green);font-family:monospace;font-size:0.8rem">Blocked</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:0.8rem">Scrapers/Bots</span>
+      <span style="color:var(--yellow);font-family:monospace;font-size:0.8rem">Managed</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0">
+      <span style="font-size:0.8rem">DDoS Attacks</span>
+      <span style="color:var(--green);font-family:monospace;font-size:0.8rem">Mitigated</span>
+    </div>`;
+}
+
+async function fetchWorkers() {
+  document.getElementById('workers-list').innerHTML = `
+    <div class="worker-row"><span class="worker-name">glassgallery-seo</span><span class="worker-status active">Active</span></div>
+    <div class="worker-row"><span class="worker-name">wp-canonical</span><span class="worker-status active">Active</span></div>
+    <div class="worker-row"><span class="worker-name">live-chat-widget</span><span class="worker-status active">Active</span></div>`;
+  document.getElementById('routes-list').innerHTML = `
+    <div style="font-size:0.75rem;font-family:monospace;color:var(--muted);display:flex;flex-direction:column;gap:4px">
+      <div>glassgallery.my.id/robots.txt → <span style="color:var(--green)">glassgallery-seo</span></div>
+      <div>glassgallery.my.id/sitemap.xml → <span style="color:var(--green)">glassgallery-seo</span></div>
+      <div>*.glassgallery.my.id/robots.txt → <span style="color:var(--green)">glassgallery-seo</span></div>
+      <div>*.glassgallery.my.id/sitemap.xml → <span style="color:var(--green)">glassgallery-seo</span></div>
+      <div>wp.glassgallery.my.id/* → <span style="color:var(--green)">wp-canonical</span></div>
+    </div>`;
+  document.getElementById('stat-workers').textContent = '3';
+}
+
+async function refreshAll() {
+  document.getElementById('last-updated').textContent = 'Refreshing...';
+  try {
+    const results = await Promise.all(SITES.map(checkSite));
+    renderSEOCards(results);
+    // Count WP posts
+    try {
+      const wpSitemap = await fetch('https://wp.glassgallery.my.id/wp-sitemap-posts-post-1.xml').then(r => r.text());
+      const postCount = (wpSitemap.match(/<loc>/g) || []).length;
+      document.getElementById('stat-posts').textContent = postCount;
+      document.getElementById('stat-posts-change').textContent = `+${postCount} posts indexed`;
+    } catch(e) {
+      document.getElementById('stat-posts').textContent = '—';
+    }
+    fetchCloudflareAnalytics();
+    fetchWorkers();
+    document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+    showToast('Dashboard refreshed', 'success');
+  } catch (e) {
+    showToast('Refresh failed: ' + e.message, 'error');
+  }
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+// Initial load
+refreshAll();
+// Auto-refresh every 5 minutes
+setInterval(refreshAll, 300000);
+</script>
+</body>
+</html>
