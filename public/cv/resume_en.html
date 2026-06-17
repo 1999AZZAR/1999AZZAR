@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AZZAR BUDIYANTO — RESUME</title>
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#2a2a2a;
+    --muted:#5a5a5a;
+    --rule:#cfcfcf;
+    --rule-strong:#111111;
+    --paper:#ffffff;
+    --accent:#8b1a1a;
+    --gutter:22mm;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{
+    margin:0;
+    font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+    font-size:10.5pt;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:8.5pt;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  @page{ size:A4; margin:0; }
+  .sheet{
+    width:210mm;
+    min-height:297mm;
+    padding:14mm var(--gutter) 12mm var(--gutter);
+    margin:0 auto;
+    background:var(--paper);
+  }
+
+  header{
+    border-top:6px solid var(--rule-strong);
+    border-bottom:2px solid var(--rule-strong);
+    padding:10px 0 10px 0;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:end;
+    gap:10mm;
+    margin-bottom:6mm;
+  }
+  header .name{
+    font-weight:900;
+    font-style:italic;
+    font-size:32pt;
+    line-height:.95;
+    letter-spacing:-.02em;
+    margin:0 0 2px 0;
+  }
+  header .name span{ color:var(--accent); }
+  header .tagline{
+    font-weight:700;
+    font-size:9.5pt;
+    letter-spacing:.02em;
+  }
+  header .meta{
+    text-align:right;
+    font-size:8.5pt;
+    line-height:1.6;
+    color:var(--ink-soft);
+  }
+  header .meta .mono{ color:var(--accent); display:block; }
+
+  .contact-bar{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:4mm;
+    border-bottom:1px solid var(--rule);
+    padding:6px 0 8px 0;
+    margin-bottom:6mm;
+  }
+  .contact-bar .item .mono{ display:block; color:var(--accent); font-size:7.5pt; }
+  .contact-bar .item span.v{ font-weight:700; font-size:9pt; }
+
+  section{ margin-bottom:5mm; }
+  section h2{
+    font-size:10pt;
+    font-weight:900;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    margin:0 0 3mm 0;
+    padding-bottom:3px;
+    border-bottom:2px solid var(--rule-strong);
+  }
+
+  .summary{
+    font-size:9.5pt;
+    text-align:justify;
+    margin:0 0 5mm 0;
+    color:var(--ink-soft);
+  }
+
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2mm 6mm;
+    margin-bottom:5mm;
+  }
+  .skill-row h3{
+    font-size:8.5pt;
+    font-weight:900;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    margin:0 0 1px 0;
+  }
+  .skill-row p{
+    margin:0;
+    font-size:8.5pt;
+    color:var(--ink-soft);
+  }
+
+  .xp{ display:grid; grid-template-columns:26mm 1fr; gap:4mm; margin-bottom:4mm; }
+  .xp .when{
+    font-family:"JetBrains Mono",monospace;
+    font-size:8pt;
+    color:var(--accent);
+    font-weight:700;
+    letter-spacing:.08em;
+    padding-top:2px;
+  }
+  .xp .what h3{
+    margin:0;
+    font-size:11pt;
+    font-weight:900;
+    font-style:italic;
+    letter-spacing:-.01em;
+  }
+  .xp .what .role{
+    font-weight:800;
+    font-size:8.5pt;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:1px 0 3px 0;
+  }
+  .xp .what ul{ margin:0; padding-left:13px; }
+  .xp .what li{ font-size:9pt; margin-bottom:2px; }
+
+  .certs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1mm 6mm;
+  }
+  .cert{
+    font-size:8.5pt;
+    padding:2px 0;
+    border-bottom:1px dotted var(--rule);
+    display:flex;
+    justify-content:space-between;
+  }
+  .cert .t{ font-weight:700; }
+  .cert .y{
+    font-family:"JetBrains Mono",monospace;
+    font-size:7.5pt;
+    color:var(--accent);
+    white-space:nowrap;
+    margin-left:6px;
+  }
+
+  .langs{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:3mm;
+  }
+  .lang{
+    text-align:center;
+    border:1.5px solid var(--rule-strong);
+    padding:4px 6px;
+  }
+  .lang .lname{ font-weight:900; font-size:9pt; letter-spacing:.06em; }
+  .lang .lvl{
+    font-family:"JetBrains Mono",monospace;
+    font-size:7.5pt;
+    color:var(--accent);
+    letter-spacing:.18em;
+  }
+
+  footer{
+    border-top:1px solid var(--rule);
+    margin-top:6mm;
+    padding-top:4px;
+    display:flex;
+    justify-content:space-between;
+    font-family:"JetBrains Mono",monospace;
+    font-size:7.5pt;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .sheet{ width:auto; min-height:0; margin:0; padding:0; }
+    @page{ size:A4; margin:12mm 14mm 12mm 14mm; }
+    section{ page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div>
+      <p class="name">AZZAR<br/>BUDIYANTO<span>.</span></p>
+      <div class="tagline">Software Developer · IoT · Full-Stack · AI Tooling</div>
+    </div>
+    <div class="meta">
+      <span class="mono">RESUME</span>
+      <div>Yogyakarta, ID · Remote Worldwide</div>
+      <div>azzar.mr.zs@gmail.com · +62 822 3252 9804</div>
+    </div>
+  </header>
+
+  <div class="contact-bar">
+    <div class="item"><span class="mono">GitHub</span><span class="v">github.com/1999AZZAR</span></div>
+    <div class="item"><span class="mono">LinkedIn</span><span class="v">linkedin.com/in/azzar-budiyanto</span></div>
+    <div class="item"><span class="mono">Portfolio</span><span class="v">1999azzar.github.io/1999AZZAR</span></div>
+    <div class="item"><span class="mono">ORCID</span><span class="v">0009-0003-6856-7820</span></div>
+  </div>
+
+  <!-- SUMMARY -->
+  <section>
+    <h2>Summary</h2>
+    <p class="summary">
+      Freelance software developer with 5+ years delivering production systems end-to-end: IoT firmware,
+      cloud pipelines, full-stack web applications, AI agent tooling, and browser automation. <strong>13 live
+      commercial deployments</strong> across travel, news, energy, e-commerce, and SaaS. 127+ public repositories,
+      multilingual, remote-first. Pragmatic about scope, deadlines, and documentation.
+    </p>
+  </section>
+
+  <!-- CORE SKILLS -->
+  <section>
+    <h2>Core Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <h3>Programming</h3>
+        <p>Python · TypeScript · JavaScript · C/C++ · Rust · Go · Bash · SQL</p>
+      </div>
+      <div class="skill-row">
+        <h3>Web Stack</h3>
+        <p>React · Next.js · Vue.js · Node.js · Django · Flask · Tailwind · REST/GraphQL</p>
+      </div>
+      <div class="skill-row">
+        <h3>Embedded &amp; IoT</h3>
+        <p>ESP32 · STM32 · Arduino · LoRa · MQTT · Sensor Integration · Wokwi</p>
+      </div>
+      <div class="skill-row">
+        <h3>Control Systems</h3>
+        <p>PID · Fuzzy Logic · LQR · State-Space · Genetic Algorithms</p>
+      </div>
+      <div class="skill-row">
+        <h3>DevOps &amp; Cloud</h3>
+        <p>Docker · AWS · GCP · Azure · Firebase · CI/CD · NGINX · Terraform</p>
+      </div>
+      <div class="skill-row">
+        <h3>AI / Automation</h3>
+        <p>MCP Servers · Agent Skills · Playwright · TensorFlow · LLM Tooling · OpenCV</p>
+      </div>
+      <div class="skill-row">
+        <h3>Databases</h3>
+        <p>PostgreSQL · MySQL · MongoDB · Redis · SQLite · Elasticsearch</p>
+      </div>
+      <div class="skill-row">
+        <h3>Consulting</h3>
+        <p>Technical SEO · Core Web Vitals · Web Strategy · Structured Data</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <h2>Experience</h2>
+
+    <div class="xp">
+      <div class="when">2026/01 — Present</div>
+      <div class="what">
+        <h3>Lead Developer</h3>
+        <div class="role">PT. TURGA BERKAH KUBRA · Remote/Onsite</div>
+        <ul>
+          <li>Lead full-stack development, architecting scalable solutions from concept to deployment.</li>
+          <li>Integrate AI/ML models into production; manage DevOps infrastructure and CI/CD pipelines.</li>
+          <li>Oversee team, conduct code reviews, and collaborate with stakeholders on roadmaps.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="xp">
+      <div class="when">2018/10 — Present</div>
+      <div class="what">
+        <h3>Freelance Software Developer</h3>
+        <div class="role">Self-employed · Remote Worldwide</div>
+        <ul>
+          <li>Delivered 13 commercial sites end-to-end: firmware, cloud, dashboard, deployment.</li>
+          <li>Built MCP servers, agent skill libraries, and browser automation pipelines.</li>
+          <li>Developed control algorithms (PID, Fuzzy, LQR) for industrial and research prototypes.</li>
+          <li>Architected REST/GraphQL APIs; deployed containerised workloads on AWS, GCP, Azure.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="xp">
+      <div class="when">2022/01 — 2023/01</div>
+      <div class="what">
+        <h3>Microcontroller Trainer</h3>
+        <div class="role">Indobot Academy · Yogyakarta, ID</div>
+        <ul>
+          <li>Designed Arduino/ESP32/STM32 curriculum; taught 4 cohorts of 20+ participants.</li>
+          <li>Delivered IoT modules on MQTT, cloud telemetry, and dashboard integration.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section>
+    <h2>Certifications</h2>
+    <div class="certs">
+      <div class="cert"><span class="t">IoT Practitioner — BNSP</span><span class="y">2024</span></div>
+      <div class="cert"><span class="t">Belajar Fundamental Deep Learning — Dicoding</span><span class="y">2023</span></div>
+      <div class="cert"><span class="t">Membangun Sistem Machine Learning — Dicoding</span><span class="y">2023</span></div>
+      <div class="cert"><span class="t">Problem Solving (Intermediate) — HackerRank</span><span class="y">2023</span></div>
+      <div class="cert"><span class="t">SQL (Intermediate) — HackerRank</span><span class="y">2023</span></div>
+      <div class="cert"><span class="t">REST API (Intermediate) — HackerRank</span><span class="y">2023</span></div>
+      <div class="cert"><span class="t">freeCodeCamp — Responsive Web &amp; Algorithms</span><span class="y">2022</span></div>
+      <div class="cert"><span class="t">GitHub Achievements (Starstruck ×2, Pull Shark ×2)</span><span class="y">2023–25</span></div>
+    </div>
+  </section>
+
+  <!-- LANGUAGES -->
+
+  <footer>
+    <span>RESUME-EN-V1</span>
+    <span>AZZAR BUDIYANTO</span>
+    <span>EST. 1999</span>
+  </footer>
+
+</div>
+</body>
+</html>
