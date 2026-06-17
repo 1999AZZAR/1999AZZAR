@@ -682,7 +682,7 @@ export const translations = {
     "expLeadDev5": "Berkolaborasi dengan pemangku kepentingan untuk menentukan persyaratan teknis dan roadmap proyek.",
     "expFreelancerTitle": "freelancer, none",
     "expFreelancerDate": "2018/10 - Sekarang",
-    "expFreelancerLocation": "Yogyakarta, ID",
+    "expFreelancerLocation": "Remote-ID",
     "expFreelancer1": "Meningkatkan produksi Produk atau Layanan untuk melampaui target.",
     "expFreelancer2": "Mengembangkan rencana perbaikan yang efektif sesuai tujuan dan spesifikasi.",
     "expFreelancer3": "Membuat dan memperbarui spreadsheet pemantauan proses dan pelaporan.",
