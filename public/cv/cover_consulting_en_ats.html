@@ -6,133 +6,103 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>COVER LETTER — WEB · SEO · AI CONSULTING — AZZAR BUDIYANTO</title>
 <style>
-  :root{
-    --ink:#111111;
-    --ink-soft:#2a2a2a;
-    --muted:#5a5a5a;
-    --rule:#cfcfcf;
-    --rule-strong:#111111;
-    --paper:#ffffff;
-    --accent:#8b1a1a;
-    --gutter:22mm;
-  }
-  *{box-sizing:border-box}
-  html,body{background:var(--paper);color:var(--ink);}
+  *{margin:0;padding:0;box-sizing:border-box}
   body{
-    margin:0;
-    font-family: "Inter","Helvetica Neue",Arial,sans-serif;
-    font-size:11pt;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:geometricPrecision;
+    background:#fff;
+    color:#1a1a1a;
+    font-family:"Inter",Arial,Helvetica,sans-serif;
+    font-size:10.5pt;
+    line-height:1.5;
+    max-width:750px;
+    margin:48px auto;
+    padding:24px;
   }
-  .mono{
-    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
-    font-size:9pt;
-    letter-spacing:.16em;
-    text-transform:uppercase;
+  h1{
+    font-size:26pt;
+    font-weight:800;
+    letter-spacing:-.02em;
+    margin-bottom:2px;
   }
-  @page{ size:A4; margin:0; }
-  .sheet{
-    width:210mm;
-    min-height:297mm;
-    padding:18mm var(--gutter) 18mm var(--gutter);
-    margin:0 auto;
-    background:var(--paper);
-    display:flex; flex-direction:column;
+  .subtitle{
+    font-weight:600;
+    font-size:10pt;
+    color:#555;
+    margin-bottom:4px;
   }
-  header.cl{
-    border-top:6px solid var(--rule-strong);
-    border-bottom:1.5px solid var(--rule-strong);
-    padding:10px 0 12px 0;
-    display:grid;
-    grid-template-columns: 1fr auto;
-    align-items:end;
-    gap:10mm;
-    margin-bottom:8mm;
-  }
-  .id h1{
-    margin:4px 0 0 0;
-    font-size:22pt;
-    font-weight:900;
-    font-style:italic;
-    letter-spacing:-.015em;
-    line-height:1;
-  }
-  .id .tag{ color:var(--accent); font-weight:800; }
-  .id .role{ font-weight:800; font-size:10pt; letter-spacing:.04em; margin-top:3px; }
-  .ref{
-    text-align:right;
-    font-size:9pt;
+  .contact-line{
+    font-size:9.5pt;
+    color:#333;
+    padding:8px 0;
+    border-top:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    margin-bottom:16px;
     line-height:1.6;
-    color:var(--ink-soft);
   }
-  .ref .mono{ display:block; color:var(--accent); margin-bottom:4px; }
-  .meta{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:10mm;
-    margin-bottom:8mm;
-    padding-bottom:6mm;
-    border-bottom:1px solid var(--rule);
+  .contact-line a{color:#333;text-decoration:none}
+  .meta-block{
+    font-size:10pt;
+    margin-bottom:16px;
+    line-height:1.5;
   }
-  .meta .lbl{ display:block; }
-  .meta .lbl .mono{ color:var(--accent); display:block; margin-bottom:2px; }
-  .meta .to p, .meta .doc p{ margin:0; font-size:10pt; }
-  .salute{ margin-bottom:4mm; font-weight:800; }
-  .body p{ margin:0 0 4mm 0; text-align:justify; }
+  .meta-block p{
+    margin-bottom:2px;
+  }
+  .salute{
+    font-size:10.5pt;
+    font-weight:700;
+    margin-bottom:12px;
+  }
+  .body{
+    font-size:10.5pt;
+    line-height:1.55;
+    color:#222;
+  }
+  .body p{
+    margin-bottom:12px;
+    text-align:justify;
+  }
   .body p.lede{
-    font-family:"Times New Roman",serif;
     font-style:italic;
-    font-size:13pt;
-    line-height:1.3;
+    font-size:11pt;
+    color:#111;
   }
-  .body p.lede::before{ content:"\201C"; color:var(--accent); font-size:1.1em; margin-right:3px;}
-  .body p.lede::after{ content:"\201D"; color:var(--accent); font-size:1.1em; margin-left:2px;}
   .bullets{
-    border-left:3px solid var(--accent);
-    padding:2mm 0 2mm 6mm;
-    margin:4mm 0;
+    margin:12px 0;
+    padding-left:12px;
+    border-left:2px solid #8b1a1a;
   }
-  .bullets ul{ margin:0; padding-left:18px; }
-  .bullets li{ font-size:10pt; margin-bottom:3px; }
-  .close{
-    margin-top:auto;
-    padding-top:8mm;
-    border-top:1.5px solid var(--rule-strong);
-    display:grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap:10mm;
-    align-items:end;
+  .bullets ul{
+    margin-top:4px;
+    padding-left:16px;
   }
-  .signoff .name{ font-weight:900; font-style:italic; font-size:14pt; letter-spacing:-.01em; }
-  .signoff .meta{ display:block; border:none; padding:0; margin:2px 0 0 0; font-size:9pt; color:var(--ink-soft); }
+  .bullets li{
+    font-size:10pt;
+    margin-bottom:4px;
+  }
+  .close-section{
+    margin-top:24px;
+    padding-top:12px;
+    border-top:1px solid #ccc;
+    line-height:1.5;
+  }
+  .signoff{
+    margin-bottom:16px;
+  }
   .signoff .sig{
-    margin-top:6mm;
-    font-family:"Times New Roman",serif;
+    font-size:16pt;
     font-style:italic;
-    font-size:24pt;
-    color:var(--ink);
+    font-family:Georgia,serif;
+    margin:8px 0;
   }
-  .channels{ font-size:9pt; line-height:1.6; }
-  .channels .mono{ color:var(--accent); display:block; margin-bottom:4px; }
-  footer.cl{
-    border-top:1px solid var(--rule);
-    margin-top:6mm;
-    padding-top:4px;
-    display:flex; justify-content:space-between;
-    font-family:"JetBrains Mono",monospace;
-    font-size:7.5pt;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
+  .channels{
+    font-size:9.5pt;
+    color:#444;
   }
-  @media print{
-    body{ background:#fff; }
-    .sheet{ width:auto; min-height:0; margin:0; padding:0; }
-    @page{ size:A4; margin:14mm 14mm 14mm 14mm; }
-    header.cl{ border-top-width:5px; }
-    .close{ page-break-inside: avoid; }
+  hr{border:none;border-top:1px solid #ccc;margin:14px 0 6px 0}
+  .footer-note{
+    font-size:8pt;
+    color:#888;
+    text-align:center;
   }
 
   .personalize-panel {
@@ -212,35 +182,19 @@
 </div>
 </div>
 
-<div class="sheet">
-<header class="cl">
-<div class="id">
-<span class="tag mono">REF_001999 // WEB_SEO_AIO_CONSULTING</span>
-<h1>AZZAR BUDIYANTO<span style="color:var(--accent)">.</span></h1>
-<div class="role">Web Consultant · SEO Strategist · AI-Optimized Content &amp; Systems</div>
+<h1>Azzar Budiyanto</h1>
+<div class="subtitle">Web Consultant · SEO Strategist · AI-Optimized Content &amp; Systems</div>
+<div class="contact-line">
+azzar.mr.zs@gmail.com | +62 822 3252 9804 | Remote-ID — Remote Worldwide<br/>
+github.com/1999AZZAR | linkedin.com/in/azzar-budiyanto | 1999azzar.github.io/1999AZZAR
 </div>
-<div class="ref">
-<span class="mono">Cover_Letter</span>
-<div>Document ID: CL-CON-EN-V1</div>
-<div>Issued: 2026</div>
-<div>Track: Consulting — Web · SEO · AIO</div>
-</div>
-</header>
-<div class="meta">
-<div class="to lbl">
-<span class="mono">Recipient</span>
+<div class="meta-block">
+<p><strong>To:</strong></p>
 <p><strong><span class="placeholder-recipient">[Hiring Manager / Business Owner]</span></strong></p>
 <p><span class="placeholder-company">[Company Name]</span></p>
 <p><span class="placeholder-address">[Company Address Line]</span></p>
 <p><span class="placeholder-city">[City, Country]</span></p>
-</div>
-<div class="doc lbl">
-<span class="mono">From</span>
-<p>Azzar Budiyanto</p>
-<p>Remote-ID · Remote-first</p>
-<p>azzar.mr.zs@gmail.com · +62 822 3252 9804</p>
-<p>1999azzar.github.io/1999AZZAR</p>
-</div>
+<p style="margin-top: 8px;"><strong>Date:</strong> 2026</p>
 </div>
 <p class="salute">Dear Hiring Manager,</p>
 <div class="body">
@@ -260,26 +214,20 @@
 <p>Where I add the most value in a consulting engagement is the intersection of technical depth and strategic framing: I can read a crawl report and spot why a dynamically rendered SPA is invisible to Googlebot, then fix the rendering architecture the same day. I can evaluate whether an AI writing tool is producing indexable, differentiated content or training a future Google penalty. I can wire a content pipeline that uses an LLM for first drafts, a Python validation layer for factual consistency, and a scheduled deployment hook for publishing — without the client touching a line of code.</p>
 <p>I operate remotely from Remote-ID and have collaborated with clients across time zones since 2018 using a written-first, asynchronous style. My consulting rate is USD 35/hour with a USD 250 project minimum, adjustable for retainer arrangements, fixed-scope audits, or ongoing monthly engagements. I would welcome a scoping call to understand your current web presence, organic goals, and where AI tooling might accelerate the path. You can reach me at azzar.mr.zs@gmail.com or +62 822 3252 9804.</p>
 </div>
-<div class="close">
+<div class="close-section">
 <div class="signoff">
 <div>Sincerely,</div>
 <div class="sig">Azzar Budiyanto</div>
-<div class="name">Azzar Budiyanto</div>
-<span class="meta">Web · SEO · AIO Consultant · Remote-ID · Remote</span>
+<div><strong>Azzar Budiyanto</strong></div>
+<div style="font-size:9.5pt;color:#555">Web · SEO · AIO Consultant · Remote-ID · Remote</div>
 </div>
 <div class="channels">
-<span class="mono">Direct_Channels</span>
-<div>azzar.mr.zs@gmail.com</div>
-<div>+62 822 3252 9804</div>
-<div>linkedin.com/in/azzar-budiyanto</div>
-<div>github.com/1999AZZAR</div>
+<strong>Contact:</strong> azzar.mr.zs@gmail.com | +62 822 3252 9804 | linkedin.com/in/azzar-budiyanto | github.com/1999AZZAR
+  </div>
 </div>
-</div>
-<footer class="cl">
-<span>CL-CON-EN-V1</span>
-<span>AZZAR BUDIYANTO</span>
-<span>EST. 1999</span>
-</footer>
+<hr/>
+<div class="footer-note">
+  CL-CON-EN-V1-ATS — Azzar Budiyanto — EST. 1999
 </div>
 
 <script>
