@@ -29,16 +29,6 @@
     -webkit-font-smoothing: antialiased;
     @apply tracking-tight overflow-x-hidden;
     position: relative;
-    cursor: default;
-  }
-
-  @media (min-width: 1024px) {
-    body:not(.no-custom-cursor) {
-      cursor: none;
-    }
-    a, button, .group {
-      cursor: none;
-    }
   }
 
   body::before {

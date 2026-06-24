@@ -7,7 +7,6 @@ import Footer from '@/components/ui/footer'
 import BackToTop from '@/components/ui/back-to-top'
 import Script from 'next/script'
 import ScrollProgress from '@/components/ui/scroll-progress'
-import CustomCursor from '@/components/ui/custom-cursor'
 import SEOJsonLd from '@/components/ui/seo-json-ld'
 
 const sans = Plus_Jakarta_Sans({ 
@@ -131,7 +130,6 @@ export default function RootLayout({
       </head>
       <body className={`${sans.variable} ${serif.variable} ${mono.variable} font-sans antialiased`}>
         <ScrollProgress />
-        <CustomCursor />
         <LanguageProvider>
           <SEOJsonLd />
           <div className="min-h-screen flex flex-col relative blueprint-grid">
