@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AZZAR BUDIYANTO — DAFTAR RIWAYAT HIDUP WEB DEVELOPMENT</title>
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#2a2a2a;
+    --muted:#5a5a5a;
+    --rule:#cfcfcf;
+    --rule-strong:#111111;
+    --paper:#ffffff;
+    --accent:#1a5276;
+    --gutter:24mm;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{
+    margin:0;
+    font-family: "Inter","Helvetica Neue",Arial,sans-serif;
+    font-size:10.5pt;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:geometricPrecision;
+  }
+  .mono{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:8.5pt;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .serif{ font-family:"Times New Roman",Georgia,serif; }
+  .ital{ font-style:italic; }
+
+  @page{ size:A4; margin:0; }
+  .sheet{
+    width:210mm;
+    min-height:297mm;
+    padding:18mm var(--gutter) 18mm var(--gutter);
+    margin:0 auto;
+    background:var(--paper);
+  }
+  .sheet + .sheet{ page-break-before:always; }
+
+  header.cv{
+    border-top:8px solid var(--rule-strong);
+    border-bottom:2px solid var(--rule-strong);
+    padding:14px 0 14px 0;
+    display:grid;
+    grid-template-columns: 1fr auto;
+    align-items:end;
+    gap:12mm;
+    margin-bottom:10mm;
+  }
+  .id-block .stamp{
+    color:var(--accent);
+    font-weight:800;
+    font-size:9pt;
+    letter-spacing:.32em;
+  }
+  .id-block h1{
+    font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+    font-weight:900;
+    font-style:italic;
+    font-size:38pt;
+    line-height:.95;
+    letter-spacing:-.02em;
+    margin:6px 0 4px 0;
+  }
+  .id-block .sub{
+    font-size:10.5pt;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+  .meta{
+    text-align:right;
+    font-size:9pt;
+    line-height:1.55;
+    color:var(--ink-soft);
+  }
+  .meta .mono{ display:block; margin-bottom:4px; color:var(--accent); }
+  .meta a{ color:inherit; text-decoration:none; }
+
+  .contacts{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6mm;
+    border-bottom:1px solid var(--rule);
+    padding:8px 0 10px 0;
+    margin-bottom:10mm;
+  }
+  .contacts .item .mono{ display:block; color:var(--accent); margin-bottom:2px; }
+  .contacts .item span.v{ font-weight:700; font-size:9.5pt; }
+
+  section{ margin-bottom:9mm; }
+  section h2{
+    font-size:11pt;
+    font-weight:900;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    margin:0 0 6mm 0;
+    padding-bottom:4px;
+    border-bottom:2px solid var(--rule-strong);
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  section h2 .num{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    color:var(--accent);
+    font-weight:900;
+    letter-spacing:0;
+    font-size:12pt;
+  }
+
+  .profile{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:8mm;
+  }
+  .profile p{
+    margin:0;
+    font-size:10.5pt;
+    text-align:justify;
+  }
+  .profile p.lede{
+    font-family:"Times New Roman",serif;
+    font-style:italic;
+    font-size:14pt;
+    line-height:1.25;
+    color:var(--ink);
+  }
+  .profile p.lede::before{ content:"\201C"; color:var(--accent); font-size:1.1em; margin-right:4px;}
+  .profile p.lede::after{ content:"\201D"; color:var(--accent); font-size:1.1em; margin-left:2px;}
+
+  .skills{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4mm 6mm;
+  }
+  .skill{
+    border-left:2px solid var(--rule-strong);
+    padding:2px 0 2px 8px;
+  }
+  .skill h3{
+    font-size:9.5pt;
+    font-weight:900;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    margin:0 0 4px 0;
+  }
+  .skill p{ margin:0; font-size:9pt; color:var(--ink-soft); }
+
+  .xp{ display:grid; grid-template-columns: 28mm 1fr; gap:6mm; }
+  .xp .when{ font-family:"JetBrains Mono",monospace; font-size:8.5pt; color:var(--accent); font-weight:700; letter-spacing:.08em; padding-top:2px;}
+  .xp .what h3{
+    margin:0;
+    font-size:12pt;
+    font-weight:900;
+    font-style:italic;
+    letter-spacing:-.01em;
+  }
+  .xp .what .role{ font-weight:800; font-size:9.5pt; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin:2px 0 6px 0; }
+  .xp .what ul{ margin:0; padding-left:14px; }
+  .xp .what li{ font-size:9.7pt; margin-bottom:3px; }
+  .xp-block{ padding:6mm 0; border-bottom:1px dashed var(--rule); }
+  .xp-block:last-child{ border-bottom:none; }
+
+  .langs{ display:grid; grid-template-columns:repeat(4,1fr); gap:4mm; }
+  .lang{ text-align:center; border:1.5px solid var(--rule-strong); padding:8px 6px; }
+  .lang .lname{ font-weight:900; font-size:10pt; letter-spacing:.06em; }
+  .lang .lvl{ font-family:"JetBrains Mono",monospace; font-size:8pt; color:var(--accent); letter-spacing:.18em; }
+
+  footer.cv{
+    border-top:1px solid var(--rule);
+    margin-top:6mm;
+    padding-top:4px;
+    display:flex; justify-content:space-between;
+    font-family:"JetBrains Mono",monospace;
+    font-size:7.5pt;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .sheet{ width:auto; min-height:0; margin:0; padding:0; }
+    @page{ size:A4; margin:14mm 14mm 14mm 14mm; }
+    header.cv{ border-top-width:6px; }
+    section{ page-break-inside: avoid; }
+    .xp-block{ page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="cv">
+    <div class="id-block">
+      <div class="mono stamp">REF_001999 // WEB_DEVELOPMENT_V1.0</div>
+      <h1>AZZAR<br/>BUDIYANTO<span style="color:var(--accent)">.</span></h1>
+      <div class="sub">Web Developer · SEO Specialist · Digital Marketing · Full-Stack</div>
+    </div>
+    <div class="meta">
+      <span class="mono">Daftar Riwayat Hidup</span>
+      <div>EST. 1999 · Remote-ID</div>
+      <div>Remote — Tersedia di Seluruh Dunia</div>
+      <div>Gaji: Negosiable</div>
+    </div>
+  </header>
+
+  <div class="contacts">
+    <div class="item"><span class="mono">Surat_Elektronik</span><span class="v">azzar.mr.zs@gmail.com</span></div>
+    <div class="item"><span class="mono">Saluran_Telepon</span><span class="v">+62 822 3252 9804</span></div>
+    <div class="item"><span class="mono">Basis_Operasi</span><span class="v">Remote-ID</span></div>
+    <div class="item"><span class="mono">Kanal_Web</span><span class="v">1999azzar.github.io/1999AZZAR</span></div>
+  </div>
+  <div class="contacts" style="grid-template-columns:repeat(4,1fr);margin-top:-6mm;">
+    <div class="item"><span class="mono">GitHub</span><span class="v">github.com/1999AZZAR</span></div>
+    <div class="item"><span class="mono">LinkedIn</span><span class="v">linkedin.com/in/azzar-budiyanto</span></div>
+    <div class="item"><span class="mono">Portofolio</span><span class="v">azzar.netlify.app</span></div>
+    <div class="item"><span class="mono">ORCID</span><span class="v">0009-0003-6856-7820</span></div>
+  </div>
+
+  <section>
+    <h2>01 // Profil<span class="num">Ringkasan.</span></h2>
+    <div class="profile">
+      <p class="lede">Pengembang software yang suka membangun solusi digital dari nol — dari kode hingga strategi SEO yang menghasilkan.</p>
+      <p>Pengembang software freelance dengan 5+ tahun pengalaman, fokus pada web development, SEO, dan digital marketing. Berpengalaman menyelesaikan 13+ situs komersial end-to-end dari konsep hingga deployment. Menguasai React, Vue, Node.js, Python, serta stack web modern lainnya. Terbiasa bekerja langsung dengan klien untuk memahami kebutuhan bisnis mereka.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>02 // Kompetensi_Inti<span class="num">Stack.</span></h2>
+    <div class="skills">
+      <div class="skill">
+        <h3>Web Development</h3>
+        <p>React · Next.js · Vue.js · Node.js · Express · Django · Flask · Tailwind · REST/GraphQL</p>
+      </div>
+      <div class="skill">
+        <h3>Pemrograman</h3>
+        <p>Python · TypeScript · JavaScript · C/C++ · Bash · SQL</p>
+      </div>
+      <div class="skill">
+        <h3>SEO &amp; Digital Marketing</h3>
+        <p>SEO Teknis · Core Web Vitals · Structured Data · Google Analytics · Landing Page</p>
+      </div>
+      <div class="skill">
+        <h3>DevOps &amp; Cloud</h3>
+        <p>Docker · Kubernetes · AWS · GCP · Azure · Firebase · CI/CD · NGINX</p>
+      </div>
+      <div class="skill">
+        <h3>Database</h3>
+        <p>PostgreSQL · MySQL · MongoDB · Redis · SQLite · Elasticsearch</p>
+      </div>
+      <div class="skill">
+        <h3>Tools &amp; Platform</h3>
+        <p>Git · cPanel · WordPress · Google Analytics · Google Search Console</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>03 // Linimasa_Kerja<span class="num">Pengalaman.</span></h2>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2026/01<br/>— Sekarang</div>
+        <div class="what">
+          <h3>Pengembang Utama (Lead)</h3>
+          <div class="role">PT. TURGA BERKAH KUBRA · Remote/Onsite</div>
+          <ul>
+            <li>Memimpin pengembangan full-stack, merancang solusi skalabel dari konsep hingga deployment.</li>
+            <li>Mengintegrasikan model AI/ML ke produksi; mengelola infrastruktur DevOps dan pipeline CI/CD.</li>
+            <li>Mengawasi tim, melakukan review kode, dan berkolaborasi dengan pemangku kepentingan.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2018/10<br/>— Sekarang</div>
+        <div class="what">
+          <h3>Pengembang Software Freelance</h3>
+          <div class="role">Bekerja Mandiri · Remote — Seluruh Dunia</div>
+          <ul>
+            <li>Menyelesaikan 13+ situs komersial end-to-end: desain, coding, SEO, deployment.</li>
+            <li>Membangun landing page dan website responsif untuk berbagai sektor bisnis.</li>
+            <li>Menerapkan SEO teknis, Core Web Vitals, dan structured data untuk performa website.</li>
+            <li>Membangun API REST/GraphQL; men-deploy di AWS, GCP, Azure, dan Firebase.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2022/01<br/>— 2023/01</div>
+        <div class="what">
+          <h3>Trainer Mikrokontroler</h3>
+          <div class="role">Indobot Academy · Yogyakarta, ID</div>
+          <ul>
+            <li>Merancang kurikulum Arduino/ESP32/STM32; mengajar 4 angkatan dengan 20+ peserta.</li>
+            <li>Menyampaikan modul IoT tentang MQTT, telemetri cloud, dan integrasi dashboard.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>04 // Pendidikan<span class="num">Akademik.</span></h2>
+    <div class="xp-block">
+      <div class="xp">
+        <div class="when">2018 — 2025</div>
+        <div class="what">
+          <h3>S1 Pendidikan Teknik Mekatronika</h3>
+          <div class="role">Universitas Negeri Yogyakarta (UNY) · Tidak Selesai</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>05 // Sertifikasi<span class="num">Terverifikasi.</span></h2>
+    <div class="skills" style="grid-template-columns:1fr 1fr;">
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>IoT Practitioner — BNSP (2024)</p>
+      </div>
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>Belajar Fundamental Deep Learning — Dicoding (2023)</p>
+      </div>
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>Membangun Sistem Machine Learning — Dicoding (2023)</p>
+      </div>
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>Problem Solving (Intermediate) — HackerRank (2023)</p>
+      </div>
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>SQL (Intermediate) — HackerRank (2023)</p>
+      </div>
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>REST API (Intermediate) — HackerRank (2023)</p>
+      </div>
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>freeCodeCamp — Responsive Web &amp; Algoritma (2022)</p>
+      </div>
+      <div class="skill" style="border-left:none;padding-left:0;">
+        <p>Pencapaian GitHub — Starstruck x2, Pull Shark x2 (2023–2025)</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>06 // Bahasa<span class="num">Komunikasi.</span></h2>
+    <div class="langs">
+      <div class="lang"><div class="lname">Indonesia</div><div class="lvl">NATIVE</div></div>
+      <div class="lang"><div class="lname">Inggris</div><div class="lvl">LANCAR</div></div>
+      <div class="lang"><div class="lname">Jawa</div><div class="lvl">FAHAM</div></div>
+      <div class="lang"><div class="lname">Arab</div><div class="lvl">DASAR</div></div>
+    </div>
+  </section>
+
+  <footer class="cv">
+    <span>CV-WEBDEV-ID-V3</span>
+    <span>AZZAR BUDIYANTO</span>
+    <span>EST. 1999</span>
+  </footer>
+
+</div>
+</body>
+</html>
