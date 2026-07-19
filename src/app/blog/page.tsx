@@ -23,7 +23,7 @@ async function getBlogPosts(): Promise<Post[]> {
     const xml = await res.text();
     const items: Post[] = [];
     const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
-    let match;
+    let match: RegExpExecArray | null;
     while ((match = itemRegex.exec(xml)) !== null) {
       const get = (tag: string) => {
         const m = match[1].match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
