@@ -328,7 +328,21 @@ export default function PricingCalculator() {
                     <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
                       <ExternalLink size={14} className="inline mr-1" /> WhatsApp
                     </a>
-                    <a href={`mailto:azzar.budi@gmail.com?subject=Project Estimate&body=${encodeURIComponent(projectDescription)}`} className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
+                    <a href={`mailto:azzar.budi@gmail.com?subject=${encodeURIComponent('Project Estimate - ' + hours + 'h')}&body=${encodeURIComponent(
+`Hi Azzar,
+
+I'd like to discuss a project.
+
+${projectDescription ? `Project: ${projectDescription}\n\n` : ''}Hours: ${hours}
+Rate: ${formatValue(results.rateUSD)}/hr
+Engineering: ${formatValue(results.projectTotalUSD)}
+Management (15%): ${formatValue(results.totalConsultationUSD)}
+${results.taxUSD > 0 ? `Tax (11%): ${formatValue(results.taxUSD)}\n` : ''}Total: ${formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}
+Plan: ${paymentPlan}
+Currency: ${currency}
+
+Looking forward to your response.`
+)}`} className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
                       <Mail size={14} className="inline mr-1" /> Email
                     </a>
                   </div>
