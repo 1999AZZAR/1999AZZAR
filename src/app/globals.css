@@ -378,47 +378,35 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
-    background: none;
-    padding: 0;
-    margin: 0;
+    background: #fff;
     z-index: 99999;
   }
-  #printable-receipt-wrapper > div {
+  #printable-receipt-wrapper > * {
     box-shadow: none !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-  #printable-receipt-wrapper > div > div:first-child,
-  #printable-receipt-wrapper > div > div:last-child {
-    display: none;
+    transform: none !important;
+    opacity: 1 !important;
   }
   #printable-receipt {
     color: #000;
-    background: #fff !important;
-    padding: 0;
-    max-width: 100%;
   }
   #printable-receipt * {
-    color: #000 !important;
-    background: #fff !important;
-    border-color: #ccc !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
+    color: #000;
+    border-color: #999;
+    box-shadow: none;
+    text-shadow: none;
   }
   #printable-receipt button,
   #printable-receipt a[href*="wa.me"],
   #printable-receipt a[href*="mailto"],
-  #printable-receipt img,
-  #printable-receipt .absolute {
+  #printable-receipt [style*="background-image"] {
     display: none !important;
   }
-  #printable-receipt > div {
-    padding: 20px !important;
+  #printable-receipt [class*="absolute"] {
+    display: none !important;
   }
   @page {
     size: A4 portrait;
-    margin: 1cm;
+    margin: 0.5cm;
   }
 }
 
