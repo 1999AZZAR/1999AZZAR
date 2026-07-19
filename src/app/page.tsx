@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, Cpu, Activity, Globe, Newspaper } from 'lucide-react';
+import { ArrowUpRight, Cpu, Activity, Globe, Newspaper, Shield } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import RotatingSkills from '@/components/ui/rotating-skills';
@@ -8,18 +8,12 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const stagger = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.15 }
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.15 } }
 };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1, y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
-  }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
 };
 
 export default function HomePage() {
@@ -40,9 +34,10 @@ export default function HomePage() {
       <section className="section-spacing border-b border-border pb-16 md:pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-8 space-y-10">
-            <motion.div variants={fadeUp} className="flex items-center gap-2.5">
-              <Cpu size={16} className="text-accent" strokeWidth={1.5} />
-              <span className="section-label">EST. 1999 — IoT & Full-Stack Engineer</span>
+            <motion.div variants={fadeUp} className="flex items-center gap-3">
+              <Cpu size={14} className="text-accent" strokeWidth={1.5} />
+              <span className="section-label">Est. 1999 &mdash; IoT &amp; Full-Stack Engineer</span>
+              <span className="stamp ml-2 hidden sm:inline-flex">Active</span>
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="heading-xl !text-[clamp(2.8rem,8vw,5.5rem)] !font-[500] tracking-[-0.03em] leading-[0.95]">
@@ -54,7 +49,7 @@ export default function HomePage() {
 
             <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
               <Link href="/projects" className="btn-primary">
-                {t('navPortfolio' as any)} <ArrowUpRight size={14} />
+                <Shield size={12} /> {t('navPortfolio' as any)} <ArrowUpRight size={14} />
               </Link>
               <Link href="/about" className="btn-ghost">
                 {t('navAbout' as any)}
@@ -63,10 +58,14 @@ export default function HomePage() {
                 {t('hireMe' as any)} <ArrowUpRight size={14} />
               </Link>
             </motion.div>
+
+            <motion.p variants={fadeUp} className="typewriter text-text/30 text-[0.7rem]">
+              &gt; system_ready — accepting new connections
+            </motion.p>
           </div>
 
           <motion.div variants={fadeUp} className="lg:col-span-4 hidden lg:flex flex-col items-end justify-end">
-            <div className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-text/50 [writing-mode:vertical-lr] border-r border-border pr-4 h-48">
+            <div className="typewriter text-[0.55rem] uppercase tracking-[0.3em] text-text/30 [writing-mode:vertical-lr] border-r border-border pr-4 h-48">
               ARCHIVAL_REF_001999
             </div>
           </motion.div>
@@ -76,10 +75,11 @@ export default function HomePage() {
       {/* STATUS + SKILLS */}
       <section className="section-spacing">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div variants={fadeUp} className="card-surface p-8 md:p-10 space-y-6">
+          <motion.div variants={fadeUp} className="document-frame p-8 md:p-10 space-y-6">
             <div className="flex items-center gap-2.5">
               <Activity size={14} className="text-accent" strokeWidth={1.5} />
               <span className="section-label">{t('statusTitle' as any)}</span>
+              <span className="stamp ml-auto text-[0.5rem]">Live</span>
             </div>
             <p className="heading-lg !text-[clamp(2rem,5vw,3.5rem)] gradient-text !font-[500]">
               {t('statusOnline' as any)}
@@ -87,6 +87,9 @@ export default function HomePage() {
             <p className="text-sm-body">
               {t('statusAvailability' as any).replace('${half}', currentHalf).replace('${year}', currentYear.toString())}
             </p>
+            <div className="typewriter text-[0.65rem] text-text/30">
+              &gt; uptime: {(365 * 5 + Math.floor((Date.now() - new Date('2018-10-01').getTime()) / 86400000)).toLocaleString()} days
+            </div>
           </motion.div>
 
           <motion.div variants={fadeUp} className="card-surface bg-paper-3/50 p-8 md:p-10 space-y-6">
@@ -100,10 +103,11 @@ export default function HomePage() {
             <div className="h-12">
               <RotatingSkills />
             </div>
-            <div className="pt-4 border-t border-border">
+            <div className="pt-4 border-t border-border flex items-center justify-between">
               <Link href="/about" className="mono-meta hover:text-accent transition-colors inline-flex items-center gap-1.5">
                 {t('aboutIdentityTitle' as any)} <ArrowUpRight size={10} />
               </Link>
+              <span className="typewriter text-[0.55rem] text-text/20">CORE_COMPETENCY</span>
             </div>
           </motion.div>
         </div>
@@ -122,10 +126,11 @@ export default function HomePage() {
         </motion.div>
 
         <motion.div variants={fadeUp}>
-          <Link href="/blog" className="card-surface-subtle block p-8 md:p-10 space-y-6 group">
+          <Link href="/blog" className="document-frame block p-8 md:p-10 space-y-6 group">
             <div className="flex items-center gap-3">
-              <Newspaper size={18} className="text-accent" strokeWidth={1.5} />
-              <span className="font-mono text-[0.65rem] uppercase tracking-[0.15em] text-text">Latest Entry</span>
+              <Newspaper size={16} className="text-accent" strokeWidth={1.5} />
+              <span className="typewriter text-[0.65rem] uppercase tracking-[0.1em] text-text/50">Latest Entry</span>
+              <span className="stamp ml-auto text-[0.5rem]">New</span>
             </div>
             <p className="heading-md group-hover:text-accent transition-colors">
               &ldquo;{t('blogQuote' as any)}&rdquo;

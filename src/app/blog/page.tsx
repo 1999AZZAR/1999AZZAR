@@ -1,4 +1,3 @@
-import Parser from 'rss-parser';
 import { Newspaper, ArrowUpRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
@@ -11,28 +10,37 @@ const WP_FEED = 'https://wp.glassgallery.my.id/feed/';
 const WP_BASE = 'https://wp.glassgallery.my.id';
 const APEX_BASE = 'https://glassgallery.my.id';
 
-const parser = new Parser();
-
 type Post = {
   title: string;
   link: string;
   pubDate: string;
   contentSnippet: string;
-  creator?: string;
-  categories?: string[];
 };
 
 async function getBlogPosts(): Promise<Post[]> {
   try {
-    const feed = await parser.parseURL(WP_FEED);
-    return feed.items.map(item => ({
-      title: item.title || 'Untitled',
-      link: item.link || '#',
-      pubDate: item.pubDate || '',
-      contentSnippet: (item.contentSnippet || '').substring(0, 200),
-      creator: (item as any).creator || (item as any)['dc:creator'] || 'Azzar Budiyanto',
-      categories: item.categories || [],
-    }));
+    const res = await fetch(WP_FEED, { next: { revalidate: 3600 } });
+    const xml = await res.text();
+    const items: Post[] = [];
+    const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
+    let match;
+    while ((match = itemRegex.exec(xml)) !== null) {
+      const get = (tag: string) => {
+        const m = match[1].match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+        return m ? m[1].trim() : '';
+      };
+      const title = get('title');
+      const link = get('link');
+      const pubDate = get('pubDate');
+      const content = get('content:encoded') || get('description');
+      items.push({
+        title: title || 'Untitled',
+        link: link || '#',
+        pubDate,
+        contentSnippet: content.replace(/<[^>]*>/g, '').substring(0, 200),
+      });
+    }
+    return items;
   } catch (error) {
     console.error('Error fetching blog feed:', error);
     return [];

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const navItems = [
@@ -85,9 +84,6 @@ export default function Footer() {
         <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="mono-meta text-[0.6rem]">
             &copy; {currentYear} Azzar Budiyanto
-          </p>
-          <p className="mono-meta text-[0.6rem]">
-            Built with Next.js & Tailwind CSS
           </p>
         </div>
       </div>

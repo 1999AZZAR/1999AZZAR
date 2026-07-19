@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
+import { Space_Grotesk, Inter, JetBrains_Mono, Courier_Prime } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/context/LanguageContext'
 import Navbar from '@/components/ui/navbar'
@@ -22,6 +22,12 @@ const body = Inter({
 const mono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
+})
+
+const typewriter = Courier_Prime({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-typewriter',
 })
 
 const siteUrl = 'https://glassgallery.my.id';
@@ -106,10 +112,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://live-chat-widget.azzar.workers.dev" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://raw.githubusercontent.com" />
-        <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png" />
-        <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
       </head>
-      <body className={`${display.variable} ${body.variable} ${mono.variable} font-body antialiased`}>
+      <body className={`${display.variable} ${body.variable} ${mono.variable} ${typewriter.variable} font-body antialiased`}>
         <ScrollProgress />
         <LanguageProvider>
           <SEOJsonLd />
