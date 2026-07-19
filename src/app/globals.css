@@ -169,34 +169,14 @@
   }
 
   .card-surface {
-    background-color: var(--color-paper-3);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    transition: all var(--dur-base) var(--ease-out);
-  }
-
-  .card-surface:hover {
-    border-color: var(--color-accent);
-    background-color: color-mix(in oklch, var(--color-paper-3), var(--color-accent) 5%);
-    box-shadow: 0 0 0 1px var(--color-accent);
-  }
-
-  .card-surface-subtle {
-    background-color: transparent;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    transition: all var(--dur-base) var(--ease-out);
-  }
-
-  .document-frame {
     position: relative;
+    background-color: var(--color-paper-3);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background-color: var(--color-paper-3);
     transition: all var(--dur-base) var(--ease-out);
   }
 
-  .document-frame::before {
+  .card-surface::before {
     content: "";
     position: absolute;
     inset: 4px;
@@ -207,13 +187,21 @@
     transition: opacity var(--dur-base) var(--ease-out);
   }
 
-  .document-frame:hover {
+  .card-surface:hover {
     border-color: var(--color-accent);
+    background-color: color-mix(in oklch, var(--color-paper-3), var(--color-accent) 5%);
   }
 
-  .document-frame:hover::before {
+  .card-surface:hover::before {
     border-color: var(--color-accent);
     opacity: 0.6;
+  }
+
+  .card-surface-subtle {
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--dur-base) var(--ease-out);
   }
 
   .btn-primary {

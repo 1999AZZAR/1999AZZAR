@@ -75,7 +75,7 @@ export default function HomePage() {
       {/* STATUS + SKILLS */}
       <section className="section-spacing">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div variants={fadeUp} className="document-frame p-8 md:p-10 space-y-6">
+          <motion.div variants={fadeUp} className="card-surface p-8 md:p-10 space-y-6">
             <div className="flex items-center gap-2.5">
               <Activity size={14} className="text-accent" strokeWidth={1.5} />
               <span className="section-label">{t('statusTitle' as any)}</span>
@@ -126,7 +126,7 @@ export default function HomePage() {
         </motion.div>
 
         <motion.div variants={fadeUp}>
-          <Link href="/blog" className="document-frame block p-8 md:p-10 space-y-6 group">
+          <Link href="/blog" className="card-surface block p-8 md:p-10 space-y-6 group">
             <div className="flex items-center gap-3">
               <Newspaper size={16} className="text-accent" strokeWidth={1.5} />
               <span className="typewriter text-[0.65rem] uppercase tracking-[0.1em] text-text/50">Latest Entry</span>
