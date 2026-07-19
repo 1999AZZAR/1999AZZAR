@@ -20,15 +20,15 @@ export default function RotatingSkills() {
   }, []);
 
   return (
-    <span className="h-14 md:h-24 overflow-hidden inline-flex items-center align-middle ml-2 py-2">
+    <span className="inline-flex items-center align-middle">
       <AnimatePresence mode="wait">
         <motion.span
           key={skills[index]}
-          initial={{ y: 30, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -30, opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-          className="text-accent font-black italic uppercase tracking-tighter block whitespace-nowrap leading-tight"
+          exit={{ y: -20, opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="gradient-text font-display font-semibold text-xl md:text-2xl tracking-tight block whitespace-nowrap"
         >
           {skills[index]}
         </motion.span>

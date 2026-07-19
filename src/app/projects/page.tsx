@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { useGitHubProjects, Project } from '@/hooks/useGitHubProjects';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Star, GitFork, Loader2, Briefcase, Globe, Code2, Search as SearchIcon } from 'lucide-react';
+import { ArrowUpRight, Star, GitFork, Loader2, Globe, Code2, Search } from 'lucide-react';
 import Fuse from 'fuse.js';
 
 type ViewType = 'web' | 'repos';
@@ -41,70 +41,66 @@ export default function ProjectsPage() {
   }, [searchQuery, categoryFiltered, fuse]);
 
   return (
-    <main className="min-h-screen pt-40 pb-24 px-6 max-w-7xl mx-auto">
-      <section className="mb-24 border-b-[16px] border-foreground pb-16">
-        <div className="flex items-center gap-3 text-accent mb-8">
-          <Briefcase size={24} strokeWidth={3} />
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4">{t('portoHeaderLabel' as any)}</span>
+    <main className="page-container">
+      <section className="section-spacing border-b border-border pb-16 md:pb-20">
+        <div className="flex items-center gap-2.5 mb-6">
+          <span className="section-label">{t('portoHeaderLabel' as any)}</span>
         </div>
         
-        <h1 className="headline-main mb-12" dangerouslySetInnerHTML={{ __html: t('portoHeadline' as any) }} />
+        <h1 className="heading-xl mb-8" dangerouslySetInnerHTML={{ __html: t('portoHeadline' as any) }} />
 
-        <div className="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-12">
-          <div className="space-y-8 w-full max-w-2xl">
-            <p className="text-xl md:text-3xl font-black italic text-muted-foreground leading-tight uppercase tracking-tighter">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
+          <div className="space-y-4 w-full max-w-lg">
+            <p className="text-sm-body">
               {t('portoSubheadline' as any)}
             </p>
             
-            <div className="relative group max-w-lg">
-              <SearchIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-accent transition-colors" size={20} />
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text/50" size={16} />
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('portoSearchPlaceholder' as any)}
-                className="w-full bg-card border-4 border-foreground p-6 pl-16 font-sans font-black italic text-xs tracking-widest uppercase outline-none focus:bg-white focus:border-accent transition-all shadow-[8px_8px_0px_0px_rgba(42,37,32,1)]"
+                className="input-field pl-10"
               />
             </div>
           </div>
           
-          <div className="flex bg-foreground p-2 shadow-[12px_12px_0px_0px_rgba(139,26,26,1)] shrink-0">
+          <div className="flex bg-paper-3 rounded-lg p-1 border border-border shrink-0">
             <button 
               onClick={() => setCurrentView('web')}
-              className={`px-8 py-4 text-[10px] font-black uppercase italic tracking-widest transition-all flex items-center gap-3 ${currentView === 'web' ? 'bg-accent text-background' : 'text-background hover:bg-accent/50'}`}
+              className={`px-5 py-2.5 rounded-md text-[0.65rem] font-mono uppercase tracking-wider transition-all flex items-center gap-2 ${currentView === 'web' ? 'bg-accent text-paper' : 'text-text hover:text-text-2'}`}
             >
-              <Globe size={16} /> {t('portoLiveSites' as any)}
+              <Globe size={14} /> {t('portoLiveSites' as any)}
             </button>
             <button 
               onClick={() => setCurrentView('repos')}
-              className={`px-8 py-4 text-[10px] font-black uppercase italic tracking-widest transition-all flex items-center gap-3 ${currentView === 'repos' ? 'bg-accent text-background' : 'text-background hover:bg-accent/50'}`}
+              className={`px-5 py-2.5 rounded-md text-[0.65rem] font-mono uppercase tracking-wider transition-all flex items-center gap-2 ${currentView === 'repos' ? 'bg-accent text-paper' : 'text-text hover:text-text-2'}`}
             >
-              <Code2 size={16} /> {t('portoRepositories' as any)}
+              <Code2 size={14} /> {t('portoRepositories' as any)}
             </button>
           </div>
         </div>
       </section>
 
       {loading ? (
-        <div className="flex justify-center py-40">
-          <Loader2 className="w-16 h-16 animate-spin text-accent" strokeWidth={4} />
+        <div className="flex justify-center py-32">
+          <Loader2 className="w-8 h-8 animate-spin text-accent" strokeWidth={2} />
         </div>
       ) : error ? (
-        <div className="p-12 border-4 border-accent text-accent font-black text-2xl italic text-center uppercase shadow-[15px_15px_0px_0px_rgba(139,26,26,1)]">
-          {error}
+        <div className="card-surface p-10 text-center">
+          <p className="text-sm-body text-accent">{error}</p>
         </div>
       ) : (
-        <div className="space-y-12">
-          <div className="flex justify-between items-end border-b-4 border-foreground/10 pb-4">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent italic">
-              {t('portoMatchResults' as any)} {filteredProjects.length} {t('portoFound' as any)}
+        <div className="space-y-8">
+          <div className="flex justify-between items-end pb-2">
+            <span className="mono-meta">
+              {filteredProjects.length} {t('portoFound' as any)}
             </span>
           </div>
 
-          <motion.div 
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 gap-12"
-          >
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <AnimatePresence mode="popLayout" initial={false}>
               {filteredProjects.map((project, index) => (
                 <ProjectCard key={project.name} project={project} index={index + 1} />
@@ -116,10 +112,10 @@ export default function ProjectsPage() {
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="p-32 border-4 border-dashed border-muted text-center bg-card/30"
+              className="card-surface p-16 text-center"
             >
-               <p className="text-3xl font-black italic uppercase text-muted-foreground opacity-50 mb-4">{t('portoNoResults' as any)}</p>
-               <button onClick={() => setSearchQuery('')} className="btn-swiss-outline !py-4 !px-8 mx-auto">{t('portoClearFilters' as any)}</button>
+              <p className="text-sm-body text-text/50 mb-4">{t('portoNoResults' as any)}</p>
+              <button onClick={() => setSearchQuery('')} className="btn-ghost !py-2 !px-4">{t('portoClearFilters' as any)}</button>
             </motion.div>
           )}
         </div>
@@ -129,50 +125,42 @@ export default function ProjectsPage() {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const { t } = useLanguage();
   return (
     <motion.a 
       layout
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ 
-        layout: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
-      }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ layout: { type: "spring", stiffness: 300, damping: 30 } }}
       href={project.homepage || project.html_url || '#'}
       target="_blank"
-      className="group bg-card border-4 border-foreground p-10 shadow-[12px_12px_0px_0px_rgba(42,37,32,1)] hover:shadow-[20px_20px_0px_0px_rgba(139,26,26,1)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between min-h-[450px]"
+      className="card-surface p-7 flex flex-col justify-between min-h-[280px] group"
     >
-      <div className="space-y-8">
+      <div className="space-y-5">
         <div className="flex justify-between items-start">
-          <span className="text-4xl font-black italic text-accent tracking-tighter leading-none">
-            #{index.toString().padStart(2, '0')}
-          </span>
-          <ArrowUpRight size={40} className="group-hover:text-accent transition-colors shrink-0" strokeWidth={3} />
+          <span className="mono-meta text-accent">#{index.toString().padStart(2, '0')}</span>
+          <ArrowUpRight size={18} className="text-text/30 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" strokeWidth={1.5} />
         </div>
 
-        <h3 className="text-3xl md:text-5xl font-black italic tracking-tighter leading-tight uppercase group-hover:text-accent transition-colors break-words">
+        <h3 className="heading-md group-hover:text-accent transition-colors">
           {project.name.replace(/-/g, ' ')}
         </h3>
 
-        <p className="text-sm font-bold text-muted-foreground uppercase italic leading-relaxed line-clamp-4">
-          {project.description || 'Architectural implementation for specialized engineering environments and automated system protocols.'}
+        <p className="text-sm-body text-text/60 line-clamp-3">
+          {project.description || 'No description available.'}
         </p>
       </div>
 
-      <div className="mt-12 pt-8 border-t-2 border-foreground/10 flex flex-wrap gap-8 items-center">
+      <div className="mt-8 pt-5 border-t border-border flex flex-wrap gap-4 items-center">
         {project.language && (
-          <span className="px-5 py-2 bg-foreground text-background text-[11px] font-black uppercase tracking-[0.2em] italic">
-            {project.language}
-          </span>
+          <span className="tag">{project.language}</span>
         )}
-        <div className="flex gap-6">
-          <span className="text-xs font-black flex items-center gap-3 italic">
-            <Star size={18} fill="currentColor" className="text-accent" /> {project.stargazers_count}
+        <div className="flex gap-4 ml-auto">
+          <span className="mono-meta text-[0.55rem] flex items-center gap-1.5">
+            <Star size={12} className="text-accent" /> {project.stargazers_count}
           </span>
-          <span className="text-xs font-black flex items-center gap-3 italic">
-            <GitFork size={18} strokeWidth={3} /> {project.forks_count}
+          <span className="mono-meta text-[0.55rem] flex items-center gap-1.5">
+            <GitFork size={12} /> {project.forks_count}
           </span>
         </div>
       </div>

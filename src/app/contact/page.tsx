@@ -3,156 +3,149 @@
 import { useLanguage } from '@/context/LanguageContext';
 import PricingCalculator from '@/components/ui/pricing-calculator';
 import { 
-  Mail, Phone, MapPin, Send, MessageCircle, ShieldCheck, 
-  Zap, Clock, TrendingUp, Info, Github, Linkedin, 
-  Twitter, Instagram, Youtube, PenTool, Database, 
-  Code2, Cpu, Globe, Camera
+  Mail, MapPin, Send, MessageCircle, ShieldCheck, 
+  Zap, Clock, TrendingUp, ArrowUpRight
 } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+};
 
 export default function ContactPage() {
   const { t } = useLanguage();
 
   const socialLinks = [
-    { name: 'X / Twitter', url: 'https://x.com/siapa_hayosiapa', handle: '@siapa_hayosiapa' },
-    { name: 'Instagram', url: 'https://www.instagram.com/azzar_budiyanto/', handle: '@azzar_budiyanto' },
-    { name: 'LinkedIn', url: 'https://linkedin.com/in/azzar-budiyanto/', handle: 'Azzar Budiyanto' },
-    { name: 'Telegram', url: 'https://t.me/azzar_budiyanto', handle: '@azzar_budiyanto' },
-    { name: 'YouTube', url: 'https://www.youtube.com/@azzar.', handle: '@azzar.' },
-    { name: 'Pinterest', url: 'https://id.pinterest.com/azzar_budiyanto/', handle: 'azzar_budiyanto' },
-    { name: 'DeviantArt', url: 'https://www.deviantart.com/azzar01', handle: 'azzar01' },
-    { name: 'Medium', url: 'https://medium.com/@azzar_budiyanto', handle: '@azzar_budiyanto' },
+    { name: 'X / Twitter', handle: '@siapa_hayosiapa', url: 'https://x.com/siapa_hayosiapa' },
+    { name: 'Instagram', handle: '@azzar_budiyanto', url: 'https://www.instagram.com/azzar_budiyanto/' },
+    { name: 'LinkedIn', handle: 'Azzar Budiyanto', url: 'https://linkedin.com/in/azzar-budiyanto/' },
+    { name: 'Telegram', handle: '@azzar_budiyanto', url: 'https://t.me/azzar_budiyanto' },
+    { name: 'YouTube', handle: '@azzar.', url: 'https://www.youtube.com/@azzar.' },
+    { name: 'Pinterest', handle: 'azzar_budiyanto', url: 'https://id.pinterest.com/azzar_budiyanto/' },
+    { name: 'DeviantArt', handle: 'azzar01', url: 'https://www.deviantart.com/azzar01' },
+    { name: 'Medium', handle: '@azzar_budiyanto', url: 'https://medium.com/@azzar_budiyanto' },
   ];
 
   const devLinks = [
-    { name: 'GitHub', url: 'https://github.com/1999azzar', handle: '1999azzar' },
-    { name: 'Devpost', url: 'https://devpost.com/1999AZZAR', handle: '1999AZZAR' },
-    { name: 'HackerRank', url: 'https://www.hackerrank.com/profile/azzar_mr_zs', handle: 'azzar_mr_zs' },
-    { name: 'Wokwi', url: 'https://wokwi.com/makers/azzar', handle: 'makers/azzar' },
-    { name: 'CodePen', url: 'https://codepen.io/azzar', handle: 'azzar' },
-    { name: 'freeCodeCamp', url: 'https://www.freecodecamp.org/azzar', handle: 'azzar' },
-    { name: 'CodeCrafters', url: 'https://app.codecrafters.io/users/1999AZZAR', handle: '1999AZZAR' },
+    { name: 'GitHub', handle: '1999azzar', url: 'https://github.com/1999azzar' },
+    { name: 'Devpost', handle: '1999AZZAR', url: 'https://devpost.com/1999AZZAR' },
+    { name: 'HackerRank', handle: 'azzar_mr_zs', url: 'https://www.hackerrank.com/profile/azzar_mr_zs' },
+    { name: 'Wokwi', handle: 'makers/azzar', url: 'https://wokwi.com/makers/azzar' },
+    { name: 'CodePen', handle: 'azzar', url: 'https://codepen.io/azzar' },
+    { name: 'freeCodeCamp', handle: 'azzar', url: 'https://www.freecodecamp.org/azzar' },
+    { name: 'CodeCrafters', handle: '1999AZZAR', url: 'https://app.codecrafters.io/users/1999AZZAR' },
   ];
 
   const benefits = [
-    { icon: <Clock />, textKey: "pricingBenefit1" },
-    { icon: <ShieldCheck />, textKey: "pricingBenefit2" },
-    { icon: <Zap />, textKey: "pricingBenefit3" },
-    { icon: <TrendingUp />, textKey: "pricingBenefit4" }
+    { icon: <Clock size={18} />, textKey: "pricingBenefit1" },
+    { icon: <ShieldCheck size={18} />, textKey: "pricingBenefit2" },
+    { icon: <Zap size={18} />, textKey: "pricingBenefit3" },
+    { icon: <TrendingUp size={18} />, textKey: "pricingBenefit4" }
   ];
 
   return (
-    <main className="min-h-screen pt-40 pb-24 px-6 max-w-7xl mx-auto">
-      {/* CONNECTION SECTION */}
-      <section className="mb-32 border-b-[min(16px,4vw)] border-foreground pb-16">
-        <div className="flex items-center gap-3 text-accent mb-8">
-          <MessageCircle size={24} strokeWidth={3} className="shrink-0" />
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4 truncate">{t('contactHeaderLabel' as any)}</span>
+    <main className="page-container">
+      {/* HEADER */}
+      <motion.section initial="hidden" animate="visible" variants={fadeUp} className="section-spacing border-b border-border pb-16 md:pb-20">
+        <div className="flex items-center gap-2.5 mb-6">
+          <MessageCircle size={16} className="text-accent" strokeWidth={1.5} />
+          <span className="section-label">{t('contactHeaderLabel' as any)}</span>
         </div>
         
-        <h1 className="headline-main mb-16" dangerouslySetInnerHTML={{ __html: t('contactHeadline' as any) }} />
+        <h1 className="heading-xl mb-8" dangerouslySetInnerHTML={{ __html: t('contactHeadline' as any) }} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Left Column: Socials & Dev Channels */}
-          <div className="lg:col-span-5 space-y-16 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          {/* Left */}
+          <div className="lg:col-span-5 space-y-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-black italic uppercase tracking-tighter border-b-4 border-foreground pb-4 mb-10">{t('contactDirectAccess' as any)}</h2>
-              <div className="space-y-12">
-                <a href="mailto:azzar.mr.zs@gmail.com" className="group block overflow-hidden">
-                  <span className="text-[11px] font-black uppercase tracking-widest text-accent italic mb-2 block">{t('contactEmailLabel' as any)}</span>
-                  <div className="text-xl sm:text-2xl md:text-4xl font-black italic uppercase tracking-tighter group-hover:text-accent transition-colors flex items-center gap-4 break-all sm:break-normal">
-                    azzar.mr.zs@gmail.com <Mail className="shrink-0 opacity-20 group-hover:opacity-100 transition-opacity" size={24} strokeWidth={3} />
-                  </div>
+              <h2 className="heading-md mb-6">{t('contactDirectAccess' as any)}</h2>
+              <div className="space-y-6">
+                <a href="mailto:azzar.mr.zs@gmail.com" className="block group">
+                  <span className="mono-meta text-accent mb-1 block">{t('contactEmailLabel' as any)}</span>
+                  <p className="heading-md !text-lg group-hover:text-accent transition-colors break-all">
+                    azzar.mr.zs@gmail.com <ArrowUpRight size={14} className="inline" />
+                  </p>
                 </a>
-                <div className="group block">
-                  <span className="text-[11px] font-black uppercase tracking-widest text-accent italic mb-2 block">{t('contactBaseOps' as any)}</span>
-                  <div className="text-xl sm:text-2xl md:text-4xl font-black italic uppercase tracking-tighter flex items-center gap-4">
-                    INDONESIA <MapPin size={24} strokeWidth={3} className="text-accent shrink-0" />
-                  </div>
+                <div>
+                  <span className="mono-meta text-accent mb-1 block">{t('contactBaseOps' as any)}</span>
+                  <p className="heading-md !text-lg flex items-center gap-2">
+                    Indonesia <MapPin size={16} className="text-accent" />
+                  </p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-black italic uppercase tracking-tighter border-b-4 border-foreground pb-4 mb-10">{t('contactNeuralNets' as any)}</h2>
-              <div className="grid grid-cols-1 gap-4">
+              <h2 className="heading-md mb-6">{t('contactNeuralNets' as any)}</h2>
+              <div className="space-y-1">
                 {socialLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer me"
-                    className="flex justify-between items-center py-4 border-b-2 border-foreground hover:bg-foreground hover:text-background px-4 transition-all group gap-4"
+                  <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer me"
+                    className="flex justify-between items-center py-3 px-4 rounded-md hover:bg-paper-3 transition-all group gap-4"
                   >
-                    <span className="text-lg font-black uppercase italic tracking-tighter whitespace-nowrap">{link.name}</span>
-                    <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest opacity-40 group-hover:opacity-100 truncate">{link.handle}</span>
+                    <span className="font-body text-sm text-text-2 group-hover:text-accent transition-colors">{link.name}</span>
+                    <span className="mono-meta text-[0.55rem] group-hover:text-text-2 transition-colors">{link.handle}</span>
                   </a>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-black italic uppercase tracking-tighter border-b-4 border-foreground pb-4 mb-10">{t('contactDevChannels' as any)}</h2>
-              <div className="grid grid-cols-1 gap-4">
+              <h2 className="heading-md mb-6">{t('contactDevChannels' as any)}</h2>
+              <div className="space-y-1">
                 {devLinks.map((link) => (
-                  <a 
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer me"
-                    className="flex justify-between items-center py-4 border-b-2 border-foreground hover:bg-accent hover:border-accent hover:text-background px-4 transition-all group gap-4"
+                  <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer me"
+                    className="flex justify-between items-center py-3 px-4 rounded-md hover:bg-paper-3 transition-all group gap-4"
                   >
-                    <span className="text-lg font-black uppercase italic tracking-tighter whitespace-nowrap">{link.name}</span>
-                    <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest opacity-40 group-hover:opacity-100 truncate">{link.handle}</span>
+                    <span className="font-body text-sm text-text-2 group-hover:text-accent transition-colors">{link.name}</span>
+                    <span className="mono-meta text-[0.55rem] group-hover:text-text-2 transition-colors">{link.handle}</span>
                   </a>
                 ))}
               </div>
             </div>
 
-            <div className="space-y-8">
-              <h4 className="text-[11px] font-black uppercase tracking-[0.3em] text-accent italic uppercase">{t('navServices' as any)}</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <span className="section-label">{t('navServices' as any)}</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {benefits.map((b, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 border-2 border-foreground bg-card h-full">
+                  <div key={i} className="card-surface p-4 flex items-center gap-3">
                     <div className="text-accent shrink-0">{b.icon}</div>
-                    <span className="text-[10px] font-black uppercase italic tracking-wider leading-tight">{t(b.textKey as any)}</span>
+                    <span className="font-mono text-[0.6rem] uppercase tracking-wider text-text/70 leading-tight">{t(b.textKey as any)}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right Column: Pricing & Contact Action */}
+          {/* Right */}
           <div className="lg:col-span-7">
-            <div className="lg:sticky lg:top-40 space-y-12">
-              <div className="p-8 md:p-12 bg-foreground text-background border-4 border-foreground shadow-[20px_20px_0px_0px_rgba(139,26,26,1)] space-y-6">
-                <h3 className="text-3xl md:text-4xl font-black italic uppercase tracking-tighter flex items-center gap-4 text-accent">
-                  <Info size={32} strokeWidth={3} /> {t('contactProjectIntake' as any)}
+            <div className="lg:sticky lg:top-24 space-y-8">
+              <div className="card-surface bg-accent/5 border-accent/20 p-8 md:p-10 space-y-4">
+                <h3 className="heading-md flex items-center gap-3 text-accent">
+                  Let&apos;s work together
                 </h3>
-                <p className="text-lg font-bold uppercase italic leading-relaxed opacity-80">
+                <p className="text-sm-body">
                   {t('contactProjectIntakeDesc' as any)}
                 </p>
-                <div className="pt-6 border-t-2 border-background/20 flex items-center gap-3">
-                   <Zap size={20} className="text-accent" />
-                   <span className="text-xs font-black uppercase tracking-widest">{t('contactMinProject' as any)}</span>
+                <div className="pt-4 border-t border-border flex items-center gap-2.5">
+                  <Zap size={14} className="text-accent" />
+                  <span className="mono-meta">{t('contactMinProject' as any)}</span>
                 </div>
               </div>
 
               <PricingCalculator />
               
-              <a
-                href="https://t.me/azzar_budiyanto"
-                target="_blank"
-                rel="noopener noreferrer me"
-                className="btn-swiss-primary !text-xl md:!text-3xl !py-10 !px-12 shadow-[min(20px,3vw)_min(20px,3vw)_0px_0px_rgba(139,26,26,1)] w-full flex justify-between items-center group"
+              <a href="https://t.me/azzar_budiyanto" target="_blank" rel="noopener noreferrer me"
+                className="btn-primary w-full justify-between !py-5 !px-8 group"
               >
                 {t('contactTelegramBtn' as any)}
-                <Send size={40} strokeWidth={3} className="group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500" />
+                <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </a>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 }

@@ -4,15 +4,28 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Handle legacy /porto path if needed, but since we have the page it will work.
-  // This middleware ensures SEO and legacy links stay healthy.
   if (pathname === '/porto') {
     return NextResponse.rewrite(new URL('/projects', request.url))
   }
 
-  return NextResponse.next()
+  if (pathname.startsWith('/cv')) {
+    const url = request.nextUrl.clone()
+    const rest = pathname.replace(/^\/cv/, '') || '/'
+
+    if (rest === '/' || rest === '') {
+      url.pathname = '/cv/index.html'
+    } else if (rest.endsWith('/')) {
+      url.pathname = `/cv${rest}index.html`
+    } else if (!rest.endsWith('.html')) {
+      url.pathname = `/cv${rest}.html`
+    } else {
+      url.pathname = pathname
+    }
+
+    return NextResponse.rewrite(url)
+  }
 }
 
 export const config = {
-  matcher: ['/porto'],
+  matcher: ['/porto', '/cv/:path*', '/cv/'],
 }

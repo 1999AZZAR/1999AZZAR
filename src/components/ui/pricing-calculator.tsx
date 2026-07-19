@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { 
-  Calculator, Calendar, DollarSign, User, Briefcase, 
-  Receipt, X, Send, Mail, Download, Printer, ExternalLink, Info
+  Calculator, Calendar, DollarSign, Receipt, X, Send, 
+  Mail, Download, Printer, ExternalLink, Info
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,7 +17,6 @@ export default function PricingCalculator() {
   const [projectDescription, setProjectDescription] = useState('');
   const [showReceipt, setShowReceipt] = useState(false);
 
-  // Results State
   const [results, setResults] = useState<{
     rateUSD: number;
     projectTotalUSD: number;
@@ -39,11 +38,10 @@ export default function PricingCalculator() {
       return;
     }
 
-    // Updated Pricing Constants (25-45)
-    const Rmax = 45;   // New Max rate ($)
-    const Rmin = 25;   // New Min rate ($)
-    const Hmin = 8;    // Min hours for max rate
-    const Hmax = 208;  // Max hours for min rate
+    const Rmax = 45;
+    const Rmin = 25;
+    const Hmin = 8;
+    const Hmax = 208;
 
     let rateUSD;
     if (hours <= Hmin) rateUSD = Rmax;
@@ -58,9 +56,8 @@ export default function PricingCalculator() {
         const baseFee = 95;
         const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
         const fee = Math.max(70, Math.min(120, baseFee + variation));
-        const roundedFee = Math.round(fee);
-        consultationFees.push(roundedFee);
-        totalConsultationUSD += roundedFee;
+        consultationFees.push(Math.round(fee));
+        totalConsultationUSD += Math.round(fee);
     }
 
     const projectTotalUSD = Math.max(rateUSD * hours, 250);
@@ -73,7 +70,7 @@ export default function PricingCalculator() {
       percentages.forEach((pct, i) => {
         installments.push({
           desc: `${t('pricingPaymentProjectLabel' as any)} ${i + 1}`,
-          amount: projectTotalUSD * pct,
+          amount: Math.round(projectTotalUSD * pct),
           isConsultation: false
         });
       });
@@ -89,16 +86,16 @@ export default function PricingCalculator() {
       percentages.forEach((pct, i) => {
         installments.push({
           desc: `${t('pricingPaymentProjectLabel' as any)} ${i + 1}`,
-          amount: combinedTotal * pct,
+          amount: Math.round(combinedTotal * pct),
           isConsultation: false
         });
       });
     }
 
     setResults({
-      rateUSD,
-      projectTotalUSD,
-      totalConsultationUSD,
+      rateUSD: Math.round(rateUSD),
+      projectTotalUSD: Math.round(projectTotalUSD),
+      totalConsultationUSD: Math.round(totalConsultationUSD),
       days,
       installments
     });
@@ -123,36 +120,32 @@ export default function PricingCalculator() {
   };
 
   return (
-    <div className="p-8 md:p-12 bg-card border-[6px] border-foreground shadow-[20px_20px_0px_0px_rgba(42,37,32,1)] relative overflow-hidden">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3 text-accent">
-           <Calculator size={24} strokeWidth={3} />
-           <span className="text-xs font-black uppercase tracking-[0.3em] italic">{t('calcTitle' as any)}</span>
-        </div>
+    <div className="card-surface bg-accent/5 border-accent/20 p-8 md:p-10">
+      <div className="flex items-center gap-2.5 mb-6">
+        <Calculator size={16} className="text-accent" strokeWidth={1.5} />
+        <span className="section-label">{t('calcTitle' as any)}</span>
       </div>
       
-      <div className="space-y-10">
-        {/* INPUTS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcHoursLabel' as any)}</label>
+            <label className="mono-meta block mb-3">{t('calcHoursLabel' as any)}</label>
             <input 
               type="number" 
               min="0"
               value={hours || ''} 
               onChange={(e) => setHours(Math.max(0, Number(e.target.value)))}
-              placeholder="0.00"
-              className="w-full bg-background border-4 border-foreground p-6 focus:outline-none focus:bg-accent focus:text-background transition-all font-black text-4xl italic tracking-tighter"
+              placeholder="0"
+              className="input-field font-display text-2xl font-semibold tracking-tight"
             />
           </div>
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcCurrencyLabel' as any)}</label>
-            <div className="grid grid-cols-2 gap-2">
+            <label className="mono-meta block mb-3">{t('calcCurrencyLabel' as any)}</label>
+            <div className="grid grid-cols-4 gap-2">
               {(['USD', 'IDR', 'EUR', 'GBP'] as const).map((cur) => (
-                <button
-                  key={cur}
+                <button key={cur}
                   onClick={() => setCurrency(cur)}
-                  className={`py-3 text-sm font-black italic border-4 border-foreground transition-all ${currency === cur ? 'bg-accent text-background border-accent' : 'bg-background hover:bg-foreground hover:text-background'}`}
+                  className={`py-2.5 rounded-md text-xs font-mono font-medium transition-all ${currency === cur ? 'bg-accent text-paper' : 'bg-paper-3 text-text hover:text-text-2 border border-border'}`}
                 >
                   {cur}
                 </button>
@@ -162,22 +155,22 @@ export default function PricingCalculator() {
         </div>
 
         <div>
-          <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcProjectBriefLabel' as any)}</label>
+          <label className="mono-meta block mb-3">{t('calcProjectBriefLabel' as any)}</label>
           <textarea 
             value={projectDescription}
             onChange={(e) => setProjectDescription(e.target.value)}
             placeholder={t('pricingProjectDescriptionPlaceholder' as any)}
-            className="w-full bg-background border-4 border-foreground p-6 min-h-[120px] focus:outline-none focus:border-accent transition-all font-sans font-bold text-sm uppercase italic"
+            className="input-field min-h-[100px] resize-y"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-[0.2em] mb-4 italic">{t('calcPlanLabel' as any)}</label>
+            <label className="mono-meta block mb-3">{t('calcPlanLabel' as any)}</label>
             <select 
               value={paymentPlan}
               onChange={(e) => setPaymentPlan(e.target.value)}
-              className="w-full bg-background border-4 border-foreground p-4 font-black italic uppercase text-xs outline-none focus:bg-foreground focus:text-background transition-all"
+              className="input-field appearance-none cursor-pointer"
             >
               <option value="1-100">{t('calcPlanSingle' as any)}</option>
               <option value="2-50-50">{t('calcPlanMilestones' as any)}</option>
@@ -186,152 +179,140 @@ export default function PricingCalculator() {
             </select>
           </div>
           <div className="flex items-end">
-            <label className="flex items-center gap-4 cursor-pointer group">
+            <label className="flex items-center gap-3 cursor-pointer group">
               <input 
                 type="checkbox" 
                 checked={payConsultationSeparate} 
                 onChange={(e) => setPayConsultationSeparate(e.target.checked)}
-                className="w-8 h-8 border-4 border-foreground rounded-none appearance-none checked:bg-accent transition-all cursor-pointer"
+                className="w-5 h-5 rounded border-border bg-paper-3 accent-accent transition-all cursor-pointer"
               />
-              <span className="text-[11px] font-black uppercase italic group-hover:text-accent transition-colors">{t('calcConsSeparate' as any)}</span>
+              <span className="font-mono text-[0.65rem] uppercase tracking-wider text-text group-hover:text-text-2 transition-colors">{t('calcConsSeparate' as any)}</span>
             </label>
           </div>
         </div>
 
-        {/* RESULTS */}
         {results && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="pt-10 border-t-4 border-foreground/10 space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
-                <DollarSign size={20} className="text-accent" />
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="pt-6 border-t border-border space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="card-surface p-4 flex items-center gap-3">
+                <DollarSign size={16} className="text-accent shrink-0" />
                 <div>
-                  <p className="text-[9px] font-black text-muted-foreground uppercase italic">{t('calcRateHr' as any)}</p>
-                  <p className="text-xl font-black italic">{formatValue(results.rateUSD)}</p>
+                  <p className="stat-label">{t('calcRateHr' as any)}</p>
+                  <p className="stat-value !text-base">{formatValue(results.rateUSD)}</p>
                 </div>
               </div>
-              <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
-                <Calendar size={20} className="text-accent" />
+              <div className="card-surface p-4 flex items-center gap-3">
+                <Calendar size={16} className="text-accent shrink-0" />
                 <div>
-                  <p className="text-[9px] font-black text-muted-foreground uppercase italic">{t('calcDuration' as any)}</p>
-                  <p className="text-xl font-black italic">{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</p>
+                  <p className="stat-label">{t('calcDuration' as any)}</p>
+                  <p className="stat-value !text-base">{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</p>
                 </div>
               </div>
-              <div className="p-4 bg-foreground text-background border-2 border-foreground flex items-center gap-4">
-                <Calculator size={20} className="text-accent" />
+              <div className="card-surface bg-accent/10 border-accent/30 p-4 flex items-center gap-3">
+                <Calculator size={16} className="text-accent shrink-0" />
                 <div>
-                  <p className="text-[9px] font-black text-accent uppercase italic">{t('calcTotalEst' as any)}</p>
-                  <p className="text-xl font-black italic">
-                    {formatValue(results.projectTotalUSD + results.totalConsultationUSD)}
-                  </p>
+                  <p className="stat-label text-accent">{t('calcTotalEst' as any)}</p>
+                  <p className="stat-value !text-base">{formatValue(results.projectTotalUSD + results.totalConsultationUSD)}</p>
                 </div>
               </div>
             </div>
 
             <button 
               onClick={() => setShowReceipt(true)}
-              className="w-full bg-accent text-background py-6 font-black italic uppercase text-sm tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-foreground transition-all shadow-[8px_8px_0px_0px_rgba(26,24,20,1)]"
+              className="btn-primary w-full !py-4"
             >
-              <Receipt size={20} /> {t('calcGenReceipt' as any)}
+              <Receipt size={16} /> {t('calcGenReceipt' as any)}
             </button>
           </motion.div>
         )}
       </div>
 
-      {/* RECEIPT MODAL */}
       <AnimatePresence>
         {showReceipt && results && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-foreground/90 backdrop-blur-sm overflow-y-auto">
+          <div id="printable-receipt-wrapper" className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-paper/80 backdrop-blur-sm overflow-y-auto">
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-background border-[12px] border-foreground max-w-2xl w-full p-8 md:p-16 relative shadow-2xl"
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="card-surface max-w-lg w-full p-8 md:p-10 relative shadow-2xl"
             >
               <button 
                 onClick={() => setShowReceipt(false)}
-                className="absolute top-8 right-8 p-2 hover:text-accent transition-colors"
+                className="absolute top-5 right-5 p-1.5 rounded-md hover:bg-paper-3 text-text hover:text-text-2 transition-colors"
               >
-                <X size={32} strokeWidth={3} />
+                <X size={18} />
               </button>
 
-              <div id="printable-receipt" className="space-y-12">
-                 {/* Header */}
-                 <div className="border-b-4 border-foreground pb-8 flex justify-between items-end">
-                    <div className="space-y-2">
-                       <h2 className="text-4xl font-black italic uppercase tracking-tighter">{t('receiptTitle' as any)}</h2>
-                       <p className="text-[10px] font-black opacity-50 uppercase tracking-widest">NO. #{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
-                    </div>
-                    <div className="text-right">
-                       <p className="text-[10px] font-black uppercase tracking-widest opacity-50">{t('receiptDate' as any)}</p>
-                       <p className="font-sans font-black italic">{new Date().toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US')}</p>
-                    </div>
-                 </div>
+              <div id="printable-receipt" className="space-y-8">
+                <div className="border-b border-border pb-6 flex justify-between items-end">
+                  <div className="space-y-1">
+                    <h2 className="heading-md">{t('receiptTitle' as any)}</h2>
+                    <p className="mono-meta text-[0.5rem]">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="mono-meta text-[0.5rem]">{t('receiptDate' as any)}</p>
+                    <p className="font-body text-sm text-text-2">{new Date().toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US')}</p>
+                  </div>
+                </div>
 
-                 {/* Content */}
-                 <div className="grid grid-cols-2 gap-12">
-                    <div className="space-y-4">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">{t('receiptSpecs' as any)}</p>
-                       <div className="space-y-2 text-sm font-bold uppercase italic">
-                          <div className="flex justify-between"><span>HOURS:</span> <span>{hours}</span></div>
-                          <div className="flex justify-between"><span>DURATION:</span> <span>{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</span></div>
-                          <div className="flex justify-between"><span>CURRENCY:</span> <span>{currency}</span></div>
-                       </div>
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <p className="mono-meta text-accent">{t('receiptSpecs' as any)}</p>
+                    <div className="space-y-1.5 text-sm text-text">
+                      <div className="flex justify-between"><span className="text-text/50">HOURS:</span> <span className="text-text-2">{hours}</span></div>
+                      <div className="flex justify-between"><span className="text-text/50">DURATION:</span> <span className="text-text-2">{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</span></div>
+                      <div className="flex justify-between"><span className="text-text/50">CURRENCY:</span> <span className="text-text-2">{currency}</span></div>
                     </div>
-                    <div className="space-y-4">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">{t('receiptFinancial' as any)}</p>
-                       <div className="space-y-2 text-sm font-bold uppercase italic">
-                          <div className="flex justify-between"><span>PROJECT:</span> <span>{formatValue(results.projectTotalUSD)}</span></div>
-                          <div className="flex justify-between"><span>CONSULT:</span> <span>{formatValue(results.totalConsultationUSD)}</span></div>
-                          <div className="flex justify-between border-t-2 border-foreground pt-2 mt-2 text-accent">
-                             <span>TOTAL:</span> <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD)}</span>
-                          </div>
-                       </div>
+                  </div>
+                  <div className="space-y-3">
+                    <p className="mono-meta text-accent">{t('receiptFinancial' as any)}</p>
+                    <div className="space-y-1.5 text-sm text-text">
+                      <div className="flex justify-between"><span className="text-text/50">PROJECT:</span> <span className="text-text-2">{formatValue(results.projectTotalUSD)}</span></div>
+                      <div className="flex justify-between"><span className="text-text/50">CONSULT:</span> <span className="text-text-2">{formatValue(results.totalConsultationUSD)}</span></div>
+                      <div className="flex justify-between border-t border-border pt-2 mt-2 text-accent font-medium">
+                        <span>TOTAL:</span> <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD)}</span>
+                      </div>
                     </div>
-                 </div>
+                  </div>
+                </div>
 
-                 {projectDescription && (
-                    <div className="space-y-4">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-accent italic">{t('receiptBrief' as any)}</p>
-                       <p className="font-serif italic text-sm text-foreground/80 leading-relaxed border-2 border-border p-4 bg-white">
-                          {projectDescription}
-                       </p>
-                    </div>
-                 )}
+                {projectDescription && (
+                  <div className="space-y-3">
+                    <p className="mono-meta text-accent">{t('receiptBrief' as any)}</p>
+                    <p className="text-sm-body bg-paper-3 p-4 rounded-md">{projectDescription}</p>
+                  </div>
+                )}
 
-                 {/* QR Codes Section */}
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-y-4 border-foreground/10">
-                    <div className="flex flex-col items-center gap-4 text-center">
-                       <p className="text-[9px] font-black uppercase tracking-widest italic">{t('receiptWhatsapp' as any)}</p>
-                       <div className="p-4 bg-white border-2 border-foreground">
-                          <img 
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(getWhatsAppLink())}`}
-                            alt="WhatsApp QR"
-                            className="w-32 h-32"
-                          />
-                       </div>
-                       <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="text-[10px] font-black uppercase italic underline flex items-center gap-2">
-                          OPEN_WHATSAPP <ExternalLink size={12} />
-                       </a>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-y border-border">
+                  <div className="flex flex-col items-center gap-3 text-center">
+                    <p className="mono-meta">{t('receiptWhatsapp' as any)}</p>
+                    <div className="p-3 bg-paper-3 rounded-md border border-border">
+                      <img 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(getWhatsAppLink())}`}
+                        alt="WhatsApp QR"
+                        className="w-28 h-28"
+                      />
                     </div>
-                    <div className="flex flex-col items-center justify-center gap-4 text-center border-l-2 border-foreground/10 pl-8">
-                       <p className="text-xs font-black uppercase italic leading-tight">{t('receiptReady' as any)}</p>
-                       <p className="text-[10px] font-bold uppercase italic opacity-50">{t('receiptCommence' as any)}</p>
-                       <div className="flex gap-4">
-                          <button onClick={() => window.print()} className="p-3 border-2 border-foreground hover:bg-foreground hover:text-background transition-all">
-                             <Printer size={20} />
-                          </button>
-                          <a href={`mailto:azzar.mr.zs@gmail.com?subject=Project Inquiry&body=${encodeURIComponent(projectDescription)}`} className="p-3 border-2 border-foreground hover:bg-foreground hover:text-background transition-all">
-                             <Mail size={20} />
-                          </a>
-                       </div>
+                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="mono-meta text-accent text-[0.55rem] flex items-center gap-1.5 hover:underline">
+                      OPEN WHATSAPP <ExternalLink size={10} />
+                    </a>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-3 text-center border-l border-border pl-6">
+                    <p className="font-body text-sm text-text-2">{t('receiptReady' as any)}</p>
+                    <div className="flex gap-3">
+                      <button onClick={() => window.print()} className="chip hover:bg-accent hover:text-paper hover:border-accent">
+                        <Printer size={14} />
+                      </button>
+                      <a href={`mailto:azzar.mr.zs@gmail.com?subject=Project Inquiry&body=${encodeURIComponent(projectDescription)}`} className="chip hover:bg-accent hover:text-paper hover:border-accent">
+                        <Mail size={14} />
+                      </a>
                     </div>
-                 </div>
+                  </div>
+                </div>
 
-                 <div className="pt-8 text-center">
-                    <p className="text-[9px] font-black uppercase tracking-[0.5em] italic text-muted-foreground">
-                       {t('receiptFooter' as any)}
-                    </p>
-                 </div>
+                <div className="text-center">
+                  <p className="mono-meta text-[0.5rem]">{t('receiptFooter' as any)}</p>
+                </div>
               </div>
             </motion.div>
           </div>

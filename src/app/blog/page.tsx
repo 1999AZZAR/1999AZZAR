@@ -52,9 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     publisher: 'Azzar Budiyanto',
     alternates: {
       canonical: `${APEX_BASE}/blog`,
-      types: {
-        'application/rss+xml': WP_FEED,
-      },
+      types: { 'application/rss+xml': WP_FEED },
     },
     openGraph: {
       type: 'website',
@@ -79,7 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 function buildItemListJsonLd(posts: Post[]): string {
-  const list = {
+  return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     '@id': `${APEX_BASE}/blog#itemlist`,
@@ -93,8 +91,7 @@ function buildItemListJsonLd(posts: Post[]): string {
       url: p.link,
       name: p.title,
     })),
-  };
-  return JSON.stringify(list);
+  });
 }
 
 function buildBlogPersonJsonLd(): string {
@@ -124,90 +121,62 @@ export default async function BlogPage() {
   const personJsonLd = buildBlogPersonJsonLd();
 
   return (
-    <main className="min-h-screen pt-40 pb-24 px-6 max-w-7xl mx-auto">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: itemListJsonLd }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: personJsonLd }}
-      />
+    <main className="page-container">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: itemListJsonLd }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personJsonLd }} />
 
       <BlogHeader />
 
-      <p className="text-sm font-bold italic text-muted-foreground uppercase tracking-wider mb-12 max-w-3xl">
+      <p className="text-sm-body mb-10 max-w-2xl">
         Excerpts of long-form essays by{' '}
         <Link href="/about" className="text-accent hover:underline">Azzar Budiyanto</Link>.
-        Full articles live on{' '}
-        <a
-          href={WP_BASE}
-          target="_blank"
-          rel="noopener noreferrer me"
-          className="text-accent hover:underline"
-        >
-          Wong Edan's ↗
-        </a>
-        . Updated hourly.
+        Full articles on{' '}
+        <a href={WP_BASE} target="_blank" rel="noopener noreferrer me" className="text-accent hover:underline">
+          Wong Edan&apos;s ↗
+        </a>.
       </p>
 
       {posts.length === 0 ? (
-        <div className="border-4 border-dashed border-foreground/20 p-12 text-center">
-          <Newspaper size={48} className="mx-auto mb-4 text-muted-foreground" strokeWidth={2} />
-          <p className="text-sm font-bold italic text-muted-foreground uppercase tracking-wider">
-            No articles yet. Check back soon, or visit the source feed at{' '}
-            <a href={WP_FEED} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-              {WP_FEED}
-            </a>
-            .
+        <div className="card-surface p-12 text-center">
+          <Newspaper size={32} className="mx-auto mb-4 text-text/30" strokeWidth={1.5} />
+          <p className="text-sm-body text-text/50">
+            No articles yet. Visit{' '}
+            <a href={WP_FEED} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">{WP_FEED}</a>.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {posts.map((post, index) => (
-            <a
-              key={index}
-              href={post.link}
-              target="_blank"
-              rel="noopener noreferrer me"
-              className="group bg-card border-4 border-foreground p-8 shadow-[12px_12px_0px_0px_rgba(42,37,32,1)] flex flex-col justify-between min-h-[300px] hover:-translate-y-1 hover:shadow-[16px_16px_0px_0px_rgba(139,26,26,1)] transition-all duration-200"
+            <a key={index} href={post.link} target="_blank" rel="noopener noreferrer me"
+              className="card-surface p-7 flex flex-col justify-between min-h-[260px] group"
             >
               <div>
-                <div className="flex justify-between items-start mb-6">
-                  <span className="text-4xl font-black italic text-accent">
-                    #{(index + 1).toString().padStart(2, '0')}
-                  </span>
-                  <ArrowUpRight size={32} strokeWidth={3} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <div className="flex justify-between items-start mb-4">
+                  <span className="mono-meta text-accent">#{String(index + 1).padStart(2, '0')}</span>
+                  <ArrowUpRight size={16} className="text-text/30 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-3xl font-black italic uppercase tracking-tighter mb-4 leading-tight">
-                  {post.title}
-                </h3>
-                <p className="text-xs font-bold text-muted-foreground uppercase italic leading-relaxed">
-                  {post.contentSnippet}
-                  {post.contentSnippet.length >= 200 ? '…' : ''}
+                <h3 className="heading-md !text-base group-hover:text-accent transition-colors mb-3">{post.title}</h3>
+                <p className="text-sm-body text-text/60">
+                  {post.contentSnippet}{post.contentSnippet.length >= 200 ? '…' : ''}
                 </p>
               </div>
-              <div className="mt-8 pt-6 border-t-2 border-foreground/10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase italic text-accent flex items-center gap-2">
-                  <Calendar size={12} strokeWidth={3} />
+              <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
+                <span className="mono-meta text-[0.55rem] flex items-center gap-1.5">
+                  <Calendar size={10} />
                   {post.pubDate ? new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
                 </span>
-                <span className="text-[10px] font-black uppercase italic text-muted-foreground tracking-wider">
-                  wong edan's ↗
-                </span>
+                <span className="mono-meta text-[0.5rem]">wong edan&apos;s</span>
               </div>
             </a>
           ))}
         </div>
       )}
 
-      <div className="mt-24 pt-12 border-t-2 border-foreground/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <p className="text-xs font-bold italic text-muted-foreground uppercase tracking-wider">
+      <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <p className="text-sm-body text-text/50">
           Subscribe: <a href={WP_FEED} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">RSS feed</a> · <a href={WP_BASE} target="_blank" rel="noopener noreferrer me" className="text-accent hover:underline">Full archive</a>
         </p>
-        <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
-          {posts.length} {posts.length === 1 ? 'article' : 'articles'} · canonical: {WP_BASE}
-        </p>
+        <p className="mono-meta text-[0.55rem]">{posts.length} articles</p>
       </div>
     </main>
   );

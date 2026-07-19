@@ -3,12 +3,22 @@
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
 import { 
-  Cpu, Code, Database, Brain, ArrowDownCircle, Globe, 
+  Cpu, Code, Database, Brain, Globe, 
   ShieldCheck, Terminal, Server, Layout, Settings, 
   Activity, Zap, Camera, Music, Film, Tv, Book, Plane,
-  FileText, Calendar, Briefcase
+  FileText, Calendar, Briefcase, ArrowUpRight
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
+};
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } }
+};
 
 export default function AboutPage() {
   const { t } = useLanguage();
@@ -27,15 +37,15 @@ export default function AboutPage() {
   }, []);
 
   const skillCategories = [
-    { id: "prog", icon: <Code />, titleKey: "progLanguagesTitle" },
-    { id: "web", icon: <Globe />, titleKey: "webdevStackTitle" },
-    { id: "iot", icon: <Cpu />, titleKey: "embeddedIotTitle" },
-    { id: "ctrl", icon: <Settings />, titleKey: "controlSystemsTitle" },
-    { id: "devops", icon: <Server />, titleKey: "devopsCloudTitle" },
-    { id: "ai", icon: <Brain />, titleKey: "aiMlTitle" },
-    { id: "gui", icon: <Layout />, titleKey: "guiDevTitle" },
-    { id: "db", icon: <Database />, titleKey: "databaseMgmtTitle" },
-    { id: "os", icon: <Terminal />, titleKey: "osToolsTitle" },
+    { id: "prog", icon: <Code size={20} />, titleKey: "progLanguagesTitle" },
+    { id: "web", icon: <Globe size={20} />, titleKey: "webdevStackTitle" },
+    { id: "iot", icon: <Cpu size={20} />, titleKey: "embeddedIotTitle" },
+    { id: "ctrl", icon: <Settings size={20} />, titleKey: "controlSystemsTitle" },
+    { id: "devops", icon: <Server size={20} />, titleKey: "devopsCloudTitle" },
+    { id: "ai", icon: <Brain size={20} />, titleKey: "aiMlTitle" },
+    { id: "gui", icon: <Layout size={20} />, titleKey: "guiDevTitle" },
+    { id: "db", icon: <Database size={20} />, titleKey: "databaseMgmtTitle" },
+    { id: "os", icon: <Terminal size={20} />, titleKey: "osToolsTitle" },
   ];
 
   const experiences = [
@@ -47,147 +57,157 @@ export default function AboutPage() {
   ];
 
   const interests = [
-    { icon: <Code />, key: "interestPython" },
-    { icon: <Cpu />, key: "interestMcu" },
-    { icon: <Layout />, key: "interestUiux" },
-    { icon: <Zap />, key: "interestAutomation" },
-    { icon: <Camera />, key: "interestPhoto" },
-    { icon: <Activity />, key: "interestComputer" },
-    { icon: <Settings />, key: "interestRobot" },
-    { icon: <Music />, key: "interestMusic" },
-    { icon: <Film />, key: "interestFilms" },
-    { icon: <Tv />, key: "interestAnime" },
-    { icon: <Book />, key: "interestReading" },
-    { icon: <Plane />, key: "interestTravel" },
+    { icon: <Code size={18} />, key: "interestPython" },
+    { icon: <Cpu size={18} />, key: "interestMcu" },
+    { icon: <Layout size={18} />, key: "interestUiux" },
+    { icon: <Zap size={18} />, key: "interestAutomation" },
+    { icon: <Camera size={18} />, key: "interestPhoto" },
+    { icon: <Activity size={18} />, key: "interestComputer" },
+    { icon: <Settings size={18} />, key: "interestRobot" },
+    { icon: <Music size={18} />, key: "interestMusic" },
+    { icon: <Film size={18} />, key: "interestFilms" },
+    { icon: <Tv size={18} />, key: "interestAnime" },
+    { icon: <Book size={18} />, key: "interestReading" },
+    { icon: <Plane size={18} />, key: "interestTravel" },
   ];
 
   return (
-    <main className="min-h-screen pt-40 pb-24 px-6 max-w-7xl mx-auto">
-      {/* IDENTITY SECTION */}
-      <section className="mb-32 border-b-[16px] border-foreground pb-16">
-        <div className="flex items-center gap-3 text-accent mb-8">
-          <ArrowDownCircle size={24} strokeWidth={3} />
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic">{t('aboutIdentityTitle' as any)}</span>
+    <main className="page-container">
+      {/* IDENTITY */}
+      <motion.section variants={fadeUp} initial="hidden" animate="visible" className="section-spacing border-b border-border pb-16 md:pb-20">
+        <div className="flex items-center gap-2.5 mb-6">
+          <span className="section-label">{t('aboutIdentityTitle' as any)}</span>
         </div>
         
-        <h1 className="headline-main mb-16" dangerouslySetInnerHTML={{ __html: t('aboutEngineerHeadline' as any) }} />
+        <h1 className="heading-xl mb-12" dangerouslySetInnerHTML={{ __html: t('aboutEngineerHeadline' as any) }} />
 
-        <div className="grid grid-cols-12 gap-12">
-          <div className="col-span-12 lg:col-span-7">
-            <div className="text-3xl md:text-5xl font-black italic text-foreground leading-[1.1] uppercase tracking-tighter mb-12">
-              "{t('aboutBlueprintQuote' as any)}"
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="lg:col-span-7 space-y-8">
+            <p className="heading-md italic font-[400] text-text leading-snug">
+              &ldquo;{t('aboutBlueprintQuote' as any)}&rdquo;
+            </p>
             
-            <div className="text-xl font-bold text-muted-foreground italic uppercase leading-relaxed space-y-8 mb-12">
-              <div dangerouslySetInnerHTML={{ __html: t('summaryText' as any) }} />
+            <div className="text-sm-body space-y-4" dangerouslySetInnerHTML={{ __html: t('summaryText' as any) }} />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="card-surface p-5 flex items-center gap-4">
+                <Calendar size={18} className="text-accent shrink-0" />
+                <div>
+                  <p className="stat-label">{t('aboutOperationalAge' as any)}</p>
+                  <p className="stat-value">{ageInDays.toLocaleString()} <span className="mono-meta text-[0.55rem]">{t('aboutDays' as any)}</span></p>
+                </div>
+              </div>
+              <div className="card-surface p-5 flex items-center gap-4">
+                <Briefcase size={18} className="text-accent shrink-0" />
+                <div>
+                  <p className="stat-label">{t('aboutStatusLabel' as any)}</p>
+                  <p className="stat-value text-accent">{t('freelanceStatus' as any)}</p>
+                </div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-               <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
-                  <Calendar size={20} className="text-accent" />
-                  <div>
-                    <p className="text-[9px] font-black uppercase opacity-50">{t('aboutOperationalAge' as any)}</p>
-                    <p className="text-xl font-black italic tracking-tighter">{ageInDays.toLocaleString()} {t('aboutDays' as any)}</p>
-                  </div>
-               </div>
-               <div className="p-4 bg-background border-2 border-foreground flex items-center gap-4">
-                  <Briefcase size={20} className="text-accent" />
-                  <div>
-                    <p className="text-[9px] font-black uppercase opacity-50">{t('aboutStatusLabel' as any)}</p>
-                    <p className="text-xl font-black italic tracking-tighter text-accent uppercase">{t('freelanceStatus' as any)}</p>
-                  </div>
-               </div>
-            </div>
-
-            <div className="flex flex-wrap gap-6">
-              <a href="/cv/" target="_blank" rel="noopener noreferrer" className="btn-swiss-primary !w-fit group">
-                {t('aboutDownloadCV' as any)} <FileText size={20} className="group-hover:rotate-12 transition-transform" />
+            <div className="flex flex-wrap gap-3 pt-2">
+              <a href="/cv/" target="_blank" rel="noopener noreferrer" className="btn-primary">
+                {t('aboutDownloadCV' as any)} <FileText size={14} />
               </a>
-              <a href="/porto_photo_azzar.pdf" target="_blank" rel="noopener noreferrer" className="btn-swiss-outline !w-fit group">
-                {t('aboutPhotoPorto' as any)} <Camera size={20} className="group-hover:scale-110 transition-transform" />
+              <a href="/porto_photo_azzar.pdf" target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                {t('aboutPhotoPorto' as any)} <Camera size={14} />
               </a>
             </div>
           </div>
 
-          <div className="col-span-12 lg:col-span-5">
-            <div className="aspect-square bg-accent border-[12px] border-foreground shadow-[24px_24px_0px_0px_rgba(42,37,32,1)] relative overflow-hidden group">
-               <img src="/azzar.png" alt="Azzar Budiyanto" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-               <div className="absolute top-6 left-6 px-4 py-2 bg-foreground text-background font-black text-xs tracking-widest uppercase italic">EST. 1999</div>
+          <div className="lg:col-span-5">
+            <div className="aspect-square rounded-lg overflow-hidden border border-border bg-paper-3">
+              <img src="/azzar.png" alt="Azzar Budiyanto" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* SKILLS SECTION */}
-      <section className="mb-32">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-12 pb-12 border-b-8 border-foreground mb-16">
-          <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none" dangerouslySetInnerHTML={{ __html: t('aboutTechStack' as any) }} />
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-accent italic pb-2">{t('aboutCoreCompetencies' as any)}</span>
+      {/* SKILLS */}
+      <motion.section variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="section-spacing">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pb-6 border-b border-border mb-10">
+          <div>
+            <span className="section-label">{t('aboutCoreCompetencies' as any)}</span>
+            <h2 className="heading-lg mt-1" dangerouslySetInnerHTML={{ __html: t('aboutTechStack' as any) }} />
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {skillCategories.map((cat, i) => (
-            <div key={i} className="p-8 bg-card border-4 border-foreground shadow-[10px_10px_0px_0px_rgba(139,26,26,1)] space-y-6 flex flex-col h-full group hover:-translate-y-1 transition-all">
-              <div className="w-16 h-16 bg-foreground text-background flex items-center justify-center group-hover:bg-accent transition-colors">
+            <motion.div key={i} variants={fadeUp} className="card-surface p-6 space-y-4">
+              <div className="w-10 h-10 rounded-md bg-accent/10 text-accent flex items-center justify-center">
                 {cat.icon}
               </div>
-              <h3 className="text-2xl font-black italic uppercase tracking-tighter">
+              <h3 className="heading-md !text-base">
                 {t(cat.titleKey as any)}
               </h3>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase italic leading-relaxed tracking-wider">
+              <p className="text-sm-body text-text/70">
                 {t((cat.titleKey.replace('Title', 'Desc')) as any)}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      {/* EXPERIENCE SECTION */}
-      <section className="mb-32">
-        <div className="flex items-center gap-3 text-accent mb-12">
-          <span className="text-xs font-black uppercase tracking-[0.4em] italic underline decoration-4">{t('aboutTimelineTitle' as any)}</span>
+      {/* EXPERIENCE */}
+      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} className="section-spacing">
+        <div className="pb-6 border-b border-border mb-10">
+          <span className="section-label">{t('aboutTimelineTitle' as any)}</span>
         </div>
-        <div className="grid grid-cols-1 gap-12">
+        
+        <div className="space-y-6">
           {experiences.map((exp, i) => (
-            <div key={i} className="p-10 bg-card border-4 border-foreground shadow-[12px_12px_0px_0px_rgba(42,37,32,1)] group">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 border-b-4 border-foreground/10 pb-8">
+            <motion.div
+              key={i}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="card-surface p-8 space-y-6"
+            >
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                  <h3 className="text-4xl font-black italic uppercase tracking-tighter group-hover:text-accent transition-colors">{exp.key}</h3>
-                  <p className="text-sm font-black uppercase tracking-widest text-muted-foreground mt-2">{exp.company}</p>
+                  <h3 className="heading-md">{exp.key}</h3>
+                  <p className="mono-meta text-[0.6rem] mt-1">{exp.company}</p>
                 </div>
-                <div className="text-right">
-                  <span className="text-2xl font-black italic text-accent">{exp.period}</span>
-                </div>
+                <span className="mono-meta text-accent shrink-0">{exp.period}</span>
               </div>
-              <ul className="space-y-4">
+              <ul className="space-y-2">
                 {exp.achievements.map((ach, idx) => (
-                  <li key={idx} className="flex gap-4 items-start text-xs font-bold uppercase italic tracking-wide text-foreground/80">
-                    <span className="w-2 h-2 bg-accent mt-1 shrink-0" />
+                  <li key={idx} className="flex gap-3 items-start text-sm-body text-text/70">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 shrink-0" />
                     {t(ach as any)}
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      {/* INTERESTS SECTION */}
-      <section className="mb-32">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-12 pb-12 border-b-8 border-foreground mb-16">
-          <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none" dangerouslySetInnerHTML={{ __html: t('aboutPersonalTitle' as any) }} />
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-accent italic pb-2">{t('aboutHumanInterests' as any)}</span>
+      {/* INTERESTS */}
+      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} className="section-spacing">
+        <div className="pb-6 border-b border-border mb-10">
+          <span className="section-label">{t('aboutHumanInterests' as any)}</span>
+          <h2 className="heading-lg mt-1" dangerouslySetInnerHTML={{ __html: t('aboutPersonalTitle' as any) }} />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        <motion.div variants={stagger} className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
           {interests.map((item, i) => (
-            <div key={i} className="p-6 bg-foreground text-background border-4 border-foreground flex flex-col items-center text-center gap-4 shadow-ambient hover:bg-accent transition-all duration-300 group">
-               <div className="text-accent group-hover:text-background">{item.icon}</div>
-               <span className="text-[10px] font-black uppercase italic tracking-widest leading-tight group-hover:text-background">{t(item.key as any)}</span>
-            </div>
+            <motion.div
+              key={i}
+              variants={fadeUp}
+              className="card-surface p-5 flex flex-col items-center text-center gap-3 hover:bg-accent/10 hover:border-accent transition-all group cursor-default"
+            >
+              <div className="text-text group-hover:text-accent transition-colors">{item.icon}</div>
+              <span className="text-[0.6rem] font-mono uppercase tracking-wider text-text/70 group-hover:text-accent transition-colors leading-tight">
+                {t(item.key as any)}
+              </span>
+            </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </main>
   );
 }

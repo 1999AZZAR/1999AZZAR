@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Plus_Jakarta_Sans, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/context/LanguageContext'
 import Navbar from '@/components/ui/navbar'
@@ -9,16 +9,14 @@ import Script from 'next/script'
 import ScrollProgress from '@/components/ui/scroll-progress'
 import SEOJsonLd from '@/components/ui/seo-json-ld'
 
-const sans = Plus_Jakarta_Sans({ 
+const display = Space_Grotesk({ 
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-display',
 })
 
-const serif = Instrument_Serif({
+const body = Inter({
   subsets: ['latin'],
-  weight: '400',
-  style: ['italic', 'normal'],
-  variable: '--font-serif',
+  variable: '--font-body',
 })
 
 const mono = JetBrains_Mono({
@@ -31,17 +29,14 @@ const siteUrl = 'https://glassgallery.my.id';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Azzar Budiyanto | Expert Freelance Engineer & Full-Stack Developer',
+    default: 'Azzar Budiyanto | IoT & Full-Stack Engineer',
     template: '%s | Azzar Budiyanto'
   },
-  description: 'Expert freelance IoT developer & full-stack engineer specializing in Arduino programming, Python, JavaScript, AI/ML, and embedded systems. 5+ years experience. Available for remote projects worldwide.',
+  description: 'IoT engineer & full-stack developer specializing in embedded systems, Arduino, Python, and web technologies. Available for freelance projects worldwide.',
   keywords: [
-    "freelance IoT developer", "full-stack developer portfolio", "remote engineer", "Arduino programmer", "Python developer",
-    "JavaScript engineer", "web development", "embedded systems", "React developer", "Node.js", "API development",
-    "software engineer", "TypeScript", "IoT solutions", "electronics engineering", "portfolio website",
-    "tech consultant", "open source contributor", "GitHub projects", "problem solver",
-    "scalable applications", "backend development", "frontend development",
-    "real-time applications", "cloud engineer", "RESTful API", "Next.js"
+    "IoT developer", "full-stack engineer", "Arduino programmer", "Python developer",
+    "embedded systems", "React developer", "TypeScript", "freelance engineer",
+    "web development", "cloud infrastructure", "DevOps", "Next.js"
   ],
   authors: [{ name: 'Azzar Budiyanto', url: siteUrl }],
   creator: 'Azzar Budiyanto',
@@ -68,20 +63,20 @@ export const metadata: Metadata = {
     type: 'profile',
     locale: 'en_US',
     url: siteUrl,
-    title: 'Azzar Budiyanto | Expert Freelance Engineer & Full-Stack Developer',
-    description: 'Expert freelance IoT developer & full-stack engineer. Specializing in Arduino, Python, JavaScript, AI/ML, embedded systems. 5+ years experience. View portfolio & hire today!',
+    title: 'Azzar Budiyanto | IoT & Full-Stack Engineer',
+    description: 'IoT engineer & full-stack developer. Embedded systems, Arduino, Python, web technologies. Available for freelance projects.',
     siteName: 'Azzar Budiyanto Portfolio',
     images: [{
       url: 'https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/azzar.png',
       width: 1200,
       height: 630,
-      alt: 'Azzar Budiyanto - Expert Engineer',
+      alt: 'Azzar Budiyanto - Engineer',
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Azzar Budiyanto | Expert Freelance Engineer & Full-Stack Developer',
-    description: 'Expert freelance IoT developer & full-stack engineer. Arduino, Python, JavaScript, AI/ML, embedded systems. 5+ years experience. Starting $35/hr!',
+    title: 'Azzar Budiyanto | IoT & Full-Stack Engineer',
+    description: 'IoT engineer & full-stack developer. Embedded systems, Arduino, Python, web technologies.',
     creator: '@siapa_hayosiapa',
     images: ['https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/azzar.png'],
   },
@@ -90,16 +85,11 @@ export const metadata: Metadata = {
     'phone': '+62 82232529804',
     'location': 'Remote - Available Worldwide',
     'availability': 'Available for freelance projects',
-    'experience': '5+ years in software development',
-    'geo.region': 'GLOBAL',
-    'geo.placename': 'Remote - Worldwide',
-    'geo.position': '0;0',
-    'ICBM': '0, 0',
   }
 }
 
 export const viewport: Viewport = {
-  themeColor: '#8B1A1A', // Burgundy
+  themeColor: '#8B1A1A',
   width: 'device-width',
   initialScale: 1,
 }
@@ -116,23 +106,16 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://live-chat-widget.azzar.workers.dev" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://raw.githubusercontent.com" />
-        {/* Favicons */}
         <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png" />
         <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/logo.png" />
       </head>
-      <body className={`${sans.variable} ${serif.variable} ${mono.variable} font-sans antialiased`}>
+      <body className={`${display.variable} ${body.variable} ${mono.variable} font-body antialiased`}>
         <ScrollProgress />
         <LanguageProvider>
           <SEOJsonLd />
-          <div className="min-h-screen flex flex-col relative blueprint-grid">
-            <div className="blueprint-line left-0" />
-            <div className="blueprint-line left-1/4 hidden md:block" />
-            <div className="blueprint-line left-1/2 hidden md:block" />
-            <div className="blueprint-line left-3/4 hidden md:block" />
-            <div className="blueprint-line right-0" />
-            
+          <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-grow relative z-10">
+            <main className="flex-grow">
               {children}
             </main>
             <Footer />
@@ -140,22 +123,11 @@ export default function RootLayout({
           </div>
         </LanguageProvider>
         
-        {/* Azzar AI Live Chat Widget */}
         <Script 
           src="https://live-chat-widget.azzar.workers.dev/widget.js" 
-          data-color="light"
+          data-color="dark"
           strategy="afterInteractive"
         />
-        <script dangerouslySetInnerHTML={{ __html: `
-          if('serviceWorker' in navigator){
-            navigator.serviceWorker.getRegistrations().then(function(r){
-              for(var i=0;i<r.length;i++){r[i].unregister()}
-            });
-            caches.keys().then(function(k){
-              for(var i=0;i<k.length;i++){caches.delete(k[i])}
-            });
-          }
-        `}} />
       </body>
     </html>
   )
