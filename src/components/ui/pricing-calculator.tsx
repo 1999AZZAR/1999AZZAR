@@ -23,7 +23,7 @@ export default function PricingCalculator() {
     totalConsultationUSD: number;
     taxUSD: number;
     days: number;
-    installments: { desc: string; amount: number; isConsultation: boolean }[];
+    installments: { desc: string; amount: number; isMgmt: boolean }[];
   } | null>(null);
 
   const exchangeRates = {
