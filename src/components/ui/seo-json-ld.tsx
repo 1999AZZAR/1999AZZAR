@@ -27,7 +27,7 @@ export default function SEOJsonLd() {
           "@type": "Organization",
           "name": "Independent Contractor"
         },
-        "email": "azzar.mr.zs@gmail.com",
+        "email": "azzar.budi@gmail.com",
         "telephone": "+62 82232529804",
         "address": {
           "@type": "PostalAddress",
@@ -119,7 +119,7 @@ export default function SEOJsonLd() {
           "addressCountry": "Available Globally"
         },
         "telephone": "+62 82232529804",
-        "email": "azzar.mr.zs@gmail.com"
+        "email": "azzar.budi@gmail.com"
       },
       {
         "@type": "WebPage",

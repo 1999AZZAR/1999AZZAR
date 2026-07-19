@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     images: ['https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/azzar.png'],
   },
   other: {
-    'contact': 'azzar.mr.zs@gmail.com',
+    'contact': 'azzar.budi@gmail.com',
     'phone': '+62 82232529804',
     'location': 'Remote - Available Worldwide',
     'availability': 'Available for freelance projects',

@@ -321,7 +321,7 @@ export default function PricingCalculator() {
                     <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
                       <ExternalLink size={14} className="inline mr-1" /> WhatsApp
                     </a>
-                    <a href={`mailto:azzar.mr.zs@gmail.com?subject=Project Estimate&body=${encodeURIComponent(projectDescription)}`} className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
+                    <a href={`mailto:azzar.budi@gmail.com?subject=Project Estimate&body=${encodeURIComponent(projectDescription)}`} className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
                       <Mail size={14} className="inline mr-1" /> Email
                     </a>
                   </div>

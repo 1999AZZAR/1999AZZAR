@@ -62,10 +62,10 @@ export default function ContactPage() {
             <div>
               <h2 className="heading-md mb-6">{t('contactDirectAccess' as any)}</h2>
               <div className="space-y-6">
-                <a href="mailto:azzar.mr.zs@gmail.com" className="block group">
+                <a href="mailto:azzar.budi@gmail.com" className="block group">
                   <span className="mono-meta text-accent mb-1 block">{t('contactEmailLabel' as any)}</span>
                   <p className="heading-md !text-lg group-hover:text-accent transition-colors break-all">
-                    azzar.mr.zs@gmail.com <ArrowUpRight size={14} className="inline" />
+                    azzar.budi@gmail.com <ArrowUpRight size={14} className="inline" />
                   </p>
                 </a>
                 <div>

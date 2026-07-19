@@ -64,7 +64,7 @@ export default function Footer() {
           <div className="col-span-6 sm:col-span-3 lg:col-span-2 space-y-5">
             <p className="mono-meta">Connect</p>
             <div className="flex flex-col gap-2.5">
-              <a href="mailto:azzar.mr.zs@gmail.com" className="font-body text-sm text-text hover:text-text-2 transition-colors w-fit">
+              <a href="mailto:azzar.budi@gmail.com" className="font-body text-sm text-text hover:text-text-2 transition-colors w-fit">
                 Email
               </a>
               <a href="https://t.me/azzar_budiyanto" target="_blank" rel="noopener noreferrer" className="font-body text-sm text-text hover:text-text-2 transition-colors w-fit">
