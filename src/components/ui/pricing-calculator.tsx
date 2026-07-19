@@ -120,23 +120,23 @@ export default function PricingCalculator() {
       <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="mono-meta block mb-3">{t('calcHoursLabel' as any)}</label>
+            <label className="text-[0.55rem] font-mono uppercase tracking-wider text-accent/70 block mb-2">{t('calcHoursLabel' as any)}</label>
             <input 
               type="number" 
               min="0"
               value={hours || ''} 
               onChange={(e) => setHours(Math.max(0, Number(e.target.value)))}
               placeholder="0"
-              className="input-field font-display text-2xl font-semibold tracking-tight"
+              className="input-field font-display text-xl font-medium tracking-tight"
             />
           </div>
           <div>
-            <label className="mono-meta block mb-3">{t('calcCurrencyLabel' as any)}</label>
-            <div className="grid grid-cols-4 gap-2">
+            <label className="text-[0.55rem] font-mono uppercase tracking-wider text-accent/70 block mb-2">{t('calcCurrencyLabel' as any)}</label>
+            <div className="grid grid-cols-4 gap-1.5">
               {(['USD', 'IDR', 'EUR', 'GBP'] as const).map((cur) => (
                 <button key={cur}
                   onClick={() => setCurrency(cur)}
-                  className={`py-2.5 rounded-md text-xs font-mono font-medium transition-all ${currency === cur ? 'bg-accent text-paper' : 'bg-paper-3 text-text hover:text-text-2 border border-border'}`}
+                  className={`py-2 rounded-sm text-[0.65rem] font-mono font-medium transition-all ${currency === cur ? 'bg-accent text-paper' : 'bg-paper-3 text-text hover:text-text-2 border border-border'}`}
                 >
                   {cur}
                 </button>
@@ -146,22 +146,22 @@ export default function PricingCalculator() {
         </div>
 
         <div>
-          <label className="mono-meta block mb-3">{t('calcProjectBriefLabel' as any)}</label>
-          <textarea 
-            value={projectDescription}
-            onChange={(e) => setProjectDescription(e.target.value)}
-            placeholder={t('pricingProjectDescriptionPlaceholder' as any)}
-            className="input-field min-h-[100px] resize-y"
-          />
+            <label className="text-[0.55rem] font-mono uppercase tracking-wider text-accent/70 block mb-2">{t('calcProjectBriefLabel' as any)}</label>
+            <textarea 
+              value={projectDescription}
+              onChange={(e) => setProjectDescription(e.target.value)}
+              placeholder={t('pricingProjectDescriptionPlaceholder' as any)}
+              className="input-field min-h-[80px] resize-y text-sm"
+            />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="mono-meta block mb-3">{t('calcPlanLabel' as any)}</label>
+            <label className="text-[0.55rem] font-mono uppercase tracking-wider text-accent/70 block mb-2">{t('calcPlanLabel' as any)}</label>
             <select 
               value={paymentPlan}
               onChange={(e) => setPaymentPlan(e.target.value)}
-              className="input-field appearance-none cursor-pointer"
+              className="input-field appearance-none cursor-pointer text-sm"
             >
               <option value="1-100">{t('calcPlanSingle' as any)}</option>
               <option value="2-50-50">{t('calcPlanMilestones' as any)}</option>
@@ -169,15 +169,15 @@ export default function PricingCalculator() {
               <option value="4-25-25-25-25">{t('calcPlanQuarters' as any)}</option>
             </select>
           </div>
-          <div className="flex items-end">
-            <label className="flex items-center gap-3 cursor-pointer group">
+          <div className="flex items-end pb-1">
+            <label className="flex items-center gap-2 cursor-pointer group">
                 <input 
                   type="checkbox" 
                   checked={payMgmtSeparate} 
                   onChange={(e) => setPayMgmtSeparate(e.target.checked)}
-                  className="w-5 h-5 rounded border-border bg-paper-3 accent-accent transition-all cursor-pointer"
+                  className="w-3.5 h-3.5 rounded-sm border-border bg-paper-3 accent-accent transition-all cursor-pointer"
                 />
-                <span className="font-mono text-[0.65rem] uppercase tracking-wider text-text group-hover:text-text-2 transition-colors">Separate Mgmt Fee</span>
+                <span className="font-mono text-[0.55rem] uppercase tracking-wider text-text/50 group-hover:text-text/70 transition-colors">Separate Mgmt Fee</span>
             </label>
           </div>
         </div>
