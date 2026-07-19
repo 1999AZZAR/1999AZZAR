@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --color-paper: oklch(12% 0.020 0);
-  --color-paper-2: oklch(37% 0.040 0);
-  --color-paper-3: oklch(22% 0.030 0);
-  --color-text: oklch(67% 0.050 0);
-  --color-text-2: oklch(87% 0.070 0);
-  --color-accent: oklch(42% 0.280 30);
-  --color-accent-2: oklch(52% 0.230 30);
-  --color-border: oklch(22% 0.020 0);
-  --color-focus: oklch(42% 0.380 30);
+  --color-paper: oklch(91% 0.025 78);
+  --color-paper-2: oklch(60% 0.040 78);
+  --color-paper-3: oklch(84% 0.030 78);
+  --color-text: oklch(18% 0.020 50);
+  --color-text-2: oklch(35% 0.025 50);
+  --color-accent: oklch(38% 0.200 25);
+  --color-accent-2: oklch(48% 0.150 25);
+  --color-border: oklch(78% 0.020 75);
+  --color-focus: oklch(38% 0.300 25);
 
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
@@ -66,7 +66,7 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    opacity: 0.035;
+    opacity: 0.06;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
@@ -279,8 +279,8 @@
 
   .redacted {
     display: inline-block;
-    background-color: var(--color-text-2);
-    color: var(--color-text-2);
+    background-color: var(--color-text);
+    color: var(--color-text);
     padding: 0 0.25rem;
     border-radius: 2px;
     transition: color var(--dur-slow) var(--ease-out);
