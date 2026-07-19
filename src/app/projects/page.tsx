@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useGitHubProjects, Project } from '@/hooks/useGitHubProjects';
 import { useLanguage } from '@/context/LanguageContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowUpRight, Star, GitFork, Loader2, Globe, Code2, Search } from 'lucide-react';
 import Fuse from 'fuse.js';
 
@@ -16,7 +16,7 @@ export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const categoryFiltered = useMemo(() => {
-    return projects.filter(project => {
+    const filtered = projects.filter(project => {
       if (currentView === 'web') {
         return (project.homepage && project.homepage.trim() !== '') || 
                project.name.toLowerCase().includes('site') || 
@@ -25,6 +25,16 @@ export default function ProjectsPage() {
       }
       return !project.archived;
     });
+
+    if (currentView === 'repos') {
+      return [...filtered].sort((a, b) => {
+        const popA = a.stargazers_count + a.forks_count;
+        const popB = b.stargazers_count + b.forks_count;
+        return popB - popA || new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+      });
+    }
+
+    return filtered;
   }, [projects, currentView]);
 
   const fuse = useMemo(() => {
@@ -100,12 +110,15 @@ export default function ProjectsPage() {
             </span>
           </div>
 
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <AnimatePresence mode="popLayout" initial={false}>
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={project.name} project={project} index={index + 1} />
-              ))}
-            </AnimatePresence>
+          <motion.div
+            key={`${currentView}-${searchQuery}-${filteredProjects.length}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
+          >
+            {filteredProjects.map((project, index) => (
+              <ProjectCard key={project.name} project={project} index={index + 1} />
+            ))}
           </motion.div>
 
           {filteredProjects.length === 0 && (
@@ -127,11 +140,9 @@ export default function ProjectsPage() {
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <motion.a 
-      layout
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ layout: { type: "spring", stiffness: 300, damping: 30 } }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       href={project.homepage || project.html_url || '#'}
       target="_blank"
       className="card-surface p-7 flex flex-col justify-between min-h-[280px] group"
