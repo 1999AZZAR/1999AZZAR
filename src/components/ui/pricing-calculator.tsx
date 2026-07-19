@@ -235,101 +235,113 @@ export default function PricingCalculator() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="card-surface max-w-lg w-full p-8 md:p-10 relative shadow-2xl"
+              className="relative w-[92%] max-w-[420px]"
             >
               <button 
                 onClick={() => setShowReceipt(false)}
-                className="absolute top-5 right-5 p-1.5 rounded-md hover:bg-paper-3 text-text hover:text-text-2 transition-colors"
+                className="absolute -top-2 -right-2 z-10 w-8 h-8 rounded-full bg-paper-3 border border-border flex items-center justify-center text-text hover:text-accent transition-colors"
               >
-                <X size={18} />
+                <X size={14} />
               </button>
 
-              <div id="printable-receipt" className="space-y-8">
-                <div className="border-b border-border pb-6 flex justify-between items-end">
-                  <div className="space-y-1">
-                    <h2 className="heading-md">{t('receiptTitle' as any)}</h2>
-                    <p className="mono-meta text-[0.5rem]">#{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="mono-meta text-[0.5rem]">{t('receiptDate' as any)}</p>
-                    <p className="font-body text-sm text-text-2">{new Date().toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US')}</p>
-                  </div>
-                </div>
+              <div id="printable-receipt" className="bg-[#fbfbf9] text-[#1a1a1a] font-mono relative pb-4 shadow-[0_20px_60px_rgba(0,0,0,0.3)]">
+                {/* Jagged top edge */}
+                <div className="absolute -top-[10px] left-0 right-0 h-[10px] bg-repeat-x" style={{ backgroundImage: 'radial-gradient(circle at 50% 0, transparent 4px, #fbfbf9 5px)', backgroundSize: '10px 10px' }} />
 
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <p className="mono-meta text-accent">{t('receiptSpecs' as any)}</p>
-                    <div className="space-y-1.5 text-sm">
-                      <div className="flex justify-between"><span className="text-text/50">Hours:</span> <span className="text-text-2">{hours}</span></div>
-                      <div className="flex justify-between"><span className="text-text/50">Duration:</span> <span className="text-text-2">{results.days} {language === 'id' ? 'hari' : 'days'}</span></div>
-                      <div className="flex justify-between"><span className="text-text/50">Rate:</span> <span className="text-text-2">{formatValue(results.rateUSD)}/hr</span></div>
-                      <div className="flex justify-between"><span className="text-text/50">Plan:</span> <span className="text-text-2">{paymentPlan}</span></div>
-                    </div>
+                <div className="px-6 md:px-8 pt-8 pb-2 text-sm md:text-[13px] leading-relaxed">
+                  {/* Header */}
+                  <div className="text-center font-bold text-lg md:text-xl tracking-[0.2em] uppercase mb-1">
+                    * AZZAR *
                   </div>
-                  <div className="space-y-3">
-                    <p className="mono-meta text-accent">{t('receiptFinancial' as any)}</p>
-                    <div className="space-y-1.5 text-sm">
-                      <div className="flex justify-between"><span className="text-text/50">Engineering:</span> <span className="text-text-2">{formatValue(results.projectTotalUSD)}</span></div>
-                      <div className="flex justify-between"><span className="text-text/50">Mgmt Fee (15%):</span> <span className="text-text-2">{formatValue(results.totalConsultationUSD)}</span></div>
-                      {results.taxUSD > 0 && (
-                        <div className="flex justify-between"><span className="text-text/50">Tax (11%):</span> <span className="text-text-2">{formatValue(results.taxUSD)}</span></div>
-                      )}
-                      <div className="flex justify-between border-t pt-1 mt-1 text-accent font-medium">
-                        <span>Total:</span> <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</span>
-                      </div>
-                    </div>
+                  <p className="text-center text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-4">Project Estimate / {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                  
+                  <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
+                  
+                  {/* Ref */}
+                  <div className="flex justify-between text-[11px] uppercase tracking-wider mb-4">
+                    <span>Ref: #{Math.random().toString(36).substr(2, 8).toUpperCase()}</span>
+                    <span>{language === 'id' ? 'ESTIMASI' : 'ESTIMATE'}</span>
                   </div>
-                </div>
 
-                <div className="space-y-2 border-t pt-4">
-                  <p className="mono-meta text-accent text-[0.5rem]">Installment Breakdown{results.taxUSD > 0 ? ' (incl. tax)' : ''}</p>
-                  <div className="space-y-1 text-xs">
-                    {results.installments.map((inst, idx) => (
-                      <div key={idx} className="flex justify-between">
-                        <span className="text-text/60">{inst.desc} {inst.isMgmt ? '(mgmt)' : ''}</span>
-                        <span className="text-text-2 font-medium">{formatValue(inst.amount)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                  <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
 
-                {projectDescription && (
-                  <div className="space-y-3">
-                    <p className="mono-meta text-accent">{t('receiptBrief' as any)}</p>
-                    <p className="text-sm-body bg-paper-3 p-4 rounded-md">{projectDescription}</p>
-                  </div>
-                )}
+                  {/* Line items */}
+                  <table className="w-full text-[12px] uppercase">
+                    <thead>
+                      <tr className="text-[9px] text-gray-500 tracking-[0.2em]">
+                        <th className="font-normal pb-3 text-left">Item</th>
+                        <th className="font-normal pb-3 text-right">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td className="py-2">Engineering ({hours}h &times; {formatValue(results.rateUSD)}/hr)</td><td className="py-2 text-right">{formatValue(results.projectTotalUSD)}</td></tr>
+                      <tr><td className="py-2">Management Fee (15%)</td><td className="py-2 text-right">{formatValue(results.totalConsultationUSD)}</td></tr>
+                      {results.taxUSD > 0 && <tr><td className="py-2">Tax (11%)</td><td className="py-2 text-right">{formatValue(results.taxUSD)}</td></tr>}
+                    </tbody>
+                  </table>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-y border-border">
-                  <div className="flex flex-col items-center gap-3 text-center">
-                    <p className="mono-meta">{t('receiptWhatsapp' as any)}</p>
-                    <div className="p-3 bg-paper-3 rounded-md border border-border">
-                      <img 
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(getWhatsAppLink())}`}
-                        alt="WhatsApp QR"
-                        className="w-28 h-28"
-                      />
-                    </div>
-                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="mono-meta text-accent text-[0.55rem] flex items-center gap-1.5 hover:underline">
-                      OPEN WHATSAPP <ExternalLink size={10} />
+                  <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
+
+                  {/* Total */}
+                  <div className="flex justify-between text-sm font-bold tracking-wider">
+                    <span>TOTAL</span>
+                    <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</span>
+                  </div>
+
+                  <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
+
+                  {/* Installments */}
+                  <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-2">Payment Plan: {paymentPlan}</p>
+                  <table className="w-full text-[11px] uppercase">
+                    <tbody>
+                      {results.installments.map((inst, idx) => (
+                        <tr key={idx}>
+                          <td className="py-1.5">{inst.desc}{inst.isMgmt ? ' (mgmt)' : ''}</td>
+                          <td className="py-1.5 text-right">{formatValue(inst.amount)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  {projectDescription && (
+                    <>
+                      <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
+                      <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-1">Notes</p>
+                      <p className="text-[11px] text-gray-700 italic leading-relaxed">{projectDescription}</p>
+                    </>
+                  )}
+
+                  <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
+
+                  {/* Actions */}
+                  <div className="flex justify-center gap-4 py-2">
+                    <button onClick={() => window.print()} className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
+                      <Printer size={14} className="inline mr-1" /> Print
+                    </button>
+                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
+                      <ExternalLink size={14} className="inline mr-1" /> WhatsApp
+                    </a>
+                    <a href={`mailto:azzar.mr.zs@gmail.com?subject=Project Estimate&body=${encodeURIComponent(projectDescription)}`} className="text-[9px] uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors">
+                      <Mail size={14} className="inline mr-1" /> Email
                     </a>
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-3 text-center border-l border-border pl-6">
-                    <p className="font-body text-sm text-text-2">{t('receiptReady' as any)}</p>
-                    <div className="flex gap-3">
-                      <button onClick={() => window.print()} className="chip hover:bg-accent hover:text-paper hover:border-accent">
-                        <Printer size={14} />
-                      </button>
-                      <a href={`mailto:azzar.mr.zs@gmail.com?subject=Project Inquiry&body=${encodeURIComponent(projectDescription)}`} className="chip hover:bg-accent hover:text-paper hover:border-accent">
-                        <Mail size={14} />
-                      </a>
-                    </div>
+
+                  <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
+
+                  {/* Footer */}
+                  <div className="text-center text-[9px] text-gray-500 uppercase tracking-wider space-y-1">
+                    <p>{t('receiptFooter' as any)}</p>
                   </div>
+
+                  {/* Barcode */}
+                  <div className="flex justify-center mt-6 px-4">
+                    <div className="w-full h-10 opacity-80" style={{ backgroundImage: 'repeating-linear-gradient(90deg, black 0, black 2px, transparent 2px, transparent 4px, black 4px, black 8px, transparent 8px, transparent 10px, black 10px, black 11px, transparent 11px, transparent 14px)' }} />
+                  </div>
+                  <div className="text-center text-[10px] mt-1 tracking-[0.6em] font-bold text-gray-600">AZZAR-EST</div>
                 </div>
 
-                <div className="text-center">
-                  <p className="mono-meta text-[0.5rem]">{t('receiptFooter' as any)}</p>
-                </div>
+                {/* Jagged bottom edge */}
+                <div className="absolute -bottom-[10px] left-0 right-0 h-[10px] bg-repeat-x" style={{ backgroundImage: 'radial-gradient(circle at 50% 10px, transparent 4px, #fbfbf9 5px)', backgroundSize: '10px 10px' }} />
               </div>
             </motion.div>
           </div>
