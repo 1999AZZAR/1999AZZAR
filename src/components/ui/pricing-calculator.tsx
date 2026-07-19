@@ -103,10 +103,17 @@ export default function PricingCalculator() {
 
   const getWhatsAppLink = () => {
     if (!results) return '';
-    let msg = `Hi Azzar! I'm interested in your development services.\n\n`;
-    if (projectDescription) msg += `PROJECT DESCRIPTION:\n${projectDescription}\n\n`;
-    msg += `PROJECT DETAILS:\n- Hours: ${hours}\n- Currency: ${currency}\n- Plan: ${paymentPlan}\n\n`;
-    msg += `TOTAL: ${formatValue(results.projectTotalUSD + results.totalConsultationUSD)}`;
+    const total = results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD;
+    let msg = `Hi Azzar, I'd like to discuss a project.\n\n`;
+    if (projectDescription) msg += `Project: ${projectDescription}\n\n`;
+    msg += `Hours: ${hours}\n`;
+    msg += `Rate: ${formatValue(results.rateUSD)}/hr\n`;
+    msg += `Engineering: ${formatValue(results.projectTotalUSD)}\n`;
+    msg += `Management (15%): ${formatValue(results.totalConsultationUSD)}\n`;
+    if (results.taxUSD > 0) msg += `Tax (11%): ${formatValue(results.taxUSD)}\n`;
+    msg += `Total: ${formatValue(total)}\n`;
+    msg += `Plan: ${paymentPlan}\n`;
+    msg += `Currency: ${currency}`;
     return `https://wa.me/+6282232529804?text=${encodeURIComponent(msg)}`;
   };
 
