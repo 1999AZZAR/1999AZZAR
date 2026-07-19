@@ -13,7 +13,7 @@ export default function PricingCalculator() {
   const [hours, setHours] = useState<number>(0);
   const [currency, setCurrency] = useState<'USD' | 'IDR' | 'EUR' | 'GBP'>('USD');
   const [paymentPlan, setPaymentPlan] = useState('2-50-50'); 
-  const [payConsultationSeparate, setPayConsultationSeparate] = useState(false);
+  const [payMgmtSeparate, setPayMgmtSeparate] = useState(false);
   const [projectDescription, setProjectDescription] = useState('');
   const [showReceipt, setShowReceipt] = useState(false);
 
@@ -21,6 +21,7 @@ export default function PricingCalculator() {
     rateUSD: number;
     projectTotalUSD: number;
     totalConsultationUSD: number;
+    taxUSD: number;
     days: number;
     installments: { desc: string; amount: number; isConsultation: boolean }[];
   } | null>(null);
@@ -48,58 +49,48 @@ export default function PricingCalculator() {
     else if (hours >= Hmax) rateUSD = Rmin;
     else rateUSD = Rmax - ((Rmax - Rmin) / (Hmax - Hmin)) * (hours - Hmin);
 
-    const numConsultationFees = Math.floor(hours / 30);
-    let totalConsultationUSD = 0;
-    const consultationFees: number[] = [];
-
-    for (let i = 0; i < numConsultationFees; i++) {
-        const baseFee = 95;
-        const variation = Math.sin(hours * 0.1 + i * 0.5) * 15;
-        const fee = Math.max(70, Math.min(120, baseFee + variation));
-        consultationFees.push(Math.round(fee));
-        totalConsultationUSD += Math.round(fee);
-    }
-
-    const projectTotalUSD = Math.max(rateUSD * hours, 250);
+    const projectTotalUSD = Math.max(Math.round(rateUSD * hours), 500);
+    const mgmtFeeUSD = Math.round(projectTotalUSD * 0.15);
+    const taxUSD = projectTotalUSD > 500 ? Math.round((projectTotalUSD + mgmtFeeUSD) * 0.11) : 0;
     const days = Math.ceil(hours / 8);
 
     const percentages = paymentPlan.split('-').slice(1).map(p => parseInt(p) / 100);
-    let installments: { desc: string; amount: number; isConsultation: boolean }[] = [];
+    let installments: { desc: string; amount: number; isMgmt: boolean }[] = [];
 
-    if (payConsultationSeparate && numConsultationFees > 0) {
+    if (payMgmtSeparate) {
+      const engTotal = projectTotalUSD + taxUSD;
       percentages.forEach((pct, i) => {
         installments.push({
           desc: `${t('pricingPaymentProjectLabel' as any)} ${i + 1}`,
-          amount: Math.round(projectTotalUSD * pct),
-          isConsultation: false
+          amount: Math.round(engTotal * pct),
+          isMgmt: false
         });
       });
-      consultationFees.forEach((fee, i) => {
-        installments.push({
-          desc: `${t('pricingPaymentConsultationLabel' as any)} ${i + 1}`,
-          amount: fee,
-          isConsultation: true
-        });
+      installments.push({
+        desc: 'Management Fee',
+        amount: mgmtFeeUSD,
+        isMgmt: true
       });
     } else {
-      const combinedTotal = projectTotalUSD + totalConsultationUSD;
+      const combinedTotal = projectTotalUSD + mgmtFeeUSD + taxUSD;
       percentages.forEach((pct, i) => {
         installments.push({
           desc: `${t('pricingPaymentProjectLabel' as any)} ${i + 1}`,
           amount: Math.round(combinedTotal * pct),
-          isConsultation: false
+          isMgmt: false
         });
       });
     }
 
     setResults({
       rateUSD: Math.round(rateUSD),
-      projectTotalUSD: Math.round(projectTotalUSD),
-      totalConsultationUSD: Math.round(totalConsultationUSD),
+      projectTotalUSD,
+      totalConsultationUSD: mgmtFeeUSD,
+      taxUSD,
       days,
       installments
     });
-  }, [hours, paymentPlan, payConsultationSeparate, t]);
+  }, [hours, paymentPlan, payMgmtSeparate, t]);
 
   const formatValue = (usdAmount: number) => {
     const converted = usdAmount * exchangeRates[currency];
@@ -180,20 +171,20 @@ export default function PricingCalculator() {
           </div>
           <div className="flex items-end">
             <label className="flex items-center gap-3 cursor-pointer group">
-              <input 
-                type="checkbox" 
-                checked={payConsultationSeparate} 
-                onChange={(e) => setPayConsultationSeparate(e.target.checked)}
-                className="w-5 h-5 rounded border-border bg-paper-3 accent-accent transition-all cursor-pointer"
-              />
-              <span className="font-mono text-[0.65rem] uppercase tracking-wider text-text group-hover:text-text-2 transition-colors">{t('calcConsSeparate' as any)}</span>
+                <input 
+                  type="checkbox" 
+                  checked={payMgmtSeparate} 
+                  onChange={(e) => setPayMgmtSeparate(e.target.checked)}
+                  className="w-5 h-5 rounded border-border bg-paper-3 accent-accent transition-all cursor-pointer"
+                />
+                <span className="font-mono text-[0.65rem] uppercase tracking-wider text-text group-hover:text-text-2 transition-colors">Separate Mgmt Fee</span>
             </label>
           </div>
         </div>
 
         {results && (
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="pt-6 border-t border-border space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="card-surface p-4 flex items-center gap-3">
                 <DollarSign size={16} className="text-accent shrink-0" />
                 <div>
@@ -208,11 +199,21 @@ export default function PricingCalculator() {
                   <p className="stat-value !text-base">{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</p>
                 </div>
               </div>
+              {results.taxUSD > 0 && (
+                <div className="card-surface p-4 flex items-center gap-3">
+                  <Calculator size={16} className="text-accent shrink-0" />
+                  <div>
+                    <p className="stat-label">Tax (11%)</p>
+                    <p className="stat-value !text-base">{formatValue(results.taxUSD)}</p>
+                  </div>
+                </div>
+              )}
               <div className="card-surface bg-accent/10 border-accent/30 p-4 flex items-center gap-3">
                 <Calculator size={16} className="text-accent shrink-0" />
                 <div>
                   <p className="stat-label text-accent">{t('calcTotalEst' as any)}</p>
-                  <p className="stat-value !text-base">{formatValue(results.projectTotalUSD + results.totalConsultationUSD)}</p>
+                  <p className="stat-value !text-base">{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</p>
+                  {results.totalConsultationUSD > 0 && <p className="text-[0.55rem] font-mono text-accent">incl. 15% mgmt fee</p>}
                 </div>
               </div>
             </div>
@@ -255,24 +256,40 @@ export default function PricingCalculator() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-3">
                     <p className="mono-meta text-accent">{t('receiptSpecs' as any)}</p>
-                    <div className="space-y-1.5 text-sm text-text">
-                      <div className="flex justify-between"><span className="text-text/50">HOURS:</span> <span className="text-text-2">{hours}</span></div>
-                      <div className="flex justify-between"><span className="text-text/50">DURATION:</span> <span className="text-text-2">{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</span></div>
-                      <div className="flex justify-between"><span className="text-text/50">CURRENCY:</span> <span className="text-text-2">{currency}</span></div>
+                    <div className="space-y-1.5 text-sm">
+                      <div className="flex justify-between"><span className="text-text/50">Hours:</span> <span className="text-text-2">{hours}</span></div>
+                      <div className="flex justify-between"><span className="text-text/50">Duration:</span> <span className="text-text-2">{results.days} {language === 'id' ? 'hari' : 'days'}</span></div>
+                      <div className="flex justify-between"><span className="text-text/50">Rate:</span> <span className="text-text-2">{formatValue(results.rateUSD)}/hr</span></div>
+                      <div className="flex justify-between"><span className="text-text/50">Plan:</span> <span className="text-text-2">{paymentPlan}</span></div>
                     </div>
                   </div>
                   <div className="space-y-3">
                     <p className="mono-meta text-accent">{t('receiptFinancial' as any)}</p>
-                    <div className="space-y-1.5 text-sm text-text">
-                      <div className="flex justify-between"><span className="text-text/50">PROJECT:</span> <span className="text-text-2">{formatValue(results.projectTotalUSD)}</span></div>
-                      <div className="flex justify-between"><span className="text-text/50">CONSULT:</span> <span className="text-text-2">{formatValue(results.totalConsultationUSD)}</span></div>
-                      <div className="flex justify-between border-t border-border pt-2 mt-2 text-accent font-medium">
-                        <span>TOTAL:</span> <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD)}</span>
+                    <div className="space-y-1.5 text-sm">
+                      <div className="flex justify-between"><span className="text-text/50">Engineering:</span> <span className="text-text-2">{formatValue(results.projectTotalUSD)}</span></div>
+                      <div className="flex justify-between"><span className="text-text/50">Mgmt Fee (15%):</span> <span className="text-text-2">{formatValue(results.totalConsultationUSD)}</span></div>
+                      {results.taxUSD > 0 && (
+                        <div className="flex justify-between"><span className="text-text/50">Tax (11%):</span> <span className="text-text-2">{formatValue(results.taxUSD)}</span></div>
+                      )}
+                      <div className="flex justify-between border-t pt-1 mt-1 text-accent font-medium">
+                        <span>Total:</span> <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</span>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 border-t pt-4">
+                  <p className="mono-meta text-accent text-[0.5rem]">Installment Breakdown{results.taxUSD > 0 ? ' (incl. tax)' : ''}</p>
+                  <div className="space-y-1 text-xs">
+                    {results.installments.map((inst, idx) => (
+                      <div key={idx} className="flex justify-between">
+                        <span className="text-text/60">{inst.desc} {inst.isMgmt ? '(mgmt)' : ''}</span>
+                        <span className="text-text-2 font-medium">{formatValue(inst.amount)}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
