@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="assets/blotcat-hero.jpg" alt="Blotcat saying hello" width="100%" style="max-width: 800px; border-radius: 10px; margin-bottom: 20px;">
   <h1 style="font-size: 3em; color: #e74c3c; text-shadow: 3px 3px #bdc3c7;">Hello, I'm Azzar Budiyanto</h1>
   <h4 style="font-size: 1.5em; color: #2980b9; margin-top: -10px;">
     Freelance Software Developer | IoT & Embedded Systems Enthusiast
@@ -46,6 +47,16 @@
 <details>
   <summary style="font-size: 1.2em; font-weight: bold; color: #e74c3c; cursor: pointer;">About Me</summary>
   <div align="center">
+    <table align="center" style="border: none; margin-bottom: 20px;">
+      <tr>
+        <td width="50%" align="center" style="border: none;">
+          <img src="assets/blotcat-web.jpg" alt="Software & Web Dev" width="100%" style="border-radius: 10px;">
+        </td>
+        <td width="50%" align="center" style="border: none;">
+          <img src="assets/blotcat-iot.jpg" alt="IoT & Embedded Systems" width="100%" style="border-radius: 10px;">
+        </td>
+      </tr>
+    </table>
     <ul style="list-style: none; padding: 0; text-align: left; max-width: 600px; margin: auto; color: #555;">
       <li><strong>Languages:</strong> JavaScript, TypeScript, Python, C/C++</li>
       <li><strong>Web Development:</strong> React, Node.js, Express, Django</li>
