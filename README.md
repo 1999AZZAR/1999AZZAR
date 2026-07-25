@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="assets/blotcat-hero.jpg" alt="Azzar saying hello" width="100%" style="max-width: 800px; border-radius: 8px; margin-bottom: 20px;">
   
   <h1>Azzar Budiyanto</h1>
   <p><b>Software Developer | IoT & Embedded Systems</b></p>
