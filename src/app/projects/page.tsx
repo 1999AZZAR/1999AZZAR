@@ -138,43 +138,60 @@ export default function ProjectsPage() {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const projectUrl = project.homepage || project.html_url || '#';
+  const specimenUrl = `https://geometry-vault.glassgallery.my.id/?mode=embed&seed=${encodeURIComponent(project.name)}&colors=${encodeURIComponent('#8B1A1A, #2A2520, #EFE9DC')}&w=16&h=9`;
+
   return (
-    <motion.a 
+    <motion.article
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      href={project.homepage || project.html_url || '#'}
-      target="_blank"
-      className="card-surface p-7 flex flex-col justify-between min-h-[280px] group"
+      className="card-surface overflow-hidden flex flex-col group"
     >
-      <div className="space-y-5">
-        <div className="flex justify-between items-start">
-          <span className="mono-meta text-accent">#{index.toString().padStart(2, '0')}</span>
-          <ArrowUpRight size={18} className="text-text/30 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" strokeWidth={1.5} />
-        </div>
-
-        <h3 className="heading-md group-hover:text-accent transition-colors">
-          {project.name.replace(/-/g, ' ')}
-        </h3>
-
-        <p className="text-sm-body text-text/60 line-clamp-3">
-          {project.description || 'No description available.'}
-        </p>
+      <div className="relative aspect-video overflow-hidden border-b border-border bg-paper-3" aria-hidden="true">
+        <iframe
+          src={specimenUrl}
+          title=""
+          loading="lazy"
+          tabIndex={-1}
+          className="absolute inset-0 w-full h-full pointer-events-none scale-[1.02] grayscale-[15%] transition-transform duration-500 group-hover:scale-[1.05]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-paper-3/25 to-transparent pointer-events-none" />
+        <span className="absolute top-4 left-4 stamp bg-paper-3/90">GV_{index.toString().padStart(3, '0')}</span>
       </div>
 
-      <div className="mt-8 pt-5 border-t border-border flex flex-wrap gap-4 items-center">
-        {project.language && (
-          <span className="tag">{project.language}</span>
-        )}
-        <div className="flex gap-4 ml-auto">
-          <span className="mono-meta text-[0.55rem] flex items-center gap-1.5">
-            <Star size={12} className="text-accent" /> {project.stargazers_count}
-          </span>
-          <span className="mono-meta text-[0.55rem] flex items-center gap-1.5">
-            <GitFork size={12} /> {project.forks_count}
-          </span>
+      <div className="p-7 flex flex-col justify-between flex-1 min-h-[260px]">
+        <div className="space-y-5">
+          <div className="flex justify-between items-start">
+            <span className="mono-meta text-accent">#{index.toString().padStart(2, '0')}</span>
+            <a href={projectUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.name} in a new tab`} className="min-w-11 min-h-11 -m-3 flex items-center justify-center">
+              <ArrowUpRight size={18} className="text-text/30 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" strokeWidth={1.5} />
+            </a>
+          </div>
+
+          <h3 className="heading-md group-hover:text-accent transition-colors">
+            <a href={projectUrl} target="_blank" rel="noopener noreferrer">{project.name.replace(/-/g, ' ')}</a>
+          </h3>
+
+          <p className="text-sm-body text-text/60 line-clamp-3">
+            {project.description || 'No description available.'}
+          </p>
+        </div>
+
+        <div className="mt-8 pt-5 border-t border-border flex flex-wrap gap-4 items-center">
+          {project.language && (
+            <span className="tag">{project.language}</span>
+          )}
+          <div className="flex gap-4 ml-auto">
+            <span className="mono-meta text-[0.55rem] flex items-center gap-1.5">
+              <Star size={12} className="text-accent" /> {project.stargazers_count}
+            </span>
+            <span className="mono-meta text-[0.55rem] flex items-center gap-1.5">
+              <GitFork size={12} /> {project.forks_count}
+            </span>
+          </div>
         </div>
       </div>
-    </motion.a>
+    </motion.article>
   );
 }

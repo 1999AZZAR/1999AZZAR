@@ -19,9 +19,9 @@ export default function Footer() {
   return (
     <footer className="border-t border-border bg-paper/50">
       <div className="max-w-6xl mx-auto px-6 py-16 md:py-20">
-        <div className="grid grid-cols-12 gap-10 md:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 md:gap-12">
           
-          <div className="col-span-12 lg:col-span-5 space-y-6">
+          <div className="col-span-2 md:col-span-12 lg:col-span-5 space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-md bg-accent text-paper flex items-center justify-center font-display font-semibold text-base">
                 AB
@@ -46,7 +46,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="col-span-6 sm:col-span-3 lg:col-span-2 lg:col-start-7 space-y-5">
+          <div className="col-span-1 md:col-span-3 lg:col-span-2 lg:col-start-7 space-y-5">
             <p className="mono-meta">Navigation</p>
             <div className="flex flex-col gap-2.5">
               {navItems.map((item) => (
@@ -61,7 +61,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="col-span-6 sm:col-span-3 lg:col-span-2 space-y-5">
+          <div className="col-span-1 md:col-span-3 lg:col-span-2 space-y-5">
             <p className="mono-meta">Connect</p>
             <div className="flex flex-col gap-2.5">
               <a href="mailto:azzar.budi@gmail.com" className="font-body text-sm text-text hover:text-text-2 transition-colors w-fit">

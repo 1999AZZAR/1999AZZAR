@@ -2,6 +2,8 @@
 
 import { useLanguage } from '@/context/LanguageContext';
 import PricingCalculator from '@/components/ui/pricing-calculator';
+import ProjectBrief from '@/components/ui/project-brief';
+import FAQ from '@/components/ui/faq';
 import { 
   Mail, MapPin, Send, MessageCircle, ShieldCheck, 
   Zap, Clock, TrendingUp, ArrowUpRight
@@ -146,6 +148,9 @@ export default function ContactPage() {
           </div>
         </div>
       </motion.section>
+
+      <ProjectBrief />
+      <FAQ />
     </main>
   );
 }
