@@ -31,6 +31,7 @@ export default function ContactPage() {
   ];
 
   const devLinks = [
+    { name: 'Google Developer', handle: 'g.dev/azzar', url: 'https://g.dev/azzar' },
     { name: 'GitHub', handle: '1999azzar', url: 'https://github.com/1999azzar' },
     { name: 'Devpost', handle: '1999AZZAR', url: 'https://devpost.com/1999AZZAR' },
     { name: 'HackerRank', handle: 'azzar_mr_zs', url: 'https://www.hackerrank.com/profile/azzar_mr_zs' },
