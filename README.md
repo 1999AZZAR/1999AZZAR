@@ -10,7 +10,7 @@
   <a href="https://twitter.com/siapa_hayosiapa"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=flat-square&logo=twitter&logoColor=white" alt="Twitter"></a>
   <br>
   <br>
-  <a href="https://1999azzar.github.io/1999AZZAR/" target="_blank"><img src="/public/grid-snake.svg" alt="Azzar Logo" height="150" style="border-radius: 8px;"></a>
+  <a href="https://glassgallery.my.id/" target="_blank"><img src="/public/grid-snake.svg" alt="Azzar Logo" height="150" style="border-radius: 8px;"></a>
 </div>
 
 ---
