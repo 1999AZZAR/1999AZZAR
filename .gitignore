@@ -31,3 +31,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# temp data
+temp/
+
+# project guardian / local memory
+memory.db
+memory.db-shm
+memory.db-wal
+*.db-shm
+*.db-wal
