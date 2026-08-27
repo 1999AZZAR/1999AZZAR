@@ -38,17 +38,6 @@
 - **DevOps & Cloud:** Docker, Kubernetes, AWS, CI/CD
 - **Currently Learning:** Distributed systems and advanced cloud-native architectures.
 
-## GitHub Activity
-
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=1999AZZAR&show_icons=true&theme=transparent&hide_border=true&title_color=2980b9" alt="GitHub Stats" width="48%">
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=1999AZZAR&theme=transparent&hide_border=true&title_color=2980b9" alt="Streak Stats" width="48%">
-</div>
-
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=1999azzar&theme=github-compact&hide_border=true&bg_color=transparent" alt="Activity Graph" width="100%">
-</div>
-
 ---
 
 <div align="center">
