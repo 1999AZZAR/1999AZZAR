@@ -18,7 +18,7 @@ export default function SEOJsonLd() {
         "url": `${siteUrl}/porto`,
         "image": {
           "@type": "ImageObject",
-          "url": "https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/azzar.png",
+          "url": "https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/public/azzar.png",
           "width": 800,
           "height": 800
         },

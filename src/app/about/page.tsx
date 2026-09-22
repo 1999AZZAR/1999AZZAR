@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Cpu, Code, Database, Brain, Globe, 
   ShieldCheck, Terminal, Server, Layout, Settings, 
@@ -21,8 +21,9 @@ const stagger = {
 };
 
 export default function AboutPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [ageInDays, setAgeInDays] = useState<number>(0);
+  const [photoEra, setPhotoEra] = useState<'adult' | 'child'>('adult');
 
   useEffect(() => {
     const birthDate = new Date('1999-10-09');
@@ -116,9 +117,63 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-5">
-            <div className="aspect-square rounded-lg overflow-hidden border border-border bg-paper-3">
-              <img src="/azzar.png" alt="Azzar Budiyanto" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+          <div className="lg:col-span-5 space-y-3">
+            <div className="flex items-center justify-between px-1">
+              <span className="mono-meta text-[0.6rem] text-accent font-semibold">
+                {photoEra === 'adult' ? 'PORTRAIT // PRESENT' : 'ORIGIN // EST_1999'}
+              </span>
+              <div className="inline-flex rounded border border-border p-0.5 bg-paper-2">
+                <button
+                  type="button"
+                  onClick={() => setPhotoEra('adult')}
+                  className={`px-2.5 py-0.5 text-[0.6rem] font-mono uppercase tracking-wider rounded transition-all ${
+                    photoEra === 'adult'
+                      ? 'bg-accent text-paper font-semibold shadow-sm'
+                      : 'text-text/70 hover:text-text'
+                  }`}
+                >
+                  {language === 'id' ? 'Sekarang' : 'Adult'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPhotoEra('child')}
+                  className={`px-2.5 py-0.5 text-[0.6rem] font-mono uppercase tracking-wider rounded transition-all ${
+                    photoEra === 'child'
+                      ? 'bg-accent text-paper font-semibold shadow-sm'
+                      : 'text-text/70 hover:text-text'
+                  }`}
+                >
+                  {language === 'id' ? 'Kecil (1999)' : 'Child (1999)'}
+                </button>
+              </div>
+            </div>
+
+            <div 
+              className="aspect-square rounded-lg overflow-hidden border border-border bg-paper-3 relative group cursor-pointer select-none"
+              onClick={() => setPhotoEra(prev => prev === 'adult' ? 'child' : 'adult')}
+              title={photoEra === 'adult' ? 'Click to switch to 1999 archive' : 'Click to switch to present portrait'}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={photoEra}
+                  src={photoEra === 'adult' ? '/me-adult.jpeg' : '/me-child.png'}
+                  alt={photoEra === 'adult' ? 'Azzar Budiyanto — Adult' : 'Azzar Budiyanto — Child (Est. 1999)'}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+              </AnimatePresence>
+
+              <div className="absolute bottom-3 right-3 bg-paper/90 backdrop-blur-md border border-border px-2 py-0.5 rounded text-[0.55rem] font-mono tracking-wider text-text/70 pointer-events-none group-hover:text-accent transition-colors">
+                {photoEra === 'adult' ? 'ERA: PRESENT' : 'ERA: 1999'} ⟷
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center px-1 text-[0.6rem] font-mono text-text/40">
+              <span>&gt; click_photo_to_toggle</span>
+              <span>1999 ⟷ {new Date().getFullYear()}</span>
             </div>
           </div>
         </div>

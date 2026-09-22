@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     description: 'IoT engineer & full-stack developer. Embedded systems, Arduino, Python, web technologies. Available for freelance projects.',
     siteName: 'Azzar Budiyanto Portfolio',
     images: [{
-      url: 'https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/azzar.png',
+      url: 'https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/public/azzar.png',
       width: 1200,
       height: 630,
       alt: 'Azzar Budiyanto - Engineer',
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     title: 'Azzar Budiyanto | IoT & Full-Stack Engineer',
     description: 'IoT engineer & full-stack developer. Embedded systems, Arduino, Python, web technologies.',
     creator: '@siapa_hayosiapa',
-    images: ['https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/resources/azzar.png'],
+    images: ['https://raw.githubusercontent.com/1999AZZAR/1999AZZAR/readme/public/azzar.png'],
   },
   other: {
     'contact': 'azzar.budi@gmail.com',

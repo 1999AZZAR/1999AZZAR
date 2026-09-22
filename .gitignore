@@ -41,3 +41,7 @@ memory.db-shm
 memory.db-wal
 *.db-shm
 *.db-wal
+
+# job hunting temp
+job-hunting/
+
