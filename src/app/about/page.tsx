@@ -156,7 +156,7 @@ export default function AboutPage() {
               <AnimatePresence mode="wait">
                 <motion.img
                   key={photoEra}
-                  src={photoEra === 'adult' ? '/me-adult.jpeg' : '/me-child.png'}
+                  src={photoEra === 'adult' ? '/me-adult.webp' : '/me-child.webp'}
                   alt={photoEra === 'adult' ? 'Azzar Budiyanto — Adult' : 'Azzar Budiyanto — Child (Est. 1999)'}
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
