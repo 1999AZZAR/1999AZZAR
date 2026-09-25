@@ -50,7 +50,8 @@ export default function AboutPage() {
   ];
 
   const experiences = [
-    { key: "LeadDev", company: "PT. TURGA BERKAH KUBRA", period: "2026/01 — PRESENT", achievements: ["expLeadDev1", "expLeadDev2", "expLeadDev3", "expLeadDev4", "expLeadDev5"] },
+    { key: "Full Stack Engineer", company: "PT. JEJARING MEDIA ARUS UTAMA", period: "2026/08 — PRESENT", achievements: ["expMediaEngineer1", "expMediaEngineer2", "expMediaEngineer3", "expMediaEngineer4", "expMediaEngineer5"] },
+    { key: "Lead Developer", company: "PT. TURGA BERKAH KUBRA", period: "2026/01 — PRESENT", achievements: ["expLeadDev1", "expLeadDev2", "expLeadDev3", "expLeadDev4", "expLeadDev5"] },
     { key: "Freelancer", company: "Self-employed", period: "2018/10 — PRESENT", achievements: ["expFreelancer1", "expFreelancer2", "expFreelancer3", "expFreelancer4", "expFreelancer5", "expFreelancer8", "expFreelancer9"] },
     { key: "Trainer", company: "Indobot Academy", period: "2022/01 — 2023/01", achievements: ["expTrainer1", "expTrainer2", "expTrainer3", "expTrainer4"] },
     { key: "Photographer", company: "Lembaran Kasih", period: "2020/09 — 2021/09", achievements: ["expPhotographer1", "expPhotographer2", "expPhotographer3", "expPhotographer4"] },
