@@ -75,7 +75,7 @@ export default function ProjectBrief() {
       String(form.get('description') || '').trim(),
     ].join('\n');
 
-    window.location.href = `mailto:azzar.budi@gmail.com?subject=${encodeURIComponent(`${text.subject}: ${clientName}`)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:azzar@glassgallery.my.id?subject=${encodeURIComponent(`${text.subject}: ${clientName}`)}&body=${encodeURIComponent(body)}`;
   }
 
   return (
