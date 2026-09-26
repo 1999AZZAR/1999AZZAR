@@ -12,7 +12,7 @@ type ViewType = 'web' | 'repos';
 export default function ProjectsPage() {
   const { projects, loading, error } = useGitHubProjects();
   const { t } = useLanguage();
-  const [currentView, setCurrentView] = useState<ViewType>('web');
+  const [currentView, setCurrentView] = useState<ViewType>('repos');
   const [searchQuery, setSearchQuery] = useState('');
 
   const categoryFiltered = useMemo(() => {
