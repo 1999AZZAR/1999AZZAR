@@ -45,3 +45,10 @@ memory.db-wal
 # job hunting temp
 job-hunting/
 
+# stray local helpers / bundles at root (not part of portfolio)
+/fill.js
+/route.js
+/vendor.js
+/index_*.py
+/.pre-commit-config.yaml
+
