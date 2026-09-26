@@ -1,7 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { translations, Language, TranslationKeys } from '@/lib/translations';
+import { getYearsOfExperience } from '@/lib/experience';
 
 interface LanguageContextType {
   language: Language;
@@ -31,10 +32,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = language;
   }, [language]);
 
+  const yearsOfExperience = useMemo(() => getYearsOfExperience(), []);
+
   const t = (key: TranslationKeys): string => {
     const currentTranslations = (translations as any)[language];
     const fallbackTranslations = translations['en'] as any;
-    return currentTranslations[key] || fallbackTranslations[key] || key;
+    const raw: unknown = currentTranslations[key] ?? fallbackTranslations[key] ?? key;
+    if (typeof raw !== 'string') return raw as string;
+    return raw.replaceAll('{{years}}', String(yearsOfExperience));
   };
 
   return (

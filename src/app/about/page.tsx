@@ -37,6 +37,13 @@ export default function AboutPage() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    (['/me-adult.webp', '/me-child.webp'] as const).forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   const skillCategories = [
     { id: "prog", icon: <Code size={20} />, titleKey: "progLanguagesTitle" },
     { id: "web", icon: <Globe size={20} />, titleKey: "webdevStackTitle" },
@@ -120,8 +127,18 @@ export default function AboutPage() {
 
           <div className="lg:col-span-5 space-y-3">
             <div className="flex items-center justify-between px-1">
-              <span className="mono-meta text-[0.6rem] text-accent font-semibold">
-                {photoEra === 'adult' ? 'PORTRAIT // PRESENT' : 'ORIGIN // EST_1999'}
+              <span className="mono-meta text-[0.6rem] text-accent font-semibold overflow-hidden inline-flex">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={photoEra}
+                    initial={{ y: 10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -10, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {photoEra === 'adult' ? 'PORTRAIT // PRESENT' : 'ORIGIN // EST_1999'}
+                  </motion.span>
+                </AnimatePresence>
               </span>
               <div className="inline-flex rounded border border-border p-0.5 bg-paper-2">
                 <button
@@ -154,21 +171,32 @@ export default function AboutPage() {
               onClick={() => setPhotoEra(prev => prev === 'adult' ? 'child' : 'adult')}
               title={photoEra === 'adult' ? 'Click to switch to 1999 archive' : 'Click to switch to present portrait'}
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence initial={false}>
                 <motion.img
                   key={photoEra}
                   src={photoEra === 'adult' ? '/me-adult.webp' : '/me-child.webp'}
                   alt={photoEra === 'adult' ? 'Azzar Budiyanto — Adult' : 'Azzar Budiyanto — Child (Est. 1999)'}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.25 }}
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  initial={{ opacity: 0, scale: 1.06, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, scale: 1.02, filter: 'blur(8px)' }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-[filter] duration-700"
                 />
               </AnimatePresence>
 
-              <div className="absolute bottom-3 right-3 bg-paper/90 backdrop-blur-md border border-border px-2 py-0.5 rounded text-[0.55rem] font-mono tracking-wider text-text/70 pointer-events-none group-hover:text-accent transition-colors">
-                {photoEra === 'adult' ? 'ERA: PRESENT' : 'ERA: 1999'} ⟷
+              <div className="absolute bottom-3 right-3 bg-paper/90 backdrop-blur-md border border-border px-2 py-0.5 rounded text-[0.55rem] font-mono tracking-wider text-text/70 pointer-events-none group-hover:text-accent transition-colors overflow-hidden">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={photoEra}
+                    className="inline-block"
+                    initial={{ y: 8, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -8, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {photoEra === 'adult' ? 'ERA: PRESENT' : 'ERA: 1999'} ⟷
+                  </motion.span>
+                </AnimatePresence>
               </div>
             </div>
 

@@ -252,12 +252,12 @@
 <p class="salute">Dear Hiring Manager,</p>
 <div class="body">
 <p class="lede">I build firmware that talks to the physical world — and the dashboards that make that conversation legible to humans.</p>
-<p>I am writing to express my interest in the IoT and automation role at <span class="placeholder-company">[Company Name]</span>. Over the last five years I have shipped end-to-end connected systems: ESP32 and STM32 firmware, MQTT pipelines, REST and WebSocket APIs, React-based telemetry dashboards, and the control loops running underneath. My most recent production work includes a multi-sensor telemetry stack on ESP32 (SHT20, thermistors, MQ-137 gas sensors), a fuzzy-plus-PID temperature controller tuned with Ziegler–Nichols and Cohen–Coon, and an RFID access system with relay control and Telegram alerting on ESP8266. I hold the BNSP IoT Practitioner certification (2024) and have been formally verified on HackerRank for problem-solving, Python, SQL, and REST APIs.</p>
+<p>I am writing to express my interest in the IoT and automation role at <span class="placeholder-company">[Company Name]</span>. Over the last <span data-exp-years>7+</span> years I have shipped end-to-end connected systems: ESP32 and STM32 firmware, MQTT pipelines, REST and WebSocket APIs, React-based telemetry dashboards, and the control loops running underneath. My most recent production work includes a multi-sensor telemetry stack on ESP32 (SHT20, thermistors, MQ-137 gas sensors), a fuzzy-plus-PID temperature controller tuned with Ziegler–Nichols and Cohen–Coon, and an RFID access system with relay control and Telegram alerting on ESP8266. I hold the BNSP IoT Practitioner certification (2024) and have been formally verified on HackerRank for problem-solving, Python, SQL, and REST APIs.</p>
 <p>I work comfortably across the full stack your role implies. On the device side I write clean C/C++ for STM32 HAL, Arduino-core code for ESP32/ESP8266, and Python for tooling and test rigs. On the cloud side I deploy containerised services on AWS and GCP behind Docker and Kubernetes, wire MQTT brokers (Mosquitto, EMQX, AWS IoT Core) to Node.js and Django backends, and front the data with React + Next.js dashboards using WebSockets for live updates. I have implemented PID, Fuzzy Logic, and LQR controllers and have run auto-tuning experiments with genetic algorithms; I am comfortable picking the right loop for the plant rather than defending a favourite one.</p>
 <div class="bullets">
 <strong>Highlights of fit for this role:</strong>
 <ul>
-<li>5+ years shipping IoT products from schematic to dashboard, with a portfolio of live systems and 30+ open repositories.</li>
+<li><span data-exp-years>7+</span> years shipping IoT products from schematic to dashboard, with a portfolio of live systems and 30+ open repositories.</li>
 <li>Production firmware on ESP32, STM32, and Arduino; sensor integration across temperature, humidity, gas, RFID, and relay-actuated loads.</li>
 <li>Control-systems depth: PID with Ziegler–Nichols and Cohen–Coon, Fuzzy Logic supervisor, LQR; MATLAB simulation to embedded deployment.</li>
 <li>Cloud telemetry stack: MQTT, Node.js / Django APIs, PostgreSQL, Redis caching, and React dashboards with live WebSocket feeds.</li>
@@ -317,5 +317,5 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
-</body>
+<script id="exp-years-script">(function(){var SY=2018,SM=10;function y(){var n=new Date(),v=n.getFullYear()-SY;if(n.getMonth()+1<SM)v--;return Math.max(0,v)}var t=y()+"+";document.querySelectorAll("[data-exp-years]").forEach(function(e){e.textContent=t})})();</script></body>
 </html>
