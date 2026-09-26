@@ -1,19 +1,27 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useGitHubProjects, Project } from '@/hooks/useGitHubProjects';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Star, GitFork, Loader2, Globe, Code2, Search } from 'lucide-react';
+import { ArrowUpRight, Star, GitFork, Loader2, Globe, Code2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import Fuse from 'fuse.js';
 
 type ViewType = 'web' | 'repos';
+
+const PAGE_SIZE = 12;
 
 export default function ProjectsPage() {
   const { projects, loading, error } = useGitHubProjects();
   const { t } = useLanguage();
   const [currentView, setCurrentView] = useState<ViewType>('repos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setPage(1);
+  }, [currentView, searchQuery]);
 
   const categoryFiltered = useMemo(() => {
     const filtered = projects.filter(project => {
@@ -49,6 +57,27 @@ export default function ProjectsPage() {
     if (!searchQuery.trim()) return categoryFiltered;
     return fuse.search(searchQuery).map(result => result.item);
   }, [searchQuery, categoryFiltered, fuse]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredProjects.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pagedProjects = useMemo(() => {
+    const start = (safePage - 1) * PAGE_SIZE;
+    return filteredProjects.slice(start, start + PAGE_SIZE);
+  }, [filteredProjects, safePage]);
+
+  const pageNumbers = useMemo(() => {
+    const window = 1;
+    const pages = new Set<number>([1, totalPages, safePage]);
+    for (let i = safePage - window; i <= safePage + window; i++) {
+      if (i > 1 && i < totalPages) pages.add(i);
+    }
+    return [...pages].sort((a, b) => a - b);
+  }, [safePage, totalPages]);
+
+  const goToPage = (next: number) => {
+    setPage(Math.min(Math.max(1, next), totalPages));
+    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <main className="page-container">
@@ -103,23 +132,64 @@ export default function ProjectsPage() {
           <p className="text-sm-body text-accent">{error}</p>
         </div>
       ) : (
-        <div className="space-y-8">
+        <div ref={resultsRef} className="space-y-8 scroll-mt-24">
           <div className="flex justify-between items-end pb-2">
             <span className="mono-meta">
               {filteredProjects.length} {t('portoFound' as any)}
             </span>
+            {totalPages > 1 && (
+              <span className="mono-meta text-text/50">
+                PAGE_{safePage}/{totalPages}
+              </span>
+            )}
           </div>
 
           <motion.div
-            key={`${currentView}-${searchQuery}-${filteredProjects.length}`}
+            key={`${currentView}-${searchQuery}-${safePage}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-5"
           >
-            {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.name} project={project} index={index + 1} />
+            {pagedProjects.map((project, index) => (
+              <ProjectCard key={project.name} project={project} index={(safePage - 1) * PAGE_SIZE + index + 1} />
             ))}
           </motion.div>
+
+          {totalPages > 1 && (
+            <nav aria-label="Projects pagination" className="flex items-center justify-center gap-2 pt-4">
+              <button
+                onClick={() => goToPage(safePage - 1)}
+                disabled={safePage === 1}
+                aria-label="Previous page"
+                className="btn-ghost !py-2 !px-3 disabled:opacity-30 disabled:pointer-events-none"
+              >
+                <ChevronLeft size={14} />
+              </button>
+              {pageNumbers.map((num, i) => (
+                <span key={num} className="flex items-center gap-2">
+                  {i > 0 && num - pageNumbers[i - 1] > 1 && (
+                    <span className="mono-meta text-text/30">…</span>
+                  )}
+                  <button
+                    onClick={() => goToPage(num)}
+                    aria-label={`Page ${num}`}
+                    aria-current={num === safePage ? 'page' : undefined}
+                    className={`min-w-9 px-2 py-2 rounded-md text-[0.65rem] font-mono tracking-wider transition-all ${num === safePage ? 'bg-accent text-paper' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
+                  >
+                    {num}
+                  </button>
+                </span>
+              ))}
+              <button
+                onClick={() => goToPage(safePage + 1)}
+                disabled={safePage === totalPages}
+                aria-label="Next page"
+                className="btn-ghost !py-2 !px-3 disabled:opacity-30 disabled:pointer-events-none"
+              >
+                <ChevronRight size={14} />
+              </button>
+            </nav>
+          )}
 
           {filteredProjects.length === 0 && (
             <motion.div 
