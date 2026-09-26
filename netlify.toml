@@ -1,8 +1,25 @@
 [build]
   command = "npm run build"
   publish = ".next"
-  # Reset base directory to root
   base = "/"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/id"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/en"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/login"
+  to = "/"
+  status = 301
+  force = true
