@@ -7,6 +7,12 @@
   package = "@netlify/plugin-nextjs"
 
 [[redirects]]
+  from = "https://azzar.netlify.app/*"
+  to = "https://glassgallery.my.id/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/id"
   to = "/"
   status = 301
