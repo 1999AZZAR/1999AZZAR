@@ -197,6 +197,29 @@
     opacity: 0.6;
   }
 
+  @keyframes skeleton-sweep {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+    background-color: color-mix(in oklch, var(--color-paper-3), var(--color-text) 12%);
+  }
+
+  .skeleton-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 25%, color-mix(in oklch, var(--color-paper) 60%, transparent) 50%, transparent 75%);
+    animation: skeleton-sweep 1.4s var(--ease-in-out) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton-shimmer::after { animation: none; }
+  }
+
   .card-surface-subtle {
     background-color: transparent;
     border: 1px solid var(--color-border);

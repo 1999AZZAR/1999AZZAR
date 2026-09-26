@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 import { Globe, Menu, X, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,8 +18,12 @@ const navItems = [
 
 export default function Navbar() {
   const { language, setLanguage, t } = useLanguage();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const isActive = (href: string) =>
+    pathname === href || (href === '/projects' && pathname === '/porto');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -54,7 +59,8 @@ export default function Navbar() {
             <Link 
               key={item.href} 
               href={item.href}
-              className="px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.15em] text-text hover:text-text-2 rounded-md hover:bg-paper-3 transition-all"
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              className={`px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.15em] rounded-md transition-all ${isActive(item.href) ? 'text-accent bg-accent/10' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
             >
               {t(item.labelKey as any)}
             </Link>
@@ -102,7 +108,8 @@ export default function Navbar() {
                   <Link 
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between py-3 px-4 font-display text-lg font-medium text-text-2 hover:text-accent hover:bg-paper-3 rounded-md transition-all"
+                    aria-current={isActive(item.href) ? 'page' : undefined}
+                    className={`flex items-center justify-between py-3 px-4 font-display text-lg font-medium rounded-md transition-all ${isActive(item.href) ? 'text-accent bg-accent/10' : 'text-text-2 hover:text-accent hover:bg-paper-3'}`}
                   >
                     {t(item.labelKey as any)}
                     <ArrowUpRight size={14} className="opacity-30" />
