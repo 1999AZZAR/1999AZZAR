@@ -4,8 +4,9 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useGitHubProjects, Project } from '@/hooks/useGitHubProjects';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Star, GitFork, Loader2, Globe, Code2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUpRight, Star, GitFork, Globe, Code2, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import Fuse from 'fuse.js';
+import { ProjectGridSkeleton } from '@/components/ui/skeletons';
 
 type ViewType = 'web' | 'repos';
 
@@ -124,9 +125,7 @@ export default function ProjectsPage() {
       </section>
 
       {loading ? (
-        <div className="flex justify-center py-32">
-          <Loader2 className="w-8 h-8 animate-spin text-accent" strokeWidth={2} />
-        </div>
+        <ProjectGridSkeleton count={6} />
       ) : error ? (
         <div className="card-surface p-10 text-center">
           <p className="text-sm-body text-accent">{error}</p>

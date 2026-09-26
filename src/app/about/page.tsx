@@ -176,11 +176,12 @@ export default function AboutPage() {
                   key={photoEra}
                   src={photoEra === 'adult' ? '/me-adult.webp' : '/me-child.webp'}
                   alt={photoEra === 'adult' ? 'Azzar Budiyanto — Adult' : 'Azzar Budiyanto — Child (Est. 1999)'}
-                  initial={{ opacity: 0, scale: 1.06, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, scale: 1.02, filter: 'blur(8px)' }}
+                  initial={{ opacity: 0, scale: 1.06, filter: 'grayscale(100%) blur(10px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'grayscale(100%) blur(0px)' }}
+                  exit={{ opacity: 0, scale: 1.02, filter: 'grayscale(100%) blur(8px)' }}
+                  whileHover={{ filter: 'grayscale(0%) blur(0px)' }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-[filter] duration-700"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               </AnimatePresence>
 

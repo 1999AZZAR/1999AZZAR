@@ -1,7 +1,9 @@
 import { Newspaper, ArrowUpRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import BlogHeader from '@/components/ui/blog-header';
+import { PostGridSkeleton } from '@/components/ui/skeletons';
 
 export const revalidate = 3600;
 export const dynamic = 'force-dynamic';
@@ -48,8 +50,7 @@ async function getBlogPosts(): Promise<Post[]> {
   }
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const posts = await getBlogPosts();
+export function generateMetadata(): Metadata {
   const title = 'Blog — Wong Edan\'s by Azzar | IoT, Infrastructure & Engineering';
   const description = 'Essays on infrastructure, IoT, networking, and the messy edges between bits and atoms. Written by Azzar Budiyanto on Wong Edan\'s.';
   return {
@@ -124,16 +125,9 @@ function buildBlogPersonJsonLd(): string {
   });
 }
 
-export default async function BlogPage() {
-  const posts = await getBlogPosts();
-  const itemListJsonLd = buildItemListJsonLd(posts);
-  const personJsonLd = buildBlogPersonJsonLd();
-
+export default function BlogPage() {
   return (
     <main className="page-container">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: itemListJsonLd }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personJsonLd }} />
-
       <BlogHeader />
 
       <p className="text-sm-body mb-10 max-w-2xl">
@@ -144,6 +138,23 @@ export default async function BlogPage() {
           Wong Edan&apos;s ↗
         </a>.
       </p>
+
+      <Suspense fallback={<PostGridSkeleton count={6} />}>
+        <BlogPosts />
+      </Suspense>
+    </main>
+  );
+}
+
+async function BlogPosts() {
+  const posts = await getBlogPosts();
+  const itemListJsonLd = buildItemListJsonLd(posts);
+  const personJsonLd = buildBlogPersonJsonLd();
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: itemListJsonLd }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personJsonLd }} />
 
       {posts.length === 0 ? (
         <div className="card-surface p-12 text-center">
@@ -187,6 +198,6 @@ export default async function BlogPage() {
         </p>
         <p className="mono-meta text-[0.55rem]">{posts.length} articles</p>
       </div>
-    </main>
+    </>
   );
 }
