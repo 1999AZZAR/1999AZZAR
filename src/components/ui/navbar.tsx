@@ -60,7 +60,7 @@ export default function Navbar() {
               key={item.href} 
               href={item.href}
               aria-current={isActive(item.href) ? 'page' : undefined}
-              className={`px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.15em] rounded-md transition-all ${isActive(item.href) ? 'text-accent bg-accent/10' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
+              className={`nav-link px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.15em] rounded-md transition-colors ${isActive(item.href) ? 'nav-link-active' : 'text-text hover:text-accent'}`}
             >
               {t(item.labelKey as any)}
             </Link>
@@ -109,7 +109,7 @@ export default function Navbar() {
                     href={item.href}
                     onClick={() => setIsOpen(false)}
                     aria-current={isActive(item.href) ? 'page' : undefined}
-                    className={`flex items-center justify-between py-3 px-4 font-display text-lg font-medium rounded-md transition-all ${isActive(item.href) ? 'text-accent bg-accent/10' : 'text-text-2 hover:text-accent hover:bg-paper-3'}`}
+                    className={`flex items-center justify-between py-3 px-4 font-display text-lg font-medium rounded-md transition-colors ${isActive(item.href) ? 'text-accent' : 'text-text-2 hover:text-accent hover:bg-paper-3'}`}
                   >
                     {t(item.labelKey as any)}
                     <ArrowUpRight size={14} className="opacity-30" />

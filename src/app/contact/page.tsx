@@ -10,11 +10,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
-};
+import { fadeUp } from '@/lib/motion';
 
 export default function ContactPage() {
   const { t } = useLanguage();

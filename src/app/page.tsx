@@ -5,16 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import RotatingSkills from '@/components/ui/rotating-skills';
 import { useLanguage } from '@/context/LanguageContext';
-
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.15 } }
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
-};
+import { fadeUp, stagger } from '@/lib/motion';
 
 export default function HomePage() {
   const { t, language } = useLanguage();

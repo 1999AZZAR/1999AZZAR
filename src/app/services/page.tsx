@@ -9,16 +9,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.02 } }
-};
+import { fadeUp, staggerFast as stagger } from '@/lib/motion';
 
 function getIcon(key: string) {
   const icons: Record<string, React.ReactNode> = {

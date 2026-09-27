@@ -227,7 +227,7 @@ async function BlogPosts({ page }: { page: number }) {
                 href={pageHref(num)}
                 aria-label={`Page ${num}`}
                 aria-current={num === safePage ? 'page' : undefined}
-                className={`min-w-9 px-2 py-2 rounded-md text-[0.65rem] font-mono tracking-wider text-center transition-all ${num === safePage ? 'bg-accent text-paper' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
+                className={`min-w-9 px-2 py-2 rounded-md text-[0.65rem] font-mono tracking-wider text-center transition-all ${num === safePage ? 'bg-text text-paper' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
               >
                 {num}
               </Link>

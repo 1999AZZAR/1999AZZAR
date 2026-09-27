@@ -5,7 +5,7 @@
 :root {
   --color-paper: oklch(91% 0.025 78);
   --color-paper-2: oklch(60% 0.040 78);
-  --color-paper-3: oklch(84% 0.030 78);
+  --color-paper-3: oklch(93.5% 0.018 88);
   --color-text: oklch(18% 0.020 50);
   --color-text-2: oklch(35% 0.025 50);
   --color-accent: oklch(38% 0.200 25);
@@ -232,7 +232,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background-color: var(--color-accent);
+    background-color: var(--color-text);
     color: var(--color-paper);
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -246,7 +246,7 @@
   }
 
   .btn-primary:hover {
-    background-color: var(--color-accent-2);
+    background-color: var(--color-accent);
     transform: translateY(-1px);
     color: var(--color-paper);
   }
@@ -331,6 +331,32 @@
 
   .chip:hover {
     border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 2px;
+    height: 1.5px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .nav-link:hover::after,
+  .nav-link-active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link-active {
     color: var(--color-accent);
   }
 

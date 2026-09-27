@@ -143,7 +143,7 @@ export default function PricingCalculator() {
               {(['USD', 'IDR', 'EUR', 'GBP'] as const).map((cur) => (
                 <button key={cur}
                   onClick={() => setCurrency(cur)}
-                  className={`py-2 rounded-sm text-[0.65rem] font-mono font-medium transition-all ${currency === cur ? 'bg-accent text-paper' : 'bg-paper-3 text-text hover:text-text-2 border border-border'}`}
+                  className={`py-2 rounded-sm text-[0.65rem] font-mono font-medium transition-all ${currency === cur ? 'bg-text text-paper' : 'bg-paper-3 text-text hover:text-text-2 border border-border'}`}
                 >
                   {cur}
                 </button>

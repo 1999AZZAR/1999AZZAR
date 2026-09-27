@@ -9,16 +9,7 @@ import {
   FileText, Calendar, Briefcase, ArrowUpRight
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08 } }
-};
+import { fadeUp, stagger } from '@/lib/motion';
 
 export default function AboutPage() {
   const { t, language } = useLanguage();
@@ -146,7 +137,7 @@ export default function AboutPage() {
                   onClick={() => setPhotoEra('adult')}
                   className={`px-2.5 py-0.5 text-[0.6rem] font-mono uppercase tracking-wider rounded transition-all ${
                     photoEra === 'adult'
-                      ? 'bg-accent text-paper font-semibold shadow-sm'
+                      ? 'bg-text text-paper font-semibold shadow-sm'
                       : 'text-text/70 hover:text-text'
                   }`}
                 >
@@ -157,7 +148,7 @@ export default function AboutPage() {
                   onClick={() => setPhotoEra('child')}
                   className={`px-2.5 py-0.5 text-[0.6rem] font-mono uppercase tracking-wider rounded transition-all ${
                     photoEra === 'child'
-                      ? 'bg-accent text-paper font-semibold shadow-sm'
+                      ? 'bg-text text-paper font-semibold shadow-sm'
                       : 'text-text/70 hover:text-text'
                   }`}
                 >

@@ -110,13 +110,13 @@ export default function ProjectsPage() {
           <div className="flex bg-paper-3 rounded-lg p-1 border border-border shrink-0">
             <button 
               onClick={() => setCurrentView('web')}
-              className={`px-5 py-2.5 rounded-md text-[0.65rem] font-mono uppercase tracking-wider transition-all flex items-center gap-2 ${currentView === 'web' ? 'bg-accent text-paper' : 'text-text hover:text-text-2'}`}
+              className={`px-5 py-2.5 rounded-md text-[0.65rem] font-mono uppercase tracking-wider transition-all flex items-center gap-2 ${currentView === 'web' ? 'bg-text text-paper' : 'text-text hover:text-text-2'}`}
             >
               <Globe size={14} /> {t('portoLiveSites' as any)}
             </button>
             <button 
               onClick={() => setCurrentView('repos')}
-              className={`px-5 py-2.5 rounded-md text-[0.65rem] font-mono uppercase tracking-wider transition-all flex items-center gap-2 ${currentView === 'repos' ? 'bg-accent text-paper' : 'text-text hover:text-text-2'}`}
+              className={`px-5 py-2.5 rounded-md text-[0.65rem] font-mono uppercase tracking-wider transition-all flex items-center gap-2 ${currentView === 'repos' ? 'bg-text text-paper' : 'text-text hover:text-text-2'}`}
             >
               <Code2 size={14} /> {t('portoRepositories' as any)}
             </button>
@@ -173,7 +173,7 @@ export default function ProjectsPage() {
                     onClick={() => goToPage(num)}
                     aria-label={`Page ${num}`}
                     aria-current={num === safePage ? 'page' : undefined}
-                    className={`min-w-9 px-2 py-2 rounded-md text-[0.65rem] font-mono tracking-wider transition-all ${num === safePage ? 'bg-accent text-paper' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
+                    className={`min-w-9 px-2 py-2 rounded-md text-[0.65rem] font-mono tracking-wider transition-all ${num === safePage ? 'bg-text text-paper' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
                   >
                     {num}
                   </button>
