@@ -103,7 +103,7 @@ export default function ServicesPage() {
       </motion.div>
 
       {/* CTA */}
-      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mt-24 card-surface bg-accent/5 border-accent/20 p-10 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8">
+      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mt-24 card-surface p-10 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="space-y-2">
           <h2 className="heading-lg">Ready to scale?</h2>
           <p className="text-sm-body">Let&apos;s discuss your next breakthrough project.</p>

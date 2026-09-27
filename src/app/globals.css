@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --color-paper: oklch(91% 0.025 78);
+  --color-paper: oklch(90.9% 0.023 85);
   --color-paper-2: oklch(60% 0.040 78);
   --color-paper-3: oklch(93.5% 0.018 88);
   --color-text: oklch(18% 0.020 50);
@@ -407,10 +407,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, var(--color-text-2), var(--color-accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--color-text);
   }
 }
 

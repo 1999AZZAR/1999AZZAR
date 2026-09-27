@@ -120,7 +120,7 @@ export default function ContactPage() {
           {/* Right */}
           <div className="lg:col-span-7">
             <div className="lg:sticky lg:top-24 space-y-8">
-              <div className="card-surface bg-accent/5 border-accent/20 p-8 md:p-10 space-y-4">
+              <div className="card-surface p-8 md:p-10 space-y-4">
                 <h3 className="heading-md flex items-center gap-3 text-accent">
                   Let&apos;s work together
                 </h3>

@@ -118,7 +118,7 @@ export default function PricingCalculator() {
   };
 
   return (
-    <div className="card-surface bg-accent/5 border-accent/20 p-8 md:p-10">
+    <div className="card-surface p-8 md:p-10">
       <div className="flex items-center gap-2.5 mb-6">
         <Calculator size={16} className="text-accent" strokeWidth={1.5} />
         <span className="section-label">{t('calcTitle' as any)}</span>
@@ -215,7 +215,7 @@ export default function PricingCalculator() {
                   </div>
                 </div>
               )}
-              <div className="card-surface bg-accent/10 border-accent/30 p-4 flex items-center gap-3">
+              <div className="card-surface p-4 flex items-center gap-3">
                 <Calculator size={16} className="text-accent shrink-0" />
                 <div>
                   <p className="stat-label text-accent">{t('calcTotalEst' as any)}</p>
