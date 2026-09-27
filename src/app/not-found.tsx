@@ -10,6 +10,8 @@ export const metadata: Metadata = {
 
 const shortcuts = [
   { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
   { href: '/projects', label: 'Projects' },
   { href: '/blog', label: 'Journal' },
   { href: '/contact', label: 'Contact' },
