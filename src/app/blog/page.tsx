@@ -125,7 +125,15 @@ function buildBlogPersonJsonLd(): string {
   });
 }
 
-export default function BlogPage() {
+const BLOG_PAGE_SIZE = 6;
+
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = Math.max(1, parseInt(pageParam ?? '1', 10) || 1);
   return (
     <main className="page-container">
       <BlogHeader />
@@ -140,16 +148,20 @@ export default function BlogPage() {
       </p>
 
       <Suspense fallback={<PostGridSkeleton count={6} />}>
-        <BlogPosts />
+        <BlogPosts page={page} />
       </Suspense>
     </main>
   );
 }
 
-async function BlogPosts() {
+async function BlogPosts({ page }: { page: number }) {
   const posts = await getBlogPosts();
   const itemListJsonLd = buildItemListJsonLd(posts);
   const personJsonLd = buildBlogPersonJsonLd();
+  const totalPages = Math.max(1, Math.ceil(posts.length / BLOG_PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pagedPosts = posts.slice((safePage - 1) * BLOG_PAGE_SIZE, safePage * BLOG_PAGE_SIZE);
+  const pageHref = (n: number) => (n <= 1 ? '/blog' : `/blog?page=${n}`);
 
   return (
     <>
@@ -166,13 +178,13 @@ async function BlogPosts() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {posts.map((post, index) => (
-            <a key={index} href={post.link} target="_blank" rel="noopener noreferrer me"
+          {pagedPosts.map((post, index) => (
+            <a key={(safePage - 1) * BLOG_PAGE_SIZE + index} href={post.link} target="_blank" rel="noopener noreferrer me"
               className="card-surface p-7 flex flex-col justify-between min-h-[260px] group"
             >
               <div>
                 <div className="flex justify-between items-start mb-4">
-                  <span className="mono-meta text-accent">#{String(index + 1).padStart(2, '0')}</span>
+                  <span className="mono-meta text-accent">#{String((safePage - 1) * BLOG_PAGE_SIZE + index + 1).padStart(2, '0')}</span>
                   <ArrowUpRight size={16} className="text-text/30 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" strokeWidth={1.5} />
                 </div>
                 <h3 className="heading-md !text-base group-hover:text-accent transition-colors mb-3">{post.title}</h3>
@@ -190,6 +202,46 @@ async function BlogPosts() {
             </a>
           ))}
         </div>
+      )}
+
+      {totalPages > 1 && posts.length > 0 && (
+        <nav aria-label="Blog pagination" className="flex items-center justify-center gap-2 mt-10">
+          <Link
+            href={pageHref(safePage - 1)}
+            aria-label="Previous page"
+            aria-disabled={safePage === 1}
+            className={`btn-ghost !py-2 !px-3 ${safePage === 1 ? 'opacity-30 pointer-events-none' : ''}`}
+          >
+            ←
+          </Link>
+          {Array.from({ length: totalPages }).map((_, i) => {
+            const num = i + 1;
+            if (totalPages > 7 && Math.abs(num - safePage) > 2 && num !== 1 && num !== totalPages) {
+              return num === 2 || num === totalPages - 1 ? (
+                <span key={num} className="mono-meta text-text/30">…</span>
+              ) : null;
+            }
+            return (
+              <Link
+                key={num}
+                href={pageHref(num)}
+                aria-label={`Page ${num}`}
+                aria-current={num === safePage ? 'page' : undefined}
+                className={`min-w-9 px-2 py-2 rounded-md text-[0.65rem] font-mono tracking-wider text-center transition-all ${num === safePage ? 'bg-accent text-paper' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
+              >
+                {num}
+              </Link>
+            );
+          })}
+          <Link
+            href={pageHref(safePage + 1)}
+            aria-label="Next page"
+            aria-disabled={safePage === totalPages}
+            className={`btn-ghost !py-2 !px-3 ${safePage === totalPages ? 'opacity-30 pointer-events-none' : ''}`}
+          >
+            →
+          </Link>
+        </nav>
       )}
 
       <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
