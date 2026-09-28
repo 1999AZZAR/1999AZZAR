@@ -193,7 +193,7 @@ export default function PricingCalculator() {
 
         {results && (
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="pt-6 border-t border-border space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="card-surface p-4 flex items-center gap-3 min-w-0">
                 <DollarSign size={16} className="text-accent shrink-0" />
                 <div className="min-w-0 flex-1">

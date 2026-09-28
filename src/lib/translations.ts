@@ -505,6 +505,14 @@ export const translations = {
     "ariaLoadingProjects": "Loading projects",
     "ariaLoadingArticles": "Loading articles",
     "articlesCount": "articles",
+    "homeSystemReady": "> system_ready — accepting new connections",
+    "homeCoreCompetency": "CORE_COMPETENCY",
+    "aboutClickPhoto": "> click_photo_to_toggle",
+    "photoPortrait": "PORTRAIT // PRESENT",
+    "photoOrigin": "ORIGIN // EST_1999",
+    "eraPresent": "ERA: PRESENT",
+    "notFoundStatus": "> status: 404 — null response_",
+    "errorStatus": "> status: 500 — attempting recovery_",
     "hireMe": "Hire Me"
   },
   "id": {
@@ -1012,6 +1020,14 @@ export const translations = {
     "ariaLoadingProjects": "Memuat proyek",
     "ariaLoadingArticles": "Memuat artikel",
     "articlesCount": "artikel",
+    "homeSystemReady": "> system_ready — menerima koneksi baru",
+    "homeCoreCompetency": "KOMPETENSI_INTI",
+    "aboutClickPhoto": "> klik_foto_untuk_ganti",
+    "photoPortrait": "POTRET // KINI",
+    "photoOrigin": "ASAL // EST_1999",
+    "eraPresent": "ERA: KINI",
+    "notFoundStatus": "> status: 404 — respons kosong_",
+    "errorStatus": "> status: 500 — mencoba pemulihan_",
     "hireMe": "Hubungi Saya"
   }
 };

@@ -27,7 +27,7 @@ export default function Error({
           {t('errorPageDesc' as any)}
         </p>
         <p className="typewriter text-text/30 text-[0.7rem] mb-12">
-          &gt; status: 500 — attempting recovery_
+          {t('errorStatus' as any)}
         </p>
 
         <div className="flex flex-wrap gap-4">

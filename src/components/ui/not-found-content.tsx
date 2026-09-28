@@ -31,7 +31,7 @@ export default function NotFoundContent() {
         {t('notFoundDesc' as any)}
       </p>
       <p className="typewriter text-text/30 text-[0.7rem] mb-12">
-        &gt; status: 404 — null response_
+        {t('notFoundStatus' as any)}
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mb-12">

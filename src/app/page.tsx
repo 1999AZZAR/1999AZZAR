@@ -51,7 +51,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.p variants={fadeUp} className="typewriter text-text/30 text-[0.7rem]">
-              &gt; system_ready — accepting new connections
+              {t('homeSystemReady' as any)}
             </motion.p>
           </div>
 
@@ -98,7 +98,7 @@ export default function HomePage() {
               <Link href="/about" className="mono-meta hover:text-accent transition-colors inline-flex items-center gap-1.5">
                 {t('aboutIdentityTitle' as any)} <ArrowUpRight size={10} />
               </Link>
-              <span className="typewriter text-[0.55rem] text-text/20">CORE_COMPETENCY</span>
+              <span className="typewriter text-[0.55rem] text-text/20">{t('homeCoreCompetency' as any)}</span>
             </div>
           </motion.div>
         </div>

@@ -127,7 +127,7 @@ export default function AboutPage() {
                     exit={{ y: -10, opacity: 0 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    {photoEra === 'adult' ? 'PORTRAIT // PRESENT' : 'ORIGIN // EST_1999'}
+                    {photoEra === 'adult' ? t('photoPortrait' as any) : t('photoOrigin' as any)}
                   </motion.span>
                 </AnimatePresence>
               </span>
@@ -185,14 +185,14 @@ export default function AboutPage() {
                     exit={{ y: -8, opacity: 0 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    {photoEra === 'adult' ? 'ERA: PRESENT' : 'ERA: 1999'} ⟷
+                    {photoEra === 'adult' ? t('eraPresent' as any) : 'ERA: 1999'} ⟷
                   </motion.span>
                 </AnimatePresence>
               </div>
             </div>
 
             <div className="flex justify-between items-center px-1 text-[0.6rem] font-mono text-text/40">
-              <span>&gt; click_photo_to_toggle</span>
+              <span>{t('aboutClickPhoto' as any)}</span>
               <span>1999 ⟷ {new Date().getFullYear()}</span>
             </div>
           </div>
