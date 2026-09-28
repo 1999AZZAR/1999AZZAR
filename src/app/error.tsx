@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ArrowUpRight, RotateCcw, TriangleAlert } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Error({
   reset,
@@ -9,6 +10,7 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const { t } = useLanguage();
   return (
     <main className="page-container">
       <section className="section-spacing">
@@ -22,8 +24,7 @@ export default function Error({
         </h1>
 
         <p className="text-sm-body max-w-2xl mb-4">
-          Something failed while rendering this page. The fault has been isolated —
-          retrying usually recovers the session.
+          {t('errorPageDesc' as any)}
         </p>
         <p className="typewriter text-text/30 text-[0.7rem] mb-12">
           &gt; status: 500 — attempting recovery_
@@ -31,10 +32,10 @@ export default function Error({
 
         <div className="flex flex-wrap gap-4">
           <button onClick={() => reset()} className="btn-primary">
-            <RotateCcw size={14} /> Try Again
+            <RotateCcw size={14} /> {t('errorPageRetry' as any)}
           </button>
           <Link href="/" className="btn-ghost">
-            Back to Home <ArrowUpRight size={14} />
+            {t('notFoundBack' as any)} <ArrowUpRight size={14} />
           </Link>
         </div>
       </section>

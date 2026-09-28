@@ -27,8 +27,8 @@ export default function HomePage() {
           <div className="lg:col-span-8 space-y-10">
             <motion.div variants={fadeUp} className="flex items-center gap-3">
               <Cpu size={14} className="text-accent" strokeWidth={1.5} />
-              <span className="section-label">Est. 1999 &mdash; IoT &amp; Full-Stack Engineer</span>
-              <span className="stamp ml-2 hidden sm:inline-flex">Active</span>
+              <span className="section-label">{t('homeTagline' as any)}</span>
+              <span className="stamp ml-2 hidden sm:inline-flex">{t('homeActive' as any)}</span>
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="heading-xl !text-[clamp(2.8rem,8vw,5.5rem)] !font-[500] tracking-[-0.03em] leading-[0.95]">
@@ -70,7 +70,7 @@ export default function HomePage() {
             <div className="flex items-center gap-2.5">
               <Activity size={14} className="text-accent" strokeWidth={1.5} />
               <span className="section-label">{t('statusTitle' as any)}</span>
-              <span className="stamp ml-auto text-[0.5rem]">Live</span>
+              <span className="stamp ml-auto text-[0.5rem]">{t('homeLive' as any)}</span>
             </div>
             <p className="heading-lg !text-[clamp(2rem,5vw,3.5rem)] gradient-text !font-[500]">
               {t('statusOnline' as any)}
@@ -120,14 +120,14 @@ export default function HomePage() {
           <Link href="/blog" className="card-surface block p-8 md:p-10 space-y-6 group">
             <div className="flex items-center gap-3">
               <Newspaper size={16} className="text-accent" strokeWidth={1.5} />
-              <span className="typewriter text-[0.65rem] uppercase tracking-[0.1em] text-text/50">Latest Entry</span>
-              <span className="stamp ml-auto text-[0.5rem]">New</span>
+              <span className="typewriter text-[0.65rem] uppercase tracking-[0.1em] text-text/50">{t('homeLatestEntry' as any)}</span>
+              <span className="stamp ml-auto text-[0.5rem]">{t('homeNew' as any)}</span>
             </div>
             <p className="heading-md group-hover:text-accent transition-colors">
               &ldquo;{t('blogQuote' as any)}&rdquo;
             </p>
             <div className="flex items-center gap-2 text-sm-body">
-              <span className="mono-meta">Read more</span>
+              <span className="mono-meta">{t('homeReadMore' as any)}</span>
               <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </Link>

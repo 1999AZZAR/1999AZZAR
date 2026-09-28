@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import BlogHeader from '@/components/ui/blog-header';
+import BlogFooter from '@/components/ui/blog-footer';
 import { PostGridSkeleton } from '@/components/ui/skeletons';
 
 export const revalidate = 3600;
@@ -161,7 +162,6 @@ async function BlogPosts({ page }: { page: number }) {
   const totalPages = Math.max(1, Math.ceil(posts.length / BLOG_PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
   const pagedPosts = posts.slice((safePage - 1) * BLOG_PAGE_SIZE, safePage * BLOG_PAGE_SIZE);
-  const pageHref = (n: number) => (n <= 1 ? '/blog' : `/blog?page=${n}`);
 
   return (
     <>
@@ -204,52 +204,7 @@ async function BlogPosts({ page }: { page: number }) {
         </div>
       )}
 
-      {totalPages > 1 && posts.length > 0 && (
-        <nav aria-label="Blog pagination" className="flex items-center justify-center gap-2 mt-10">
-          <Link
-            href={pageHref(safePage - 1)}
-            aria-label="Previous page"
-            aria-disabled={safePage === 1}
-            className={`btn-ghost !py-2 !px-3 ${safePage === 1 ? 'opacity-30 pointer-events-none' : ''}`}
-          >
-            ←
-          </Link>
-          {Array.from({ length: totalPages }).map((_, i) => {
-            const num = i + 1;
-            if (totalPages > 7 && Math.abs(num - safePage) > 2 && num !== 1 && num !== totalPages) {
-              return num === 2 || num === totalPages - 1 ? (
-                <span key={num} className="mono-meta text-text/30">…</span>
-              ) : null;
-            }
-            return (
-              <Link
-                key={num}
-                href={pageHref(num)}
-                aria-label={`Page ${num}`}
-                aria-current={num === safePage ? 'page' : undefined}
-                className={`min-w-9 px-2 py-2 rounded-md text-[0.65rem] font-mono tracking-wider text-center transition-all ${num === safePage ? 'bg-text text-paper' : 'text-text hover:text-text-2 hover:bg-paper-3'}`}
-              >
-                {num}
-              </Link>
-            );
-          })}
-          <Link
-            href={pageHref(safePage + 1)}
-            aria-label="Next page"
-            aria-disabled={safePage === totalPages}
-            className={`btn-ghost !py-2 !px-3 ${safePage === totalPages ? 'opacity-30 pointer-events-none' : ''}`}
-          >
-            →
-          </Link>
-        </nav>
-      )}
-
-      <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <p className="text-sm-body text-text/50">
-          Subscribe: <a href={WP_FEED} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">RSS feed</a> · <a href={WP_BASE} target="_blank" rel="noopener noreferrer me" className="text-accent hover:underline">Full archive</a>
-        </p>
-        <p className="mono-meta text-[0.55rem]">{posts.length} articles</p>
-      </div>
+      <BlogFooter feed={WP_FEED} base={WP_BASE} total={posts.length} totalPages={totalPages} safePage={safePage} />
     </>
   );
 }

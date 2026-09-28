@@ -39,17 +39,19 @@ export default function PricingCalculator() {
       return;
     }
 
-    const Rmax = 45;
-    const Rmin = 25;
-    const Hmin = 8;
-    const Hmax = 208;
+    const RATE_BASE = 25;
+    const RUSH_HOURS = 24;
+    const RUSH_MULT = 1.5;
+    const LONG_HOURS = 160;
+    const RATE_LONG = 20;
+    const MIN_TOTAL = 350;
 
     let rateUSD;
-    if (hours <= Hmin) rateUSD = Rmax;
-    else if (hours >= Hmax) rateUSD = Rmin;
-    else rateUSD = Rmax - ((Rmax - Rmin) / (Hmax - Hmin)) * (hours - Hmin);
+    if (hours <= RUSH_HOURS) rateUSD = RATE_BASE * RUSH_MULT;
+    else if (hours > LONG_HOURS) rateUSD = RATE_LONG;
+    else rateUSD = RATE_BASE;
 
-    const projectTotalUSD = Math.max(Math.round(rateUSD * hours), 500);
+    const projectTotalUSD = Math.max(Math.round(rateUSD * hours), MIN_TOTAL);
     const mgmtFeeUSD = Math.round(projectTotalUSD * 0.15);
     const taxUSD = projectTotalUSD > 500 ? Math.round((projectTotalUSD + mgmtFeeUSD) * 0.11) : 0;
     const days = Math.ceil(hours / 8);
@@ -184,7 +186,7 @@ export default function PricingCalculator() {
                   onChange={(e) => setPayMgmtSeparate(e.target.checked)}
                   className="w-3.5 h-3.5 rounded-sm border-border bg-paper-3 accent-accent transition-all cursor-pointer"
                 />
-                <span className="font-mono text-[0.55rem] uppercase tracking-wider text-text/50 group-hover:text-text/70 transition-colors">Separate Mgmt Fee</span>
+                <span className="font-mono text-[0.55rem] uppercase tracking-wider text-text/50 group-hover:text-text/70 transition-colors">{t('calcMgmtSeparate' as any)}</span>
             </label>
           </div>
         </div>
@@ -192,35 +194,35 @@ export default function PricingCalculator() {
         {results && (
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="pt-6 border-t border-border space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="card-surface p-4 flex items-center gap-3">
+              <div className="card-surface p-4 flex items-center gap-3 min-w-0">
                 <DollarSign size={16} className="text-accent shrink-0" />
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="stat-label">{t('calcRateHr' as any)}</p>
-                  <p className="stat-value !text-base">{formatValue(results.rateUSD)}</p>
+                  <p className="stat-value !text-base break-words">{formatValue(results.rateUSD)}</p>
                 </div>
               </div>
-              <div className="card-surface p-4 flex items-center gap-3">
+              <div className="card-surface p-4 flex items-center gap-3 min-w-0">
                 <Calendar size={16} className="text-accent shrink-0" />
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="stat-label">{t('calcDuration' as any)}</p>
                   <p className="stat-value !text-base">{results.days} {language === 'id' ? 'HARI' : 'DAYS'}</p>
                 </div>
               </div>
               {results.taxUSD > 0 && (
-                <div className="card-surface p-4 flex items-center gap-3">
+                <div className="card-surface p-4 flex items-center gap-3 min-w-0">
                   <Calculator size={16} className="text-accent shrink-0" />
-                  <div>
-                    <p className="stat-label">Tax (11%)</p>
-                    <p className="stat-value !text-base">{formatValue(results.taxUSD)}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="stat-label">{t('calcTax' as any)}</p>
+                    <p className="stat-value !text-base break-words">{formatValue(results.taxUSD)}</p>
                   </div>
                 </div>
               )}
-              <div className="card-surface p-4 flex items-center gap-3">
+              <div className="card-surface p-4 flex items-center gap-3 min-w-0">
                 <Calculator size={16} className="text-accent shrink-0" />
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="stat-label text-accent">{t('calcTotalEst' as any)}</p>
-                  <p className="stat-value !text-base">{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</p>
-                  {results.totalConsultationUSD > 0 && <p className="text-[0.55rem] font-mono text-accent">incl. 15% mgmt fee</p>}
+                  <p className="stat-value !text-base break-words">{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</p>
+                  {results.totalConsultationUSD > 0 && <p className="text-[0.55rem] font-mono text-accent">{t('calcInclFee' as any)}</p>}
                 </div>
               </div>
             </div>
@@ -273,38 +275,38 @@ export default function PricingCalculator() {
                   <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
 
                   {/* Line items */}
-                  <table className="w-full text-[12px] uppercase">
+                  <table className="w-full text-[12px] uppercase table-fixed">
                     <thead>
                       <tr className="text-[9px] text-gray-500 tracking-[0.2em]">
-                        <th className="font-normal pb-3 text-left">Item</th>
-                        <th className="font-normal pb-3 text-right">Amount</th>
+                        <th className="font-normal pb-3 text-left">{t('receiptItem' as any)}</th>
+                        <th className="font-normal pb-3 text-right w-[38%]">{t('receiptAmount' as any)}</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td className="py-2">Engineering ({hours}h &times; {formatValue(results.rateUSD)}/hr)</td><td className="py-2 text-right">{formatValue(results.projectTotalUSD)}</td></tr>
-                      <tr><td className="py-2">Management Fee (15%)</td><td className="py-2 text-right">{formatValue(results.totalConsultationUSD)}</td></tr>
-                      {results.taxUSD > 0 && <tr><td className="py-2">Tax (11%)</td><td className="py-2 text-right">{formatValue(results.taxUSD)}</td></tr>}
+                      <tr><td className="py-2 pr-2 break-words">Engineering ({hours}h &times; {formatValue(results.rateUSD)}/hr)</td><td className="py-2 text-right break-words">{formatValue(results.projectTotalUSD)}</td></tr>
+                      <tr><td className="py-2 pr-2 break-words">{t('receiptMgmtFee' as any)}</td><td className="py-2 text-right break-words">{formatValue(results.totalConsultationUSD)}</td></tr>
+                      {results.taxUSD > 0 && <tr><td className="py-2 pr-2 break-words">{t('calcTax' as any)}</td><td className="py-2 text-right break-words">{formatValue(results.taxUSD)}</td></tr>}
                     </tbody>
                   </table>
 
                   <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
 
                   {/* Total */}
-                  <div className="flex justify-between text-sm font-bold tracking-wider">
-                    <span>TOTAL</span>
-                    <span>{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</span>
+                  <div className="flex justify-between gap-3 text-sm font-bold tracking-wider">
+                    <span className="shrink-0">{t('receiptTotal' as any)}</span>
+                    <span className="text-right break-words min-w-0">{formatValue(results.projectTotalUSD + results.totalConsultationUSD + results.taxUSD)}</span>
                   </div>
 
                   <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
 
                   {/* Installments */}
-                  <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-2">Payment Plan: {paymentPlan}</p>
-                  <table className="w-full text-[11px] uppercase">
+                  <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-2 break-words">Payment Plan: {paymentPlan}</p>
+                  <table className="w-full text-[11px] uppercase table-fixed">
                     <tbody>
                       {results.installments.map((inst, idx) => (
                         <tr key={idx}>
-                          <td className="py-1.5">{inst.desc}{inst.isMgmt ? ' (mgmt)' : ''}</td>
-                          <td className="py-1.5 text-right">{formatValue(inst.amount)}</td>
+                          <td className="py-1.5 pr-2 break-words">{inst.desc}{inst.isMgmt ? ' (mgmt)' : ''}</td>
+                          <td className="py-1.5 text-right break-words">{formatValue(inst.amount)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -313,7 +315,7 @@ export default function PricingCalculator() {
                   {projectDescription && (
                     <>
                       <div className="border-t-2 border-dashed border-gray-400 my-4"></div>
-                      <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-1">Notes</p>
+                      <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] mb-1">{t('receiptNotes' as any)}</p>
                       <p className="text-[11px] text-gray-700 italic leading-relaxed">{projectDescription}</p>
                     </>
                   )}

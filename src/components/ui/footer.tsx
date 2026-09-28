@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
 
           <div className="col-span-1 md:col-span-3 lg:col-span-2 lg:col-start-7 space-y-5">
-            <p className="mono-meta">Navigation</p>
+            <p className="mono-meta">{t('footerNav' as any)}</p>
             <div className="flex flex-col gap-2.5">
               {navItems.map((item) => (
                 <Link 
@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
 
           <div className="col-span-1 md:col-span-3 lg:col-span-2 space-y-5">
-            <p className="mono-meta">Connect</p>
+            <p className="mono-meta">{t('footerConnect' as any)}</p>
             <div className="flex flex-col gap-2.5">
               <a href="mailto:azzar@glassgallery.my.id" className="font-body text-sm text-text hover:text-text-2 transition-colors w-fit">
                 Email

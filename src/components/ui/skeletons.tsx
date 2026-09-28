@@ -1,6 +1,11 @@
+'use client';
+
+import { useLanguage } from '@/context/LanguageContext';
+
 export function ProjectGridSkeleton({ count = 6 }: { count?: number }) {
+  const { t } = useLanguage();
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5" aria-hidden="true" aria-label="Loading projects">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5" aria-hidden="true" aria-label={t('ariaLoadingProjects' as any)}>
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="card-surface overflow-hidden flex flex-col">
           <div className="skeleton-shimmer aspect-video border-b border-border" />
@@ -27,8 +32,9 @@ export function ProjectGridSkeleton({ count = 6 }: { count?: number }) {
 }
 
 export function PostGridSkeleton({ count = 6 }: { count?: number }) {
+  const { t } = useLanguage();
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-5" aria-hidden="true" aria-label="Loading articles">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5" aria-hidden="true" aria-label={t('ariaLoadingArticles' as any)}>
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="card-surface p-7 flex flex-col justify-between min-h-[260px]">
           <div>

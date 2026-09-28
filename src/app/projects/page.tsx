@@ -155,11 +155,11 @@ export default function ProjectsPage() {
           </motion.div>
 
           {totalPages > 1 && (
-            <nav aria-label="Projects pagination" className="flex items-center justify-center gap-2 pt-4">
+            <nav aria-label={t('ariaPaginationProjects' as any)} className="flex items-center justify-center gap-2 pt-4">
               <button
                 onClick={() => goToPage(safePage - 1)}
                 disabled={safePage === 1}
-                aria-label="Previous page"
+                aria-label={t('ariaPrev' as any)}
                 className="btn-ghost !py-2 !px-3 disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ChevronLeft size={14} />
@@ -182,7 +182,7 @@ export default function ProjectsPage() {
               <button
                 onClick={() => goToPage(safePage + 1)}
                 disabled={safePage === totalPages}
-                aria-label="Next page"
+                aria-label={t('ariaNext' as any)}
                 className="btn-ghost !py-2 !px-3 disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ChevronRight size={14} />

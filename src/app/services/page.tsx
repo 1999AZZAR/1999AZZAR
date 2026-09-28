@@ -56,7 +56,7 @@ export default function ServicesPage() {
       <motion.section initial="hidden" animate="visible" variants={fadeUp} className="section-spacing border-b border-border pb-16 md:pb-20">
         <div className="flex items-center gap-2.5 mb-6">
           <Zap size={16} className="text-accent" strokeWidth={1.5} />
-          <span className="section-label">Capabilities</span>
+          <span className="section-label">{t('servicesHeaderLabel' as any)}</span>
         </div>
         
         <h1 className="heading-xl mb-6">
@@ -105,11 +105,11 @@ export default function ServicesPage() {
       {/* CTA */}
       <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="mt-24 card-surface p-10 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="space-y-2">
-          <h2 className="heading-lg">Ready to scale?</h2>
-          <p className="text-sm-body">Let&apos;s discuss your next breakthrough project.</p>
+          <h2 className="heading-lg">{t('servicesCtaTitle' as any)}</h2>
+          <p className="text-sm-body">{t('servicesCtaDesc' as any)}</p>
         </div>
         <Link href="/contact" className="btn-primary shrink-0">
-          Establish Connection <ArrowUpRight size={14} />
+          {t('servicesEstablishConnection' as any)} <ArrowUpRight size={14} />
         </Link>
       </motion.section>
     </main>

@@ -8,14 +8,14 @@ const questions = {
     ['What kinds of projects do you take on?', 'Web applications, APIs, automation, IoT and embedded systems, AI integrations, technical consulting, and focused training. If your project crosses several of these areas, that is usually a good fit.'],
     ['What happens after I send a brief?', 'I review the goals, constraints, budget, and timeline, then reply by email with questions or a proposed next step.'],
     ['Can you work with an existing product or codebase?', 'Yes. I can audit, repair, extend, or modernize an existing system. Access and technical constraints are reviewed before scope is confirmed.'],
-    ['How do pricing and payments work?', 'Rates depend on scope, risk, and duration. Projects start at USD 500, with milestones and payment terms agreed before development begins.'],
+    ['How do pricing and payments work?', 'Base rate $25/hr (rush $38/hr, long-project $20/hr). Projects start at USD 350, with milestones and payment terms agreed before development begins.'],
     ['Do you work remotely and internationally?', 'Yes. I am based in Indonesia and work remotely with clients worldwide. Async updates are the default, with calls when they are useful.'],
   ],
   id: [
     ['Proyek seperti apa yang Anda kerjakan?', 'Aplikasi web, API, otomasi, IoT dan sistem tertanam, integrasi AI, konsultasi teknis, serta pelatihan terfokus. Proyek lintas beberapa bidang tersebut biasanya sangat cocok.'],
     ['Apa yang terjadi setelah saya mengirim brief?', 'Saya meninjau tujuan, batasan, anggaran, dan linimasa, lalu membalas melalui email dengan pertanyaan atau usulan langkah berikutnya.'],
     ['Bisakah Anda mengerjakan produk atau codebase yang sudah ada?', 'Bisa. Saya dapat mengaudit, memperbaiki, mengembangkan, atau memodernisasi sistem yang ada. Akses dan batasan teknis ditinjau sebelum ruang lingkup disepakati.'],
-    ['Bagaimana sistem harga dan pembayarannya?', 'Harga bergantung pada ruang lingkup, risiko, dan durasi. Nilai proyek mulai dari USD 500, dengan milestone dan ketentuan pembayaran yang disepakati sebelum pengembangan dimulai.'],
+    ['Bagaimana sistem harga dan pembayarannya?', 'Tarif dasar $25/jam (rush $38/jam, proyek panjang $20/jam). Nilai proyek mulai dari USD 350, dengan milestone dan ketentuan pembayaran yang disepakati sebelum pengembangan dimulai.'],
     ['Apakah Anda menerima proyek remote dan internasional?', 'Ya. Saya berbasis di Indonesia dan bekerja remote dengan klien di seluruh dunia. Pembaruan asinkron menjadi standar, dengan panggilan saat memang berguna.'],
   ],
 } as const;

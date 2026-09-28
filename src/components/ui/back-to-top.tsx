@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function BackToTop() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function BackToTop() {
           exit={{ opacity: 0, scale: 0.8, y: 10 }}
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 z-[100] w-10 h-10 rounded-lg bg-paper-3 border border-border text-text hover:text-accent hover:border-accent transition-all flex items-center justify-center"
-          aria-label="Back to top"
+          aria-label={t('bttLabel' as any)}
         >
           <ArrowUp size={16} />
         </motion.button>
