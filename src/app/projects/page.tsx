@@ -206,9 +206,63 @@ export default function ProjectsPage() {
   );
 }
 
+interface ArtVaultSpecimen {
+  code: 'GV' | 'FV' | 'LV' | 'CV';
+  name: string;
+  url: string;
+}
+
+function getProjectSpecimen(project: Project): ArtVaultSpecimen {
+  const seed = encodeURIComponent(project.name);
+  const text = `${project.name} ${project.description || ''} ${(project.topics || []).join(' ')}`.toLowerCase();
+
+  const VAULTS: ArtVaultSpecimen[] = [
+    {
+      code: 'GV',
+      name: 'Geometry Vault',
+      url: `https://geometry-vault.glassgallery.my.id/?mode=embed&seed=${seed}&colors=${encodeURIComponent('#8B1A1A, #2A2520, #EFE9DC')}&w=16&h=9`,
+    },
+    {
+      code: 'FV',
+      name: 'Fish Vault',
+      url: `https://fish-vault.glassgallery.my.id/?mode=embed&seed=${seed}&w=16&h=9`,
+    },
+    {
+      code: 'LV',
+      name: 'Landscape Vault',
+      url: `https://landscape-vault.glassgallery.my.id/?mode=embed&seed=${seed}&w=16&h=9`,
+    },
+    {
+      code: 'CV',
+      name: 'Celestial Vault',
+      url: `https://celestial-vault.glassgallery.my.id/?mode=embed&seed=${seed}&w=16&h=9`,
+    },
+  ];
+
+  if (/(?:fish|marine|ichthyo|ocean|sea|aqua|water|biology|specimen|creature|whale|shark)/.test(text)) {
+    return VAULTS[1];
+  }
+  if (/(?:landscape|terrain|mountain|nature|topo|earth|ground|forest|field|valley|river|sumi)/.test(text)) {
+    return VAULTS[2];
+  }
+  if (/(?:celest|space|star|astro|orbit|cosmic|galaxy|sky|solar|lunar|satellite|planet|universe)/.test(text)) {
+    return VAULTS[3];
+  }
+  if (/(?:geometr|poly|math|mesh|matrix|shape|vector|cad|canvas|3d|dimension|curve)/.test(text)) {
+    return VAULTS[0];
+  }
+
+  let hash = 0;
+  for (let i = 0; i < project.name.length; i++) {
+    hash = ((hash << 5) - hash) + project.name.charCodeAt(i);
+    hash |= 0;
+  }
+  return VAULTS[Math.abs(hash) % VAULTS.length];
+}
+
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const projectUrl = project.homepage || project.html_url || '#';
-  const specimenUrl = `https://geometry-vault.glassgallery.my.id/?mode=embed&seed=${encodeURIComponent(project.name)}&colors=${encodeURIComponent('#8B1A1A, #2A2520, #EFE9DC')}&w=16&h=9`;
+  const specimen = getProjectSpecimen(project);
 
   return (
     <motion.article
@@ -219,14 +273,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <div className="relative aspect-video overflow-hidden border-b border-border bg-paper-3" aria-hidden="true">
         <iframe
-          src={specimenUrl}
+          src={specimen.url}
           title=""
           loading="lazy"
           tabIndex={-1}
           className="absolute inset-0 w-full h-full pointer-events-none scale-[1.02] grayscale-[15%] transition-transform duration-500 group-hover:scale-[1.05]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-paper-3/25 to-transparent pointer-events-none" />
-        <span className="absolute top-4 left-4 stamp bg-paper-3/90">GV_{index.toString().padStart(3, '0')}</span>
+        <span className="absolute top-4 left-4 stamp bg-paper-3/90" title={`${specimen.name} Specimen`}>
+          {specimen.code}_{index.toString().padStart(3, '0')}
+        </span>
       </div>
 
       <div className="p-7 flex flex-col justify-between flex-1 min-h-[260px]">
