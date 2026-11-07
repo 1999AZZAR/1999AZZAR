@@ -309,7 +309,7 @@ async function fetchAndSortProjects() {
     try {
         showOverviewLoading();
 
-        const usernames = ['1999AZZAR', 'lily-osp'];
+        const usernames = ['1999AZZAR', 'lily-osp', 'Hela-Ecosystem'];
         let allProjects = [];
 
         for (const username of usernames) {

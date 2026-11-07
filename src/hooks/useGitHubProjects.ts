@@ -13,6 +13,11 @@ export interface Project {
   language: string;
   topics: string[];
   archived: boolean;
+  owner?: {
+    login: string;
+    avatar_url?: string;
+    html_url?: string;
+  };
 }
 
 function parseLiveSiteFile(text: string): Project[] {
@@ -49,19 +54,25 @@ export function useGitHubProjects() {
       const [githubProjects, liveSiteProjects] = await Promise.all([
         (async (): Promise<Project[]> => {
           try {
-            const usernames = ['1999AZZAR', 'lily-osp'];
-            let allProjects: any[] = [];
+            const usernames = ['1999AZZAR', 'lily-osp', 'Hela-Ecosystem'];
+            const batches = await Promise.all(
+              usernames.map(async (username) => {
+                try {
+                  const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+                  if (response.ok) {
+                    return (await response.json()) as any[];
+                  }
+                } catch {
+                  // Ignore per-user fetch failures
+                }
+                return [];
+              })
+            );
 
-            for (const username of usernames) {
-              const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
-              if (response.ok) {
-                const data = await response.json();
-                allProjects = [...allProjects, ...data];
-              }
-            }
+            const allProjects = batches.flat();
 
             return allProjects
-              .filter(repo => !repo.archived)
+              .filter(repo => !repo.archived && repo.name !== '.github')
               .sort((a, b) => {
                 const popA = a.stargazers_count + a.forks_count;
                 const popB = b.stargazers_count + b.forks_count;
