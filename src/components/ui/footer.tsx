@@ -85,6 +85,14 @@ export default function Footer() {
           <p className="mono-meta text-[0.6rem]">
             &copy; {currentYear} Azzar Budiyanto
           </p>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="mono-meta text-[0.6rem] hover:text-text-2 transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms" className="mono-meta text-[0.6rem] hover:text-text-2 transition-colors">
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
