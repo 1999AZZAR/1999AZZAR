@@ -6,7 +6,7 @@ import ProjectBrief from '@/components/ui/project-brief';
 import FAQ from '@/components/ui/faq';
 import { 
   Mail, MapPin, Send, MessageCircle, ShieldCheck, 
-  Zap, Clock, TrendingUp, ArrowUpRight
+  Zap, Clock, TrendingUp, ArrowUpRight, Calendar
 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -135,6 +135,20 @@ export default function ContactPage() {
 
               <PricingCalculator />
               
+              <div className="card-surface p-6 md:p-7 space-y-3">
+                <div className="flex items-center gap-3">
+                  <Calendar size={15} className="text-accent" />
+                  <h3 className="font-mono text-[0.7rem] uppercase tracking-[0.15em] text-text">
+                    {t('contactBookCallTitle' as any)}
+                  </h3>
+                </div>
+                <p className="text-sm-body">{t('contactBookCallDesc' as any)}</p>
+                <Link href="/book" className="btn-ghost w-full justify-between !py-3 group">
+                  {t('contactBookCallBtn' as any)}
+                  <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
+              </div>
+
               <a href="https://t.me/azzar_budiyanto" target="_blank" rel="noopener noreferrer me"
                 className="btn-primary w-full justify-between !py-5 !px-8 group"
               >
