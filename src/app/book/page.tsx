@@ -30,7 +30,7 @@ const COPY = {
   en: {
     eyebrow: 'Availability',
     title: 'Book a call',
-    intro: 'Pick a slot and tell me what we are solving. You get a Telegram call link the moment I confirm.',
+    intro: 'Pick a slot and tell me what we are solving. You get a Google Meet link and a calendar invite once I confirm.',
     pickDay: 'Choose a day',
     pickTime: 'Choose a time',
     details: 'Your details',
@@ -67,7 +67,7 @@ const COPY = {
   id: {
     eyebrow: 'Ketersediaan',
     title: 'Jadwalkan panggilan',
-    intro: 'Pilih slot dan ceritakan apa yang ingin dibahas. Tautan panggilan Telegram muncul begitu saya konfirmasi.',
+    intro: 'Pilih slot dan ceritakan apa yang ingin dibahas. Tautan Google Meet dan undangan kalender dikirim begitu saya konfirmasi.',
     pickDay: 'Pilih hari',
     pickTime: 'Pilih jam',
     details: 'Data kamu',
