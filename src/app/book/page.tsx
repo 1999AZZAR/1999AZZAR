@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { fadeUp } from '@/lib/motion';
+import { groupSlotsByZone, type SlotDay } from '@/lib/slot-time';
 
 interface Slot { start: string; end: string }
 interface Day { date: string; slots: Slot[] }
@@ -59,6 +60,8 @@ const COPY = {
     back: 'Back to details',
     newRequest: 'Request another slot',
     timezone: 'Times shown in',
+    showMyTime: 'Show my time',
+    showAzzarTime: "Show Azzar's time",
     duration: 'minute call',
     errName: 'Enter your name.',
     errEmail: 'Enter a valid email.',
@@ -95,6 +98,8 @@ const COPY = {
     back: 'Kembali ke data',
     newRequest: 'Ajukan slot lain',
     timezone: 'Waktu ditampilkan dalam',
+    showMyTime: 'Tampilkan waktu saya',
+    showAzzarTime: 'Tampilkan waktu Azzar',
     duration: 'menit',
     errName: 'Isi nama kamu.',
     errEmail: 'Email tidak valid.',
@@ -109,6 +114,8 @@ export default function BookPage() {
   const copy = COPY[language] ?? COPY.en;
 
   const [availability, setAvailability] = useState<Availability | null>(null);
+  const [visitorTz, setVisitorTz] = useState<string | null>(null);
+  const [showOwnerTz, setShowOwnerTz] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [dayIndex, setDayIndex] = useState(0);
   const [slot, setSlot] = useState<string | null>(null);
@@ -118,6 +125,14 @@ export default function BookPage() {
   const [record, setRecord] = useState<{ id: string; token: string } | null>(null);
   const [status, setStatus] = useState<StatusPayload | null>(null);
   const statusRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    try {
+      setVisitorTz(Intl.DateTimeFormat().resolvedOptions().timeZone || null);
+    } catch {
+      setVisitorTz(null);
+    }
+  }, []);
 
   const loadAvailability = useCallback(async () => {
     try {
@@ -188,35 +203,59 @@ export default function BookPage() {
     if (record) statusRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [record]);
 
-  const days = availability?.days ?? [];
+  const ownerTz = availability?.timeZone;
+  const displayTz = showOwnerTz ? ownerTz : visitorTz || ownerTz;
+
+  const days = useMemo<SlotDay[]>(() => {
+    if (!availability) return [];
+    const zone = displayTz || availability.timeZone;
+    return groupSlotsByZone(
+      availability.days.flatMap((day) => day.slots),
+      zone,
+    );
+  }, [availability, displayTz]);
+
   const activeDay = days[Math.min(dayIndex, days.length - 1)];
+
+  useEffect(() => {
+    setDayIndex(0);
+    setSlot(null);
+  }, [displayTz]);
 
   const formatTime = useMemo(
     () => (iso: string) =>
       new Intl.DateTimeFormat(language === 'id' ? 'id-ID' : 'en-GB', {
-        timeZone: availability?.timeZone,
+        timeZone: displayTz,
         hour: '2-digit',
         minute: '2-digit',
         hour12: false,
       }).format(new Date(iso)),
-    [availability?.timeZone, language],
+    [displayTz, language],
   );
 
   const formatDay = useMemo(
-    () => (date: string) =>
+    () => (instant: string) =>
       new Intl.DateTimeFormat(language === 'id' ? 'id-ID' : 'en-GB', {
         weekday: 'short',
         day: 'numeric',
         month: 'short',
-        timeZone: 'UTC',
-      }).format(new Date(`${date}T00:00:00Z`)),
-    [language],
+        timeZone: displayTz,
+      }).format(new Date(instant)),
+    [displayTz, language],
+  );
+
+  const formatZoneLabel = useMemo(
+    () => (zone: string) =>
+      new Intl.DateTimeFormat('en-GB', { timeZone: zone, timeZoneName: 'short' })
+        .formatToParts(new Date())
+        .find((part) => part.type === 'timeZoneName')?.value ?? zone,
+    [],
   );
 
   const formatFull = useMemo(
     () => (iso: string) =>
       new Intl.DateTimeFormat(language === 'id' ? 'id-ID' : 'en-GB', {
-        timeZone: availability?.timeZone,
+        timeZone: displayTz,
         weekday: 'long',
         day: 'numeric',
         month: 'long',
@@ -224,7 +263,7 @@ export default function BookPage() {
         minute: '2-digit',
         hour12: false,
       }).format(new Date(iso)),
-    [availability?.timeZone, language],
+    [displayTz, language],
   );
 
   async function submit(event: React.FormEvent) {
@@ -246,6 +285,7 @@ export default function BookPage() {
           telegram: form.telegram,
           topic: form.topic,
           slotStart: slot,
+          timeZone: visitorTz || undefined,
         }),
       });
       const payload = (await response.json()) as { id?: string; token?: string; error?: string };
@@ -294,9 +334,19 @@ export default function BookPage() {
         <span className="section-label">{copy.eyebrow}</span>
         <h1 className="heading-xl mt-4">{copy.title}</h1>
         {availability && (
-          <p className="mono-meta mt-4">
-            {availability.durationMinutes} {copy.duration} · {copy.timezone} {availability.timeZone}
-          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <p className="mono-meta">
+              {availability.durationMinutes} {copy.duration} · {copy.timezone}{' '}
+              {displayTz} ({formatZoneLabel(displayTz || availability.timeZone)})
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowOwnerTz((value) => !value)}
+              className="chip !py-1"
+            >
+              {showOwnerTz ? copy.showMyTime : copy.showAzzarTime}
+            </button>
+          </div>
         )}
         <p className="text-body mt-6 max-w-xl">{copy.intro}</p>
       </motion.section>
@@ -324,6 +374,17 @@ export default function BookPage() {
             <div className="flex items-center gap-2.5 mono-meta">
               <Calendar size={13} className="text-accent" />
               {formatFull(status.slotStart)}
+              {ownerTz && displayTz && ownerTz !== displayTz && (
+                <span className="text-text-2">
+                  ({new Intl.DateTimeFormat(language === 'id' ? 'id-ID' : 'en-GB', {
+                    timeZone: ownerTz,
+                    weekday: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                  }).format(new Date(status.slotStart))} Azzar)
+                </span>
+              )}
             </div>
 
             {status.status === 'pending' && <p className="text-sm-body">{copy.pendingBody}</p>}
@@ -382,7 +443,7 @@ export default function BookPage() {
                         }}
                         className={`chip ${index === dayIndex ? 'border-accent text-accent' : ''}`}
                       >
-                        {formatDay(day.date)}
+                        {formatDay(day.first)}
                       </button>
                     ))}
                   </div>
