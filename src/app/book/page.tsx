@@ -119,23 +119,26 @@ export default function BookPage() {
   const [status, setStatus] = useState<StatusPayload | null>(null);
   const statusRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    fetch('/api/call/availability', { cache: 'no-store' })
-      .then(async (response) => {
-        if (!response.ok) throw new Error('unavailable');
-        return (await response.json()) as Availability;
-      })
-      .then((data) => {
-        if (!cancelled) setAvailability(data);
-      })
-      .catch(() => {
-        if (!cancelled) setLoadError(copy.retryLater);
-      });
-    return () => {
-      cancelled = true;
-    };
+  const loadAvailability = useCallback(async () => {
+    try {
+      const response = await fetch('/api/call/availability', { cache: 'no-store' });
+      if (!response.ok) throw new Error('unavailable');
+      setAvailability((await response.json()) as Availability);
+      setLoadError(null);
+    } catch {
+      setLoadError(copy.retryLater);
+    }
   }, [copy.retryLater]);
+
+  useEffect(() => {
+    void loadAvailability();
+  }, [loadAvailability]);
+
+  useEffect(() => {
+    if (record) return;
+    const timer = setInterval(() => void loadAvailability(), 60_000);
+    return () => clearInterval(timer);
+  }, [record, loadAvailability]);
 
   const refreshStatus = useCallback(
     async (target: { id: string; token: string }) => {
@@ -248,6 +251,10 @@ export default function BookPage() {
       const payload = (await response.json()) as { id?: string; token?: string; error?: string };
       if (!response.ok || !payload.id || !payload.token) {
         setError(payload.error || copy.retryLater);
+        if (response.status === 409) {
+          setSlot(null);
+          await loadAvailability();
+        }
         return;
       }
       const next = { id: payload.id, token: payload.token };
@@ -278,6 +285,7 @@ export default function BookPage() {
     setRecord(null);
     setStatus(null);
     setSlot(null);
+    void loadAvailability();
   }
 
   return (
