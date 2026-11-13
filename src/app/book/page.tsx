@@ -9,7 +9,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { fadeUp } from '@/lib/motion';
 import { groupSlotsByZone, type SlotDay } from '@/lib/slot-time';
 
-interface Slot { start: string; end: string }
+interface Slot { start: string; end: string; preferred?: boolean }
 interface Day { date: string; slots: Slot[] }
 interface Availability {
   timeZone: string;
@@ -61,6 +61,7 @@ const COPY = {
     back: 'Back to details',
     newRequest: 'Request another slot',
     timezone: 'Times shown in',
+    preferred: 'preferred',
     comfortOnly: 'Comfortable hours only',
     showAllTimes: 'All times',
     noneInWindow: 'Nothing left inside comfortable hours for your timezone.',
@@ -102,6 +103,7 @@ const COPY = {
     back: 'Kembali ke data',
     newRequest: 'Ajukan slot lain',
     timezone: 'Waktu ditampilkan dalam',
+    preferred: 'disarankan',
     comfortOnly: 'Hanya jam wajar',
     showAllTimes: 'Semua jam',
     noneInWindow: 'Tidak ada slot di jam wajar untuk zona waktumu.',
@@ -235,10 +237,15 @@ export default function BookPage() {
     return days
       .map((day) => ({
         ...day,
-        slots: day.slots.filter((entry) => {
-          const hour = Number(hourOf.format(new Date(entry.start))) % 24;
-          return hour >= guestWindow.startHour && hour < guestWindow.endHour;
-        }),
+        slots: day.slots
+          .filter((entry) => {
+            const hour = Number(hourOf.format(new Date(entry.start))) % 24;
+            return hour >= guestWindow.startHour && hour < guestWindow.endHour;
+          })
+          .sort((a, b) => {
+            const rank = Number(Boolean(b.preferred)) - Number(Boolean(a.preferred));
+            return rank !== 0 ? rank : a.start.localeCompare(b.start);
+          }),
       }))
       .filter((day) => day.slots.length > 0);
   }, [days, guestWindow, showAllTimes, displayTz]);
@@ -502,7 +509,10 @@ export default function BookPage() {
 
                 {activeDay && (
                   <div className="space-y-3">
-                    <span className="mono-meta">{copy.pickTime}</span>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="mono-meta">{copy.pickTime}</span>
+                      <span className="mono-meta text-accent">★ {copy.preferred}</span>
+                    </div>
                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                       {activeDay.slots.map((option) => (
                         <button
@@ -513,7 +523,10 @@ export default function BookPage() {
                             slot === option.start ? 'border-accent text-accent' : 'hover:border-accent/50'
                           }`}
                         >
-                          {formatTime(option.start)}
+                          <span className="flex items-center justify-center gap-1">
+                            {formatTime(option.start)}
+                            {option.preferred && <span className="text-accent">★</span>}
+                          </span>
                         </button>
                       ))}
                     </div>

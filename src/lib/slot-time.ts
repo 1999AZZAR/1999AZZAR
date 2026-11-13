@@ -1,6 +1,7 @@
 export interface Slot {
   start: string;
   end: string;
+  preferred?: boolean;
 }
 
 export interface SlotDay {
@@ -47,5 +48,9 @@ export function groupSlotsByZone(slots: Slot[], zone: string): SlotDay[] {
     }
   }
 
-  return [...buckets.values()].sort((a, b) => a.date.localeCompare(b.date));
+  const days = [...buckets.values()].sort((a, b) => a.date.localeCompare(b.date));
+  for (const day of days) {
+    day.first = day.slots.reduce((earliest, slot) => (slot.start < earliest ? slot.start : earliest), day.slots[0].start);
+  }
+  return days;
 }
