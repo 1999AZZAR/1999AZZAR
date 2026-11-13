@@ -15,6 +15,7 @@ interface Availability {
   timeZone: string;
   durationMinutes: number;
   minLeadHours: number;
+  guestWindow?: { startHour: number; endHour: number };
   days: Day[];
 }
 interface StatusPayload {
@@ -60,6 +61,9 @@ const COPY = {
     back: 'Back to details',
     newRequest: 'Request another slot',
     timezone: 'Times shown in',
+    comfortOnly: 'Comfortable hours only',
+    showAllTimes: 'All times',
+    noneInWindow: 'Nothing left inside comfortable hours for your timezone.',
     showMyTime: 'Show my time',
     showAzzarTime: "Show Azzar's time",
     duration: 'minute call',
@@ -98,6 +102,9 @@ const COPY = {
     back: 'Kembali ke data',
     newRequest: 'Ajukan slot lain',
     timezone: 'Waktu ditampilkan dalam',
+    comfortOnly: 'Hanya jam wajar',
+    showAllTimes: 'Semua jam',
+    noneInWindow: 'Tidak ada slot di jam wajar untuk zona waktumu.',
     showMyTime: 'Tampilkan waktu saya',
     showAzzarTime: 'Tampilkan waktu Azzar',
     duration: 'menit',
@@ -116,6 +123,7 @@ export default function BookPage() {
   const [availability, setAvailability] = useState<Availability | null>(null);
   const [visitorTz, setVisitorTz] = useState<string | null>(null);
   const [showOwnerTz, setShowOwnerTz] = useState(false);
+  const [showAllTimes, setShowAllTimes] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [dayIndex, setDayIndex] = useState(0);
   const [slot, setSlot] = useState<string | null>(null);
@@ -215,7 +223,30 @@ export default function BookPage() {
     );
   }, [availability, displayTz]);
 
-  const activeDay = days[Math.min(dayIndex, days.length - 1)];
+  const guestWindow = availability?.guestWindow;
+
+  const visibleDays = useMemo(() => {
+    if (!guestWindow || showAllTimes) return days;
+    const hourOf = new Intl.DateTimeFormat('en-GB', {
+      timeZone: displayTz,
+      hour: '2-digit',
+      hour12: false,
+    });
+    return days
+      .map((day) => ({
+        ...day,
+        slots: day.slots.filter((entry) => {
+          const hour = Number(hourOf.format(new Date(entry.start))) % 24;
+          return hour >= guestWindow.startHour && hour < guestWindow.endHour;
+        }),
+      }))
+      .filter((day) => day.slots.length > 0);
+  }, [days, guestWindow, showAllTimes, displayTz]);
+
+  const hiddenByWindow = days.reduce((total, day) => total + day.slots.length, 0) -
+    visibleDays.reduce((total, day) => total + day.slots.length, 0);
+
+  const activeDay = visibleDays[Math.min(dayIndex, visibleDays.length - 1)];
 
   useEffect(() => {
     setDayIndex(0);
@@ -346,6 +377,17 @@ export default function BookPage() {
             >
               {showOwnerTz ? copy.showMyTime : copy.showAzzarTime}
             </button>
+            {guestWindow && (
+              <button
+                type="button"
+                onClick={() => setShowAllTimes((value) => !value)}
+                className={`chip !py-1 ${showAllTimes ? '' : 'border-accent text-accent'}`}
+              >
+                {showAllTimes
+                  ? copy.comfortOnly
+                  : `${copy.showAllTimes} (${guestWindow.startHour}:00–${guestWindow.endHour}:00)`}
+              </button>
+            )}
           </div>
         )}
         <p className="text-body mt-6 max-w-xl">{copy.intro}</p>
@@ -428,12 +470,21 @@ export default function BookPage() {
             {loadError && <p className="text-sm-body">{loadError}</p>}
             {!availability && !loadError && <p className="mono-meta animate-pulse">…</p>}
             {availability && days.length === 0 && <p className="text-sm-body">{copy.empty}</p>}
-            {days.length > 0 && (
+
+            {availability && days.length > 0 && visibleDays.length === 0 && (
+              <div className="space-y-3">
+                <p className="text-sm-body">{copy.noneInWindow}</p>
+                <button type="button" onClick={() => setShowAllTimes(true)} className="chip border-accent text-accent">
+                  {copy.showAllTimes}
+                </button>
+              </div>
+            )}
+            {visibleDays.length > 0 && (
               <>
                 <div className="space-y-3">
                   <span className="mono-meta">{copy.pickDay}</span>
                   <div className="flex flex-wrap gap-2">
-                    {days.map((day, index) => (
+                    {visibleDays.map((day, index) => (
                       <button
                         key={day.date}
                         type="button"
